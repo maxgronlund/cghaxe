@@ -1,0 +1,5 @@
+<lib fps="30" width="1600" height="600" frameCount="2" compressed="false">
+
+
+	<font file="timr45w-webfont.ttf" class="MyFont" glyphs="32-177,200-255"/>
+</lib>

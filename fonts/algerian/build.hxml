@@ -1,0 +1,12 @@
+#build file
+-cp src
+-cp ../../framework/lib
+
+-main Main
+-swf-lib ../swfmill/resource.swf
+-swf ../../../Calligraphen/app/assets/flash/algerian.swf
+
+-swf-header 600:400:30:FF0000
+-swf-version 10
+
+

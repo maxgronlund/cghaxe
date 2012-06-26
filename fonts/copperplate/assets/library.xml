@@ -1,0 +1,34 @@
+<lib fps="30" width="1600" height="600" frameCount="2" compressed="true">
+	<frame />
+
+	<font file="COPRGTL.TTF" class="MyFont" glyphs="32-180,200-255"/>
+</lib>
+
+<!--
+lib attributes: 
+
+version="10" 
+width="800" 
+height="600" 
+fps="30" 
+backgroundcolor="0xffffff" 
+frameCount="1" 
+actionscript3="true" 
+compressed="false" 
+useDirectBlit="false" 
+useGPU="false" 
+hasMetaData="false" 
+useNetWork="false"
+
+supported baseclasses:
+
+flash.display.BitmapData
+flash.display.Bitmap
+flash.display.Sprite
+flash.display.MovieClip
+flash.display.SimpleButton
+flash.utils.ByteArray
+flash.media.Sound
+flash.text.Font
+
+-->

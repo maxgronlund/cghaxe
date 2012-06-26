@@ -1,0 +1,5 @@
+<lib fps="30" width="1600" height="600" frameCount="2" compressed="false">
+
+
+	<font file="Calligraphic_421_BT.TTF" class="MyFont" glyphs="32-180,200-255"/>
+</lib>

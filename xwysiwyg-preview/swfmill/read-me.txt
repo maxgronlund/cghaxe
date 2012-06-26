@@ -1,0 +1,11 @@
+run from terminal
+
+cd /Users/synthmax/Dropbox/calligraphen-haxe/wysiwyg-editor/swfmill 
+
+swfmill simple resource.xml resource.swf
+
+ broken in convertion
+ 
+ eccentric
+ AVANTGARD
+ ECCENTRIC

@@ -1,0 +1,1 @@
+-cmd echo "compiling library.swf"-cmd cd assets-cmd neko hxswfml.n xml2lib library.xml library.swf-cmd cd ..-cmd echo "compiling index.swf"--next-cp ../shared-cp src-main Main-swf-lib assets/library.swf-swf-header 600:400:30:FF0000#-swf-version 10#-cp src--flash-use-stage-swf ../../../Calligraphen/app/assets/flash/bickham_script.swf

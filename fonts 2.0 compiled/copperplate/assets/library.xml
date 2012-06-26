@@ -1,0 +1,3 @@
+<lib fps="30" width="1600" height="600" frameCount="2" compressed="true">
+	<font file="copperplate.ttf" class="MyFont" glyphs="32-255"/>
+</lib>

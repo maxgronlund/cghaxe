@@ -1,0 +1,22 @@
+-cmd echo "compiling calligraphic.swf"
+-cmd cd ../calligraphic/assets
+-cmd neko hxswfml.n xml2lib library.xml library.swf
+-cmd cd ..
+-cp ../calligraphic/src
+-main Main
+-swf-lib ../calligraphic/assets/library.swf
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf ../../../Calligraphen/app/assets/flash/calligraphic.swf
+
+
+#-cmd echo "compiling copperplate.swf"
+#-cmd cd ../copperplate/assets
+#-cmd neko hxswfml.n xml2lib library.xml library.swf
+#-cmd cd ..
+#-cp ../copperplate/src
+#-main Main
+#-swf-lib ../copperplate/assets/library.swf
+#-swf-header 600:400:30:FF0000
+#--flash-use-stage
+#-swf ../../../Calligraphen/app/assets/flash/copperplate.swf

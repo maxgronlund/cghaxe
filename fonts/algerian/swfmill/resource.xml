@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+	
+<movie version="9" width="900" height="900" framerate="30"> 
+  <frame> 
+    <library> 
+		<font id="algerian" import="library/ALGER.TTF" name="algerian"/>  <!-- CHANGE HERE -->
+    </library> 
+  </frame> 
+</movie>
