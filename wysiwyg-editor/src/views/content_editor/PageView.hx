@@ -298,10 +298,10 @@ class PageView extends View{
     if(inFocus.getPlaceholderType() == 'textPlaceholder'){
 
       var textField:TextField = inFocus.getTextField();
-     
-      if(model.getString('hide_mask_url') != '/assets/fallback/hide_mask.png'){
+      
+      if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
         trace('test for hit');
-       if(GLOBAL.hitTest.textFieldHitBitmap(textField, hideMask)) {
+       if(GLOBAL.hitTest.textFieldHitBitmap(textField, guideMask)) {
          trace("Hit!");
        }
       }
