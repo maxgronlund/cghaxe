@@ -251,5 +251,11 @@ class FontBase extends MovieClip
     return textField.width*(72/150);
   }
  
+  public function getTextField():TextField{
+
+    return textField;
+  }
 }
+
+
 

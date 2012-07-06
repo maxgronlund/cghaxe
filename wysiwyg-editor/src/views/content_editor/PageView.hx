@@ -16,6 +16,7 @@ import flash.display.MovieClip;
 import flash.Vector;
 import flash.Lib;
 import flash.filters.DropShadowFilter;
+import flash.text.TextField;
 
 
 
@@ -290,17 +291,26 @@ class PageView extends View{
     
   }
   
+
+    
   public function disableMove():Void{
     
-    //if(inFocus == textfield){
-    //  var text_field = inFocus.getTextField()
-    //  
-    //  if(hidemask != null){
-    //    if(GLOBAL.hit_test.textFieldHitBitmap(text_field, hidemask)){
-    //      inFocus.alert();
-    //    }
-    //  }
-    //}
+    if(inFocus.getPlaceholderType() == 'textPlaceholder'){
+
+      var textField:TextField = inFocus.getTextField();
+     
+      if(model.getString('hide_mask_url') != '/assets/fallback/hide_mask.png'){
+        trace('test for hit');
+       if(GLOBAL.hitTest.textFieldHitBitmap(textField, hideMask)) {
+         trace("Hit!");
+       }
+      }
+      //if(hidemask != null){
+      //  if(GLOBAL.hitTest.textFieldHitBitmap(text_field, hidemask)){
+      //    inFocus.alert();
+      //  }
+      //}
+    }
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
   }
 

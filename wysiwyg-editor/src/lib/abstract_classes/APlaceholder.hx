@@ -4,6 +4,7 @@ package;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.text.TextField;
 
 class APlaceholder extends MouseHandler{
 
@@ -30,5 +31,15 @@ class APlaceholder extends MouseHandler{
   
   public function setFocus(b:Bool):Void{
     trace("setFocus: must be overriden in a subclass");
+  }
+  
+  public function getPlaceholderType():String{
+    trace("getPlaceholderType: must be overriden in a subclass");
+    return 'na';
+  }
+  
+  public function getTextField():TextField{
+    trace("getPlaceholderType: must be overriden in a subclass");
+    return null;
   }
 }

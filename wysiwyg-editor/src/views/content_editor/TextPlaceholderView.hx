@@ -416,4 +416,13 @@ class TextPlaceholderView extends APlaceholder{
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }
+  
+  override public function getPlaceholderType():String{
+    return 'textPlaceholder';
+  }
+  
+  override public function getTextField():TextField{
+
+     return font.getTextField();
+   }
 }

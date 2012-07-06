@@ -66,7 +66,7 @@ class Main
   private var version:VersionCheck;
   private var Fonts:SystemFonts;
   private var userParser:UserParser;
-  private var hit_test:CGHitTest;
+  private var hitTest:CGHitTest;
   
 
   
@@ -155,7 +155,8 @@ class Main
     setGlobalViews();
     
     // system
-    hit_test = new CGHitTest();
+    //hitTest = new CGHitTest();
+    GLOBAL.hitTest = new CGHitTest();
     
     init();
     buildInterface();

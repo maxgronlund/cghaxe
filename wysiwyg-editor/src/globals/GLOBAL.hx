@@ -25,6 +25,7 @@ class GLOBAL  {
   public static var save_path:String;
   public static var edit_mode:String;
   public static var admin_mode:Bool;
+  public static var hitTest:CGHitTest;
   
   // zoom
   public static var Zoom:ZoomTools;
