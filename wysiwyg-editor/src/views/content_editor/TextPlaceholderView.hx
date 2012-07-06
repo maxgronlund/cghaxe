@@ -412,6 +412,7 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   private function onRemovedFromStage(e:Event){
+    trace('onRemovedFromStage');
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }

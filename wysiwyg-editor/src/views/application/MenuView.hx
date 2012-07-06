@@ -6,9 +6,6 @@ import flash.geom.Point;
 class MenuView extends View, implements IView
 {
 	private var saveButton:OneStateButton;
-	//private var cardButton:TwoStateButton;
-	//private var insertButton:TwoStateButton;
-	//private var envelopeButton:TwoStateButton;
 	private var maskButton:TwoStateButton;
 	private var moveButton:TwoStateButton;
 	private var textButton:TwoStateButton;
@@ -30,11 +27,6 @@ class MenuView extends View, implements IView
 		backdrop            = new Bitmap(bmpData);
 		                	  
 		saveButton 		      = new OneStateButton();
-/*		                  
-    cardButton 		      = new TwoStateButton();
-		insertButton 	      = new TwoStateButton();
-		envelopeButton      = new TwoStateButton();
-*/                      
 		maskButton 		      = new TwoStateButton();
 		moveButton 		      = new TwoStateButton();
 		textButton 		      = new TwoStateButton();
@@ -46,6 +38,7 @@ class MenuView extends View, implements IView
 		Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onSetDefaultTool);
   	
 	}
+	
 	private function onSetDefaultTool(e:IKEvent):Void{
 	 // trace('onSetDefaultTool');
 	 textButton.setOn(true);
@@ -58,22 +51,7 @@ class MenuView extends View, implements IView
             new Point(80,29), 
             new SaveButtonBitmap(), 
             new Parameter( EVENT_ID.SAVE_XML));
-/*    
-    cardButton.init( 	controller,
-            new Point(80,SIZE.MENU_VIEW_HEIGHT), 
-            new CardButton(), 
-            new Parameter( EVENT_ID.SHOW_CARD));
-            
-    insertButton.init(  controller,
-            new Point(96,SIZE.MENU_VIEW_HEIGHT), 
-            new InsertButton(), 
-            new Parameter( EVENT_ID.SHOW_INSERT));
-            
-    envelopeButton.init(	controller,
-            new Point(100,SIZE.MENU_VIEW_HEIGHT), 
-            new EnvelopeButton(), 
-            new Parameter( EVENT_ID.SHOW_ENVELOPE));	
-*/            
+          
     maskButton.init( controller,
             new Point(40,29), 
             new MaskButton(), 

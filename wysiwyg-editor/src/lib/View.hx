@@ -24,7 +24,6 @@ class View extends AView{
     Zoom              = GLOBAL.Zoom;
     Application	      = GLOBAL.Application;
     Menu      	      = GLOBAL.Menu;
-//    Configuration     = GLOBAL.Configuration;
     Preset            = GLOBAL.Preset;
     Pages             = GLOBAL.Pages;
     Designs           = GLOBAL.Designs;
@@ -33,6 +32,7 @@ class View extends AView{
   }
   
   override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
+    view.setString('viewId', id);
     addChild(view);
     view.x = posX;
     view.y = posY;

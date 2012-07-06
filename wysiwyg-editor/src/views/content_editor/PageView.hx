@@ -223,12 +223,13 @@ class PageView extends View{
   //}
   
   private function onDestroyPlaceholder(e:IKEvent){
+    removeChild(inFocus);
     var index:UInt = 0;
     for(i in 0...placeholders.length){
       if(placeholders[i] == inFocus) index = i;
     }
     placeholders.splice(index,1);
-    removeChild(inFocus);
+    
     inFocus = null;
   }
   
@@ -236,9 +237,9 @@ class PageView extends View{
     for(i in 0...placeholders.length){
       removeChild(placeholders[i]);
     }
-    inFocus = null;
-    placeholders = null;
-    placeholders            = new Vector<APlaceholder>();
+    inFocus         = null;
+    placeholders    = null;
+    placeholders    = new Vector<APlaceholder>();
   }
   
   private function onAddPlaceholder(e:KEvent):Void {
@@ -290,6 +291,16 @@ class PageView extends View{
   }
   
   public function disableMove():Void{
+    
+    //if(inFocus == textfield){
+    //  var text_field = inFocus.getTextField()
+    //  
+    //  if(hidemask != null){
+    //    if(GLOBAL.hit_test.textFieldHitBitmap(text_field, hidemask)){
+    //      inFocus.alert();
+    //    }
+    //  }
+    //}
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
   }
 

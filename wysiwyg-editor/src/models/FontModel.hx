@@ -31,8 +31,6 @@ class FontModel  {
 	function setAnchorPoint(f) return anchorPoint = f
   
   
-  
-  
   private var xml:Xml;
   
   public function new(){
@@ -51,8 +49,6 @@ class FontModel  {
     anchorPoint = 0;
     
   }
-  
-  
   
   public function setXml(s:String):Void{
     var xml:Xml = Xml.parse(s);

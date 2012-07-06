@@ -34,6 +34,8 @@
 -cp src/views/side_view/designs_view
 -cp src/views/side_view/design_images_view
 -cp src/views/side_view/text_suggestions_view
+-cp src/views/selection_view
+-cp src/views/selection_view/greetings_view
 -cp src/lib/text_editor
 #-cp src/old_stuff
 -cp src/lib/abstract_classes

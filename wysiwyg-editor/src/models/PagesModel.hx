@@ -13,13 +13,10 @@ class PagesModel extends Model, implements IModel {
   private var pageId:Int;
   private var mask_url:String;
   private var hide_mask_url:String;
-//  private var pagedesign_xml:Xml;
   private var page_name:String;
   private var front_of_paper:Bool;
   
-  
-  
-  
+
   public function new(){	
   	super();
     pageModels  = new Vector<PageModel>();
@@ -30,35 +27,22 @@ class PagesModel extends Model, implements IModel {
     super.init();
     pageInFocus = null;
     hide_mask_url = '';
-//    Application.addEventListener(EVENT_ID.RESET_WYSIWYG, onClearConfiguration );
     Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
     Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Preset.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
     Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
-//    Designs.addEventListener(EVENT_ID.BUILD_PAGE, onBuildDesignPage);
     Application.addEventListener(EVENT_ID.TRASH_PLACEHOLDERS, onDestroyPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_PAGE_DESIGN, onAddPagedesign);
-//    Application.addEventListener(EVENT_ID.PASS_DESIGN_FILE, onPassPageDesign);
     Application.addEventListener(EVENT_ID.PRESET_PAGEDESIGN_XML, onPresetPagedesignXml);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
   }
   
-  
-  
   private function onAddPagedesign(e:IKEvent):Void{
-    
     pageInFocus.dispatchParameter(new Parameter(EVENT_ID.TRASH_PLACEHOLDERS));
     pageInFocus.dispatchParameter(e.getParam());
-    //trace(e.getParam().getXml().toString());
   }
   
-  
-//  private function onClearConfiguration(e:IKEvent):Void{
-//    backDropsLoaded = 0;
-//  }
-
-
   private function onLoadDefaultPage(e:IKEvent): Void {
     setPageFocus(0);
   }
@@ -72,26 +56,7 @@ class PagesModel extends Model, implements IModel {
     
 
 	}
-/*	
-	// move to  design model
-  private function onPassPageDesign(e:IKEvent):Void{
 
-    pageOrder       = 0;
-    pageId          = 0;
-    page_name       = 'page layout';
-    mask_url        = '';
-    buildPage();
-    
-    for( design in e.getXml().elementsNamed("design") ) {
-      for( img in design.elementsNamed("image-url") ) {
-        var image_url:String        = Std.string(img.firstChild().nodeValue);
-        var param:IParameter        = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
-        param.setString(image_url);
-        pageInFocus.dispatchParameter(param);
-      }
-    }
-  }
-*/  
   private function onDestroyPlaceholders(e:IKEvent):Void{
     pageInFocus.dispatchParameter(new Parameter(e.getLabel()));
   }
@@ -135,6 +100,7 @@ class PagesModel extends Model, implements IModel {
     pageId++;
 
   }
+  
   private function onBuildDesignPage( e:IKEvent ):Void{
     //trace(e.getXml().toString());
     
@@ -146,8 +112,6 @@ class PagesModel extends Model, implements IModel {
     buildPage();
     pageOrder++;
     pageId++;
-    
- 
   }
   
   private function buildPage():Void{
@@ -169,24 +133,8 @@ class PagesModel extends Model, implements IModel {
      param.setModel(pageModel);
      dispatchParameter(param);
 
-   }
-  
-  
-//  private function onBuildDesignPage( e:IKEvent ):Void{
-//    trace('onBuildDesignPage');
-//    pageOrder = 0;
-//    pageId = 0;
-//    page_name = 'design';
-//    mask_url = '';
-//    hide_mask_url = '';
-//    front_of_paper = true;
-//    buildPage();
-//  }
-  
- 
-    
-    
-  
+  }
+
   private function onLoadFrontShot( e:IKEvent ):Void{
     
     var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);

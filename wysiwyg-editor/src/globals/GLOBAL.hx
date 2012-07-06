@@ -46,6 +46,8 @@ class GLOBAL  {
   public static var page_selector_view:IView;
   public static var desktop_view:IView;
   public static var grid_view:IView;
+  public static var selection_view:IView;
+  public static var greetingsView:IView;
   
   // controllers
   public static var text_controller:IController;
@@ -56,6 +58,7 @@ class GLOBAL  {
   public static var desktop_controller:IController;
   public static var sibling_controller:IController;
   public static var menu_controller:IController;
+  public static var selection_controller:IController;
   
   // zoom and pos
   public static var pos_x:Float;

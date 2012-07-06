@@ -39,19 +39,16 @@ class ColorPicker extends View{
   private function onMouseOver(e:MouseEvent):Void{
     stage.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDownOutside);
     removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    
     addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    
   }
   
   private function onMouseOut(e:MouseEvent){
     
     removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
     removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    // Why the fuck is this broken
+    // Why the frack is this broken
     //stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownOutside);
   }
   

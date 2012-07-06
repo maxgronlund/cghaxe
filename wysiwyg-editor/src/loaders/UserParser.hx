@@ -4,11 +4,15 @@ class UserParser {
 
   //private var fontScrollPane:AView;
   private var Designs:IModel;
+  private var defaultUser:Bool;
   
   public function new(){
     Designs = GLOBAL.Designs;
+    defaultUser = true;
   }
   public function parseUser(xml:Xml):Void{
+    // first the default user is loaded
+    
     
     for( brides_first_name in xml.elementsNamed("brides-first-name") ){
       Designs.setString('brides_first_name', brides_first_name.firstChild().nodeValue.toString());
@@ -88,6 +92,9 @@ class UserParser {
     for( countrxy in xml.elementsNamed("countrxy") ){
       Designs.setString('countrxy', countrxy.firstChild().nodeValue.toString());
     }
+    
+    // then the customor is loaded
+    defaultUser = false;
   }
 
 }

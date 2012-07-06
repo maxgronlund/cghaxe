@@ -7,7 +7,6 @@ import flash.events.Event;
 //class ApplicationModel extends PresetModel, implements IModel
 class ApplicationModel extends Model, implements IModel
 {
-//  private var editMode:String;
 	private var configurationLoader:ILoader;
 	private var presetLoader:ILoader;
 	private var pageDesignLoader:ILoader;
@@ -17,11 +16,9 @@ class ApplicationModel extends Model, implements IModel
 	private var loadStage:Array<String>;	
 	private var presetXml:Xml;
   private var pageDesignXml:Xml;
-//	private var configurationFileUrl:String;
 
   public function new(){	
     super();
-//    configurationLoader       = new XmlLoader();
     presetLoader              = new XmlLoader();
     pageDesignLoader          = new XmlLoader();
     presetPageDesignLoader    = new XmlLoader();

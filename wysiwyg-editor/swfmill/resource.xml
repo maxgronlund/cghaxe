@@ -14,7 +14,7 @@
       <bitmap id="ColorPickerButton" import="library/images/color_picker_button.png" />
       <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
       <bitmap id="DesignImagesViewButton" import="library/images/design_images_view_button.png" />
-      <bitmap id="EnvelopeButton" import="library/images/envelope_button.png" />
+      
       <bitmap id="FoilViewButton" import="library/images/foil_view_button.png" />
       <bitmap id="GarmondViewButton" import="library/images/garmond_view_button.png" />
       <bitmap id="InsertButton" import="library/images/insert_button.png" />

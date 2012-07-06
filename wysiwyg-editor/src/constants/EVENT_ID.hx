@@ -118,7 +118,6 @@ class EVENT_ID  {
   // in the menu
   public static inline var SHOW_CARD:String                 = "show_card";
   public static inline var SHOW_INSERT:String               = "show_insert";
-  public static inline var SHOW_ENVELOPE:String             = "show_envelope";
   public static inline var SHOW_MASK:String                 = "show_mask";
   public static inline var ZOOM:String                      = "zoom_id";
   public static inline var ZOOM_POPUP:String                = "menu_zoom_popup";

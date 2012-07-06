@@ -35,6 +35,7 @@ class Main
   private var priceController:IController;
   private var menuController:IController;
   private var pageSelectController:IController;
+  private var selectionController:IController;
 
   private var sidebarController:IController;
   private var desktopController:IController;
@@ -57,12 +58,16 @@ class Main
   private var pageSelectorView:AView;
   private var desktopView:AView;
   private var gridView:AView;
+  private var selectionView:AView;
+  private var greetingsView:AView;
   
   
   // system
-  var version:VersionCheck;
+  private var version:VersionCheck;
   private var Fonts:SystemFonts;
   private var userParser:UserParser;
+  private var hit_test:CGHitTest;
+  
 
   
   
@@ -124,6 +129,8 @@ class Main
     garamondController          = new GaramondController();
     logoController		          = new LogoController();
     desktopController           = new DesktopController();
+    selectionController         = new SelectionController();
+    
     setGlobalControllers();     
                                 
     // views                    
@@ -142,8 +149,13 @@ class Main
     pageSelectorView            = new PageSelectorView(pageSelectController);
     desktopView                 = new DesktopView(desktopController);
     gridView                    = new GridView(applicationController);
+    selectionView               = new SelectionView(selectionController);
+    greetingsView               = new GreetingView(selectionController);
     
     setGlobalViews();
+    
+    // system
+    hit_test = new CGHitTest();
     
     init();
     buildInterface();
@@ -158,6 +170,7 @@ class Main
     GLOBAL.Pages          = Pages;
     GLOBAL.DesignImages   = DesignImages;
     GLOBAL.Designs        = Designs;
+    
     GLOBAL.Zoom         	= new ZoomTools();
     GLOBAL.Font           = new FontModel();
     GLOBAL.userParser     = new UserParser();
@@ -179,6 +192,8 @@ class Main
     GLOBAL.page_selector_view		      = pageSelectorView;
     GLOBAL.desktop_view               = desktopView;
     GLOBAL.grid_view                  = gridView;
+    GLOBAL.selection_view             = selectionView;
+    GLOBAL.greetingsView              = greetingsView;
           		
   }
   
@@ -190,6 +205,7 @@ class Main
     GLOBAL.desktop_controller         = desktopController;
     //GLOBAL.sibling_controller         = siblingController;
     GLOBAL.menu_controller            = menuController;
+    GLOBAL.selection_controller       = selectionController;
     
   }
 
@@ -244,9 +260,10 @@ class Main
     applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
     gridView.mouseChildren = false;
     gridView.mouseEnabled = false;
-    //applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT);
     
-    //trace(SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT);
+    //applicationView.addView(selectionView, 0,0);
+    //selectionView.addView(greetingsView, 0, 0, 'greetings');
+
     
     // position views
     sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;

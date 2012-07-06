@@ -10,16 +10,13 @@ class PageModel extends Model, implements IModel
   private var page_name:String;
   private var fileStr:String;
   private var front_of_paper:Bool;
-  
-  
-  
-  
+
   public function new(){	
-  	super();
-  	fileStr   = '';
-  	mask_url  = '';
-  	hide_mask_url = '';
-  
+    super();
+    fileStr   = '';
+    mask_url  = '';
+    hide_mask_url = '';
+    
   }
   
   override public function setParam(param:IParameter):Void{
@@ -38,14 +35,6 @@ class PageModel extends Model, implements IModel
       	param.setInt(pageId);
       	dispatchParameter(param);
       }
-      //case EVENT_ID.ADD_TEXT_SUGGESTION:{
-      //  trace('ADD_TEXT_SUGGESTION');
-      //  //GLOBAL.Font.leading = 0;
-      //  //param.setModel(this);
-      //	//param.setInt(0);
-      //	//dispatchParameter(param);
-      //}
-      
       case EVENT_ID.TRASH_PLACEHOLDER:{
        dispatchParameter(param); 
       }

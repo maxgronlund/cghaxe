@@ -10,7 +10,7 @@ class DesignsView extends PropertyView, implements IView{
   
   public function new(designsController:IController){	
     super(designsController);
-    backdrop            = new PlaceholdersBackBitmap();
+    backdrop				= new PlaceholdersBackBitmap();
     
     designsScrollPane   = new ScrollPane(designsController);
     designsPane         = new DesignsPane(designsController);
@@ -18,7 +18,7 @@ class DesignsView extends PropertyView, implements IView{
     addDesignButton     = new OneStateButton();
     
     Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
-    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
     
   }
   
@@ -70,10 +70,10 @@ class DesignsView extends PropertyView, implements IView{
 
   }
   
-  private function onLoadDefaultTool(e:IKEvent):Void{
-    //trace('onLoadDefaultTool');
-    //trace(designsPane.getFloat('height'));
-    //trace(designsScrollPane.getFloat('mask_height'));
+  private function onLoadDefaultToold(e:IKEvent):Void{
+    trace('onLoadDefaultToold');
+    trace(designsPane.getFloat('height'));
+    trace(designsScrollPane.getFloat('mask_height'));
     
     verticalScrollbar.setSize(designsPane.getFloat('height'), designsScrollPane.getFloat('mask_height'));
   }

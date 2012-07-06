@@ -52,7 +52,6 @@ class PageSelectorView extends View, implements IView {
     pageButtonPosX = 0;
   }
   
-  
   private function onBuildPage(e:IKEvent):Void{
     
     var model:IModel        = e.getParam().getModel();
@@ -78,8 +77,6 @@ class PageSelectorView extends View, implements IView {
   	createPageButton(Std.string(pageIndex+1) + '.' + pageName, pageId);
   }
   
-  
-  
   private function createPageButton(label:String, pageId:Int):Void{ 
     
     var param:IParameter = new Parameter( EVENT_ID.PAGE_SELECTED);
@@ -90,8 +87,6 @@ class PageSelectorView extends View, implements IView {
     addChild(pageButtons[pages]);
     pageButtons[pages].x = pageButtonPosX;
     pageButtonPosX += pageButtons[pages].getWidth()+1;
-    
-    
   }
   
 }

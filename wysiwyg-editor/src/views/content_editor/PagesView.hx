@@ -21,9 +21,7 @@ class PagesView extends View, implements IView{
     Application.addEventListener(EVENT_ID.RESET_WYSIWYG, onResetWysiwyg);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
     Application.addEventListener(EVENT_ID.ADD_PAGES_TO_STAGE, addPagesToStage);
-//  Application.addEventListener(EVENT_ID.GET_PAGE_SIZE, onGetPageSize);
-//  Pages.addEventListener(EVENT_ID.ADD_PAGEDESIGN_PAGE, onAddPagedesignPage);
-//  Designs.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);   //<<------------- move to Pages
+
 
     DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImageToPage);
     Designs.addEventListener(EVENT_ID.ADD_DESIGN_TO_PAGE, onAddPageDesignToPage);

@@ -35,12 +35,11 @@ class DesignsModel extends Model, implements IModel {
   private var countrxy:String;
 
   
-
   public function new(){	
     super();
   }
     
- override public function init():Void{	
+  override public function init():Void{	
    super.init();
    Application.addEventListener(EVENT_ID.PASS_DESIGN_FILE, onPassDesign);
  }
@@ -61,7 +60,6 @@ class DesignsModel extends Model, implements IModel {
   }
   
   override public function setString(id:String, s:String):Void{
-    
      switch ( id ){
        case 'brides_first_name':    { brides_first_name = s;}
        case 'brides_last_name':     { brides_last_name = s;}
@@ -89,12 +87,10 @@ class DesignsModel extends Model, implements IModel {
        case 'dinner_place_name':    { dinner_place_name = s;}
        case 'city':                 { city = s;}
        case 'countrxy':             { countrxy = s;}
-       
-
      }
-   }
+  }
   
-   override public function getString(id:String):String{
+  override public function getString(id:String):String{
       switch ( id ){
         case 'brides_first_name':   {return brides_first_name;}
         case 'brides_last_name':    {return brides_last_name;}
@@ -125,8 +121,7 @@ class DesignsModel extends Model, implements IModel {
         
       }
       return '';
-    }
-    
+  }
 
   private function onPassDesign(e:IKEvent):Void{
     

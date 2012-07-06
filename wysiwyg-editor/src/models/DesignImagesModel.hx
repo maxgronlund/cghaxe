@@ -37,17 +37,17 @@ class DesignImagesModel extends Model, implements IModel {
      //switch ( id ){
      //  case 'countrxy':             { countrxy = s;}
      //}
-   }
+  }
   
-   override public function getString(id:String):String{
-      //switch ( id ){
-      //  case 'countrxy':            {return countrxy;}
-      //  
-      //}
-      return '';
-    }
-    
-
+  override public function getString(id:String):String{
+     //switch ( id ){
+     //  case 'countrxy':            {return countrxy;}
+     //  
+     //}
+     return '';
+  }
+  
+  // to do 
   private function onPassDesignImage(e:IKEvent):Void{
     
     //trace('onPassDesign');
