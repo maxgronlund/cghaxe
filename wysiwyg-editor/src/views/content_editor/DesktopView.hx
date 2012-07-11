@@ -16,7 +16,7 @@ class DesktopView extends View, implements IView{
   private var goToPosX:Float;
   private var goToPosY:Float;
   
-  
+  // touch
   private var stepY:Float;
   private var moveLeft:Bool;
   private var zoom:Bool;
