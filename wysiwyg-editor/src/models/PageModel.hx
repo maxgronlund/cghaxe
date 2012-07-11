@@ -41,7 +41,6 @@ class PageModel extends Model, implements IModel
       case EVENT_ID.UPDATE_TEXT_TOOLS:{
         GLOBAL.text_view.setParam(param);
       }
-      
     }
 	}
 
@@ -83,8 +82,7 @@ class PageModel extends Model, implements IModel
       case 'hide_mask_url':           hide_mask_url = s;
       case 'page_name':               page_name = s; 
       case 'no_move':{ trace('no move'); 	}
-      case EVENT_ID.SET_PAGE_XML:fileStr += s;
-      
+      case EVENT_ID.SET_PAGE_XML: fileStr += s;
     }
   }
   
@@ -99,10 +97,14 @@ class PageModel extends Model, implements IModel
   }
   
   override public function getXml(cmd:String):String{
+    trace('getXml');
     fileStr = '\t<page id="'+Std.string(pageId)+'">\n';
-      // placeholders returns to setString and add data to fileStr
-      var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_XML + Std.string(pageId));
-      dispatchParameter(param);
+
+    var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_POS_XML + Std.string(pageId));
+    dispatchParameter(param);
+    
+    var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_XML + Std.string(pageId));
+    dispatchParameter(param);
   
     fileStr += '\t</page>\n';
     return fileStr;

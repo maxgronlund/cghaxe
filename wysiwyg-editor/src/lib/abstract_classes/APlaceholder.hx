@@ -42,4 +42,9 @@ class APlaceholder extends MouseHandler{
     trace("getPlaceholderType: must be overriden in a subclass");
     return null;
   }
+  
+  public function alert(b:Bool):Void
+  {
+     trace("alert: must be overriden in a subclass");
+  }
 }

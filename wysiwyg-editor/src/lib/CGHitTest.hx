@@ -6,24 +6,26 @@ import flash.geom.Matrix;
 class CGHitTest
 {
 
+  private var pixelHitAmount:Int;
+
 	public function new()
 	{
-		
+		pixelHitAmount = 1;
 	}
 	
-	public function textFieldHitBitmap(textField:TextField, bitmapMask:Bitmap)
+	public function textFieldHitBitmap(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
 	{
-		return textFieldHitBitmapPixelCount(textField, bitmapMask) >= 1;
+		return textFieldHitBitmapPixelCount(textField, textFieldX, textFieldY, bitmapMask, bitmapMaskX, bitmapMaskY) >= pixelHitAmount;
 	}
 	
-	public function textFieldHitBitmapPixelCount(textField:TextField, bitmapMask:Bitmap)
+	public function textFieldHitBitmapPixelCount(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
 	{
 		var textFieldSnapshot:BitmapData = new BitmapData(Std.int(textField.width), Std.int(textField.height), true, 0x00000000);
 		textFieldSnapshot.draw(textField, new Matrix());
-		
+
 		var bitmapDataMask:BitmapData = bitmapMask.bitmapData;
 				
-		var count = bitmapDataHitBitmapDataMaskPixelCount(textFieldSnapshot, Std.int(textField.x), Std.int(textField.y), bitmapDataMask, Std.int(bitmapMask.x), Std.int(bitmapMask.y));
+		var count = bitmapDataHitBitmapDataMaskPixelCount(textFieldSnapshot, textFieldX, textFieldY, bitmapDataMask, bitmapMaskX, bitmapMaskY);
 		
 		return count;
 	}
@@ -41,7 +43,7 @@ class CGHitTest
 				var pixelX:Int = x-bitmapX+maskX;
 				var pixelY:Int = y-bitmapY+maskY;
 				
-				if(bitmapData.getPixel32(x, y) != 0)
+				if(bitmapData.getPixel32(Std.int(x*0.48), Std.int(y*0.48)) != 0)
 				{
 					if(bitmapDataMask.getPixel32(pixelX, pixelY) == hitColor)
 					{

@@ -73,7 +73,6 @@ class PagesView extends View, implements IView{
 //  }
 
   private function onPageSelected(e:IKEvent):Void{
-    
     putPageOnTop( e.getInt());
   }
   
@@ -123,4 +122,8 @@ class PagesView extends View, implements IView{
       pages[i].visible = false;
     }
   }
+
+  override public function getView(i:Int):AView{
+    return pages[i];
+	}
 }

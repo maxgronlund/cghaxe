@@ -12,6 +12,7 @@ class COLOR
 	public static inline var MOUSE_OVER:Int = 0x718F8F;
 	public static inline var SCROLLPANE:Int = 0xE7ECEC;
 	public static inline var SCROLL_HANDLE:Int = 0xB5B5B5;
+	public static inline var DESKTOP:Int = 0xffffff;
 	  
 	
 	

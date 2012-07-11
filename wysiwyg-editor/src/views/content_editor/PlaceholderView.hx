@@ -362,7 +362,7 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   private function onTextTool(e:IKEvent):Void {
-    trace('onTextTool');
+    //trace('onTextTool');
     updateFocus();
   }
   

@@ -96,8 +96,12 @@ class AView extends Sprite, implements IView
 		trace("setInt: must be overriden in a subclass");
 
 	}
-
 	
+	public function getView(i:Int):AView{
+		trace("getView: must be overriden in a subclass");
+    return null;
+	}
+
 }
 
 
