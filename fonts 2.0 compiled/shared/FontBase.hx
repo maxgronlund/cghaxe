@@ -10,6 +10,7 @@ import flash.events.KeyboardEvent;
 import flash.display.Shape;
 import flash.Vector;
 import flash.geom.Point;
+import flash.geom.ColorTransform;
 
 import flash.display.Sprite;
 //import flash.display.BitmapData;
@@ -17,19 +18,21 @@ import flash.display.Sprite;
 
 import flash.Lib;
 import flash.display.MovieClip;
-//import flash.events.Event;
+
 
 class FontBase extends MovieClip
 {
-//	private var formatedText:FormatedText;
+
   private var textField:TextField;
   private var textFormat:TextFormat;
   private var scale:Float;
-//  private var actAsATag:Bool;
   private var combindeMargins:Float;
   private var backdrop:Sprite;
+  private var alertBox:Sprite;
+  private var outline:Vector<Shape>;
+  private var placeholderView:Dynamic;
   
-  private var lines:Vector<Shape>;
+
   
   public function new()
   {
@@ -37,10 +40,13 @@ class FontBase extends MovieClip
     
     super();
     Lib.current.font  = this;	
+    scale = 150/71;
     //trace('new');
-    lines = new Vector<Shape>();
-    createLines();
+    outline = new Vector<Shape>();
     
+    createAlertBox();
+    createBackdrop();
+    createOutline();
     
   }
 
@@ -49,17 +55,10 @@ class FontBase extends MovieClip
                         align:String, 
                         text:String, 
                         leading:Int, 
-                        letterSpacing:Int):Void
+                        letterSpacing:Int,
+                        placeholderView:Dynamic):Void
   {
-    scale = 150/71;
-    backdrop = new Sprite();
-    Lib.current.addChild(backdrop);
-    backdrop.graphics.lineStyle(1/scale,0x888888);
-    backdrop.graphics.beginFill(0xffffff);
-    backdrop.graphics.drawRect(0,0,100,100);
-    backdrop.graphics.endFill();
-    backdrop.x = 100 * scale;
-    
+    this.placeholderView = placeholderView;
     
     
     var font:Font                   = new MyFont();
@@ -79,8 +78,6 @@ class FontBase extends MovieClip
     textField.defaultTextFormat     = textFormat;
     textField.type                  = TextFieldType.INPUT;
     
-    
-    
     setFieldAlign(align);                
     textField.embedFonts	          =	true;
     textField.multiline		          =	true;
@@ -98,39 +95,30 @@ class FontBase extends MovieClip
     backdrop.width                  = textField.width-(scale* combindeMargins);
     backdrop.height                 = textField.height;
     backdrop.alpha                  = 0.5;
-//    this.actAsATag                  = actAsATag;
-    
     setFocus(false);
-    //if(!actAsATag){
-    //  textField.addEventListener(Event.CHANGE, textInputCapture);
-    //}
     textField.addEventListener(Event.CHANGE, textInputCapture);
     
       
   }
   
-  public function highlightBorders(b:Bool):Void{
-    //trace(b);
-    //!b ? backdrop.graphics.lineStyle(1/scale,0xFF0000): backdrop.graphics.lineStyle(1/scale,0x888888);
-  }
-  
-  private function createLines():Void{
+  private function createOutline():Void{
+    
     // left
     createLine(new Point(-10,0), new Point(0,0));
     createLine(new Point(-10,0), new Point(0,0));
     createLine(new Point(-10,0), new Point(0,0));
-                                    
-    // bottom side                  
-    createLine(new Point(0,0), new Point(0,10));
-    createLine(new Point(0,0), new Point(0,10));
-    createLine(new Point(0,0), new Point(0,10));
-                                                
-    // right side                               
-    createLine(new Point(0,0), new Point(10,0));
-    createLine(new Point(0,0), new Point(10,0));
-    createLine(new Point(0,0), new Point(10,0));
-                                    
-    // top side                     
+                                               
+    // bottom side                             
+    createLine(new Point(0,0), new Point(0,10) );
+    createLine(new Point(0,0), new Point(0,10) );
+    createLine(new Point(0,0), new Point(0,10) );
+                                               
+    // right side                              
+    createLine(new Point(0,0), new Point(10,0) );
+    createLine(new Point(0,0), new Point(10,0) );
+    createLine(new Point(0,0), new Point(10,0) );
+                                               
+    // top side                                
     createLine(new Point(0,0), new Point(0,-10));
     createLine(new Point(0,0), new Point(0,-10));
     createLine(new Point(0,0), new Point(0,-10));
@@ -143,34 +131,66 @@ class FontBase extends MovieClip
     line.graphics.moveTo(start.x , start.y); 
     line.graphics.lineTo(end.x, end.y);
     Lib.current.addChild(line);
-    lines.push(line);
+    outline.push(line);
   }
-  
   
   public function textInputCapture(event:Event):Void { 
     resizeBackdrop();
+    placeholderView.hitTest();
+  }
+  
+  private function createAlertBox():Void{
+    
+    alertBox = new Sprite();
+    Lib.current.addChild(alertBox);
+    alertBox.graphics.lineStyle(1/scale,0xff0000);
+    alertBox.graphics.beginFill(0xff8888);
+    alertBox.graphics.drawRect(0,0,100,100);
+    alertBox.graphics.endFill();
+    alertBox.visible = false;
+    
+  }
+  
+  private function createBackdrop():Void{
+
+    backdrop = new Sprite();
+    Lib.current.addChild(backdrop);
+    backdrop.graphics.lineStyle(1/scale,0x888888);
+    backdrop.graphics.beginFill(0xffffff);
+    backdrop.graphics.drawRect(0,0,100,100);
+    backdrop.graphics.endFill();
   }
 
   private function resizeBackdrop():Void{
-
+    resizeAlertBox();
+    resizeBack();
+    drawCuttingMarks();
+  }
+  
+  private function resizeBack():Void{
     backdrop.width        = 16+textField.width-(scale*combindeMargins);
     backdrop.height       = textField.height;
     backdrop.x            = textField.x + combindeMargins;
-    drawCuttingMarks();
+  }
+  
+  private function resizeAlertBox():Void{
+    alertBox.width        = 16+textField.width-(scale*combindeMargins);
+    alertBox.height       = textField.height;
+    alertBox.x            = textField.x + combindeMargins;
   }
   
   private function drawCuttingMarks():Void{
     // left 
-    drawVertical( 0, backdrop.x);
+    drawVertical( 0, backdrop.x, outline);
     // bottom
-    drawHorizontal( 3, textField.height);
+    drawHorizontal( 3, textField.height,outline);
     // right
-    drawVertical( 6, backdrop.x+backdrop.width );
+    drawVertical( 6, backdrop.x+backdrop.width,outline );
     // top
-    drawHorizontal( 9, 0);
+    drawHorizontal( 9, 0,outline);
   }
   
-  private function drawHorizontal(offset:UInt, posY:Float):Void{
+  private function drawHorizontal(offset:UInt, posY:Float,lines:Vector<Shape>):Void{
     
     lines[offset].x    = backdrop.x;
     lines[offset+1].x  = backdrop.x + (backdrop.width/2);
@@ -181,7 +201,7 @@ class FontBase extends MovieClip
     lines[offset+2].y  = posY;
   }
   
-  private function drawVertical(offset:UInt, posX:Float):Void{
+  private function drawVertical(offset:UInt, posX:Float,lines:Vector<Shape>):Void{
      
      lines[offset].x    = posX;
      lines[offset+1].x  = posX;
@@ -202,18 +222,15 @@ class FontBase extends MovieClip
   
   public function setFocus( b:Bool ): Void{
     
-    //b = actAsATag ? actAsATag:b;
     backdrop.visible = b;
     resizeBackdrop();
-    for( i in 0...lines.length){
-      lines[i].visible = b;
+    for( i in 0...outline.length){
+      outline[i].visible = b;
     }
-
   }
   
   public function selectable(b:Bool):Void{
     
-    //b = actAsATag ? !actAsATag:b;
     textField.selectable    = b;
     textField.doubleClickEnabled = b;
     textField.mouseEnabled = b;
@@ -237,10 +254,9 @@ class FontBase extends MovieClip
     }
   }
 
-
   public function getXml():String{
+    trace('getXml');
     var escapedText:String = StringTools.htmlEscape(getText());
-    
   	var str:String = '\t\t\t<text>'   + escapedText+ '</text>\n';
               str += '\t\t\t<html>'   + textField.htmlText + '</html>\n';
     
@@ -252,8 +268,11 @@ class FontBase extends MovieClip
   }
  
   public function getTextField():TextField{
-
     return textField;
+  }
+  
+  public function alert(b:Bool):Void{
+    alertBox.visible = b;
   }
 }
 

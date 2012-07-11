@@ -90,6 +90,26 @@ class PresetModel extends Model, implements IModel
         param.setXml(configurable_place);
         param.setInt(page_count);
         dispatchParameter(param);
+        for(is_associated_product in configurable_place.elementsNamed("is-associated-product") ) {
+          // store this somewhere
+          if(is_associated_product.firstChild().nodeValue.toString() == 'true'){
+            //trace('page is ass prod', page_index);
+            //associatedProducts.push(page_index); //<<---------------- temp hack not working
+          }
+        }
+        // store id so the default 'preset-associable' can find right page to send it's frontshot to
+        for(id in configurable_place.elementsNamed("id") ) {
+          // 
+        }
+
+        for(default_associated_id in configurable_place.elementsNamed("default-associated-id") ) {
+          if(default_associated_id.firstChild() != null){
+            // store on a product place/ page_index
+            // remember to put it in the fileformat
+            // handle error when stored assProduct is missing
+            //trace('default ass prod', default_associated_id.firstChild().nodeValue.toString(), 'on page:', page_index);
+          }
+        }
         page_count++;
       }
 

@@ -78,7 +78,7 @@ class PagesModel extends Model, implements IModel {
   }
 
   private function onBuildPage( e:IKEvent ):Void{
-//    trace(e.getXml().toString());
+
 
     for(front in e.getXml().elementsNamed('front')){
        front_of_paper = front.firstChild().nodeValue == 'true';
@@ -173,7 +173,7 @@ class PagesModel extends Model, implements IModel {
       }
       case EVENT_ID.SHOW_MASK:dispatchParameter(param);
       case EVENT_ID.SAVE_XML:{
-      	getXml('foo');
+      	//getXml('foo');
       	dispatchParameter(param);
       }
       case EVENT_ID.ADD_PLACEHOLDER:{
@@ -203,24 +203,22 @@ class PagesModel extends Model, implements IModel {
     }
   }
   
-  override public function getXml(cmd:String):String{
-    
-    var fileStr:String =  '<?xml version="1.0" encoding="UTF-8"?>\n';
-    var fileStr:String ='';
-      
-      for( i in 0...pageModels.length){
-      	fileStr += pageModels[i].getXml('foo');
-      }
-    
-
-    
-    return fileStr;
-  }
+  //override public function getXml(cmd:String):String{
+  //  //trace('------------ get xml ----------------');
+  //  //var fileStr:String =  '<?xml version="1.0" encoding="UTF-8"?>\n';
+  //  var fileStr:String ='';
+  //    //for( i in 0...pageModels.length){
+  //    //	fileStr += pageModels[i].getXml('foo');
+  //    //}
+  //    //trace(fileStr);
+  //  return fileStr;
+  //}
   
   override function getString(id:String):String{
     switch ( id )
     {
       case'file_xml':{
+        trace('-----------getString-----------------');
         //var fileStr:String =  '<?xml version="1.0" encoding="UTF-8"?>\n';
         var fileStr:String ='';
         fileStr += '<stage>\n';
@@ -231,7 +229,7 @@ class PagesModel extends Model, implements IModel {
         for( i in 0...pageModels.length){
         	fileStr += (pageModels[i].getXml('foo')).toString();
         }
-        //trace( fileStr);
+        trace( fileStr);
         return fileStr;
       }
 

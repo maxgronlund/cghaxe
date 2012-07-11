@@ -27,5 +27,6 @@ interface IView
 	function getString(id:String):String;
 	function setModel(model:IModel):Void;
 	function getModel():IModel;
+	function getView(i:Int):AView;
 
 }

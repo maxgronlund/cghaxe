@@ -36,7 +36,7 @@ class TextPlaceholderView extends APlaceholder{
 	
   private var fontMovie:MovieClip;
   private var font:Dynamic;
-  private var parrent:PageView;
+  private var pageView:PageView;
   private var model:IModel;
   private var mouseOver:Bool;
   private var id:Int;
@@ -59,11 +59,12 @@ class TextPlaceholderView extends APlaceholder{
   private var focus:Bool;
   private var tagsIsVisible:Bool;
   private var textString:String;
+  private var collition:Bool;
   
-  public function new(parrent:PageView, id:Int, model:IModel, text:String){	
+  public function new(pageView:PageView, id:Int, model:IModel, text:String){	
     
-    super(parrent, id, model, text);
-    this.parrent                      = parrent;
+    super(pageView, id, model, text);
+    this.pageView                      = pageView;
     this.id                           = id;
     this.model                        = model;
     this.modelId                      = model.getInt('pageId');
@@ -80,6 +81,7 @@ class TextPlaceholderView extends APlaceholder{
     storedAlign                       = GLOBAL.Font.fontAlign;
     repossition                       = false;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+    collition                         = false;
     
   }
   
@@ -94,9 +96,11 @@ class TextPlaceholderView extends APlaceholder{
     
     if( b && GLOBAL.MOVE_TOOL){
       stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+      stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     }
     else{
       stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+      stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     }
   }
    
@@ -111,7 +115,7 @@ class TextPlaceholderView extends APlaceholder{
   override public function getXml() : String {
     
     showTags();
-
+    
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
@@ -123,7 +127,7 @@ class TextPlaceholderView extends APlaceholder{
       str += '\t\t\t<anchor-point>' + Std.string(getAnchorPoint()) + '</anchor-point>\n';
       str += font.getXml();
     str += '\t\t</placeholder>\n';
-    
+//    trace(str);
     restoreShowTags();
     return str;
   }
@@ -137,6 +141,10 @@ class TextPlaceholderView extends APlaceholder{
       case 38: this.y -=step; 
       case 40: this.y +=step;
     }
+  }
+  
+  private function onKeyUp(event:KeyboardEvent):Void{
+    pageView.hitTest();
   }
   
   private function insertTags(str:String):String{
@@ -252,7 +260,8 @@ class TextPlaceholderView extends APlaceholder{
                 fontAlign, 
                 textWithTags, 
                 letterSpacingToFont() , 
-                letterSpacing); 
+                letterSpacing,
+                this); 
     
     
     restoreShowTags();
@@ -263,6 +272,14 @@ class TextPlaceholderView extends APlaceholder{
     param.setInt(id);
     model.setParam(param);
     
+    //if(collition){
+    //  font.alert(true);
+    //}
+    pageView.hitTest();
+  }
+  
+  private function hitTest():Void{
+    pageView.hitTest();
   }
   
   override public function onUpdatePlaceholder(event:Event):Void{
@@ -286,7 +303,7 @@ class TextPlaceholderView extends APlaceholder{
     storeTags();
     tagsIsVisible   = true;
     font.setText(textWithTags);
-    font.highlightBorders(true);
+    //font.highlightBorders(true);
   }
   
   private function hideTags():Void{
@@ -350,7 +367,8 @@ class TextPlaceholderView extends APlaceholder{
     }else{
       hideTags();
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      font.setFocus(false);
+      if(!collition)
+        font.setFocus(false);
       super.resetMouse();
     }
     handleKeyboard( focus ); 
@@ -365,7 +383,7 @@ class TextPlaceholderView extends APlaceholder{
     trace('onTextTool');
     updateFocus();
   }
-  
+
   override private function onMouseOver(e:MouseEvent){
     mouseOver = true;
     super.onMouseOver(e);
@@ -381,9 +399,9 @@ class TextPlaceholderView extends APlaceholder{
     GLOBAL.Font.fontAlign       = fontAlign;
     GLOBAL.Font.leading         = fontLeading;
     GLOBAL.Font.letterSpacing   = letterSpacing;
-    parrent.setPlaceholderInFocus(this);
+    pageView.setPlaceholderInFocus(this);
     model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS));
-    if(GLOBAL.MOVE_TOOL) parrent.enableMove(e);
+    if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
   }
   
   override private function onMouseOut(e:MouseEvent){
@@ -396,14 +414,14 @@ class TextPlaceholderView extends APlaceholder{
     
     MouseTrap.release();
     super.onMouseUp(e);
-    parrent.disableMove();
+    pageView.disableMove();
     
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     
   }
-  
-  
+
   private function onGetXml(event:Event):Void{
+    
     model.setString(EVENT_ID.SET_PAGE_XML, getXml());
   }
   
@@ -422,7 +440,11 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   override public function getTextField():TextField{
-
      return font.getTextField();
-   }
+  }
+  
+  override public function alert(b:Bool):Void{
+      collition = b;
+      font.alert(b);
+  }
 }

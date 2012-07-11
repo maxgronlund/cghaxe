@@ -40,15 +40,15 @@ class TextView extends PropertyView, implements IView{
 		textAlign.init();
 		
 		openColorPickerButton.init(controller,
-										new Point(32,32), 
-										new ColorPickerButton(), 
-										new Parameter( EVENT_ID.OPEN_COLOR_PICKER));
-										
+                    new Point(32,32), 
+                    new ColorPickerButton(), 
+                    new Parameter( EVENT_ID.OPEN_COLOR_PICKER));
+                    
 		addTextfieldButton.init(controller,
-										new Point(150,22), 
-										new CreateTextfieldButton(), 
-										new Parameter( EVENT_ID.ADD_PLACEHOLDER));
-										
+                    new Point(150,22), 
+                    new CreateTextfieldButton(), 
+                    new Parameter( EVENT_ID.ADD_PLACEHOLDER));
+                    
 		addTextfieldButton.fireOnMouseUp(false);
 		
 	}

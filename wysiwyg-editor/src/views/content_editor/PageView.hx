@@ -42,6 +42,9 @@ class PageView extends View{
   
   private var frontShotSizeX:Float;
   private var frontShotSizeY:Float;
+  
+  private var hitPointX:Float;
+  private var hitPointY:Float;
 
   
   public function new(controller:IController){	
@@ -65,6 +68,9 @@ class PageView extends View{
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
     //DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImage);
+    
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
 
     
   }
@@ -84,6 +90,8 @@ class PageView extends View{
     model.addEventListener(EVENT_ID.RELEASE_FOCUS, onReleasePageFocus);
     model.addEventListener(EVENT_ID.TRASH_PLACEHOLDER, onDestroyPlaceholder);
     model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPresetXml);
+    model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
+    
     
     Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPresetXml); 
@@ -144,7 +152,6 @@ class PageView extends View{
 
   }
   
- 
   private function addDesignImagePlaceholder(posX:Float, posY:Float, imageUrl:String):Void{
     trace(imageUrl);
     setPlaceholderInFocus(null);
@@ -158,22 +165,25 @@ class PageView extends View{
   
   }
 
-
-  private function onPresetXml(e:IKEvent):Void{
-    
+  private function onPresetXml(e:IKEvent):Void{  
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
   }
   
   private function loadPagePresetXML():Void{
 
     for( page  in pagePresetXML.elementsNamed("page") ) {
+      for( pos_x in page.elementsNamed("pos-x") ) {
+           this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
+      }
+      for( pos_y in page.elementsNamed("pos-y") ) {
+           this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
+      }
       for( placeholder in page.elementsNamed("placeholder") ) {
           parsePlaceholder(placeholder);
       }
     }
   }
-
-  
+ 
   private function parsePlaceholder(xml:Xml):Void{
     var posX:Float;
     var posY:Float;
@@ -218,11 +228,6 @@ class PageView extends View{
 
   }
   
-  //private function onMoveTool(e:IKEvent):Void {
-  //  if(inFocus != null)
-  //    inFocus.handleKeyboard();
-  //}
-  
   private function onDestroyPlaceholder(e:IKEvent){
     removeChild(inFocus);
     var index:UInt = 0;
@@ -259,7 +264,6 @@ class PageView extends View{
     
   }
 
-  
   private function onReleasePageFocus(e:KEvent):Void {
     setPlaceholderInFocus(null);
   }
@@ -281,43 +285,82 @@ class PageView extends View{
   
   public function enableMove(e:MouseEvent):Void{
     
-//    trace('enable move');
+    trace('enable move');
     stage.addEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     startPoint.x = inFocus.x;
     startPoint.y = inFocus.y;
     hitPoint.x = e.stageX * GLOBAL.Zoom.toMouse();
     hitPoint.y = e.stageY * GLOBAL.Zoom.toMouse();
-    
-    
-  }
-  
 
-    
+  }
+   
   public function disableMove():Void{
     
-    if(inFocus.getPlaceholderType() == 'textPlaceholder'){
-
-      var textField:TextField = inFocus.getTextField();
-      
-      if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-        trace('test for hit');
-       if(GLOBAL.hitTest.textFieldHitBitmap(textField, guideMask)) {
-         trace("Hit!");
-       }
-      }
-      //if(hidemask != null){
-      //  if(GLOBAL.hitTest.textFieldHitBitmap(text_field, hidemask)){
-      //    inFocus.alert();
-      //  }
-      //}
-    }
+    hitTest();
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
   }
+  
+  public function hitTest():Void {
+    if(inFocus.getPlaceholderType() == 'textPlaceholder'){
+      var textField:TextField = inFocus.getTextField();
+      if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
+        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x), -Std.int(inFocus.y), guideMask, 0, 0))
+          inFocus.alert(true);
+        else
+          inFocus.alert(false);
+      }
+    }
+  }
 
+  private function onMouseOver(e:MouseEvent):Void{
+    removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
+  }
+  
+  private function onMouseOut(e:MouseEvent){
+
+    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+  }
+  
+  private function onMouseDown(e:MouseEvent){	
+    if(MouseTrap.capture()){
+      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+      stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+      
+      hitPointX = ((e.stageX* GLOBAL.Zoom.toMouse()) - this.x);
+      hitPointY = ((e.stageY* GLOBAL.Zoom.toMouse()) - this.y);
+    }
+  }
+  
   private function onMouseUp(e:MouseEvent){	
     MouseTrap.release();
     stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-//  	addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+  	//MouseTrap.release();
+  	//stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+  	//stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+  	//addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+  }
+  
+  private function onMouseMove(e:MouseEvent){
+    
+    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
+    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
+    
+    var endPosX:Float = moveX - hitPointX;
+    var endPosY:Float = moveY - hitPointY;
+    
+    //var endPosX:Float = ( e.stageX - hitPointX);
+    //var endPosY:Float = ( e.stageY - hitPointY);
+    this.x = endPosX;
+    this.y = endPosY;
+
   }
   
   private function movePlaceholder(e:MouseEvent){
@@ -335,7 +378,7 @@ class PageView extends View{
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.load(new URLRequest(e.getParam().getString()));
   }
-  
+
   //!!! is this in use
   override public function getModel():IModel{
   	return model;
@@ -374,6 +417,7 @@ class PageView extends View{
     guideMask = e.target.loader.content;
     addChild(guideMask);
     guideMask.visible = false;
+    guideMask.alpha = 0.5;
     Pages.addEventListener(EVENT_ID.SHOW_MASK, onShowMask);
 
     var hide_mask_url:String = model.getString('hide_mask_url');
@@ -439,10 +483,12 @@ class PageView extends View{
   public function hasHideMask():Bool{
     return hideMaskPresent;
   }
-  
-//  public function onGetPageSize():Void{
-//    Zoom.setTopPageSize(backdrop.width, backdrop.height);
-//    Application.dispatchParameter(new Parameter(EVENT_ID.SET_DESKTOP_POS));
-//  }
+
+  private function onGetPagePosXml( e:KEvent ): Void
+  {
+    var str:String = '\t\t<pos-x>' + Std.string(this.x) + '</pos-x>\n';
+    str += '\t\t<pos-y>' + Std.string(this.y) + '</pos-y>\n';
+    model.setString(EVENT_ID.SET_PAGE_XML,str);
+  }
 }
 

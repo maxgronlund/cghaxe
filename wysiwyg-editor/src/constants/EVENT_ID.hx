@@ -106,6 +106,7 @@ class EVENT_ID  {
                                                             
   // save                                                   
   public static inline var GET_PAGE_XML:String              = "get_page_xml";
+  public static inline var GET_PAGE_POS_XML:String          = "get_page_pos_xml";
   public static inline var SET_PAGE_XML:String              = "set_page_xml";
   public static inline var GET_DESKTOP_POS:String           = "get_desktop_pos";
   public static inline var SET_DESKTOP_POS:String           = "set_desktop_pos";                                                          
