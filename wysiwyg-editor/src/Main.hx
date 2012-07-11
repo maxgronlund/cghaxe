@@ -60,6 +60,7 @@ class Main
   private var gridView:AView;
   private var selectionView:AView;
   private var greetingsView:AView;
+  private var foil:Foil;
   
   
   // system
@@ -151,6 +152,7 @@ class Main
     gridView                    = new GridView(applicationController);
     selectionView               = new SelectionView(selectionController);
     greetingsView               = new GreetingView(selectionController);
+	  foil						            = new Foil(new FoilTexture());
     
     setGlobalViews();
     
@@ -195,7 +197,7 @@ class Main
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
     GLOBAL.greetingsView              = greetingsView;
-          		
+    GLOBAL.foil			              		= foil;
   }
   
   private function setGlobalControllers():Void{

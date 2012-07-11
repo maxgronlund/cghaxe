@@ -28,6 +28,7 @@ class DesktopView extends View, implements IView{
   
   private var placeholders:Int;
   private var pageView:AView;
+
   
   public function new(desktopController:IController){	
   	super(desktopController);
@@ -44,7 +45,6 @@ class DesktopView extends View, implements IView{
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, centerPage);
     bmpData    = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.DESKTOP_HEIGHT,false, COLOR.DESKTOP );
     backdrop   = new Bitmap(bmpData);
-    
     
   }
   

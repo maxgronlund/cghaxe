@@ -254,6 +254,9 @@ class TextPlaceholderView extends APlaceholder{
 
     fontMovie             =  cast event.target.loader.content;
     addChild(fontMovie);
+	
+	  GLOBAL.foil.foilify(fontMovie.getTextField());
+	
     font                  = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 

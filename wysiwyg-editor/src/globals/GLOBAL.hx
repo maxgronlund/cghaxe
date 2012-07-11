@@ -49,6 +49,7 @@ class GLOBAL  {
   public static var grid_view:IView;
   public static var selection_view:IView;
   public static var greetingsView:IView;
+  public static var foil:Foil;
   
   // controllers
   public static var text_controller:IController;
