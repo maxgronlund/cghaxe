@@ -456,6 +456,7 @@ class PageView extends View{
       Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
     }
     loadPagePresetXML();
+    
   }
   
   private function pageDesignImageLoaded():Void{

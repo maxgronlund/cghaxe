@@ -145,6 +145,9 @@ class DesktopView extends View, implements IView{
   	addChild(pagesView);
   	pagesView.x = 10;
   	pagesView.y = 10;
+  	trace('bamm');
+    //addChild(new FoilTexture());
+    addChild(GLOBAL.foil);
   }
   
   private function onLoadPos(e:KEvent):Void{

@@ -49,6 +49,8 @@ class ApplicationModel extends Model, implements IModel
 
   private function startLoadSeq(mode:String):Void{
     //xmlFilesLoaded = 0;
+    
+
     switch (GLOBAL.edit_mode) {
       
       

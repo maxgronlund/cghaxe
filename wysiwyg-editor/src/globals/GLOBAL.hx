@@ -14,6 +14,7 @@ class GLOBAL  {
   public static var Pages:IModel;
   public static var Designs:IModel;
   public static var DesignImages:IModel;
+  public static var Vectors:IModel;
   public static var Font:FontModel;
   public static var userParser:UserParser;
   
@@ -36,6 +37,7 @@ class GLOBAL  {
   public static var text_view:AView;
   public static var text_suggestion_view:AView;
   public static var designs_view:AView;
+  public static var vectors_view:AView;
   public static var design_images_view:AView;
   public static var foil_view:IView;
   public static var side_view:IView;
@@ -55,6 +57,7 @@ class GLOBAL  {
   public static var text_controller:IController;
   public static var text_suggestion_controller:IController;
   public static var designs_controller:IController;
+  public static var vectors_controller:IController;
   public static var design_images_controller:IController;
   public static var sidebar_controller:IController;
   public static var desktop_controller:IController;
@@ -71,5 +74,10 @@ class GLOBAL  {
   // user
   public static var user_id:String;
   
-
+  
+  
+  
+  
+  
+  public static var tmp:String;
 }

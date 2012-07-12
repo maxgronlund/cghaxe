@@ -255,7 +255,8 @@ class TextPlaceholderView extends APlaceholder{
     fontMovie             =  cast event.target.loader.content;
     addChild(fontMovie);
 	
-	  GLOBAL.foil.foilify(fontMovie.getTextField());
+	  
+	  
 	
     font                  = fontMovie.font;
     font.init(  fontSize, 
@@ -266,7 +267,8 @@ class TextPlaceholderView extends APlaceholder{
                 letterSpacing,
                 this); 
     
-    
+    //trace(fontMovie.getTextField());
+    //GLOBAL.foil.foilify(fontMovie.getTextField()); //!!! crasches on load
     restoreShowTags();
     updateFocus();
     if(repossition) moveToAnchorPoint();

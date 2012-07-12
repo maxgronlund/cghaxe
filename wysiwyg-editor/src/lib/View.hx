@@ -12,6 +12,7 @@ class View extends AView{
   private var Pages:IModel;
   private var Designs:IModel;
   private var DesignImages:IModel;
+  private var Vectors:IModel;
   private var controller:IController;
   private var bmpData:BitmapData;
   private var backdrop:Bitmap;
@@ -28,6 +29,7 @@ class View extends AView{
     Pages             = GLOBAL.Pages;
     Designs           = GLOBAL.Designs;
     DesignImages      = GLOBAL.DesignImages;
+    Vectors           = GLOBAL.Vectors;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   }
   

@@ -9,6 +9,7 @@ class Controller extends AController
   private var Preset:IModel;
   private var Pages:IModel;
   private var Designs:IModel;
+  private var Vectors:IModel;
   private var DesignImages:IModel;
   
   override public function new():Void{
@@ -16,10 +17,12 @@ class Controller extends AController
     Zoom              = GLOBAL.Zoom;
     Application	      = GLOBAL.Application;
     Menu              = GLOBAL.Menu;
+
 //    Configuration     = GLOBAL.Configuration;
     Preset            = GLOBAL.Preset;
     Pages             = GLOBAL.Pages;
     Designs           = GLOBAL.Designs;
     DesignImages      = GLOBAL.DesignImages;
+    Vectors           = GLOBAL.Vectors;
   }
 }

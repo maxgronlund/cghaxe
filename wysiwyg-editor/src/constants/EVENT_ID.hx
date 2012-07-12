@@ -17,12 +17,14 @@ class EVENT_ID  {
   public static inline var ADD_DESIGN:String                = "add_design";
   public static inline var ADD_DESIGN_TO_PAGE:String       = "add_design_to_page";
   
-  public static inline var ADD_TEXT_VIEW:String             = "add_text_view";
-  public static inline var ADD_PLACEHOLDER_VIEW:String      = "add_placeholders_view";
-  public static inline var ADD_DESIGN_VIEW:String           = "add_designs_view";
-  public static inline var ADD_FOIL_VIEW:String             = "add_foil_view";
-  public static inline var ADD_ADD_ONS_VIEW:String          = "add_add_ons_view";
-  public static inline var ADD_LOGO_VIEW:String             = "add_logo_view";
+  // side views
+//  public static inline var ADD_TEXT_VIEW:String             = "add_text_view";
+//  public static inline var ADD_PLACEHOLDER_VIEW:String      = "add_placeholders_view";
+//  public static inline var ADD_DESIGN_VIEW:String           = "add_designs_view";
+//  public static inline var ADD_VECTOR_VIEW:String           = "add_vectors_view";
+//  public static inline var ADD_FOIL_VIEW:String             = "add_foil_view";
+//  public static inline var ADD_ADD_ONS_VIEW:String          = "add_add_ons_view";
+//  public static inline var ADD_LOGO_VIEW:String             = "add_logo_view";
 
   
   // Events
@@ -194,6 +196,14 @@ class EVENT_ID  {
   public static inline var ADD_DESIGN_IMAGE_BUTTON            = "add_design_image_button";
   public static inline var DESIGN_IMAGE_SELECTED              = "design_image_selected";
   public static inline var ADD_DESIGN_IMAGE_TO_PAGE           = "add_design_image_to_page";
+  
+  // vectors
+  public static inline var SHOW_VESTORS:String                = "show_vector_images";
+  public static inline var VESTORS_LOADED:String              = "vectors_loaded";
+  public static inline var VECTOR_SCROLL                      = "vector_scroll";
+  public static inline var ADD_VESTOR_BUTTON                  = "add_vector_button";
+  public static inline var VECTOR_SELECTED                   = "vector_selected";
+  public static inline var ADD_VECTOR_TO_PAGE                = "add_vector_to_page";
   
   
   

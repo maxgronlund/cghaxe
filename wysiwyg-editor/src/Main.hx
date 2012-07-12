@@ -19,6 +19,7 @@ class Main
   private var Pages:IModel;
   private var Designs:IModel;
   private var DesignImages:IModel;
+  private var Vectors:IModel;
   private var parameterParser:ParameterParser;
   
   
@@ -28,6 +29,7 @@ class Main
   private var textSuggestionController:IController;
   private var designsController:IController;
   private var designImagesController:IController;
+  private var vectorsController:IController;
   private var foilController:IController;
   private var addOnsController:IController;
   private var garamondController:IController;
@@ -36,7 +38,6 @@ class Main
   private var menuController:IController;
   private var pageSelectController:IController;
   private var selectionController:IController;
-
   private var sidebarController:IController;
   private var desktopController:IController;
 
@@ -60,8 +61,8 @@ class Main
   private var gridView:AView;
   private var selectionView:AView;
   private var greetingsView:AView;
+  private var vectorsView:AView;
   private var foil:Foil;
-  
   
   // system
   private var version:VersionCheck;
@@ -112,7 +113,7 @@ class Main
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
     DesignImages                = new DesignImagesModel();
-                  
+    Vectors                     = new VectorsModel();             
     setGlobalModels();
     parameterParser             = new ParameterParser(Application);
     
@@ -125,6 +126,7 @@ class Main
     textSuggestionController    = new TextSuggestionController();
     designsController           = new DesignsController();
     designImagesController      = new DesignImagesController();
+    vectorsController           = new VectorsController();
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
     garamondController          = new GaramondController();
@@ -152,6 +154,7 @@ class Main
     gridView                    = new GridView(applicationController);
     selectionView               = new SelectionView(selectionController);
     greetingsView               = new GreetingView(selectionController);
+    vectorsView                 = new VectorsView(vectorsController);
 	  foil						            = new Foil(new FoilTexture());
     
     setGlobalViews();
@@ -172,6 +175,7 @@ class Main
     GLOBAL.Preset         = Preset;
     GLOBAL.Pages          = Pages;
     GLOBAL.DesignImages   = DesignImages;
+    GLOBAL.Vectors        = Vectors;
     GLOBAL.Designs        = Designs;
     
     GLOBAL.Zoom         	= new ZoomTools();
@@ -184,6 +188,7 @@ class Main
     GLOBAL.text_view                  = textView;
     GLOBAL.text_suggestion_view       = textSuggestionView;
     GLOBAL.designs_view               = designsView;
+    GLOBAL.vectors_view               = vectorsView;
     GLOBAL.design_images_view         = designImagesView;
     GLOBAL.foil_view                  = foilView;
     GLOBAL.side_view                  = sideView;
@@ -204,6 +209,7 @@ class Main
     GLOBAL.text_controller            = textController;
     GLOBAL.text_suggestion_controller = textSuggestionController;
     GLOBAL.designs_controller         = designsController;
+    GLOBAL.vectors_controller         = vectorsController;
     GLOBAL.sidebar_controller         = sidebarController;
     GLOBAL.desktop_controller         = desktopController;
     //GLOBAL.sibling_controller         = siblingController;
@@ -227,6 +233,7 @@ class Main
     textView.init();
     textSuggestionView.init();
     designsView.init();
+    vectorsView.init();
     designImagesView.init();
     foilView.init();
     addOnsView.init();
@@ -263,6 +270,8 @@ class Main
     applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
     gridView.mouseChildren = false;
     gridView.mouseEnabled = false;
+    
+    //Lib.current.addChild(foil);
     
     //applicationView.addView(selectionView, 0,0);
     //selectionView.addView(greetingsView, 0, 0, 'greetings');

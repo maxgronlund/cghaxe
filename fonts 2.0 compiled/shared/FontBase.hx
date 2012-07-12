@@ -97,7 +97,7 @@ class FontBase extends MovieClip
     backdrop.alpha                  = 0.5;
     setFocus(false);
     textField.addEventListener(Event.CHANGE, textInputCapture);
-    
+
       
   }
   

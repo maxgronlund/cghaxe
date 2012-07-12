@@ -58,6 +58,9 @@ class PresetModel extends Model, implements IModel
       // loading user content
       parseXmlData(preset);
       
+      // vector files
+      parseVectorFile(preset);
+      
     }
     var param:IParameter        = new Parameter(EVENT_ID.PLACEHOLDER_COUNT);
     param.setInt(placeholders);
@@ -191,6 +194,17 @@ class PresetModel extends Model, implements IModel
   private function parseUser(preset:Xml):Void{
     for( user in preset.elementsNamed("user") ){
       GLOBAL.userParser.parseUser(user);
+    }
+  }
+  
+  private function parseVectorFile(preset:Xml):Void{
+    for( vector_file in preset.elementsNamed("vector-file") ){
+      for( file in vector_file.elementsNamed("file") ){
+        for( url in file.elementsNamed("url") ){
+            var urlstr:String = url.firstChild().nodeValue.toString();
+            GLOBAL.tmp = urlstr;
+        }
+      }      
     }
   }
     

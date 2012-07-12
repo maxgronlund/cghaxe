@@ -68,12 +68,14 @@ class ParameterParser
           //trace('system_preset: ', params.system_preset);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
+          GLOBAL.side_view.addView(GLOBAL.vectors_view, 0,0,EVENT_ID.SHOW_VESTORS);
         } 
         
         case 'user_preset':{
           //trace('system_preset: ', params.system_preset);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
+          GLOBAL.side_view.addView(GLOBAL.vectors_view, 0,0,EVENT_ID.SHOW_VESTORS);
         }
         
         case 'system_preview':{
