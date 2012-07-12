@@ -344,7 +344,7 @@ class TextPlaceholderView extends APlaceholder{
     
   }
   
-  private function getAnchorPoint():Float{
+  override public function getAnchorPoint():Float{
     
     font.setText(textWithTags);
     var anchor_point:Float = 0;

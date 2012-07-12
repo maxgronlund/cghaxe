@@ -304,7 +304,7 @@ class PageView extends View{
     if(inFocus.getPlaceholderType() == 'textPlaceholder'){
       var textField:TextField = inFocus.getTextField();
       if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x), -Std.int(inFocus.y), guideMask, 0, 0))
+        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.getAnchorPoint()*(150/72)), -Std.int(inFocus.y), guideMask, 0, 0))
           inFocus.alert(true);
         else
           inFocus.alert(false);
