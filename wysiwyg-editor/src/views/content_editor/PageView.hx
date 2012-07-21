@@ -23,7 +23,7 @@ import flash.text.TextField;
 class PageView extends View{
   
   private var imageLoader:Loader;
-  private var maskLoader:Loader;
+  private var printMaskLoader:Loader;
   private var model:IModel;
   private var guideMask:Bitmap;
   private var hideMask:Bitmap;
@@ -52,7 +52,7 @@ class PageView extends View{
     super(controller);
     
     imageLoader	                  = new Loader();
-    maskLoader	                  = new Loader();
+    printMaskLoader	                  = new Loader();
     placeholders              = new Vector<APlaceholder>();
 //    designImagePlaceholders       = new Vector<APlaceholder>();
     hitPoint                      = new Point(0,0);
@@ -83,18 +83,18 @@ class PageView extends View{
     
 //    trace('model set');
     this.model = model;
-    model.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
-    	
+    
+    //model.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot); 	
     model.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onAddPlaceholder);
     model.addEventListener(EVENT_ID.GET_STRING, onGetString);           // !!! rename this nonsens
     model.addEventListener(EVENT_ID.RELEASE_FOCUS, onReleasePageFocus);
     model.addEventListener(EVENT_ID.TRASH_PLACEHOLDER, onDestroyPlaceholder);
     model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPresetXml);
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
-    
-    
-    Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
+    //Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPresetXml); 
+    loadFrontShot();
+    
   }
   
   override public function setParam(param:IParameter):Void{
@@ -303,7 +303,7 @@ class PageView extends View{
   public function hitTest():Void {
     if(inFocus.getPlaceholderType() == 'textPlaceholder'){
       var textField:TextField = inFocus.getTextField();
-      if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
+      if(model.getString('print_mask_url') != ''){
         if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x), -Std.int(inFocus.y), guideMask, 0, 0))
           inFocus.alert(true);
         else
@@ -372,11 +372,16 @@ class PageView extends View{
       pos = ( moveY - hitPoint.y) + startPoint.y;
       inFocus.y = pos;
   }
-
+/*
   private function onLoadFrontShot(e:IKEvent):Void{
-//    trace( 'onLoadFrontShot', e.getParam().getString());
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.load(new URLRequest(e.getParam().getString()));
+  }
+*/  
+  private function loadFrontShot():Void{
+    imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
+//    trace( model.getString('front_shoot') );
+    imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
   }
 
   //!!! is this in use
@@ -391,54 +396,55 @@ class PageView extends View{
     var filter = new DropShadowFilter(2,45,5,0.2, 10.0, 10.0,1.0);
     backdrop.filters = [filter];
     
-    var mask_url:String = model.getString('mask_url');
-    //mask_url == '/assets/fallback/hide_mask.png';? allImagesLoaded(): loadGuideMask();
+    var print_mask_url:String = model.getString('print_mask_url');
+    //mask_url == '/assets/fallback/hide_mask.png';? allImagesLoaded(): loadPrintMask();
     
-    if(mask_url == '')
+    if(print_mask_url == '')
       pageDesignImageLoaded();
     else
-      loadGuideMask(mask_url);
+      loadPrintMask();
 	}
 	
-  private function loadGuideMask(mask_url:String):Void{
-    if(mask_url == '/assets/fallback/hide_mask.png'){
-      var hide_mask_url:String = model.getString('hide_mask_url');
-      loadHideMask(hide_mask_url);
+  private function loadPrintMask():Void{
+    var print_mask_url:String = model.getString('print_mask_url');
+    if(print_mask_url == ''){
+      loadHideMask();
     }else{
-      var request:URLRequest  = new URLRequest(mask_url);
-      maskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadGuideMaskComplete);
-      maskLoader.load(request);
+      var request:URLRequest  = new URLRequest(print_mask_url);
+      printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onloadPrintMaskComplete);
+      printMaskLoader.load(request);
     } 
   }
   
-  private function onLoadGuideMaskComplete(e:Event):Void{
+  private function onloadPrintMaskComplete(e:Event):Void{
     
-    maskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadGuideMaskComplete);
+    printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onloadPrintMaskComplete);
     guideMask = e.target.loader.content;
     addChild(guideMask);
     guideMask.visible = false;
     guideMask.alpha = 0.5;
     Pages.addEventListener(EVENT_ID.SHOW_MASK, onShowMask);
 
-    var hide_mask_url:String = model.getString('hide_mask_url');
-    loadHideMask(hide_mask_url);
+    loadHideMask();
     
   }
   
-  private function loadHideMask(hide_mask_url:String):Void{
+  private function loadHideMask():Void{
+    
+    var hide_mask_url:String = model.getString('hide_mask_url');
 
-    if(hide_mask_url == '/assets/fallback/hide_mask.png'){
+    if(hide_mask_url == ''){
       allImagesLoaded();
     }else{
       hideMaskPresent = true;
-      var request:URLRequest  = new URLRequest(model.getString('hide_mask_url'));
-      maskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
-      maskLoader.load(request);
+      var request:URLRequest  = new URLRequest(hide_mask_url);
+      printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
+      printMaskLoader.load(request);
     }
   }
   
   private function onLoadHideMaskComplete(e:Event):Void{
-    maskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadHideMaskComplete);
+    printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadHideMaskComplete);
     hideMask                    = e.target.loader.content;
     addChild(hideMask);
     hideMask.visible            = false;
@@ -464,6 +470,9 @@ class PageView extends View{
   }
   
   public function useHideMask(b:Bool):Void{
+    
+    trace(b, model.getString('hide_mask_url'));
+    trace('-------------------------------');
     if(hideMask != null ){
       backdrop.mask = b ? hideMask:null;
       backdrop.cacheAsBitmap = true;
@@ -472,6 +481,7 @@ class PageView extends View{
   }
   
   private function onShowMask(e:IKEvent):Void{
+    trace('onShowMask');
   	guideMask.visible = e.getBool();
   }
   

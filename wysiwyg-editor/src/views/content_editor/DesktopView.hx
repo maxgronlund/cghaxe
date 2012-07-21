@@ -78,7 +78,7 @@ class DesktopView extends View, implements IView{
       test = (test / desktopSize)+1;
       test = 1/test;
 
-      trace(test);
+//      trace(test);
       var zoomLimit = 1.01;
       if( zoomFactor < 1/zoomLimit || zoomFactor > zoomLimit){
         zoomFactor = test;
@@ -145,9 +145,9 @@ class DesktopView extends View, implements IView{
   	addChild(pagesView);
   	pagesView.x = 10;
   	pagesView.y = 10;
-  	trace('bamm');
+//  	trace('bamm');
     //addChild(new FoilTexture());
-    addChild(GLOBAL.foil);
+//    addChild(GLOBAL.foil);
   }
   
   private function onLoadPos(e:KEvent):Void{

@@ -77,7 +77,7 @@ class PagesView extends View, implements IView{
   }
   
   private function onBuildPage(e:IKEvent):Void{
-    
+//    trace('onBuildPage');
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
     pages.push(pageView);  
@@ -117,6 +117,7 @@ class PagesView extends View, implements IView{
   }
   
   private function addPages():Void{
+    //trace('addPages');
     for( i in 0...pages.length){
       addChild(pages[i]);
       pages[i].visible = false;

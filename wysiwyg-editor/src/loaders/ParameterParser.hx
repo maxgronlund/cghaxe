@@ -14,6 +14,11 @@ class ParameterParser
 	public function parse(params:Dynamic<String>):Void{
 	  //trace('ParameterParser::parse');
 	  
+	  if(params.language_name != null){
+	    trace(params.language_name);
+	    GLOBAL.language_name = params.language_name;
+	  }
+	  
 	  if(params.authenticity_token != null){
       //trace('authenticity_token: ', params.authenticity_token);
       GLOBAL.authenticity_token = params.authenticity_token;

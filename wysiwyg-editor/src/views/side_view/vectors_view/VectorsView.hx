@@ -70,9 +70,9 @@ class VectorsView extends PropertyView, implements IView{
   }
   
   private function onLoadDefaultToold(e:IKEvent):Void{
-    trace('onLoadDefaultToold');
-    trace(vectorsPane.getFloat('height'));
-    trace(vectorsScrollPane.getFloat('mask_height'));
+    //trace('onLoadDefaultToold');
+    //trace(vectorsPane.getFloat('height'));
+    //trace(vectorsScrollPane.getFloat('mask_height'));
     
     verticalScrollbar.setSize(vectorsPane.getFloat('height'), vectorsScrollPane.getFloat('mask_height'));
   }

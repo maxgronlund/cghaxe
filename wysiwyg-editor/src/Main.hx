@@ -50,7 +50,7 @@ class Main
   private var textSuggestionView:AView;
   private var designsView:AView;
   private var designImagesView:AView;
-  private var foilView:AView;
+//  private var foilView:AView;
   private var addOnsView:AView;
   private var garamondView:AView;
   private var logoView:AView;
@@ -62,7 +62,7 @@ class Main
   private var selectionView:AView;
   private var greetingsView:AView;
   private var vectorsView:AView;
-  private var foil:Foil;
+//  private var foil:Foil;
   
   // system
   private var version:VersionCheck;
@@ -143,7 +143,7 @@ class Main
     textSuggestionView          = new TextSuggestionView(textSuggestionController);
     designsView                 = new DesignsView(designsController);
     designImagesView            = new DesignImagesView(designImagesController);
-    foilView                    = new FoilView(foilController);
+//    foilView                    = new FoilView(foilController);
     addOnsView                  = new AddOnsView(addOnsController);
     garamondView                = new GaramondView(garamondController);
     logoView                    = new LogoView(logoController);
@@ -155,7 +155,7 @@ class Main
     selectionView               = new SelectionView(selectionController);
     greetingsView               = new GreetingView(selectionController);
     vectorsView                 = new VectorsView(vectorsController);
-	  foil						            = new Foil(new FoilTexture());
+	  //foil						            = new Foil(new FoilTexture());
     
     setGlobalViews();
     
@@ -190,7 +190,7 @@ class Main
     GLOBAL.designs_view               = designsView;
     GLOBAL.vectors_view               = vectorsView;
     GLOBAL.design_images_view         = designImagesView;
-    GLOBAL.foil_view                  = foilView;
+//    GLOBAL.foil_view                  = foilView;
     GLOBAL.side_view                  = sideView;
     GLOBAL.add_ons_view	              = addOnsView;
     GLOBAL.garamond_view              = garamondView;
@@ -202,7 +202,7 @@ class Main
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
     GLOBAL.greetingsView              = greetingsView;
-    GLOBAL.foil			              		= foil;
+ //   GLOBAL.foil			              		= foil;
   }
   
   private function setGlobalControllers():Void{
@@ -235,7 +235,7 @@ class Main
     designsView.init();
     vectorsView.init();
     designImagesView.init();
-    foilView.init();
+//    foilView.init();
     addOnsView.init();
     garamondView.init();
     logoView.init();
