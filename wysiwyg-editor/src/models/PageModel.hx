@@ -5,8 +5,9 @@ class PageModel extends Model, implements IModel
 {
   private var pageId:Int;
   private var pageOrder:Int;
-  private var mask_url:String;
+  private var print_mask_url:String;
   private var hide_mask_url:String;
+  private var front_shoot_url:String;
   private var page_name:String;
   private var fileStr:String;
   private var front_of_paper:Bool;
@@ -14,7 +15,7 @@ class PageModel extends Model, implements IModel
   public function new(){	
     super();
     fileStr   = '';
-    mask_url  = '';
+    print_mask_url  = '';
     hide_mask_url = '';
     
   }
@@ -78,9 +79,9 @@ class PageModel extends Model, implements IModel
   override function setString(id:String, s:String):Void{
     
     switch(id) {
-      case 'mask_url':                mask_url  = s; 
-      case 'hide_mask_url':           hide_mask_url = s;
-      case 'page_name':               page_name = s; 
+      case 'print_mask_url':          print_mask_url  = s; 
+      case 'hide_mask_url':           hide_mask_url   = s;
+      case 'front_shoot_url':         front_shoot_url = s;
       case 'no_move':{ trace('no move'); 	}
       case EVENT_ID.SET_PAGE_XML: fileStr += s;
     }
@@ -89,13 +90,37 @@ class PageModel extends Model, implements IModel
   override function getString(id:String):String{
     
     switch(id) {
-      case 'mask_url':          return mask_url; 
+      case 'print_mask_url':    return print_mask_url; 
       case 'hide_mask_url':     return hide_mask_url; 
-      case 'page_name':         return page_name; 
+      case 'front_shoot_url':   return front_shoot_url; 
       default:                  return '';
     }
   }
   
+
+  
+  override public function setXml(id:String, xml:Xml):Void{
+    
+
+    for(front in xml.elementsNamed('front')){ 
+      front_of_paper = front.firstChild().nodeValue == 'true';
+    }
+
+    for(hide_mask in xml.elementsNamed('hide-mask')){
+      hide_mask_url = hide_mask.firstChild().nodeValue;
+    }
+    
+
+    for(print_mask in xml.elementsNamed('print-mask')){
+      print_mask_url = print_mask.firstChild().nodeValue;
+    }
+    
+    for(front_shoot in xml.elementsNamed('front-shoot')){
+      front_shoot_url = front_shoot.firstChild().nodeValue;
+    }
+    
+  }
+
   override public function getXml(cmd:String):String{
     trace('getXml');
     fileStr = '\t<page id="'+Std.string(pageId)+'">\n';

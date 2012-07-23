@@ -35,15 +35,17 @@ class PresetModel extends Model, implements IModel
   }
   
   private function onParsePreset(e:IKEvent):Void{
-  
+    //trace('onParsePreset');
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-  
+    //trace('-----------------');
+    //trace(e.getXml().toString() );
+    //trace('-----------------');
     for( preset in xml.elementsNamed("preset") ) {
   
       // building the pages
-      parseConfigurablePlaces(preset);
+      parsePreset(preset);
       
-      // loading front shots
+/*      // loading front shots
       parseProductPlaces(preset);
       
       // swap this to top of function and let parseProductPlaces pull right associated product to show
@@ -51,7 +53,7 @@ class PresetModel extends Model, implements IModel
       
       // parse designs for the sidebar
       parseDesigns(preset);
-  
+     
       // user tags
       parseUser(preset);
       
@@ -60,7 +62,7 @@ class PresetModel extends Model, implements IModel
       
       // vector files
       parseVectorFile(preset);
-      
+*/ 
     }
     var param:IParameter        = new Parameter(EVENT_ID.PLACEHOLDER_COUNT);
     param.setInt(placeholders);
@@ -68,9 +70,35 @@ class PresetModel extends Model, implements IModel
   }
   
   // building pages and getting url's for masks
-  private function parseConfigurablePlaces(preset:Xml):Void{
+  private function parsePreset(xml:Xml):Void{
+
+    for( preset in xml.elementsNamed("title") ) {
+       //trace(preset.toString() );
+    }
+    for(pages in xml.elementsNamed("pages") ) {
+      for(page in pages.elementsNamed("page") ) {
+        var is_associated_product:Bool = false;
+        for(associated_products in page.elementsNamed("associated-products") ) {
+          is_associated_product = true;
+          parseAssociatedProducts(associated_products);
+        }
+        if(!is_associated_product){
+          buildPage(page);
+        }
+      } 
+    }
+    for(xml_data in xml.elementsNamed("xml-data") ) {
+      //trace('-----------------xml-data--------------');
+      parseXmlData(xml_data);
+    }
     
-    var page_index:Int = 0;
+    for(greetings in xml.elementsNamed("greetings")){
+      for(greeting in greetings.elementsNamed("greeting")){
+        parseGreeting(greeting);
+      }
+    }
+    
+/*    var page_index:Int = 0;
     
     for(configurable_place in preset.elementsNamed("configurable-place") ) {
       var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
@@ -101,8 +129,42 @@ class PresetModel extends Model, implements IModel
       }
       page_index++;
     }
+    */
   }
   
+  private function parseAssociatedProducts(xml:Xml):Void{
+   
+    //trace('INSERT ASSOCIATED PRODUCTS HERE');
+    
+    var first_associated_product:Bool = true;
+    for(associated_product in xml.elementsNamed("associated-product") ) {
+
+     
+      for(item_number in associated_product.elementsNamed("item-number") ) {
+        //trace('build button in sidebar for',item_number.firstChild().nodeValue.toString());
+      }
+      for(pages in associated_product.elementsNamed("pages") ) {
+        for(page in pages.elementsNamed("page") ) {
+          if(first_associated_product)
+            buildPage(page);
+        }
+      }
+      first_associated_product = false;
+    }
+  }
+  
+  private function buildPage(xml:Xml):Void{
+    //for(title in xml.elementsNamed("title") ) {
+    //  trace('----------------------------------------------------');
+    //  trace('BUILD PAGE',title.firstChild().nodeValue.toString());
+    //  trace('----------------------------------------------------');
+    //}
+    var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
+    param.setXml(xml);
+    dispatchParameter(param);
+  }
+  
+  /*
   private function parsePresetAssociabled(preset:Xml):Void{
     
     for(preset_associables in preset.elementsNamed("preset-associables") ) {
@@ -129,9 +191,9 @@ class PresetModel extends Model, implements IModel
                     
                     assProdIndex++;           //<<---------------not working hack                                             
                     dispatchParameter(param); //<<---------------not working hack use pull instead of push
-                    trace('******************* go go **************************');
+                    t
                     trace(associatedProducts.toString());
-                    trace('******************* go go **************************');
+                    
                     
                   }
                 }
@@ -142,6 +204,15 @@ class PresetModel extends Model, implements IModel
       }
     }
   }
+  */
+  
+  private function parseGreeting( greeting:Xml ): Void
+  {
+
+    //trace(greeting.firstChild().nodeValue.toString());
+    GLOBAL.tmp = greeting;
+    //greeting.firstChild().nodeValue.toString();
+  }
   
   private function parseDesigns(preset:Xml):Void{
     for( design in preset.elementsNamed("design") ) {
@@ -151,30 +222,34 @@ class PresetModel extends Model, implements IModel
     
   }
   
-  private function parseXmlData(preset:Xml):Void{
+  private function parseXmlData(xml_data:Xml):Void{
     var page_index:Int = 0;
+  
+    //trace('-----------------');
+    //trace(xml_data.toString() );
+    //trace('-----------------');
     
-    for(xml_data in preset.elementsNamed("xml-data") ) {
-  
-      for(page in xml_data.elementsNamed("page") ) {
-        countPlaceHolders(page);
-        var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
-        param.setXml(page);
-        param.setInt(page_index);
-        dispatchParameter(param);
-        page_index++;
-      }
-      
-      for( stage in xml_data.elementsNamed('stage') ) {
-        //passStage(stage);
-        var param:IParameter = new Parameter(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM);
-        param.setXml(stage);
-        dispatchParameter(param);
-      }
+    
+    for(page in xml_data.elementsNamed("page") ) {
+      countPlaceHolders(page);
+      var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
+      param.setXml(page);
+      param.setInt(page_index);
+      dispatchParameter(param);
+      page_index++;
     }
+    
+    for( stage in xml_data.elementsNamed('stage') ) {
+      var param:IParameter = new Parameter(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM);
+      param.setXml(stage);
+      dispatchParameter(param);
+    }
+    
   }
-  
+/*  
   private function parseProductPlaces(preset:Xml):Void{
+    
+//    trace(preset.toString());
     var page_index:Int = 0;
     
     for(product_place in preset.elementsNamed("product-place") ) {
@@ -190,23 +265,23 @@ class PresetModel extends Model, implements IModel
       page_index++;
     }
   }
-  
+*/  
   private function parseUser(preset:Xml):Void{
     for( user in preset.elementsNamed("user") ){
       GLOBAL.userParser.parseUser(user);
     }
   }
   
-  private function parseVectorFile(preset:Xml):Void{
-    for( vector_file in preset.elementsNamed("vector-file") ){
-      for( file in vector_file.elementsNamed("file") ){
-        for( url in file.elementsNamed("url") ){
-            var urlstr:String = url.firstChild().nodeValue.toString();
-            GLOBAL.tmp = urlstr;
-        }
-      }      
-    }
-  }
+  //private function parseVectorFile(preset:Xml):Void{
+  //  for( vector_file in preset.elementsNamed("vector-file") ){
+  //    for( file in vector_file.elementsNamed("file") ){
+  //      for( url in file.elementsNamed("url") ){
+  //          var urlstr:String = url.firstChild().nodeValue.toString();
+  //          GLOBAL.tmp = urlstr;
+  //      }
+  //    }      
+  //  }
+  //}
     
   private function countPlaceHolders(xml:Xml):Void{
     for( placeholder in xml.elementsNamed("placeholder") ) {

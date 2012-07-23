@@ -27,6 +27,7 @@ class GLOBAL  {
   public static var edit_mode:String;
   public static var admin_mode:Bool;
   public static var hitTest:CGHitTest;
+  public static var language_name:String;
   
   // zoom
   public static var Zoom:ZoomTools;
@@ -79,5 +80,5 @@ class GLOBAL  {
   
   
   
-  public static var tmp:String;
+  public static var tmp:Xml;
 }

@@ -23,7 +23,7 @@ class VectorsModel extends Model, implements IModel {
         vectorsXml = param.getXml();
       }
       case EVENT_ID.ADD_VECTOR_TO_PAGE:{
-        trace('ADD_Vector_TO_PAGE');
+        vectorsXml = GLOBAL.tmp;
         if(vectorsXml != null){
           dispatchXML(EVENT_ID.ADD_VECTOR_TO_PAGE, vectorsXml);
         }

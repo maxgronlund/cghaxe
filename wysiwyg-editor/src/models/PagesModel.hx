@@ -11,9 +11,10 @@ class PagesModel extends Model, implements IModel {
   private var backDropsLoaded:UInt;
   private var pageOrder:Int;
   private var pageId:Int;
-  private var mask_url:String;
-  private var hide_mask_url:String;
-  private var page_name:String;
+  //private var print_mask_url:String;
+  //private var hide_mask_url:String;
+  //private var front_shoot:String;
+  //private var page_name:String;
   private var front_of_paper:Bool;
   
 
@@ -25,10 +26,11 @@ class PagesModel extends Model, implements IModel {
   
   override public function init():Void{	
     super.init();
-    pageInFocus = null;
-    hide_mask_url = '';
-    Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
-    Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
+    //pageInFocus = null;
+    //print_mask_url = '';
+    //hide_mask_url = '';
+    Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);                //<<----------------- REMOVED FOR NOW
+//    Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Preset.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
     Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
@@ -79,51 +81,50 @@ class PagesModel extends Model, implements IModel {
 
   private function onBuildPage( e:IKEvent ):Void{
 
-
-    for(front in e.getXml().elementsNamed('front')){
-       front_of_paper = front.firstChild().nodeValue == 'true';
-    }
     
-    for(hide_mask in e.getXml().elementsNamed('hide-mask-path')){
-      hide_mask_url = hide_mask.firstChild().nodeValue;
-    }
+    //buildPage();
     
-    for(title in e.getXml().elementsNamed('title')){
-      page_name = title.firstChild().nodeValue;
-    }
-
-    for(print_mask in e.getXml().elementsNamed('print-mask-path')){
-      mask_url = print_mask.firstChild().nodeValue;
-    }
-    buildPage();
-    pageOrder++;
-    pageId++;
+    var pageModel:PageModel     = new PageModel();
+     pageModel.init();
+     pageModel.setInt('pageOrder', pageOrder);
+     pageModel.setInt('pageId'   , pageId);
+     pageModel.setXml('', e.getXml());
+     pageOrder++;
+     pageId++;
+     pageInFocus                 = pageModel;
+     pageModels.push(pageModel);
+    
+     // picked up by PagesView
+     var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
+     param.setModel(pageModel);
+     dispatchParameter(param);
 
   }
-  
+  /*
   private function onBuildDesignPage( e:IKEvent ):Void{
     //trace(e.getXml().toString());
     
     front_of_paper = true;
     hide_mask_url = '/assets/fallback/hide_mask.png';
-    page_name = 'Design';
-    mask_url = '/assets/fallback/hide_mask.png';
+    page_name     = 'Design';
+    print_mask_url = '/assets/fallback/hide_mask.png';
     
-    buildPage();
+//    buildPage();
     pageOrder++;
     pageId++;
   }
-  
+  */
+  /*
   private function buildPage():Void{
 
      var pageModel:PageModel     = new PageModel();
      pageModel.init();
      pageModel.setInt('pageOrder', pageOrder);
      pageModel.setInt('pageId'   , pageId);
-     pageModel.setString('page_name', page_name);
-     pageModel.setString('mask_url', mask_url);
-     pageModel.setString('hide_mask_url', hide_mask_url);
-     pageModel.setBool('front_of_paper', front_of_paper);
+     //pageModel.setString('print_mask_url', print_mask_url);
+     //pageModel.setString('hide_mask_url', hide_mask_url);
+     //pageModel.setString('front_shoot', front_shoot);
+     //pageModel.setBool('front_of_paper', front_of_paper);
 
      pageInFocus                 = pageModel;
      pageModels.push(pageModel);
@@ -134,6 +135,7 @@ class PagesModel extends Model, implements IModel {
      dispatchParameter(param);
 
   }
+  */
 
   private function onLoadFrontShot( e:IKEvent ):Void{
     
@@ -162,12 +164,13 @@ class PagesModel extends Model, implements IModel {
 
   
   override public function setParam(param:IParameter):Void{
-  	
-  	switch ( param.getLabel() ){
+    
+    switch ( param.getLabel() ){
       case EVENT_ID.SET_TEXT_FORMAT:{
       	pageInFocus.onFontSelected(param);
       }
       case EVENT_ID.PAGE_SELECTED:{
+        trace(param.getLabel(), param.getInt());
         setPageFocus(param.getInt());
         dispatchParameter(param);
       }
