@@ -102,22 +102,18 @@ class PageView extends View{
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{
         addDesignToPage(param);
       }
-      case EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE:{
-        addDesignImageToPage(param);
-      }
-      
-      case EVENT_ID.ADD_VECTOR_TO_PAGE:{
-        trace(param.getXml().firstChild().nodeValue.toString());
-        
-        var url:String = param.getXml().firstChild().nodeValue.toString();
-        
+
+      case EVENT_ID.ADD_GREETING_TO_PAGE:{
+        var url:String;
+        for(url_xml in param.getXml().elementsNamed("url") ) {
+          url = url_xml.firstChild().nodeValue.toString();
+        }
         setPlaceholderInFocus(null);
         var placeholder:APlaceholder		= new VectorPlaceholderView(this, placeholders.length, model, url);
         placeholder.x = 10;
       	placeholder.y = 10;
         placeholders.push(placeholder);
         addChild(placeholder);
-        
       }
     }
   }
@@ -239,7 +235,6 @@ class PageView extends View{
   
   private function onAddTextSuggestion(e:IKEvent):Void {
     addTextPlaceholder(10,10);
-
   }
   
   private function onDestroyPlaceholder(e:IKEvent){

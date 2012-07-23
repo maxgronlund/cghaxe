@@ -15,11 +15,12 @@ class Main
 	public static var Application:IModel;
   private var Menu:IModel;
   private var Configuration:IModel;
+  private var Greetings:IModel;
   private var Preset:IModel;
   private var Pages:IModel;
   private var Designs:IModel;
-  private var DesignImages:IModel;
-  private var Vectors:IModel;
+//  private var DesignImages:IModel;
+//  private var Vectors:IModel;
   private var parameterParser:ParameterParser;
   
   
@@ -28,8 +29,9 @@ class Main
   private var textController:IController;
   private var textSuggestionController:IController;
   private var designsController:IController;
-  private var designImagesController:IController;
-  private var vectorsController:IController;
+  private var greetingsController:IController;
+//  private var designImagesController:IController;
+//  private var vectorsController:IController;
   private var foilController:IController;
   private var addOnsController:IController;
   private var garamondController:IController;
@@ -49,7 +51,8 @@ class Main
   private var textView:AView;
   private var textSuggestionView:AView;
   private var designsView:AView;
-  private var designImagesView:AView;
+//  private var designImagesView:AView;
+  private var greetingsView:AView;
 //  private var foilView:AView;
   private var addOnsView:AView;
   private var garamondView:AView;
@@ -60,8 +63,8 @@ class Main
   private var desktopView:AView;
   private var gridView:AView;
   private var selectionView:AView;
-  private var greetingsView:AView;
-  private var vectorsView:AView;
+  
+//  private var vectorsView:AView;
 //  private var foil:Foil;
   
   // system
@@ -112,8 +115,9 @@ class Main
     Preset                      = new PresetModel();
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
-    DesignImages                = new DesignImagesModel();
-    Vectors                     = new VectorsModel();             
+    Greetings                   = new GreetingsModel();
+//    DesignImages                = new DesignImagesModel();
+//    Vectors                     = new VectorsModel();             
     setGlobalModels();
     parameterParser             = new ParameterParser(Application);
     
@@ -125,8 +129,9 @@ class Main
     textController              = new TextController();
     textSuggestionController    = new TextSuggestionController();
     designsController           = new DesignsController();
-    designImagesController      = new DesignImagesController();
-    vectorsController           = new VectorsController();
+//    designImagesController      = new DesignImagesController();
+    //vectorsController           = new VectorsController();
+    greetingsController         = new GreetingsController();
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
     garamondController          = new GaramondController();
@@ -142,7 +147,8 @@ class Main
     textView                    = new TextView(textController);
     textSuggestionView          = new TextSuggestionView(textSuggestionController);
     designsView                 = new DesignsView(designsController);
-    designImagesView            = new DesignImagesView(designImagesController);
+//    designImagesView            = new DesignImagesView(designImagesController);
+    greetingsView               = new GreetingsView(greetingsController);
 //    foilView                    = new FoilView(foilController);
     addOnsView                  = new AddOnsView(addOnsController);
     garamondView                = new GaramondView(garamondController);
@@ -153,8 +159,8 @@ class Main
     desktopView                 = new DesktopView(desktopController);
     gridView                    = new GridView(applicationController);
     selectionView               = new SelectionView(selectionController);
-    greetingsView               = new GreetingView(selectionController);
-    vectorsView                 = new VectorsView(vectorsController);
+    
+//    vectorsView                 = new VectorsView(vectorsController);
 	  //foil						            = new Foil(new FoilTexture());
     
     setGlobalViews();
@@ -174,10 +180,11 @@ class Main
 //    GLOBAL.Configuration  = Configuration;
     GLOBAL.Preset         = Preset;
     GLOBAL.Pages          = Pages;
-    GLOBAL.DesignImages   = DesignImages;
-    GLOBAL.Vectors        = Vectors;
-    GLOBAL.Designs        = Designs;
+//    GLOBAL.DesignImages   = DesignImages;
+//    GLOBAL.Vectors        = Vectors;
     
+    GLOBAL.Designs        = Designs;
+    GLOBAL.Greetings      = Greetings;
     GLOBAL.Zoom         	= new ZoomTools();
     GLOBAL.Font           = new FontModel();
     GLOBAL.userParser     = new UserParser();
@@ -188,8 +195,8 @@ class Main
     GLOBAL.text_view                  = textView;
     GLOBAL.text_suggestion_view       = textSuggestionView;
     GLOBAL.designs_view               = designsView;
-    GLOBAL.vectors_view               = vectorsView;
-    GLOBAL.design_images_view         = designImagesView;
+//    GLOBAL.vectors_view               = vectorsView;
+//    GLOBAL.design_images_view         = designImagesView;
 //    GLOBAL.foil_view                  = foilView;
     GLOBAL.side_view                  = sideView;
     GLOBAL.add_ons_view	              = addOnsView;
@@ -201,7 +208,7 @@ class Main
     GLOBAL.desktop_view               = desktopView;
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
-    GLOBAL.greetingsView              = greetingsView;
+    GLOBAL.greetings_view             = greetingsView;
  //   GLOBAL.foil			              		= foil;
   }
   
@@ -209,10 +216,10 @@ class Main
     GLOBAL.text_controller            = textController;
     GLOBAL.text_suggestion_controller = textSuggestionController;
     GLOBAL.designs_controller         = designsController;
-    GLOBAL.vectors_controller         = vectorsController;
+    GLOBAL.greetings_controller       = greetingsController;
+//    GLOBAL.vectors_controller         = vectorsController;
     GLOBAL.sidebar_controller         = sidebarController;
     GLOBAL.desktop_controller         = desktopController;
-    //GLOBAL.sibling_controller         = siblingController;
     GLOBAL.menu_controller            = menuController;
     GLOBAL.selection_controller       = selectionController;
     
@@ -223,6 +230,7 @@ class Main
     Application.init();
 //    Layout.init();
     Designs.init();
+    Greetings.init();
     Menu.init();
 //    Configuration.init();
     Preset.init();
@@ -233,11 +241,12 @@ class Main
     textView.init();
     textSuggestionView.init();
     designsView.init();
-    vectorsView.init();
-    designImagesView.init();
+//    vectorsView.init();
+//    designImagesView.init();
 //    foilView.init();
     addOnsView.init();
     garamondView.init();
+    greetingsView.init();
     logoView.init();
     priceView.init();
     pageSelectorView.init();

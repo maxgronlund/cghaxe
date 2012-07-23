@@ -23,17 +23,17 @@ class PagesView extends View, implements IView{
     Application.addEventListener(EVENT_ID.ADD_PAGES_TO_STAGE, addPagesToStage);
 
 
-    DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImageToPage);
+//    DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImageToPage);
     Designs.addEventListener(EVENT_ID.ADD_DESIGN_TO_PAGE, onAddPageDesignToPage);
     Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     
-    Vectors.addEventListener(EVENT_ID.ADD_VECTOR_TO_PAGE, onAddVectorToPage);
+    Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
 
 
   }
   
-  private function onAddVectorToPage(e:IKEvent):Void{
+  private function onAddGreetingToPage(e:IKEvent):Void{
     trace('boom');
     pageInFocus.setParam(e.getParam());
   }
@@ -69,11 +69,11 @@ class PagesView extends View, implements IView{
   private function onAddPageDesignToPage(e:IKEvent):Void{
     pageInFocus.setParam(e.getParam());
   }
-  
+  /*
   private function onAddDesignImageToPage(e:IKEvent):Void{
     pageInFocus.setParam(e.getParam());
   }
-
+*/
 //  private function onAddPagedesignPage(e:IKEvent):Void{
 //    trace('onAddPagedesignPage');
 //   // addPages();
