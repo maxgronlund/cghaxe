@@ -9,15 +9,16 @@ class MySVG extends MovieClip {
 }
 
 class Main extends MovieClip {
-  private var movieclip:MovieClip;
+  public var svg_movieclip:MovieClip;
   
   public function new () {
     super();
-    movieclip = new MySVG();
+    svg_movieclip = new MySVG();
+    //Lib.current.addChild(svg_movieclip);
   }
   
   public function getMovieClip() : MovieClip {
-    return movieclip;
+    return svg_movieclip;
   }
   
   public static function main() {
