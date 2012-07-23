@@ -1,0 +1,7 @@
+-cmd echo "compiling wedding_decoration.swf"
+-cp src
+-main Main
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf-lib assets/wedding_decoration_library.swf
+-swf swf/wedding_decoration.swf

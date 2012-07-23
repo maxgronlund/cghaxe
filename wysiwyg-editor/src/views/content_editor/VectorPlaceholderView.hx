@@ -147,7 +147,7 @@ class VectorPlaceholderView extends APlaceholder {
     vectorFile                  = vectorMovie.vectorFile;
     
     //trace(vectorMovie.getTextField());
-    GLOBAL.foil.foilify(vectorMovie);
+    //GLOBAL.foil.foilify(vectorMovie);
 
     //updateFocus();
     //if(repossition) moveToAnchorPoint();
