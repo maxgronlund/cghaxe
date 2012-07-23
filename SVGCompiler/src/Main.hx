@@ -14,10 +14,9 @@ class Main extends MovieClip {
   public function new () {
     super();
     movieclip = new MySVG();
-    flash.Lib.current.addChild(movieclip);
   }
   
-  public function getMovieClip : MovieClip {
+  public function getMovieClip() : MovieClip {
     return movieclip;
   }
   

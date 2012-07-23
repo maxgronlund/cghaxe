@@ -1,0 +1,7 @@
+-cmd echo "compiling 8dk.swf"
+-cp src
+-main Main
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf-lib assets/8dk_library.swf
+-swf swf/8dk.swf

@@ -47,6 +47,7 @@ Dir["svg/*.svg"].each do |svg_dir|
       FileUtils.mv("#{build_file_name}", "build_files/#{build_file_name}")
       puts "Created #{final_swf_filename}..."
     else
+      FileUtils.mv("#{build_file_name}", "build_files/#{build_file_name}")
       puts "Error creating #{final_swf_filename}"
     end
     
@@ -54,6 +55,8 @@ Dir["svg/*.svg"].each do |svg_dir|
     puts "\n---------------------------------"
     
   else
+    FileUtils.mv("#{xml_filename}", "xml/#{xml_filename}")
+    FileUtils.mv("#{swf_filename}", "assets/#{swf_filename}")
     puts "Error creating #{swf_filename}" 
   end
 
