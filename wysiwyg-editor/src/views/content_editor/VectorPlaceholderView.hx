@@ -157,8 +157,17 @@ class VectorPlaceholderView extends APlaceholder {
     //addChild(vectorMovie);
     
     var loadedMovieClip:MovieClip =  cast event.target.loader.content;
-    //GLOBAL.foil.foilify(loadedMovieClip);
-    addChild(loadedMovieClip); // works! YES!
+    
+    
+    addChild(loadedMovieClip);
+    loadedMovieClip.width *= 0.25;
+    loadedMovieClip.height *= 0.25;
+    
+    var texture = new FoilTexture();
+    addChild(texture);
+    texture.mask = loadedMovieClip;
+    Foil.initFiltersOn(texture);
+    
     
     
     

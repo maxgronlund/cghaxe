@@ -9,17 +9,15 @@ class MySVG extends MovieClip {
 }
 
 class Main extends MovieClip {
-  public var svg_movieclip:MovieClip;
+  
+  public var svg:MovieClip;
   
   public function new () {
     super();
-    //svg_movieclip = new MySVG();
-    //Lib.current.SvgMovieclip = new MySVG();
     Lib.current.Content = this;
-    Lib.current.addChild(new MySVG());
-    
-    //var consoleSender:ConsoleSender = new ConsoleSender();
-    //trace("New from compiled svg object");
+    svg = new MySVG();
+    Lib.current.MySVG = MySVG;
+    Lib.current.addChild(svg);
   }
   
   //public function getMovieClip() : MovieClip {

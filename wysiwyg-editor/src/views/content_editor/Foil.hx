@@ -10,6 +10,7 @@ import flash.geom.ColorTransform;
 import flash.geom.Matrix;
 
 class Foil extends MovieClip {
+  
 	private var foil_filters:Array<BitmapFilter>;
 	private var foilMasks:Sprite;
 	
@@ -35,6 +36,7 @@ class Foil extends MovieClip {
 	{
 		foilMasks.removeChild(object);
 	}
+	
 	
 	
 	private function initFilters(): Void
@@ -84,5 +86,55 @@ class Foil extends MovieClip {
 		foil_filters.push(innerGlow);
 		
 		this.filters = foil_filters;
+	}
+	
+	
+	public static function initFiltersOn(object:DisplayObject): Void
+	{
+		var dropShadowOuter:DropShadowFilter = new DropShadowFilter(); 
+		dropShadowOuter.distance = -1.5;
+		dropShadowOuter.angle = 40;
+		dropShadowOuter.color = 0x000000;
+		dropShadowOuter.alpha = 0.45;
+		dropShadowOuter.blurX = 1.55;
+		dropShadowOuter.blurY = 1.55;
+		dropShadowOuter.strength = 0.8;
+		dropShadowOuter.quality = 15;
+		dropShadowOuter.inner = false;
+		dropShadowOuter.knockout = false;
+		dropShadowOuter.hideObject = false;
+		
+		var dropShadow:DropShadowFilter = new DropShadowFilter(); 
+		dropShadow.distance = 0.05;
+		dropShadow.angle = 40;
+		dropShadow.color = 0x000000;
+		dropShadow.alpha = 1;
+		dropShadow.blurX = 1.125;
+		dropShadow.blurY = 1.125;
+		dropShadow.strength = 0.65;
+		dropShadow.quality = 15;
+		dropShadow.inner = true;
+		dropShadow.knockout = false;
+		dropShadow.hideObject = false;
+		
+		var innerGlow:DropShadowFilter = new DropShadowFilter(); 
+		innerGlow.distance = -0.3;
+		innerGlow.angle = 40;
+		innerGlow.color = 0xFFFFFF;
+		innerGlow.alpha = 1;
+		innerGlow.blurX = 1.05;
+		innerGlow.blurY = 1.05;
+		innerGlow.strength = 1.3;
+		innerGlow.quality = 15;
+		innerGlow.inner = true;
+		innerGlow.knockout = false;
+		innerGlow.hideObject = false;
+		
+		var foil_filters:Array<BitmapFilter> = new Array();
+		foil_filters.push(dropShadow);
+		foil_filters.push(dropShadowOuter);
+		foil_filters.push(innerGlow);
+		
+		object.filters = foil_filters;
 	}
 }
