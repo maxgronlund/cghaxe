@@ -16,10 +16,7 @@ class GreetingsController extends Controller, implements IController{
       }
 
       case EVENT_ID.ADD_GREETING_TO_PAGE:{
-        trace('ADD_GREETING_TO_PAGE');
-        trace(Greetings == null);
         Greetings.setParam(param);
-        trace('ADD_GREETING_TO_PAGE');
       }
       case EVENT_ID.GREETING_SCROLL:{
         GLOBAL.greetings_view.setFloat(EVENT_ID.GREETING_SCROLL, param.getFloat());

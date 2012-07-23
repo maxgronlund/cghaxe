@@ -1,0 +1,7 @@
+-cmd echo "compiling standard_greeting.swf"
+-cp src
+-main Main
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf-lib assets/standard_greeting_library.swf
+-swf swf/standard_greeting.swf

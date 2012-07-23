@@ -34,7 +34,6 @@ class PagesView extends View, implements IView{
   }
   
   private function onAddGreetingToPage(e:IKEvent):Void{
-    trace('boom');
     pageInFocus.setParam(e.getParam());
   }
   

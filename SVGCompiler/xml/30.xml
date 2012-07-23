@@ -1,8 +1,8 @@
-<?xml version="1.0" encoding="iso-8859-1"?>  <movie version="9" width="800" height="900" framerate="30"> 
-  	<frame> 
-
-  		<library>
-  			<clip id="30" import="svg/30.svg" />
-  		</library> 
-  	</frame> 
-  </movie>
+<?xml version="1.0" encoding="iso-8859-1"?>
+<movie version="9" width="800" height="900" framerate="30"> 
+	<frame> 
+		<library>
+			<clip id="MySVG" name="MySVG" import="svg/30.svg" />
+		</library> 
+	</frame> 
+</movie>

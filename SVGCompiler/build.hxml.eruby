@@ -1,0 +1,7 @@
+-cmd echo "compiling <%= name %>.swf"
+-cp src
+-main Main
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf-lib assets/<%= name %>_library.swf
+-swf swf/<%= name %>.swf

@@ -20,7 +20,7 @@ class GreetingsModel extends Model, implements IModel {
     switch ( param.getLabel() ){
       case EVENT_ID.GREETING_SELECTED:{
         greetingsXml = param.getXml();
-        trace(greetingsXml.toString());
+        //trace(greetingsXml.toString());
       }
       case EVENT_ID.ADD_GREETING_TO_PAGE:{
         if(greetingsXml != null){

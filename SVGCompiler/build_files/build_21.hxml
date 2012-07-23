@@ -1,0 +1,7 @@
+-cmd echo "compiling 21.swf"
+-cp src
+-main Main
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf-lib assets/21_library.swf
+-swf swf/21.swf

@@ -1,0 +1,7 @@
+-cmd echo "compiling 14dk.swf"
+-cp src
+-main Main
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf-lib assets/14dk_library.swf
+-swf swf/14dk.swf

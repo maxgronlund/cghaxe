@@ -109,7 +109,8 @@ class PageView extends View{
           url = url_xml.firstChild().nodeValue.toString();
         }
         setPlaceholderInFocus(null);
-        var placeholder:APlaceholder		= new VectorPlaceholderView(this, placeholders.length, model, url);
+//        trace(url);
+        var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
         placeholder.x = 10;
       	placeholder.y = 10;
         placeholders.push(placeholder);
@@ -312,8 +313,8 @@ class PageView extends View{
   public function hitTest():Void {
     if(inFocus.getPlaceholderType() == 'textPlaceholder'){
       var textField:TextField = inFocus.getTextField();
-      if(model.getString('print_mask_url') != ''){
-        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x), -Std.int(inFocus.y), guideMask, 0, 0))
+      if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
+        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.getAnchorPoint()*(150/72)), -Std.int(inFocus.y), guideMask, 0, 0))
           inFocus.alert(true);
         else
           inFocus.alert(false);

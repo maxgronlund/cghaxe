@@ -146,11 +146,22 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onVectorFileLoaded(event:Event):Void { 
-
-    vectorMovie             =  cast event.target.loader.content;
-    trace(vectorMovie == null);
-    addChild(vectorMovie);
-    trace('loaded');
+    //trace('loaded 0');
+    //var vectorFile            = cast event.target.loader.content;
+    //trace('loaded 1', vectorFile == null);
+    //
+    //vectorMovie               = vectorMovie.getMovieClip();
+    //trace('loaded 2');
+    //
+    //
+    //addChild(vectorMovie);
+    
+    var loadedMovieClip:MovieClip =  cast event.target.loader.content;
+    //GLOBAL.foil.foilify(loadedMovieClip);
+    addChild(loadedMovieClip); // works! YES!
+    
+    
+    
 
   }
   
