@@ -31,7 +31,7 @@ import flash.Vector;
 class VectorPlaceholderView extends APlaceholder {
 	
   private var vectorMovie:MovieClip;
-  private var vectorFile:Dynamic;
+  //private var vectorFile:Dynamic;
   private var pageView:PageView;
   private var model:IModel;
   private var mouseOver:Bool;
@@ -40,38 +40,51 @@ class VectorPlaceholderView extends APlaceholder {
   private var xml:String;
   private var vectorFileFileName:String;
   private var vectorFileScreenName:String;
-  private var textWithTags:String;
+//  private var textWithTags:String;
+  private var url:String;
 
   private var vectorFilePosX:Float;
 
   private var focus:Bool;
   private var collition:Bool;
   
-  public function new(pageView:PageView, id:Int, model:IModel, text:String){	
+  public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
-    super(pageView, id, model, text);
+    super(pageView, id, model, url);
     this.pageView                      = pageView;
     this.id                           = id;
     this.model                        = model;
     this.modelId                      = model.getInt('pageId');
-    designMode                        = GLOBAL.edit_mode == 'system_design';
-    textWithTags                      = text;
+    //designMode                        = GLOBAL.edit_mode == 'system_design';
+//    textWithTags                      = text;
     this.alpha                        = 0.85;
     vectorFilePosX                          = 0;
     mouseOver                         = false;
-    anchorPoint                       = GLOBAL.Font.anchorPoint;
+//    anchorPoint                       = GLOBAL.Font.anchorPoint;
     GLOBAL.Font.anchorPoint           = 0;
-    previewMode                       = true;
+//    previewMode                       = true;
     focus                             = false;
-    tagsIsVisible                     = false;
+//    tagsIsVisible                     = false;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     collition                         = false;
+    
+    this.url = url;
     
   }
   
   private function onAddedToStage(e:Event){
+    /*
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);    
+    */
+    //imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadImageComplete);
+    //imageLoader.load(new URLRequest(imageUrl));
+    
+    loadVectorFile();
+    
+    
+    //model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
+    addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   }
    
   private function handleKeyboard(b:Bool):Void{
@@ -123,16 +136,9 @@ class VectorPlaceholderView extends APlaceholder {
   
  
   private function loadVectorFile():Void{
-    
-    vectorFileFileName                  = GLOBAL.Font.fileName;
-    vectorFileSize                      = GLOBAL.Font.vectorFileSize;
-    vectorFileColor                     = GLOBAL.Font.vectorFileColor;
-    vectorFileAlign                     = GLOBAL.Font.vectorFileAlign;
-    vectorFileLeading                   = GLOBAL.Font.leading;
-    letterSpacing                 = GLOBAL.Font.letterSpacing;
 
     var ldr:Loader                = new Loader(); 
-    var req:URLRequest            = new URLRequest(buildUrl(vectorFileFileName)); 
+    var req:URLRequest            = new URLRequest(url); 
     var ldrContext:LoaderContext  = new LoaderContext(); 
     ldrContext.applicationDomain  = new ApplicationDomain();
     ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onVectorFileLoaded); 
@@ -142,24 +148,10 @@ class VectorPlaceholderView extends APlaceholder {
   private function onVectorFileLoaded(event:Event):Void { 
 
     vectorMovie             =  cast event.target.loader.content;
+    trace(vectorMovie == null);
     addChild(vectorMovie);
+    trace('loaded');
 
-    vectorFile                  = vectorMovie.vectorFile;
-    
-    //trace(vectorMovie.getTextField());
-    //GLOBAL.foil.foilify(vectorMovie);
-
-    //updateFocus();
-    //if(repossition) moveToAnchorPoint();
-    
-    //var param:IParameter = new Parameter(EVENT_ID.FONT_LOADED);
-    //param.setInt(id);
-    //model.setParam(param);
-    
-    //if(collition){
-    //  vectorFile.alert(true);
-    //}
-    //pageView.hitTest();
   }
   
   private function hitTest():Void{
@@ -192,8 +184,8 @@ class VectorPlaceholderView extends APlaceholder {
     if(focus){
       GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
       GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
-      vectorFile.selectable(!GLOBAL.MOVE_TOOL);
-      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
+//      vectorFile.selectable(!GLOBAL.MOVE_TOOL);
+//      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
       //vectorFile.setFocus(true);
     }else{
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
@@ -261,8 +253,8 @@ class VectorPlaceholderView extends APlaceholder {
     return 'vectorPlaceHolder';
   }
   
-  override public function alert(b:Bool):Void{
-      collition = b;
-      vectorFile.alert(b);
-  }
+//  override public function alert(b:Bool):Void{
+//      collition = b;
+//      vectorFile.alert(b);
+//  }
 }

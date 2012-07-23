@@ -27,8 +27,15 @@ class PagesView extends View, implements IView{
     Designs.addEventListener(EVENT_ID.ADD_DESIGN_TO_PAGE, onAddPageDesignToPage);
     Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
+    
+    Vectors.addEventListener(EVENT_ID.ADD_VECTOR_TO_PAGE, onAddVectorToPage);
 
 
+  }
+  
+  private function onAddVectorToPage(e:IKEvent):Void{
+    trace('boom');
+    pageInFocus.setParam(e.getParam());
   }
   
   override public function init():Void{}

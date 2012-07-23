@@ -105,6 +105,20 @@ class PageView extends View{
       case EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE:{
         addDesignImageToPage(param);
       }
+      
+      case EVENT_ID.ADD_VECTOR_TO_PAGE:{
+        trace(param.getXml().firstChild().nodeValue.toString());
+        
+        var url:String = param.getXml().firstChild().nodeValue.toString();
+        
+        setPlaceholderInFocus(null);
+        var placeholder:APlaceholder		= new VectorPlaceholderView(this, placeholders.length, model, url);
+        placeholder.x = 10;
+      	placeholder.y = 10;
+        placeholders.push(placeholder);
+        addChild(placeholder);
+        
+      }
     }
   }
   

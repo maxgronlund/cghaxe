@@ -92,6 +92,12 @@ class PresetModel extends Model, implements IModel
       parseXmlData(xml_data);
     }
     
+    for(greetings in xml.elementsNamed("greetings")){
+      for(greeting in greetings.elementsNamed("greeting")){
+        parseGreeting(greeting);
+      }
+    }
+    
 /*    var page_index:Int = 0;
     
     for(configurable_place in preset.elementsNamed("configurable-place") ) {
@@ -200,6 +206,14 @@ class PresetModel extends Model, implements IModel
   }
   */
   
+  private function parseGreeting( greeting:Xml ): Void
+  {
+
+    //trace(greeting.firstChild().nodeValue.toString());
+    GLOBAL.tmp = greeting;
+    //greeting.firstChild().nodeValue.toString();
+  }
+  
   private function parseDesigns(preset:Xml):Void{
     for( design in preset.elementsNamed("design") ) {
       //designs for the sidebar
@@ -258,16 +272,16 @@ class PresetModel extends Model, implements IModel
     }
   }
   
-  private function parseVectorFile(preset:Xml):Void{
-    for( vector_file in preset.elementsNamed("vector-file") ){
-      for( file in vector_file.elementsNamed("file") ){
-        for( url in file.elementsNamed("url") ){
-            var urlstr:String = url.firstChild().nodeValue.toString();
-            GLOBAL.tmp = urlstr;
-        }
-      }      
-    }
-  }
+  //private function parseVectorFile(preset:Xml):Void{
+  //  for( vector_file in preset.elementsNamed("vector-file") ){
+  //    for( file in vector_file.elementsNamed("file") ){
+  //      for( url in file.elementsNamed("url") ){
+  //          var urlstr:String = url.firstChild().nodeValue.toString();
+  //          GLOBAL.tmp = urlstr;
+  //      }
+  //    }      
+  //  }
+  //}
     
   private function countPlaceHolders(xml:Xml):Void{
     for( placeholder in xml.elementsNamed("placeholder") ) {

@@ -80,5 +80,5 @@ class GLOBAL  {
   
   
   
-  public static var tmp:String;
+  public static var tmp:Xml;
 }
