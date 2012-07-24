@@ -7,18 +7,18 @@ import flash.Vector;
 class GreetingsPane extends View, implements IView{
   
   private var selectedButton:Int;
-  private var greetingsButtons:Vector<OneStateTextAndImageButton>;
+  private var vectorsButtons:Vector<OneStateTextAndImageButton>;
   private var buttonIndex:UInt;
   private var buttonPos:UInt;
   
   
   
-  public function new(designsController:IController){	
-    super(designsController);
-    bmpData 				= new BitmapData(200,200,false, COLOR.SCROLLPANE );
+  public function new(vectorsController:IController){	
+    super(vectorsController);
+    bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
     backdrop				= new Bitmap(bmpData);
     
-    greetingsButtons = new Vector<OneStateTextAndImageButton>();
+    vectorsButtons = new Vector<OneStateTextAndImageButton>();
     buttonIndex	= 0;
     selectedButton = 0;
     buttonPos	= 0;
@@ -34,54 +34,52 @@ class GreetingsPane extends View, implements IView{
   override public function onAddedToStage(e:Event):Void{
   
   	super.onAddedToStage(e);
-  	//addChild(backdrop);
+  	addChild(backdrop);
   
   }
 
 
   override public function setParam(param:IParameter):Void{
-    /*
+    
     switch ( param.getLabel() ){
-      case EVENT_ID.ADD_DESIGN_BUTTON:{
-        param.setLabel(EVENT_ID.DESIGN_SELECTED);
+      case EVENT_ID.ADD_GREETING_BUTTON:{
+        param.setLabel(EVENT_ID.GREETING_SELECTED);
         addButton(param);
       }
       
-      case EVENT_ID.DESIGN_SELECTED:{
+      case EVENT_ID.GREETING_SELECTED:{
         selectButton( param.getInt());
       }
     }
-    */
   }
   
   private function selectButton(id:Int):Void{
-    /*
     if(id != selectedButton){
-      greetingsButtons[selectedButton].setOn(false);
-      greetingsButtons[id].setOn(true);
+      vectorsButtons[selectedButton].setOn(false);
+      vectorsButtons[id].setOn(true);
       selectedButton = id;
     }
-    */
+    
   }
   
   private function addButton(param:IParameter	):Void{
-    /*
-    var designTitle:String;
+
+    var vectorTitle:String;
     
     for( title in param.getXml().elementsNamed("title") ) {
-      designTitle = title.firstChild().nodeValue;
-      param.setString(designTitle);
+      vectorTitle = title.firstChild().nodeValue;
+      param.setString(vectorTitle);
     }
     param.setInt(buttonIndex);
     var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
     oneStateTextAndImageButton.init( controller, new Point(171, 27), new PlaceholderButton(), param );
     oneStateTextAndImageButton.fireOnMouseUp(false);
     oneStateTextAndImageButton.jumpBack(false);
-    oneStateTextAndImageButton.setText(designTitle);
+    oneStateTextAndImageButton.setText(vectorTitle);
     
-    greetingsButtons[buttonIndex] = oneStateTextAndImageButton;
-    addChild(greetingsButtons[buttonIndex]);
-    greetingsButtons[buttonIndex].y = buttonPos;
+    vectorsButtons[buttonIndex] = oneStateTextAndImageButton;
+    addChild(vectorsButtons[buttonIndex]);
+    vectorsButtons[buttonIndex].y = buttonPos;
     
     buttonPos += 27;
     buttonIndex++;
@@ -89,13 +87,11 @@ class GreetingsPane extends View, implements IView{
     selectButton(0);
     
   //  trace(param.getXml().toString());
-  */
     
 	}
 
-  /*
+
   override public function getFloat(id:String):Float{
-    
     switch ( id ){
       case 'height':
         return buttonPos;
@@ -116,7 +112,7 @@ class GreetingsPane extends View, implements IView{
   //public function doStuff():Void{
   //  
   //}
-  */
+  
   
   
 }

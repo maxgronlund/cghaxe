@@ -1,30 +1,44 @@
-class Controller extends AController
+package;
+
+class Model extends AModel
 {
   private var Zoom:ZoomTools;
   // models
   private var Application:IModel;
-  //private var Layout:IModel;
+  private var Layout:IModel;
   private var Menu:IModel;
 //  private var Configuration:IModel;
   private var Preset:IModel;
   private var Pages:IModel;
+  private var Font:FontModel;
   private var Designs:IModel;
-//  private var Vectors:IModel;
-//  private var DesignImages:IModel;
   private var Greetings:IModel;
   
-  override public function new():Void{
-    super();
+  public function new(): Void{
+  	super();
+  
+  }
+  
+  override public function init():Void{
     Zoom              = GLOBAL.Zoom;
     Application	      = GLOBAL.Application;
     Menu              = GLOBAL.Menu;
-
 //    Configuration     = GLOBAL.Configuration;
     Preset            = GLOBAL.Preset;
     Pages             = GLOBAL.Pages;
+    Font              = GLOBAL.Font;
     Designs           = GLOBAL.Designs;
-//    DesignImages      = GLOBAL.DesignImages;
-    //Vectors           = GLOBAL.Vectors;
     Greetings         = GLOBAL.Greetings;
+  }
+  
+  override public function dispatchXML( label:String, xml:Xml):Void{
+    var param:IParameter = new Parameter(label);
+    param.setXml(xml);
+    dispatchEvent(new XmlEvent(label, param));
+  }
+  
+  override public function dispatchParameter(param:IParameter):Void{
+    dispatchEvent(new KEvent(param.getLabel(),param));
+  
   }
 }

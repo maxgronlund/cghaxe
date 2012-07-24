@@ -6,8 +6,8 @@ class VectorsController extends Controller, implements IController{
 
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
-      case EVENT_ID.SHOW_VESTORS:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_VESTORS, true);
+      case EVENT_ID.SHOW_VECTORS:{
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_VECTORS, true);
       }
       case EVENT_ID.VECTOR_SELECTED:{
         trace('VECTOR_SELECTED');

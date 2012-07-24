@@ -93,9 +93,7 @@ class PresetModel extends Model, implements IModel
     }
     
     for(greetings in xml.elementsNamed("greetings")){
-      for(greeting in greetings.elementsNamed("greeting")){
-        parseGreeting(greeting);
-      }
+      dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
     }
     
 /*    var page_index:Int = 0;
@@ -205,22 +203,22 @@ class PresetModel extends Model, implements IModel
     }
   }
   */
-  
-  private function parseGreeting( greeting:Xml ): Void
+  /*
+  private function parseGreetings( greetings:Xml ): Void
   {
-
+    dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
     //trace(greeting.firstChild().nodeValue.toString());
-    GLOBAL.tmp = greeting;
+    //GLOBAL.tmp = greetings;
     //greeting.firstChild().nodeValue.toString();
   }
-  
-  private function parseDesigns(preset:Xml):Void{
-    for( design in preset.elementsNamed("design") ) {
-      //designs for the sidebar
-      dispatchXML(EVENT_ID.PAGE_DESIGNS_LOADED, design);
-    }
-    
-  }
+  */
+  //private function parseDesigns(preset:Xml):Void{
+  //  for( design in preset.elementsNamed("design") ) {
+  //    //designs for the sidebar
+  //    dispatchXML(EVENT_ID.PAGE_DESIGNS_LOADED, design);
+  //  }
+  //  
+  //}
   
   private function parseXmlData(xml_data:Xml):Void{
     var page_index:Int = 0;

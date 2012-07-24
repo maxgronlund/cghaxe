@@ -21,7 +21,7 @@ class Foil extends MovieClip {
 		this.addChild(foiltexture);
 		
 		foilMasks = new Sprite();
-		this.mask = foilMasks;
+		//this.mask = foilMasks;
 		return this;
 	}
 	

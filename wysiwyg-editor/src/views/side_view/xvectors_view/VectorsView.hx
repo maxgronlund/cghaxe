@@ -16,7 +16,7 @@ class VectorsView extends PropertyView, implements IView{
     verticalScrollbar   = new VerticalScrollbar(vectorsController, EVENT_ID.VECTOR_SCROLL);
     addVectorButton     = new OneStateButton();
     
-    Preset.addEventListener(EVENT_ID.VESTORS_LOADED, onVectorsLoaded);
+    Preset.addEventListener(EVENT_ID.VECTORS_LOADED, onVectorsLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
     
   }
@@ -27,7 +27,7 @@ class VectorsView extends PropertyView, implements IView{
     selectButton.init( controller,
               new Point(190,30), 
               new GreetingsViewButton(), 
-              new Parameter( EVENT_ID.SHOW_VESTORS));
+              new Parameter( EVENT_ID.SHOW_VECTORS));
     
     addVectorButton.init(controller,
             new Point(150,22), 

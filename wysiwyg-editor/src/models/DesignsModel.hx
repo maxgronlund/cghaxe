@@ -167,9 +167,9 @@ class DesignsModel extends Model, implements IModel {
       for( user in design.elementsNamed("user") ){
         GLOBAL.userParser.parseUser(user);
       }
-      
+      /*
       for( design_images in design.elementsNamed("design-images") ){
-        dispatchXML(EVENT_ID.DESIGN_IMAGES_LOADED, design_images);
+//!!!        dispatchXML(EVENT_ID.DESIGN_IMAGES_LOADED, design_images);
         //for( design_image in design_images.elementsNamed("design-image") ){
         //  for( image in design_image.elementsNamed("image") ){
         //    for( url in image.elementsNamed("url") ){
@@ -181,6 +181,7 @@ class DesignsModel extends Model, implements IModel {
         //  }
         //}
       }
+      */
       
     }
     

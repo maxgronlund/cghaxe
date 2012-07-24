@@ -190,20 +190,28 @@ class EVENT_ID  {
   public static inline var DESIGN_SCROLL                      = "design_scroll";
   
   // design images
-  public static inline var SHOW_DESIGN_IMAGES:String          = "show_design_images";
-  public static inline var DESIGN_IMAGES_LOADED:String        = "design_images_loaded";
-  public static inline var DESIGN_IMAGE_SCROLL                = "design_image_scroll";
-  public static inline var ADD_DESIGN_IMAGE_BUTTON            = "add_design_image_button";
-  public static inline var DESIGN_IMAGE_SELECTED              = "design_image_selected";
-  public static inline var ADD_DESIGN_IMAGE_TO_PAGE           = "add_design_image_to_page";
+  //public static inline var SHOW_DESIGN_IMAGES:String          = "show_design_images";
+  //public static inline var DESIGN_IMAGES_LOADED:String        = "design_images_loaded";
+  //public static inline var DESIGN_IMAGE_SCROLL                = "design_image_scroll";
+  //public static inline var ADD_DESIGN_IMAGE_BUTTON            = "add_design_image_button";
+  //public static inline var DESIGN_IMAGE_SELECTED              = "design_image_selected";
+  //public static inline var ADD_DESIGN_IMAGE_TO_PAGE           = "add_design_image_to_page";
   
   // vectors
-  public static inline var SHOW_VESTORS:String                = "show_vector_images";
-  public static inline var VESTORS_LOADED:String              = "vectors_loaded";
-  public static inline var VECTOR_SCROLL                      = "vector_scroll";
-  public static inline var ADD_VESTOR_BUTTON                  = "add_vector_button";
-  public static inline var VECTOR_SELECTED                   = "vector_selected";
-  public static inline var ADD_VECTOR_TO_PAGE                = "add_vector_to_page";
+  //public static inline var SHOW_VECTORS:String                = "show_vector_images";
+  //public static inline var VECTORS_LOADED:String              = "vectors_loaded";
+  //public static inline var VECTOR_SCROLL                      = "vector_scroll";
+  //public static inline var ADD_VESTOR_BUTTON                  = "add_vector_button";
+  //public static inline var VECTOR_SELECTED                    = "vector_selected";
+  //public static inline var ADD_VECTOR_TO_PAGE                 = "add_vector_to_page";
+  
+  // greetings
+  public static inline var SHOW_GREETINGS:String              = "show_greetings";
+  public static inline var GREETINGS_LOADED:String            = "greetings_loaded";
+  public static inline var GREETING_SCROLL                    = "greeting_scroll";
+  public static inline var ADD_GREETING_BUTTON                = "add_greeting_button";
+  public static inline var GREETING_SELECTED                  = "greeting_selected";
+  public static inline var ADD_GREETING_TO_PAGE               = "add_greeting_to_page";
   
   
   
