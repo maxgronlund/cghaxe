@@ -61,6 +61,7 @@ class TextPlaceholderView extends APlaceholder{
   private var textString:String;
   private var collition:Bool;
   
+  
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
     
     super(pageView, id, model, text);
@@ -83,6 +84,25 @@ class TextPlaceholderView extends APlaceholder{
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     collition                         = false;
     
+  }
+  
+  private var foiled:Bool;
+  public function isFoiled():Bool {
+    return foiled == true;
+  }
+  
+  public function foilify():Void {
+    if( !this.isFoiled() ){
+      Foil.initFiltersOn(this);
+      foiled = true;
+    }
+  }
+  
+  public function unfoilify():Void {
+    if( this.isFoiled() ){
+      Foil.removeFiltersFrom(this);
+      foiled = false;
+    }
   }
   
   private function onAddedToStage(e:Event){
@@ -254,8 +274,8 @@ class TextPlaceholderView extends APlaceholder{
 
     fontMovie             =  cast event.target.loader.content;
     addChild(fontMovie);
-	
 	  
+	  //this.foilify();
 	  
 	
     font                  = fontMovie.font;

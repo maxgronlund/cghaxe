@@ -65,7 +65,7 @@ class Main
   private var selectionView:AView;
   
 //  private var vectorsView:AView;
-//  private var foil:Foil;
+  private var foil:Foil;
   
   // system
   private var version:VersionCheck;
@@ -161,7 +161,7 @@ class Main
     selectionView               = new SelectionView(selectionController);
     
 //    vectorsView                 = new VectorsView(vectorsController);
-	  //foil						            = new Foil(new FoilTexture());
+	  foil						            = new Foil(new FoilTexture());
     
     setGlobalViews();
     
@@ -209,7 +209,7 @@ class Main
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
     GLOBAL.greetings_view             = greetingsView;
- //   GLOBAL.foil			              		= foil;
+    GLOBAL.foil			              		= foil;
   }
   
   private function setGlobalControllers():Void{
