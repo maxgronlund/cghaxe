@@ -255,7 +255,7 @@ class TextPlaceholderView extends APlaceholder{
     fontMovie             =  cast event.target.loader.content;
     addChild(fontMovie);
 	
-    Foil.initFiltersOn(fontMovie);
+    //Foil.initFiltersOn(fontMovie);
 	  
 	  
 	
