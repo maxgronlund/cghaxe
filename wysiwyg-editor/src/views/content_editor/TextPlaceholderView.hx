@@ -275,7 +275,7 @@ class TextPlaceholderView extends APlaceholder{
     fontMovie             =  cast event.target.loader.content;
     addChild(fontMovie);
 	  
-	  this.foilify();
+	  //this.foilify();
 	  
 	
     font                  = fontMovie.font;
@@ -370,8 +370,8 @@ class TextPlaceholderView extends APlaceholder{
     var anchor_point:Float = 0;
     switch(fontAlign){
       case 'left': anchor_point   = 0;
-     case 'center': anchor_point  = font.getWidth()/2;
-     case 'right': anchor_point   = font.getWidth();
+      case 'center': anchor_point  = font.getWidth()/2;
+      case 'right': anchor_point   = font.getWidth();
     }
     if(!tagsIsVisible) font.setText(insertTags(textWithTags));
     return anchor_point;

@@ -181,14 +181,7 @@ class VectorPlaceholderView extends APlaceholder {
     vectorMovie.width *= 0.25;
     vectorMovie.height *= 0.25;
     
-    this.foilify();
-    this.unfoilify();
-    this.foilify();
-    this.unfoilify();
-    this.foilify();
-    this.unfoilify();
-    this.foilify();
-    this.foilify();
+    //this.foilify();
 
   }
   
