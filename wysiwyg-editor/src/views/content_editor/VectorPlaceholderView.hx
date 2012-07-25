@@ -9,6 +9,7 @@ import flash.net.URLRequest;
 import flash.display.Loader;
 
 import flash.events.MouseEvent;
+import flash.display.DisplayObject;
 import flash.display.MovieClip;
 import flash.display.Loader;
 import flash.net.URLRequest;
@@ -47,6 +48,8 @@ class VectorPlaceholderView extends APlaceholder {
 
   private var focus:Bool;
   private var collition:Bool;
+  private var foiled:Bool;
+  private var foilTexture:DisplayObject;
   
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
@@ -69,8 +72,33 @@ class VectorPlaceholderView extends APlaceholder {
     collition                         = false;
     
     this.url = url;
-    
+    foilTexture = new FoilTexture();
   }
+  
+  
+  public function isFoiled():Bool {
+    return foiled == true;
+  }
+  
+  public function foilify():Void {
+    if( !this.isFoiled() ){
+      addChild(foilTexture);
+      foilTexture.mask = vectorMovie;
+      Foil.initFiltersOn(this);
+      foiled = true;
+    }
+  }
+  
+  public function unfoilify():Void {
+    if( this.isFoiled() ){
+      //addChild(vectorMovie);
+      foilTexture.mask = null;
+      removeChild(foilTexture);
+      Foil.removeFiltersFrom(this);
+      foiled = false;
+    }
+  }
+  
   
   private function onAddedToStage(e:Event){
     
@@ -143,6 +171,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onVectorFileLoaded(event:Event):Void { 
+
     //trace('loaded 0');
     //var vectorFile            = cast event.target.loader.content;
     //trace('loaded 1', vectorFile == null);
@@ -165,9 +194,22 @@ class VectorPlaceholderView extends APlaceholder {
     texture.mask = loadedMovieClip;
     Foil.initFiltersOn(texture);
     
+
     
+    vectorMovie =  cast event.target.loader.content;
     
+    addChild(vectorMovie);
+    vectorMovie.width *= 0.25;
+    vectorMovie.height *= 0.25;
     
+    this.foilify();
+    this.unfoilify();
+    this.foilify();
+    this.unfoilify();
+    this.foilify();
+    this.unfoilify();
+    this.foilify();
+    this.foilify();
 
   }
   
