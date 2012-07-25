@@ -96,6 +96,12 @@ class PresetModel extends Model, implements IModel
       dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
     }
     
+    for(user_tags in xml.elementsNamed("user-tags")){
+      //trace(user_tags.toString());
+      GLOBAL.userParser.parseUser(user_tags);
+      //parseUser(user_tags);
+    }
+    
 /*    var page_index:Int = 0;
     
     for(configurable_place in preset.elementsNamed("configurable-place") ) {
@@ -157,6 +163,7 @@ class PresetModel extends Model, implements IModel
     //  trace('BUILD PAGE',title.firstChild().nodeValue.toString());
     //  trace('----------------------------------------------------');
     //}
+    trace('------------------- BUILD PAGES -------------------------');
     var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
     param.setXml(xml);
     dispatchParameter(param);
@@ -264,12 +271,13 @@ class PresetModel extends Model, implements IModel
     }
   }
 */  
+/*
   private function parseUser(preset:Xml):Void{
     for( user in preset.elementsNamed("user") ){
       GLOBAL.userParser.parseUser(user);
     }
   }
-  
+ */ 
   //private function parseVectorFile(preset:Xml):Void{
   //  for( vector_file in preset.elementsNamed("vector-file") ){
   //    for( file in vector_file.elementsNamed("file") ){

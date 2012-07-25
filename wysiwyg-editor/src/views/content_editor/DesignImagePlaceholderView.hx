@@ -130,7 +130,7 @@ class DesignImagePlaceholderView extends APlaceholder{
       str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
       str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
       str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
-      str += '\t\t\t<anchor-point>' + Std.string(getAnchorPoint()) + '</anchor-point>\n';
+      str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
       str += font.getXml();
     str += '\t\t</placeholder>\n';
     

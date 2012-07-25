@@ -97,6 +97,11 @@ class PageView extends View{
     
   }
   
+  /*
+  gridView.mouseChildren = false;
+  gridView.mouseEnabled = false;
+  */
+  
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{
@@ -284,6 +289,7 @@ class PageView extends View{
       // clean up
       inFocus.setFocus(false);
       model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
+
     } 
     if(placeholder != null) {
       // set focus
@@ -292,6 +298,17 @@ class PageView extends View{
       model.addEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
     }
   }
+  
+  /*
+  private function removeFocus():Void{
+    if(inFocus != null){
+      inFocus.setFocus(false);
+      model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
+      inFocus = null;
+    }
+    
+  }
+  */
   
   public function enableMove(e:MouseEvent):Void{
     
@@ -314,7 +331,7 @@ class PageView extends View{
     if(inFocus.getPlaceholderType() == 'textPlaceholder'){
       var textField:TextField = inFocus.getTextField();
       if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.getAnchorPoint()*(150/72)), -Std.int(inFocus.y), guideMask, 0, 0))
+        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.calculateAnchorPoint()*(150/72)), -Std.int(inFocus.y), guideMask, 0, 0))
           inFocus.alert(true);
         else
           inFocus.alert(false);
@@ -336,7 +353,9 @@ class PageView extends View{
   }
   
   private function onMouseDown(e:MouseEvent){	
+    
     if(MouseTrap.capture()){
+      setPlaceholderInFocus(null);
       removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
       stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
       stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);

@@ -47,15 +47,12 @@ class SideView extends View, implements IView
   }
   
   override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
-      trace(view == null);
+      
       view.setString('viewId', id);
-      trace(0);
       views.push(view);
-      trace(1);
       views[index].y = posY;
       posY += 30;
       addChild(views[index]);
-      trace(2);
       index++;  
   }
   

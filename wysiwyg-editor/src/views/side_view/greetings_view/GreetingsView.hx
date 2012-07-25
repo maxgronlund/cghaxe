@@ -62,7 +62,7 @@ class GreetingsView extends PropertyView, implements IView{
     //var greetingsXml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
     
     for(greeting in e.getXml().elementsNamed('greeting')){
-      trace(greeting.toString());
+      //trace(greeting.toString());
       var param:IParameter = new Parameter(EVENT_ID.ADD_GREETING_BUTTON);
       param.setXml(greeting);
       greetingsPane.setParam(param);
