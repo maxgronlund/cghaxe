@@ -60,7 +60,7 @@ class VectorPlaceholderView extends APlaceholder {
     this.modelId                      = model.getInt('pageId');
     //designMode                        = GLOBAL.edit_mode == 'system_design';
 //    textWithTags                      = text;
-    this.alpha                        = 0.85;
+    //this.alpha                        = 0.85;
     vectorFilePosX                          = 0;
     mouseOver                         = false;
 //    anchorPoint                       = GLOBAL.Font.anchorPoint;
@@ -101,17 +101,11 @@ class VectorPlaceholderView extends APlaceholder {
   
   
   private function onAddedToStage(e:Event){
-    /*
-    model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
-    addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);    
-    */
-    //imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadImageComplete);
-    //imageLoader.load(new URLRequest(imageUrl));
     
     loadVectorFile();
     
     
-    //model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
+    model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   }
    
@@ -129,27 +123,30 @@ class VectorPlaceholderView extends APlaceholder {
   
   override public function getXml() : String {
     
-    //showTags();
+
     //
-    //var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
-    //  str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
-    //  str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
+    var str:String = '\n\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
+      
+      str += '\t\t\t<placeholder_type>' + 'vectorPlaceHolder' + '</placeholder_type>\n';
+      str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
+      str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
     //  str += '\t\t\t<vectorFile-file-name>' + vectorFileFileName + '</vectorFile-file-name>\n';
     //  str += '\t\t\t<vectorFile-color>' + Std.string(vectorFileColor) + '</vectorFile-color>\n';
     //  str += '\t\t\t<line-space>' + Std.string(vectorFileLeading) + '</line-space>\n';
     //  str += '\t\t\t<vectorFile-size>' + Std.string(vectorFileSize) + '</vectorFile-size>\n';
     //  str += '\t\t\t<vectorFile-align>' + vectorFileAlign + '</vectorFile-align>\n';
-    //  str += '\t\t\t<anchor-point>' + Std.string(getAnchorPoint()) + '</anchor-point>\n';
+    //  str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
     //  str += vectorFile.getXml();
-    //str += '\t\t</placeholder>\n';
-//  //  trace(str);
-    //restoreShowTags();
+    str += '\t\t</placeholder>\n';
+    
+    trace(str);
+
     return "str";
   }
   
   private function onKeyPressed(event:KeyboardEvent):Void{
     var step:Float = 150/72;
-    //trace(event.keyCode);
+
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 
@@ -174,6 +171,23 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onVectorFileLoaded(event:Event):Void { 
+
+    //trace('loaded 0');
+    //var vectorFile            = cast event.target.loader.content;
+    //trace('loaded 1', vectorFile == null);
+    //
+    //vectorMovie               = vectorMovie.getMovieClip();
+    //trace('loaded 2');
+    //
+    //
+    //addChild(vectorMovie);
+    
+    var loadedMovieClip:MovieClip =  cast event.target.loader.content;
+    
+    
+    addChild(loadedMovieClip);
+    loadedMovieClip.width *= 0.5;
+    loadedMovieClip.height *= 0.5;
     
     vectorMovie =  cast event.target.loader.content;
     
@@ -189,17 +203,17 @@ class VectorPlaceholderView extends APlaceholder {
     pageView.hitTest();
   }
   
-  //override public function onUpdatePlaceholder(event:Event):Void{
-  //
-  //  storedAlign       = vectorFileAlign;
-  //  //vectorFile.setText(insertTags(textWithTags));
-  //  anchorPoint       = getAnchorPoint();
-  //  repossition       = true;
-  //  storeTags();
-  //  removeChild(vectorMovie);
-  //  vectorFile = null;
-  //  loadVectorFile();
-  //}
+  override public function onUpdatePlaceholder(event:Event):Void{
+  
+    //storedAlign       = vectorFileAlign;
+    ////vectorFile.setText(insertTags(textWithTags));
+    //anchorPoint       = calculateAnchorPoint();
+    //repossition       = true;
+    //storeTags();
+    //removeChild(vectorMovie);
+    //vectorFile = null;
+    //loadVectorFile();
+  }
   
   override public function setFocus(b:Bool):Void{
     focus = b;
@@ -214,7 +228,7 @@ class VectorPlaceholderView extends APlaceholder {
     
     if(focus){
       GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
+//     GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
 //      vectorFile.selectable(!GLOBAL.MOVE_TOOL);
 //      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
       //vectorFile.setFocus(true);
@@ -232,10 +246,12 @@ class VectorPlaceholderView extends APlaceholder {
     updateFocus();
   }
   
+  /*
   private function onTextTool(e:IKEvent):Void {
     trace('onTextTool');
     updateFocus();
   }
+  */
 
   override private function onMouseOver(e:MouseEvent){
     mouseOver = true;
@@ -269,10 +285,8 @@ class VectorPlaceholderView extends APlaceholder {
   }
 
   private function onGetXml(event:Event):Void{
-    
     model.setString(EVENT_ID.SET_PAGE_XML, getXml());
   }
-  
   
   private function onRemovedFromStage(e:Event){
     trace('onRemovedFromStage');

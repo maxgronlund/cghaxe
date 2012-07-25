@@ -14,7 +14,13 @@ class APlaceholder extends MouseHandler{
 
   }
   
+  public function calculateAnchorPoint(): Float {
+    trace("calculateAnchorPoint: must be overriden in a subclass");
+    return 0.0;
+  }
+  
   public function getAnchorPoint(): Float {
+    trace("getAnchorPoint: must be overriden in a subclass");
     return 0.0;
   }
   

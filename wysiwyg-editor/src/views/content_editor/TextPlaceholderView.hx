@@ -144,7 +144,7 @@ class TextPlaceholderView extends APlaceholder{
       str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
       str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
       str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
-      str += '\t\t\t<anchor-point>' + Std.string(getAnchorPoint()) + '</anchor-point>\n';
+      str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
       str += font.getXml();
     str += '\t\t</placeholder>\n';
 //    trace(str);
@@ -287,8 +287,6 @@ class TextPlaceholderView extends APlaceholder{
                 letterSpacing,
                 this); 
     
-    //trace(fontMovie.getTextField());
-    //GLOBAL.foil.foilify(fontMovie.getTextField()); //!!! crasches on load
     restoreShowTags();
     updateFocus();
     if(repossition) moveToAnchorPoint();
@@ -311,7 +309,7 @@ class TextPlaceholderView extends APlaceholder{
 
     storedAlign       = fontAlign;
     //font.setText(insertTags(textWithTags));
-    anchorPoint       = getAnchorPoint();
+    anchorPoint       = calculateAnchorPoint();
     repossition       = true;
     storeTags();
     removeChild(fontMovie);
@@ -353,27 +351,29 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   private function moveToAnchorPoint():Void{
-    if(anchorPoint != getAnchorPoint() ){
+    if(anchorPoint != calculateAnchorPoint() ){
       if( storedAlign == fontAlign){
-        this.x += (anchorPoint - getAnchorPoint())*(150/72);
+        this.x += (anchorPoint - calculateAnchorPoint())*(150/72);
       }
     }
-    anchorPoint = getAnchorPoint();
+    anchorPoint = calculateAnchorPoint();
     storedAlign  = fontAlign;
     repossition = false;
     
   }
   
-  override public function getAnchorPoint():Float{
+  override public function calculateAnchorPoint():Float{
     
-    font.setText(textWithTags);
+    //font.setText(textWithTags);
     var anchor_point:Float = 0;
     switch(fontAlign){
       case 'left': anchor_point   = 0;
       case 'center': anchor_point  = font.getWidth()/2;
       case 'right': anchor_point   = font.getWidth();
+      //case 'center': anchor_point  = this.width/2;
+      //case 'right': anchor_point   = this.width;
     }
-    if(!tagsIsVisible) font.setText(insertTags(textWithTags));
+    //if(!tagsIsVisible) font.setText(insertTags(textWithTags));
     return anchor_point;
   }
   

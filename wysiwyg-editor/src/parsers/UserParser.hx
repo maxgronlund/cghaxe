@@ -11,9 +11,9 @@ class UserParser {
     defaultUser = true;
   }
   public function parseUser(xml:Xml):Void{
-    // first the default user is loaded
+    //first the default user is loaded
     
-    
+
     for( brides_first_name in xml.elementsNamed("brides-first-name") ){
       Designs.setString('brides_first_name', brides_first_name.firstChild().nodeValue.toString());
     }

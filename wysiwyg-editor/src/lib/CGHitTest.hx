@@ -43,7 +43,7 @@ class CGHitTest
 				var pixelX:Int = x-bitmapX+maskX;
 				var pixelY:Int = y-bitmapY+maskY;
 				
-				if(bitmapData.getPixel32(Std.int(x*0.48), Std.int(y*0.48)) != 0)
+				if(bitmapData.getPixel32(Std.int((x*72)/150), Std.int((y*72)/150)) != 0)
 				{
 					if(bitmapDataMask.getPixel32(pixelX, pixelY) == hitColor)
 					{

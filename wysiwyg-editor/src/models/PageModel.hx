@@ -101,7 +101,8 @@ class PageModel extends Model, implements IModel
   
   override public function setXml(id:String, xml:Xml):Void{
     
-
+    //front_of_paper = false;
+    
     for(front in xml.elementsNamed('front')){ 
       front_of_paper = front.firstChild().nodeValue == 'true';
     }

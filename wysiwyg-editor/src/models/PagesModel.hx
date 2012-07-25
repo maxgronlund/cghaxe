@@ -221,7 +221,7 @@ class PagesModel extends Model, implements IModel {
     switch ( id )
     {
       case'file_xml':{
-        trace('-----------getString-----------------');
+//        trace('-----------getString-----------------');
         //var fileStr:String =  '<?xml version="1.0" encoding="UTF-8"?>\n';
         var fileStr:String ='';
         fileStr += '<stage>\n';
@@ -232,7 +232,7 @@ class PagesModel extends Model, implements IModel {
         for( i in 0...pageModels.length){
         	fileStr += (pageModels[i].getXml('foo')).toString();
         }
-        trace( fileStr);
+//        trace( fileStr);
         return fileStr;
       }
 
