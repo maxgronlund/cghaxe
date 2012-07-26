@@ -188,11 +188,13 @@ class PageView extends View{
   }
 
   private function onPageXmlLoaded(e:IKEvent):Void{  
+    trace('onPageXmlLoaded-1');
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+    trace('onPageXmlLoaded-2');
   }
   
   private function loadPagePresetXML():Void{
-
+    trace('loadPagePresetXML');
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -225,6 +227,8 @@ class PageView extends View{
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
       case "text_placeholder":
+        parseTextPlaceholder(xml);
+      default:
         parseTextPlaceholder(xml);
     }
     //parseTextPlaceholder(xml);
@@ -411,7 +415,7 @@ class PageView extends View{
     stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+    Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
   	//MouseTrap.release();
   	//stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
   	//stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
@@ -519,7 +523,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-
+    Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;
       GLOBAL.size_y = backdrop.height;

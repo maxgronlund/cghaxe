@@ -17,12 +17,11 @@ class PresetModel extends Model, implements IModel
   private var assProdIndex:UInt;                //<<------------- hack for test
   private var productSelected:String;
   private var loader:URLLoader;
-  private var placeholders:UInt;
   
   public function new(){
     super();
     productSelected = 'na';
-    placeholders = 0;
+   
     loader = new URLLoader();
     associatedProducts = new Vector<Int>();
     assProdIndex = 0;
@@ -35,13 +34,13 @@ class PresetModel extends Model, implements IModel
   }
   
   private function onParsePreset(e:IKEvent):Void{
-    //trace('onParsePreset');
+    trace('onParsePreset');
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
     //trace('-----------------');
     //trace(e.getXml().toString() );
     //trace('-----------------');
     for( preset in xml.elementsNamed("preset") ) {
-  
+      countPlaceholders(preset);
       // building the pages
       parsePreset(preset);
       
@@ -63,6 +62,18 @@ class PresetModel extends Model, implements IModel
       // vector files
       parseVectorFile(preset);
 */ 
+    }
+  }
+  
+  private function countPlaceholders(xml:Xml):Void{
+    trace('..countPlaceholders.');
+    var placeholders:UInt = 0;
+    for(pages in xml.elementsNamed("pages") ) {
+       for(page in pages.elementsNamed("page") ) {
+         for( placeholder in page.elementsNamed("placeholder") ) {
+             placeholders++;
+         }
+      }
     }
     var param:IParameter        = new Parameter(EVENT_ID.PLACEHOLDER_COUNT);
     param.setInt(placeholders);
@@ -225,7 +236,7 @@ class PresetModel extends Model, implements IModel
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {
-      countPlaceHolders(page);
+      //countPlaceHolders(page);
       var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
       param.setXml(page);
       param.setInt(page_index);
@@ -278,12 +289,12 @@ class PresetModel extends Model, implements IModel
   //  }
   //}
     
-  private function countPlaceHolders(xml:Xml):Void{
-    for( placeholder in xml.elementsNamed("placeholder") ) {
-        placeholders++;
-    }
-  }
-
+  //private function countPlaceHolders(xml:Xml):Void{
+  //  for( placeholder in xml.elementsNamed("placeholder") ) {
+  //      placeholders++;
+  //  }
+  //}
+  //
   private function getPageIndexFromConfPlaceId( confPlaceId:Xml):UInt{
     // TO do find the right page to send the front shoot to
     // here use 'configurable_place_id' to find the right page index

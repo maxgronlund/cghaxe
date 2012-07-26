@@ -72,7 +72,7 @@ class PagesModel extends Model, implements IModel {
   private function onPageXmlLoaded(e:IKEvent):Void{
     
     //Preset.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
-    Designs.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
+    //Designs.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     
     var param:IParameter        = new Parameter(EVENT_ID.PAGE_XML_LOADED);
     param.setXml(e.getXml());
