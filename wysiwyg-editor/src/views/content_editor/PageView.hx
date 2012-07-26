@@ -188,13 +188,13 @@ class PageView extends View{
   }
 
   private function onPageXmlLoaded(e:IKEvent):Void{  
-    trace('onPageXmlLoaded-1');
+    //trace('onPageXmlLoaded-1');
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    trace('onPageXmlLoaded-2');
+    //trace('onPageXmlLoaded-2');
   }
   
   private function loadPagePresetXML():Void{
-    trace('loadPagePresetXML');
+    trace('+++++++++++++++++++++++++++++++++++++++++++++++++loadPagePresetXML');
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -465,12 +465,12 @@ class PageView extends View{
     backdrop.filters = [filter];
     
     var print_mask_url:String = model.getString('print_mask_url');
-    //mask_url == '/assets/fallback/hide_mask.png';? allImagesLoaded(): loadPrintMask();
+    print_mask_url == '/assets/fallback/hide_mask.png' ? allImagesLoaded(): loadPrintMask();
     
-    if(print_mask_url == '')
-      pageDesignImageLoaded();
-    else
-      loadPrintMask();
+    //if(print_mask_url == '')
+    //  pageDesignImageLoaded();
+    //else
+    //  loadPrintMask();
 	}
 	
   private function loadPrintMask():Void{
@@ -523,6 +523,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
+    trace('allImagesLoaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;
@@ -547,7 +548,7 @@ class PageView extends View{
   }
   
   private function onShowMask(e:IKEvent):Void{
-    trace('onShowMask');
+    //trace('onShowMask');
   	guideMask.visible = e.getBool();
   }
   

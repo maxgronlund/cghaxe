@@ -55,6 +55,8 @@ class VectorPlaceholderView extends APlaceholder {
   private var foilTexture:Bitmap;
   private var foilTextureOverlay:Bitmap;
   private var foilBitmapDataForOverlay:BitmapData;
+  private var backdrop:Sprite;
+  private var lines:Vector<Shape>;
   
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
@@ -304,18 +306,18 @@ class VectorPlaceholderView extends APlaceholder {
     vectorMovie =  cast event.target.loader.content;
     
     addChild(vectorMovie);
-    vectorMovie.width *= 0.5;
-    vectorMovie.height *= 0.5;
+    //vectorMovie.width *= 0.5;
+    //vectorMovie.height *= 0.5;
     
-    this.foilify();
-    this.unfoilify();
-    this.foilify();
-    this.unfoilify();
-    this.foilify();
-    this.unfoilify();
-    this.foilify();
-    this.unfoilify();
-    this.foilify(0xFF00FF);
+    //this.foilify();
+    //this.unfoilify();
+    //this.foilify();
+    //this.unfoilify();
+    //this.foilify();
+    //this.unfoilify();
+    //this.foilify();
+    //this.unfoilify();
+    //this.foilify(0xFF00FF);
     this.foilify(0xFF0000);
 
     //vectorMovie.width *= 0.25;
