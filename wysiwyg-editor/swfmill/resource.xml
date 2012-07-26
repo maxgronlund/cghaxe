@@ -103,7 +103,7 @@
         <bitmap id="TestBack" import="library/images/test_back.png" />
         <bitmap id="ColorPickerBack" import="library/images/color_picker.png" />
         
-        <clip id="FoilTexture" import="library/images/foil_texture.jpg" />
+        <bitmap id="FoilTexture" import="library/images/foil_texture.jpg" />
         
 
       <!-- system font -->
