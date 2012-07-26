@@ -27,7 +27,7 @@ class PageModel extends Model, implements IModel
       	dispatchParameter(param);
       	GLOBAL.text_controller.setParam(param);
       }
-      case EVENT_ID.FONT_LOADED:{
+      case EVENT_ID.SWF_LOADED:{
         Pages.dispatchParameter(param);
       }
       case EVENT_ID.ADD_PLACEHOLDER:{
@@ -83,7 +83,8 @@ class PageModel extends Model, implements IModel
       case 'hide_mask_url':           hide_mask_url   = s;
       case 'front_shoot_url':         front_shoot_url = s;
       case 'no_move':{ trace('no move'); 	}
-      case EVENT_ID.SET_PAGE_XML: fileStr += s;
+      case EVENT_ID.SET_PAGE_XML:     fileStr         += s;
+
     }
   }
   
@@ -123,7 +124,7 @@ class PageModel extends Model, implements IModel
   }
 
   override public function getXml(cmd:String):String{
-    trace('getXml');
+//    trace('getXml');
     fileStr = '\t<page id="'+Std.string(pageId)+'">\n';
 
     var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_POS_XML + Std.string(pageId));

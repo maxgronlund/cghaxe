@@ -40,7 +40,7 @@ class FontBase extends MovieClip
     
     super();
     Lib.current.font  = this;	
-    scale = 150/71;
+    scale = 150/72;
     //trace('new');
     outline = new Vector<Shape>();
     
@@ -77,6 +77,8 @@ class FontBase extends MovieClip
     textField.useRichTextClipboard  = true;
     textField.defaultTextFormat     = textFormat;
     textField.type                  = TextFieldType.INPUT;
+    
+    //textField.border               = true;
     
     setFieldAlign(align);                
     textField.embedFonts	          =	true;

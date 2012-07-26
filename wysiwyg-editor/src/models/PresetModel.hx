@@ -158,12 +158,6 @@ class PresetModel extends Model, implements IModel
   }
   
   private function buildPage(xml:Xml):Void{
-    //for(title in xml.elementsNamed("title") ) {
-    //  trace('----------------------------------------------------');
-    //  trace('BUILD PAGE',title.firstChild().nodeValue.toString());
-    //  trace('----------------------------------------------------');
-    //}
-    trace('------------------- BUILD PAGES -------------------------');
     var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
     param.setXml(xml);
     dispatchParameter(param);
@@ -230,11 +224,6 @@ class PresetModel extends Model, implements IModel
   private function parseXmlData(xml_data:Xml):Void{
     var page_index:Int = 0;
   
-    //trace('-----------------');
-    //trace(xml_data.toString() );
-    //trace('-----------------');
-    
-    
     for(page in xml_data.elementsNamed("page") ) {
       countPlaceHolders(page);
       var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);

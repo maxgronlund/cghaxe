@@ -4,34 +4,23 @@ import flash.display.Shape;
 import flash.Vector;
 import flash.geom.Point;
 import flash.display.Sprite;
-
-
 import flash.Lib;
 
 
 
-class Backdrop extends Sprite
-{
-
+class Backdrop extends Sprite{
 
   private var scale:Float;
-
   private var combindeMargins:Float;
   private var backdrop:Sprite;
-  
   private var lines:Vector<Shape>;
 
   
-  public function new()
-  {
+  public function new(){
     var consoleSender:ConsoleSender = new ConsoleSender();
-    
     super();
-
     lines = new Vector<Shape>();
     createLines();
-    
-    
   }
 
   public function init( size:Int, 
@@ -43,28 +32,14 @@ class Backdrop extends Sprite
   {
     updateBackdrop(0x888888);
     
-    
-    
-    
-    
-    
-    
-   
     backdrop.width                  = textField.width-(scale* combindeMargins);
     backdrop.height                 = textField.height;
     backdrop.alpha                  = 0.5;
 
     setFocus(false);
-    //if(!actAsATag){
-    //  textField.addEventListener(Event.CHANGE, textInputCapture);
-    //}
     textField.addEventListener(Event.CHANGE, textInputCapture);
-    
-      
   }
-  
-  
-  
+   
   public function highlightBorders(b:Bool):Void{
     //trace(b);
     //!b ? backdrop.graphics.lineStyle(1/scale,0xFF0000): backdrop.graphics.lineStyle(1/scale,0x888888);
@@ -104,7 +79,6 @@ class Backdrop extends Sprite
     lines.push(line);
   }
   
-  
   public function textInputCapture(event:Event):Void { 
     resizeBackdrop();
   }
@@ -115,7 +89,7 @@ class Backdrop extends Sprite
       backdrop = null;
     }
       
-    scale = 150/71;
+    scale = 150/72;
     backdrop = new Sprite();
     Lib.current.addChild(backdrop);
     backdrop.graphics.lineStyle(1/scale,c);
@@ -210,7 +184,6 @@ class Backdrop extends Sprite
       case 'right': textField.autoSize    = TextFieldAutoSize.RIGHT;
     }
   }
-
 
   public function getXml():String{
     var escapedText:String = StringTools.htmlEscape(getText());

@@ -137,6 +137,7 @@ class TextPlaceholderView extends APlaceholder{
     showTags();
     
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
+      str += '\t\t\t<placeholder-type>' + 'text_placeholder' + '</placeholder-type>\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
       str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
@@ -164,7 +165,7 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   private function onKeyUp(event:KeyboardEvent):Void{
-    pageView.hitTest();
+    //pageView.hitTest();
   }
   
   private function insertTags(str:String):String{
@@ -291,7 +292,7 @@ class TextPlaceholderView extends APlaceholder{
     updateFocus();
     if(repossition) moveToAnchorPoint();
     
-    var param:IParameter = new Parameter(EVENT_ID.FONT_LOADED);
+    var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
     param.setInt(id);
     model.setParam(param);
     
@@ -326,7 +327,7 @@ class TextPlaceholderView extends APlaceholder{
     storeTags();
     tagsIsVisible   = true;
     font.setText(textWithTags);
-    //font.highlightBorders(true);
+    
   }
   
   private function hideTags():Void{
@@ -362,8 +363,11 @@ class TextPlaceholderView extends APlaceholder{
     
   }
   
+  
+  
   override public function calculateAnchorPoint():Float{
-    
+    //GLOBAL.MOVE_TOOL;
+    // !!! colide with the hit test
     //font.setText(textWithTags);
     var anchor_point:Float = 0;
     switch(fontAlign){
@@ -373,6 +377,7 @@ class TextPlaceholderView extends APlaceholder{
       //case 'center': anchor_point  = this.width/2;
       //case 'right': anchor_point   = this.width;
     }
+    // !!! colide with the hit test
     //if(!tagsIsVisible) font.setText(insertTags(textWithTags));
     return anchor_point;
   }
@@ -415,7 +420,6 @@ class TextPlaceholderView extends APlaceholder{
   }
 
   override private function onMouseDown(e:MouseEvent){
-//    trace('on mouse down');
     MouseTrap.capture();
     super.onMouseDown(e);
     GLOBAL.Font.fileName        = fontFileName;
@@ -461,7 +465,7 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   override public function getPlaceholderType():String{
-    return 'textPlaceholder';
+    return 'text_place_holder';
   }
   
   override public function getTextField():TextField{

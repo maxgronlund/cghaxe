@@ -83,7 +83,6 @@ class PagesView extends View, implements IView{
   }
   
   private function onBuildPage(e:IKEvent):Void{
-    trace('+++++++++++++++ 2222222222222 onBuildPage +++++++++++++++++++++');
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
     pages.push(pageView);  

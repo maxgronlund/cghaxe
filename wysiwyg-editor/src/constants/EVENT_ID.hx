@@ -39,7 +39,7 @@ class EVENT_ID  {
   public static inline var LOAD_DEFAULT_SIDEVIEW:String     = "load_default_sideview";
   public static inline var LOAD_DEFAULT_FONT:String         = "load_default_font";
   public static inline var PLACEHOLDER_SELECTED:String      = 'placeholder_selected';
-  public static inline var FONT_LOADED:String               = 'font_loaded';
+  public static inline var SWF_LOADED:String               = 'font_loaded';
   public static inline var UPDATE_FONT_PANE:String          = 'update_font_pane';
   public static inline var ADD_PLACEHOLDER                  = "add_placeholder";
   

@@ -46,6 +46,9 @@ class PageView extends View{
   
   private var hitPointX:Float;
   private var hitPointY:Float;
+  
+  private var posX:Float;
+  private var posY:Float;
 
   
   public function new(controller:IController){	
@@ -86,14 +89,14 @@ class PageView extends View{
     this.model = model;
     
     //model.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot); 	
-    model.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onAddPlaceholder);
+    model.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onAddTextPlaceholder);
     model.addEventListener(EVENT_ID.GET_STRING, onGetString);           // !!! rename this nonsens
     model.addEventListener(EVENT_ID.RELEASE_FOCUS, onReleasePageFocus);
     model.addEventListener(EVENT_ID.TRASH_PLACEHOLDER, onDestroyPlaceholder);
-    model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPresetXml);
+    model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
     //Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
-    //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPresetXml); 
+    //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded); 
     loadFrontShot();
     
   }
@@ -110,17 +113,19 @@ class PageView extends View{
       }
 
       case EVENT_ID.ADD_GREETING_TO_PAGE:{
+        parseVectorPlaceholder( param.getXml(), 10,10);
+        /*
         var url:String;
         for(url_xml in param.getXml().elementsNamed("url") ) {
           url = url_xml.firstChild().nodeValue.toString();
         }
         setPlaceholderInFocus(null);
-//        trace(url);
         var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
         placeholder.x = 10;
       	placeholder.y = 10;
         placeholders.push(placeholder);
         addChild(placeholder);
+        */
       }
     }
   }
@@ -182,7 +187,7 @@ class PageView extends View{
   
   }
 
-  private function onPresetXml(e:IKEvent):Void{  
+  private function onPageXmlLoaded(e:IKEvent):Void{  
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
   }
   
@@ -202,37 +207,73 @@ class PageView extends View{
   }
  
   private function parsePlaceholder(xml:Xml):Void{
-    var posX:Float;
-    var posY:Float;
+    
+    
     for( pos_x in xml.elementsNamed("pos-x") ) 
-      posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
+       posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
     
     for( pos_y in xml.elementsNamed("pos-y") ) 
       posY =  Std.parseFloat(pos_y.firstChild().nodeValue);
-      
+    
+
+    var placeholder_type:String = '';
+    for( plc_type in xml.elementsNamed("placeholder-type") ){
+      placeholder_type = plc_type.firstChild().nodeValue;
+    }
+    trace(placeholder_type);
+    switch( placeholder_type){
+      case "vector_placeholder":
+        parseVectorPlaceholder(xml, posX, posY);
+      case "text_placeholder":
+        parseTextPlaceholder(xml);
+    }
+    //parseTextPlaceholder(xml);
+  }
+  
+  private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
+    
+    trace('parseVectorPlaceholder\n', xml.toString());
+    
+    var url:String;
+    for(url_xml in xml.elementsNamed("url") ) {
+      url = url_xml.firstChild().nodeValue.toString();
+    }
+    
+    trace(url);
+    
+    setPlaceholderInFocus(null);
+    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
+    placeholder.x = posX;
+  	placeholder.y = posY;
+    placeholders.push(placeholder);
+    addChild(placeholder);
+
+  }
+  
+  private function parseTextPlaceholder(xml:Xml):Void{
+
     for( anchor_point in xml.elementsNamed("anchor-point") ) 
       GLOBAL.Font.anchorPoint =  Std.parseFloat(anchor_point.firstChild().nodeValue);
-
+    
     for( font_file_name in xml.elementsNamed("font-file-name") ) 
       GLOBAL.Font.fileName =  font_file_name.firstChild().nodeValue.toString();
-
+    
     for( font_color in xml.elementsNamed("font-color") ) 
       GLOBAL.Font.fontColor =  Std.parseInt(font_color.firstChild().nodeValue);
-
+    
     for( line_space in xml.elementsNamed("line-space") ) 
       GLOBAL.Font.leading =  Std.parseInt(line_space.firstChild().nodeValue);
-
+    
     for( font_size in xml.elementsNamed("font-size") ) 
       GLOBAL.Font.fontSize =  Std.parseInt(font_size.firstChild().nodeValue);
-
+    
     for( font_align in xml.elementsNamed("font-align") ) 
       GLOBAL.Font.fontAlign =  font_align.firstChild().nodeValue.toString();
     
     for( text in xml.elementsNamed("text") ) 
       TEXT_SUGGESTION.text =  text.firstChild().nodeValue.toString();
-
-    addTextPlaceholder(posX,posY);
     
+    addTextPlaceholder(posX,posY);
   }
   
   private function onDeselectPlaceholders(e:IKEvent):Void {
@@ -264,8 +305,7 @@ class PageView extends View{
     placeholders    = new Vector<APlaceholder>();
   }
   
-  private function onAddPlaceholder(e:KEvent):Void {
-    //TEXT_SUGGESTION.text = 'Type here';
+  private function onAddTextPlaceholder(e:KEvent):Void {
   	addTextPlaceholder(100,100);
   }
   
@@ -273,6 +313,18 @@ class PageView extends View{
     
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
+    placeholder.x = posX;
+  	placeholder.y = posY;
+    placeholders.push(placeholder);
+    addChild(placeholder);
+    
+  }
+  
+  private function addVectorPlaceholder(posX:Float, posY:Float, url:String):Void{
+    
+    setPlaceholderInFocus(null);
+    //var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
+    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
     placeholder.x = posX;
   	placeholder.y = posY;
     placeholders.push(placeholder);
@@ -300,20 +352,7 @@ class PageView extends View{
     }
   }
   
-  /*
-  private function removeFocus():Void{
-    if(inFocus != null){
-      inFocus.setFocus(false);
-      model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
-      inFocus = null;
-    }
-    
-  }
-  */
-  
   public function enableMove(e:MouseEvent):Void{
-    
-    trace('enable move');
     stage.addEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     startPoint.x = inFocus.x;
     startPoint.y = inFocus.y;
@@ -323,20 +362,16 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
-    
     hitTest();
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
   }
   
   public function hitTest():Void {
-    if(inFocus.getPlaceholderType() == 'textPlaceholder'){
+    if(inFocus.getPlaceholderType() == 'text_place_holder'){
       var textField:TextField = inFocus.getTextField();
       if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-        
-        var x_hit = (inFocus.x)+inFocus.calculateAnchorPoint()/(150/72);
-        //trace(x_hit.x);
-                
-        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(x_hit), -Std.int(inFocus.y), guideMask, 0, 0))
+                        
+        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
           inFocus.alert(true);
         else
           inFocus.alert(false);
@@ -407,15 +442,9 @@ class PageView extends View{
       pos = ( moveY - hitPoint.y) + startPoint.y;
       inFocus.y = pos;
   }
-/*
-  private function onLoadFrontShot(e:IKEvent):Void{
-    imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
-    imageLoader.load(new URLRequest(e.getParam().getString()));
-  }
-*/  
+
   private function loadFrontShot():Void{
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
-//    trace( model.getString('front_shoot') );
     imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
   }
 
@@ -506,8 +535,6 @@ class PageView extends View{
   
   public function useHideMask(b:Bool):Void{
     
-    trace(b, model.getString('hide_mask_url'));
-    trace('-------------------------------');
     if(hideMask != null ){
       backdrop.mask = b ? hideMask:null;
       backdrop.cacheAsBitmap = true;
@@ -530,8 +557,7 @@ class PageView extends View{
     return hideMaskPresent;
   }
 
-  private function onGetPagePosXml( e:KEvent ): Void
-  {
+  private function onGetPagePosXml( e:KEvent ): Void{
     var str:String = '\t\t<pos-x>' + Std.string(this.x) + '</pos-x>\n';
     str += '\t\t<pos-y>' + Std.string(this.y) + '</pos-y>\n';
     model.setString(EVENT_ID.SET_PAGE_XML,str);
