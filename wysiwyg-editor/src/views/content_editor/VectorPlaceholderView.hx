@@ -19,8 +19,10 @@ import flash.system.LoaderContext;
 import flash.system.SecurityDomain;
 
 import flash.geom.Point;
-//import flash.display.BitmapData;
-//import flash.display.Bitmap;
+import flash.display.BitmapDataChannel;
+import flash.display.BitmapData;
+import flash.display.Bitmap;
+import flash.display.BlendMode;
 
 import flash.events.Event;
 import flash.events.KeyboardEvent;
@@ -49,7 +51,9 @@ class VectorPlaceholderView extends APlaceholder {
   private var focus:Bool;
   private var collition:Bool;
   private var foiled:Bool;
-  private var foilTexture:DisplayObject;
+  private var foilTexture:Bitmap;
+  private var foilTextureOverlay:Bitmap;
+  private var foilBitmapDataForOverlay:BitmapData;
   
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
@@ -72,28 +76,55 @@ class VectorPlaceholderView extends APlaceholder {
     collition                         = false;
     
     this.url = url;
-    foilTexture = new FoilTexture();
+    
+    foilTexture = new FoilTexture();    
   }
   
+  private function generateFoilOverlay(color):Bitmap {
+    if(foilBitmapDataForOverlay == null) {
+      foilBitmapDataForOverlay = foilTexture.bitmapData.clone();
+
+      //Now we have the bitmapData we can make it grayscale.
+      //First lock the data so it shows no changes while we are doing the changes.
+      foilBitmapDataForOverlay.lock();
+      //We now copy the red channel to the blue and the green channel.
+      foilBitmapDataForOverlay.copyChannel(foilBitmapDataForOverlay,foilBitmapDataForOverlay.rect,new Point(),BitmapDataChannel.RED,BitmapDataChannel.BLUE);
+      foilBitmapDataForOverlay.copyChannel(foilBitmapDataForOverlay,foilBitmapDataForOverlay.rect,new Point(),BitmapDataChannel.RED,BitmapDataChannel.GREEN);
+      //After the change we can unlock the bitmapData.
+      foilBitmapDataForOverlay.unlock();
+    }
+    
+    
+    var overlayBitmapData:BitmapData = new BitmapData(foilBitmapDataForOverlay.width,foilBitmapDataForOverlay.height,false, color);
+    
+    //Create the overlay with the color set in the private var fillColor
+    foilTextureOverlay = new Bitmap(overlayBitmapData);
+    //Set the blendMode to darken so it will will be just like the picture in the post.
+    foilTextureOverlay.blendMode = BlendMode.DARKEN;
+    
+    return foilTextureOverlay;
+  }
   
   public function isFoiled():Bool {
     return foiled == true;
   }
   
-  public function foilify():Void {
-    if( !this.isFoiled() ){
-      addChild(foilTexture);
-      foilTexture.mask = vectorMovie;
-      Foil.initFiltersOn(this);
-      foiled = true;
-    }
+  public function foilify(color = 0xFFFFFF):Void {
+    unfoilify();
+    addChild(foilTexture);
+    foilTextureOverlay = generateFoilOverlay(color);
+    addChild(foilTextureOverlay);
+    this.mask = vectorMovie;
+    Foil.initFiltersOn(this);
+    foiled = true;
   }
   
   public function unfoilify():Void {
     if( this.isFoiled() ){
-      //addChild(vectorMovie);
-      foilTexture.mask = null;
       removeChild(foilTexture);
+      removeChild(foilTextureOverlay);
+      foilTextureOverlay = null;
+      this.mask = null;
       Foil.removeFiltersFrom(this);
       foiled = false;
     }
@@ -192,10 +223,19 @@ class VectorPlaceholderView extends APlaceholder {
     vectorMovie =  cast event.target.loader.content;
     
     addChild(vectorMovie);
-    vectorMovie.width *= 0.25;
-    vectorMovie.height *= 0.25;
+    vectorMovie.width *= 0.5;
+    vectorMovie.height *= 0.5;
     
-    //this.foilify();
+    this.foilify();
+    this.unfoilify();
+    this.foilify();
+    this.unfoilify();
+    this.foilify();
+    this.unfoilify();
+    this.foilify();
+    this.unfoilify();
+    this.foilify(0xFF00FF);
+    this.foilify(0xFF0000);
 
   }
   
@@ -204,7 +244,6 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function onUpdatePlaceholder(event:Event):Void{
-  
     //storedAlign       = vectorFileAlign;
     ////vectorFile.setText(insertTags(textWithTags));
     //anchorPoint       = calculateAnchorPoint();

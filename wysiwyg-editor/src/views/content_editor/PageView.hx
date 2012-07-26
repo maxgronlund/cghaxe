@@ -333,7 +333,7 @@ class PageView extends View{
       var textField:TextField = inFocus.getTextField();
       if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
         
-        var x_hit = (inFocus.x)+inFocus.calculateAnchorPoint()/(150/72);
+        var x_hit = (inFocus.x)+inFocus.calculateAnchorPoint()*(72/150);
         //trace(x_hit.x);
                 
         if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(x_hit), -Std.int(inFocus.y), guideMask, 0, 0))
