@@ -32,8 +32,8 @@ class PagesModel extends Model, implements IModel {
     Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);                //<<----------------- REMOVED FOR NOW
 //    Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Preset.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
-    Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
-    Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
+    Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
+    Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     Application.addEventListener(EVENT_ID.TRASH_PLACEHOLDERS, onDestroyPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_PAGE_DESIGN, onAddPagedesign);
     Application.addEventListener(EVENT_ID.PRESET_PAGEDESIGN_XML, onPresetPagedesignXml);
@@ -69,10 +69,10 @@ class PagesModel extends Model, implements IModel {
     pageInFocus.dispatchParameter(e.getParam());
   }
   
-  private function onPlaceholdersXml(e:IKEvent):Void{
+  private function onPageXmlLoaded(e:IKEvent):Void{
     
-    //Preset.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
-    Designs.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPlaceholdersXml);
+    //Preset.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
+    Designs.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     
     var param:IParameter        = new Parameter(EVENT_ID.PAGE_XML_LOADED);
     param.setXml(e.getXml());
@@ -225,9 +225,9 @@ class PagesModel extends Model, implements IModel {
         //var fileStr:String =  '<?xml version="1.0" encoding="UTF-8"?>\n';
         var fileStr:String ='';
         fileStr += '<stage>\n';
-        fileStr += '\t<zoom>' + Std.string(Zoom.saveZoom()*1000) + '</zoom>\n';
-        fileStr += '\t<pos_x>' + Std.string(GLOBAL.pos_x) + '</pos_x>\n';
-        fileStr += '\t<pos_y>' + Std.string(GLOBAL.pos_y) + '</pos_y>\n';
+        fileStr += '\t<zoom>'   + Std.string(Zoom.saveZoom()*1000) + '</zoom>\n';
+        fileStr += '\t<pos_x>'  + Std.string(GLOBAL.pos_x) + '</pos_x>\n';
+        fileStr += '\t<pos_y>'  + Std.string(GLOBAL.pos_y) + '</pos_y>\n';
         fileStr += '</stage>\n';
         for( i in 0...pageModels.length){
         	fileStr += (pageModels[i].getXml('foo')).toString();

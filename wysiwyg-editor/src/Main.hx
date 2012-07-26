@@ -82,10 +82,10 @@ class Main
   
   public function new(){	
   
-    //var consoleSender:ConsoleSender = new ConsoleSender();
-    //trace('------------------------------------------------------');
-    //trace('wysiwyg dev vertion Zebra',CompileDate.getDate());
-    //trace('------------------------------------------------------');
+    var consoleSender:ConsoleSender = new ConsoleSender();
+    trace('------------------------------------------------------');
+    trace('wysiwyg dev vertion Zebra',CompileDate.getDate());
+    trace('------------------------------------------------------');
     
     version = new VersionCheck();
     

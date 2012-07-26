@@ -29,6 +29,7 @@ import flash.events.KeyboardEvent;
 
 import flash.display.Shape;
 import flash.Vector;
+import flash.display.Sprite;
 
 
 class VectorPlaceholderView extends APlaceholder {
@@ -62,22 +63,101 @@ class VectorPlaceholderView extends APlaceholder {
     this.id                           = id;
     this.model                        = model;
     this.modelId                      = model.getInt('pageId');
-    //designMode                        = GLOBAL.edit_mode == 'system_design';
-//    textWithTags                      = text;
-    //this.alpha                        = 0.85;
     vectorFilePosX                          = 0;
     mouseOver                         = false;
-//    anchorPoint                       = GLOBAL.Font.anchorPoint;
-    GLOBAL.Font.anchorPoint           = 0;
-//    previewMode                       = true;
     focus                             = false;
-//    tagsIsVisible                     = false;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     collition                         = false;
     
     this.url = url;
+    foilTexture                       = new FoilTexture();
+    lines                             = new Vector<Shape>();
     
-    foilTexture = new FoilTexture();    
+    trace('new');
+
+  }
+  
+  private function updateBackdrop(c:UInt):Void{
+    if(backdrop != null){
+      removeChild(backdrop);
+      backdrop = null;
+    }
+      
+    var scale:Float = 150/72;
+    backdrop = new Sprite();
+    addChild(backdrop);
+    backdrop.graphics.lineStyle(1/scale,c);
+    backdrop.graphics.beginFill(0xffffff);
+    backdrop.graphics.drawRect(0,0,100,100);
+    backdrop.graphics.endFill();
+    backdrop.alpha = 0.5;
+    //backdrop.x = 100 * scale;
+  }
+  
+  private function createLines():Void{
+    // left
+    createLine(new Point(-10,0), new Point(0,0));
+    createLine(new Point(-10,0), new Point(0,0));
+    createLine(new Point(-10,0), new Point(0,0));
+                                    
+    // bottom side                  
+    createLine(new Point(0,0), new Point(0,10));
+    createLine(new Point(0,0), new Point(0,10));
+    createLine(new Point(0,0), new Point(0,10));
+                                                
+    // right side                               
+    createLine(new Point(0,0), new Point(10,0));
+    createLine(new Point(0,0), new Point(10,0));
+    createLine(new Point(0,0), new Point(10,0));
+                                    
+    // top side                     
+    createLine(new Point(0,0), new Point(0,-10));
+    createLine(new Point(0,0), new Point(0,-10));
+    createLine(new Point(0,0), new Point(0,-10));
+
+    
+  }
+  
+  private function createLine(start:Point, end:Point):Void{
+    var line:Shape = new Shape();
+    line.graphics.lineStyle(1, 0x000000, 1);
+    line.graphics.moveTo(start.x , start.y); 
+    line.graphics.lineTo(end.x, end.y);
+    addChild(line);
+    lines.push(line);
+  }
+  
+  private function drawCuttingMarks():Void{
+    // left 
+    drawVertical( 0, backdrop.x);
+    // bottom
+    drawHorizontal( 3, this.height-8);
+    // right
+    drawVertical( 6, backdrop.x+backdrop.width );
+    // top
+    drawHorizontal( 9, 0);
+  }
+  
+  private function drawHorizontal(offset:UInt, posY:Float):Void{
+    
+    lines[offset].x    = backdrop.x;
+    lines[offset+1].x  = backdrop.x + (backdrop.width/2);
+    lines[offset+2].x  = backdrop.x + backdrop.width;
+    
+    lines[offset].y    = posY;
+    lines[offset+1].y  = posY;
+    lines[offset+2].y  = posY;
+  }
+  
+  private function drawVertical(offset:UInt, posX:Float):Void{
+     
+     lines[offset].x    = posX;
+     lines[offset+1].x  = posX;
+     lines[offset+2].x  = posX;
+ 
+     lines[offset].y    = 0;
+     lines[offset+1].y  = backdrop.height/2;
+     lines[offset+2].y  = backdrop.height;
   }
   
   private function generateFoilOverlay(color):Bitmap {
@@ -138,6 +218,8 @@ class VectorPlaceholderView extends APlaceholder {
     
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+    
+    
   }
    
   private function handleKeyboard(b:Bool):Void{
@@ -153,15 +235,13 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function getXml() : String {
-    
 
-    //
     var str:String = '\n\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
       
-      str += '\t\t\t<placeholder_type>' + 'vectorPlaceHolder' + '</placeholder_type>\n';
+      str += '\t\t\t<placeholder-type>' + 'vector_placeholder' + '</placeholder-type>\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
-    //  str += '\t\t\t<vectorFile-file-name>' + vectorFileFileName + '</vectorFile-file-name>\n';
+      str += '\t\t\t<url>' + url + '</url>\n';
     //  str += '\t\t\t<vectorFile-color>' + Std.string(vectorFileColor) + '</vectorFile-color>\n';
     //  str += '\t\t\t<line-space>' + Std.string(vectorFileLeading) + '</line-space>\n';
     //  str += '\t\t\t<vectorFile-size>' + Std.string(vectorFileSize) + '</vectorFile-size>\n';
@@ -170,9 +250,9 @@ class VectorPlaceholderView extends APlaceholder {
     //  str += vectorFile.getXml();
     str += '\t\t</placeholder>\n';
     
-    trace(str);
+    //trace('\n---------- getXml ----------------\n', str);
 
-    return "str";
+    return str;
   }
   
   private function onKeyPressed(event:KeyboardEvent):Void{
@@ -215,7 +295,8 @@ class VectorPlaceholderView extends APlaceholder {
     
     var loadedMovieClip:MovieClip =  cast event.target.loader.content;
     
-    
+    updateBackdrop(0x888888);
+    createLines();
     addChild(loadedMovieClip);
     loadedMovieClip.width *= 0.5;
     loadedMovieClip.height *= 0.5;
@@ -237,6 +318,20 @@ class VectorPlaceholderView extends APlaceholder {
     this.foilify(0xFF00FF);
     this.foilify(0xFF0000);
 
+    //vectorMovie.width *= 0.25;
+    //vectorMovie.height *= 0.25;
+    
+    //this.foilify();
+    
+    backdrop.width = vectorMovie.width;
+    backdrop.height = vectorMovie.height;
+    drawCuttingMarks();
+    
+    var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
+    param.setInt(id);
+    model.setParam(param);
+    
+
   }
   
   private function hitTest():Void{
@@ -255,13 +350,14 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function setFocus(b:Bool):Void{
+    
     focus = b;
     updateFocus();
+    backdrop.alpha = b ? 0.5:0;
+    for( i in 0...lines.length){
+      lines[i].visible = b;
+    } 
   }
-
-  //private function buildUrl(fileName:String):String{
-  //	return "/assets/" + fileName+ ".swf?" + Math.random();
-  //}
 
   private function updateFocus():Void{
     
@@ -284,13 +380,6 @@ class VectorPlaceholderView extends APlaceholder {
   private function onMoveTool(e:IKEvent):Void {
     updateFocus();
   }
-  
-  /*
-  private function onTextTool(e:IKEvent):Void {
-    trace('onTextTool');
-    updateFocus();
-  }
-  */
 
   override private function onMouseOver(e:MouseEvent){
     mouseOver = true;
@@ -298,12 +387,11 @@ class VectorPlaceholderView extends APlaceholder {
   }
 
   override private function onMouseDown(e:MouseEvent){
-//    trace('on mouse down');
+    
     MouseTrap.capture();
     super.onMouseDown(e);
-
     pageView.setPlaceholderInFocus(this);
-    //model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS));
+    
     if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
   }
   
@@ -324,6 +412,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
 
   private function onGetXml(event:Event):Void{
+    
     model.setString(EVENT_ID.SET_PAGE_XML, getXml());
   }
   
@@ -334,7 +423,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function getPlaceholderType():String{
-    return 'vectorPlaceHolder';
+    return 'vector_placeholder';
   }
   
 //  override public function alert(b:Bool):Void{
