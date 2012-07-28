@@ -5,6 +5,7 @@ package;
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextField;
+import flash.display.Bitmap;
 
 class APlaceholder extends MouseHandler{
 
@@ -49,7 +50,12 @@ class APlaceholder extends MouseHandler{
   }
   
   public function getTextField():TextField{
-    trace("getPlaceholderType: must be overriden in a subclass");
+    trace("getTextField: must be overriden in a subclass");
+    return null;
+  }
+  
+  public function getBitmapMask():Bitmap {
+    trace("getBitmapMask: must be overriden in a subclass");
     return null;
   }
   

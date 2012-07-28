@@ -20,6 +20,11 @@ class CGHitTest
 		return textFieldHitBitmapPixelCount(textField, textFieldX, textFieldY, bitmapMask, bitmapMaskX, bitmapMaskY) >= pixelHitAmount;
 	}
 	
+	public function bitmapHitBitmapMask(bitmap:Bitmap, bitmapX:Int, bitmapY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
+	{
+		return bitmapDataHitBitmapDataMaskPixelCount(bitmap.bitmapData, bitmapX, bitmapY, bitmapMask.bitmapData, bitmapMaskX, bitmapMaskY) >= pixelHitAmount;
+	}
+	
   public function textFieldHitBitmapPixelCount(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
   {
     
