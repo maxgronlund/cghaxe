@@ -417,9 +417,11 @@ class TextPlaceholderView extends APlaceholder{
   override private function onMouseOver(e:MouseEvent){
     mouseOver = true;
     super.onMouseOver(e);
+    font.selectable(true);
   }
 
   override private function onMouseDown(e:MouseEvent){
+    
     MouseTrap.capture();
     super.onMouseDown(e);
     GLOBAL.Font.fileName        = fontFileName;
@@ -430,13 +432,16 @@ class TextPlaceholderView extends APlaceholder{
     GLOBAL.Font.letterSpacing   = letterSpacing;
     pageView.setPlaceholderInFocus(this);
     model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS));
+    
     if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+    
   }
   
   override private function onMouseOut(e:MouseEvent){
     mouseOver = false;
     removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    font.selectable(false);
   }
   
   override private function onMouseUp(e:MouseEvent){

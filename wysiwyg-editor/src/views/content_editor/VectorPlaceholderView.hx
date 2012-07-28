@@ -52,6 +52,7 @@ class VectorPlaceholderView extends APlaceholder {
   private var focus:Bool;
   private var collition:Bool;
   private var foiled:Bool;
+  private var foil:Sprite;
   private var foilTexture:Bitmap;
   private var foilTextureOverlay:Bitmap;
   private var foilBitmapDataForOverlay:BitmapData;
@@ -72,6 +73,7 @@ class VectorPlaceholderView extends APlaceholder {
     collition                         = false;
     
     this.url = url;
+    foil = new Sprite();
     foilTexture                       = new FoilTexture();
     lines                             = new Vector<Shape>();
     
@@ -193,21 +195,25 @@ class VectorPlaceholderView extends APlaceholder {
   
   public function foilify(color = 0xFFFFFF):Void {
     unfoilify();
-    addChild(foilTexture);
     foilTextureOverlay = generateFoilOverlay(color);
-    addChild(foilTextureOverlay);
-    this.mask = vectorMovie;
-    Foil.initFiltersOn(this);
+    
+    foil.addChild(foilTexture);
+    foil.addChild(foilTextureOverlay);
+    addChild(foil);
+    
+    foil.mask = vectorMovie;
+    Foil.initFiltersOn(foil);
     foiled = true;
   }
   
   public function unfoilify():Void {
     if( this.isFoiled() ){
-      removeChild(foilTexture);
-      removeChild(foilTextureOverlay);
+      removeChild(foil);
+      foil.removeChild(foilTexture);
+      foil.removeChild(foilTextureOverlay);
       foilTextureOverlay = null;
-      this.mask = null;
-      Foil.removeFiltersFrom(this);
+      foil.mask = null;
+      Foil.removeFiltersFrom(foil);
       foiled = false;
     }
   }
@@ -318,12 +324,12 @@ class VectorPlaceholderView extends APlaceholder {
     //this.foilify();
     //this.unfoilify();
     //this.foilify(0xFF00FF);
-    this.foilify(0xFF0000);
+    //this.foilify(0xFF0000);
 
     //vectorMovie.width *= 0.25;
     //vectorMovie.height *= 0.25;
     
-    //this.foilify();
+    foilify(0xFF0000);
     
     backdrop.width = vectorMovie.width;
     backdrop.height = vectorMovie.height;

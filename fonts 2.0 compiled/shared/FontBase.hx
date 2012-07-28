@@ -232,7 +232,7 @@ class FontBase extends MovieClip
   }
   
   public function selectable(b:Bool):Void{
-    
+    trace(b);
     textField.selectable    = b;
     textField.doubleClickEnabled = b;
     textField.mouseEnabled = b;
