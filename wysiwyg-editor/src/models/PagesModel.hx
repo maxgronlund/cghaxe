@@ -82,8 +82,6 @@ class PagesModel extends Model, implements IModel {
   private function onBuildPage( e:IKEvent ):Void{
 
     
-    //buildPage();
-    
     var pageModel:PageModel     = new PageModel();
      pageModel.init();
      pageModel.setInt('pageOrder', pageOrder);
@@ -100,43 +98,7 @@ class PagesModel extends Model, implements IModel {
      dispatchParameter(param);
 
   }
-  /*
-  private function onBuildDesignPage( e:IKEvent ):Void{
-    //trace(e.getXml().toString());
-    
-    front_of_paper = true;
-    hide_mask_url = '/assets/fallback/hide_mask.png';
-    page_name     = 'Design';
-    print_mask_url = '/assets/fallback/hide_mask.png';
-    
-//    buildPage();
-    pageOrder++;
-    pageId++;
-  }
-  */
-  /*
-  private function buildPage():Void{
-
-     var pageModel:PageModel     = new PageModel();
-     pageModel.init();
-     pageModel.setInt('pageOrder', pageOrder);
-     pageModel.setInt('pageId'   , pageId);
-     //pageModel.setString('print_mask_url', print_mask_url);
-     //pageModel.setString('hide_mask_url', hide_mask_url);
-     //pageModel.setString('front_shoot', front_shoot);
-     //pageModel.setBool('front_of_paper', front_of_paper);
-
-     pageInFocus                 = pageModel;
-     pageModels.push(pageModel);
-
-     // picked up by PagesView
-     var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
-     param.setModel(pageModel);
-     dispatchParameter(param);
-
-  }
-  */
-
+  
   private function onLoadFrontShot( e:IKEvent ):Void{
     
     var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
@@ -181,16 +143,23 @@ class PagesModel extends Model, implements IModel {
       }
       case EVENT_ID.ADD_PLACEHOLDER:{
         var param:IParameter = new Parameter(EVENT_ID.ADD_PLACEHOLDER);
-      	pageInFocus.setParam(param);
+        pageInFocus.setParam(param);
+        
+        trace('placeholder added check for price');
+        
       }
 
       case EVENT_ID.UPDATE_PLACEHOLDER:{
         if(pageInFocus != null){
       	  pageInFocus.dispatchParameter(param);
+      	  
+      	  trace('placeholder updated check for price');
         }
       }
       case EVENT_ID.TRASH_PLACEHOLDER:{
         pageInFocus.setParam(param);
+        
+        trace('placeholder removed check for price');
       }
       
       case EVENT_ID.MOVE_TOOL:{
