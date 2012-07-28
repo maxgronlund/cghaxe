@@ -306,28 +306,15 @@ class VectorPlaceholderView extends APlaceholder {
     updateBackdrop(0x888888);
     createLines();
     addChild(loadedMovieClip);
-    loadedMovieClip.width *= 0.5;
-    loadedMovieClip.height *= 0.5;
+    //loadedMovieClip.width *= 0.5;
+    //loadedMovieClip.height *= 0.5;
     
     vectorMovie =  cast event.target.loader.content;
     
     addChild(vectorMovie);
-    //vectorMovie.width *= 0.5;
-    //vectorMovie.height *= 0.5;
+    vectorMovie.width *= 0.5;
+    vectorMovie.height *= 0.5;
     
-    //this.foilify();
-    //this.unfoilify();
-    //this.foilify();
-    //this.unfoilify();
-    //this.foilify();
-    //this.unfoilify();
-    //this.foilify();
-    //this.unfoilify();
-    //this.foilify(0xFF00FF);
-    //this.foilify(0xFF0000);
-
-    //vectorMovie.width *= 0.25;
-    //vectorMovie.height *= 0.25;
     
     foilify(0xFF0000);
     
@@ -346,7 +333,8 @@ class VectorPlaceholderView extends APlaceholder {
     pageView.hitTest();
   }
   
-  override public function onUpdatePlaceholder(event:Event):Void{
+  override public function onUpdatePlaceholder(event:Event):Void {
+    foilify(GLOBAL.Font.fontColor);
     //storedAlign       = vectorFileAlign;
     ////vectorFile.setText(insertTags(textWithTags));
     //anchorPoint       = calculateAnchorPoint();
