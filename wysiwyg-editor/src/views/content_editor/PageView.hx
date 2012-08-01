@@ -194,7 +194,7 @@ class PageView extends View{
   }
   
   private function loadPagePresetXML():Void{
-    trace('+++++++++++++++++++++++++++++++++++++++++++++++++loadPagePresetXML');
+//    trace('+++++++++++++++++++++++++++++++++++++++++++++++++loadPagePresetXML');
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -222,7 +222,7 @@ class PageView extends View{
     for( plc_type in xml.elementsNamed("placeholder-type") ){
       placeholder_type = plc_type.firstChild().nodeValue;
     }
-    trace(placeholder_type);
+//    trace(placeholder_type);
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
@@ -536,7 +536,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    trace('allImagesLoaded');
+//    trace('allImagesLoaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;

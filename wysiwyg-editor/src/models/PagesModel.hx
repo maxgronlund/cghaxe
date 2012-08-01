@@ -153,7 +153,7 @@ class PagesModel extends Model, implements IModel {
         if(pageInFocus != null){
       	  pageInFocus.dispatchParameter(param);
       	  
-      	  trace('placeholder updated check for price');
+//      	  trace('placeholder updated check for price');
         }
       }
       case EVENT_ID.TRASH_PLACEHOLDER:{

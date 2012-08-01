@@ -362,9 +362,7 @@ class TextPlaceholderView extends APlaceholder{
     repossition = false;
     
   }
-  
-  
-  
+
   override public function calculateAnchorPoint():Float{
     //GLOBAL.MOVE_TOOL;
     // !!! colide with the hit test
@@ -431,11 +429,24 @@ class TextPlaceholderView extends APlaceholder{
     GLOBAL.Font.leading         = fontLeading;
     GLOBAL.Font.letterSpacing   = letterSpacing;
     pageView.setPlaceholderInFocus(this);
-    model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS));
+    model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS)); //!!! replace this
+    
+    
+    updateSideView();    
     
     if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
     
   }
+  
+  //!!! move this to super class
+  private function updateSideView(): Void{
+    var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
+    param.setString(getPlaceholderType());
+    GLOBAL.Application.dispatchParameter(param);
+  }
+  
+  
+  
   
   override private function onMouseOut(e:MouseEvent){
     mouseOver = false;

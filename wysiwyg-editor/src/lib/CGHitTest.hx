@@ -77,8 +77,8 @@ class CGHitTest
     	}
     }
     
-    trace("Nontransparent_pixels:");
-    trace(non_transparent_pixels);
+//    trace("Nontransparent_pixels:");
+//    trace(non_transparent_pixels);
     
     return count;
   }

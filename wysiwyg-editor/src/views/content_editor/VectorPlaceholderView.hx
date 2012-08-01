@@ -353,7 +353,7 @@ class VectorPlaceholderView extends APlaceholder {
     createLines();
     createAlertBox();
     
-    foilify(0xFF0000);
+    foilify(0x00FF00);
     
     backdrop.width = vectorMovie.width;
     backdrop.height = vectorMovie.height;
@@ -362,6 +362,8 @@ class VectorPlaceholderView extends APlaceholder {
     var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
     param.setInt(id);
     model.setParam(param);
+    
+    setFocus(false);
     
 
   }
@@ -379,6 +381,10 @@ class VectorPlaceholderView extends APlaceholder {
     //removeChild(vectorMovie);
     //vectorFile = null;
     //loadVectorFile();
+    
+    trace('update vectorView');
+    
+    
   }
   
   override public function setFocus(b:Bool):Void{
@@ -425,6 +431,15 @@ class VectorPlaceholderView extends APlaceholder {
     pageView.setPlaceholderInFocus(this);
     
     if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+    
+    updateSideView();
+  }
+  
+  //!!! move this to super class
+  private function updateSideView(): Void{
+    var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
+    param.setString(getPlaceholderType());
+    GLOBAL.Application.dispatchParameter(param);
   }
   
   override private function onMouseOut(e:MouseEvent){

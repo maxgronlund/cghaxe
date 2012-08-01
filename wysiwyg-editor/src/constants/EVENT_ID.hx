@@ -7,7 +7,7 @@ class EVENT_ID  {
   // Text Suggestion events
 //	public static inline var TEXT_SUGGESTION:String           = "text_suggestion";
 //  public static inline var EDIT_MODE:String                 = "edit_mode";
-  public static inline var SHOW_TEXT_SUGGESTIONS:String     = "show_text_suggestion_view";
+  
   public static inline var TEXT_SUGGESTION_SELECTED:String  = "text_suggestion_selected";
   public static inline var ADD_TEXT_SUGGESTION:String       = "add_text_suggestion";
   public static inline var ADD_SUGGESTION_BUTTON:String     = "add_text_suggestion_button";
@@ -15,7 +15,7 @@ class EVENT_ID  {
   public static inline var DESIGN_SELECTED:String           = "design_selected";
   public static inline var ADD_DESIGN_BUTTON:String         = "add_designs_button";
   public static inline var ADD_DESIGN:String                = "add_design";
-  public static inline var ADD_DESIGN_TO_PAGE:String       = "add_design_to_page";
+  public static inline var ADD_DESIGN_TO_PAGE:String        = "add_design_to_page";
   
   // side views
 //  public static inline var ADD_TEXT_VIEW:String             = "add_text_view";
@@ -144,9 +144,15 @@ class EVENT_ID  {
                                                              
                                                              
   // side views                                              
-  public static inline var SHOW_ADD_ONS                      = "show_add_ons";
-  public static inline var SHOW_PRICES                       = "show_prices";
-  public static inline var SHOW_TEXT:String                  = "text_view";
+  public static inline var SHOW_ADD_ONS                     = "show_add_ons";
+  public static inline var SHOW_PRICES                      = "show_prices";
+  public static inline var SHOW_TEXT:String                 = "text_view";
+  public static inline var SHOW_GREETINGS:String            = "show_greetings";
+  public static inline var SHOW_TEXT_SUGGESTIONS:String     = "show_text_suggestion_view";
+  public static inline var SHOW_COLOR_PICKERS:String        = "show_color_pickers";
+  public static inline var UPDATE_SIDE_VIEWS:String         = "update_side_views";
+  
+  
                                                             
   public static inline var SHOW_FOIL:String                  = "foil_view";
   public static inline var SHOW_GARAMOND:String              = "garamond_vies";
@@ -167,6 +173,7 @@ class EVENT_ID  {
   public static inline var PLACEHOLDER_TEXT                  = "placeholder_text";
   public static inline var SET_TEXT_FORMAT                   = "set_text_format";
   public static inline var OPEN_COLOR_PICKER	               = "open_color_picker";
+
                                                              
                                                              
   // text formatting                                         
@@ -206,12 +213,26 @@ class EVENT_ID  {
   //public static inline var ADD_VECTOR_TO_PAGE                 = "add_vector_to_page";
   
   // greetings
-  public static inline var SHOW_GREETINGS:String              = "show_greetings";
   public static inline var GREETINGS_LOADED:String            = "greetings_loaded";
   public static inline var GREETING_SCROLL                    = "greeting_scroll";
   public static inline var ADD_GREETING_BUTTON                = "add_greeting_button";
   public static inline var GREETING_SELECTED                  = "greeting_selected";
   public static inline var ADD_GREETING_TO_PAGE               = "add_greeting_to_page";
+  
+  public static inline var GREETING_COLOR_SELECTED            = "greeting_color_selected";
+  public static inline var NO_GREETING_COLOR_SELECTED         = "no_greeting_color_selected";
+  public static inline var OPEN_GREETING_COLOR_PICKER         = "open_greetings_color_picker";
+  
+  public static inline var SHOW_PMS_PICKER                    = "show_pms_picker";
+  public static inline var SHOW_FOIL_PICKER                   = "show_foil_picker";
+  public static inline var SHOW_COLOR_PICKER                  = "show_color_picker";
+  public static inline var ENABLE_PMS_PICKER                  = "enable_pms_picker";
+  public static inline var ENABLE_FOIL_PICKER                 = "enable_foil_picker";
+  public static inline var ENABLE_COLOR_PICKER                = "enable_color_picker";
+  public static inline var POSITION_PICKERS                   = "positions_pickers";
+  
+  
+  
   
   
   

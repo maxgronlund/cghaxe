@@ -3,14 +3,14 @@ import flash.events.MouseEvent;
 import flash.geom.Point;
 import flash.display.BitmapData;
 
-class ColorPicker extends View{
+class GreetingsColorPicker extends View{
 	
   //var bitmapData:BitmapData;
   
   public function new(controller:IController) {
 
     super(controller);
-    backdrop = new ColorPickerBack();
+    backdrop = new GreetingsPickerBack();
   }
   
   override public function onAddedToStage(e:Event) {
@@ -20,7 +20,7 @@ class ColorPicker extends View{
   
 
   override public function showView(id:String, b:Bool):Void{
-    
+    trace(b);
     if(b){
       addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
       stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownOutside);
@@ -28,7 +28,7 @@ class ColorPicker extends View{
       removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
       removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
       stage.removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDownOutside);
-      //trace('stage.removeEventListener called');
+
     }
     this.visible = b;
     
@@ -44,9 +44,12 @@ class ColorPicker extends View{
   }
   
   private function onMouseOut(e:MouseEvent){
+    
     removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
     removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    // Why the frack is this broken
+    //stage.addEventListener(MouseEvent.MOUSE_DOWN, onMouseDownOutside);
   }
   
   private function onMouseDownOutside(e:MouseEvent) {
@@ -54,6 +57,7 @@ class ColorPicker extends View{
   }
   
   private function onMouseDown(e:MouseEvent) {
+    
     var pixelValue:UInt = backdrop.bitmapData.getPixel(Std.int(e.localX), Std.int(e.localY));
     var param:Parameter = new Parameter(EVENT_ID.FONT_COLOR_SELECTED);
     param.setUInt(pixelValue);

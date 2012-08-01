@@ -7,53 +7,53 @@ class TextView extends PropertyView, implements IView{
 	private var fontPane:AView;
 	private var fontScrollbar:VerticalScrollbar;
 //	private var 91:FontStylePopup;
-	private var lineSpacePopup:LineSpacePopup;
-	private var fontSizePopup:FontSizePopup;
-	private var addTextfieldButton:OneStateButton;
-	private var textAlign:TextAlign;
-	private var openColorPickerButton:TwoStateButton;
-	private var colorPicker:ColorPicker;
-
-	public function new(textController:IController){	
-		super(textController);
-		backdrop							= new TextViewBack();
-		fontScrollPane				= new ScrollPane(textController);
-		fontPane							= new FontPane(textController);
-		fontScrollbar 				= new VerticalScrollbar(textController, EVENT_ID.FONT_SCROLL);
-		//fontStylePopup 				= new FontStylePopup(textController);
-		lineSpacePopup 				= new LineSpacePopup(textController);
-		textAlign 	 					= new TextAlign(textController);
-		fontSizePopup 				= new FontSizePopup(textController);
-		openColorPickerButton = new TwoStateButton();
-		colorPicker						= new ColorPicker(textController);
-		addTextfieldButton 		= new OneStateButton();
-		colorPicker.visible 	= false;
-	}
-	
-	override public function init():Void {
-		
-		selectButton.init( controller,
-						new Point(190,30), 
-						new TextViewButton(), 
-						new Parameter( EVENT_ID.SHOW_TEXT)); //!!! rename
-						
-		textAlign.init();
-		
-		openColorPickerButton.init(controller,
+  private var lineSpacePopup:LineSpacePopup;
+  private var fontSizePopup:FontSizePopup;
+  private var addTextfieldButton:OneStateButton;
+  private var textAlign:TextAlign;
+  private var openColorPickerButton:TwoStateButton;
+  private var colorPicker:ColorPicker;
+  
+  public function new(textController:IController){	
+    super(textController);
+    backdrop							= new TextViewBack();
+    fontScrollPane				= new ScrollPane(textController);
+    fontPane							= new FontPane(textController);
+    fontScrollbar 				= new VerticalScrollbar(textController, EVENT_ID.FONT_SCROLL);
+    //fontStylePopup 				= new FontStylePopup(textController);
+    lineSpacePopup 				= new LineSpacePopup(textController);
+    textAlign 	 					= new TextAlign(textController);
+    fontSizePopup 				= new FontSizePopup(textController);
+    openColorPickerButton = new TwoStateButton();
+    colorPicker						= new ColorPicker(textController);
+    addTextfieldButton 		= new OneStateButton();
+    colorPicker.visible 	= false;
+  }
+  
+  override public function init():Void {
+    
+    selectButton.init( controller,
+        new Point(190,30), 
+        new TextViewButton(), 
+        new Parameter( EVENT_ID.SHOW_TEXT)); //!!! rename
+        
+    textAlign.init();
+    
+    openColorPickerButton.init(controller,
                     new Point(32,32), 
                     new ColorPickerButton(), 
                     new Parameter( EVENT_ID.OPEN_COLOR_PICKER));
                     
-		addTextfieldButton.init(controller,
+    addTextfieldButton.init(controller,
                     new Point(150,22), 
                     new CreateTextfieldButton(), 
                     new Parameter( EVENT_ID.ADD_PLACEHOLDER));
                     
-		addTextfieldButton.fireOnMouseUp(false);
-		
-	}
-
-	override public function onAddedToStage(e:Event):Void{
+    addTextfieldButton.fireOnMouseUp(false);
+    
+  }
+  
+  override public function onAddedToStage(e:Event):Void{
     
     super.onAddedToStage(e);
     // font selection pane
@@ -113,8 +113,7 @@ class TextView extends PropertyView, implements IView{
     switch ( param.getLabel() ){
       case EVENT_ID.FONT_SELECTED:{
         //trace('font selected');
-        fontPane.setParam(param);
-                
+        fontPane.setParam(param);   
       }
       case EVENT_ID.LINE_SPACE_SELECTED:{
         lineSpacePopup.deselectItem(param.getInt());
@@ -141,11 +140,9 @@ class TextView extends PropertyView, implements IView{
         trace('is there a free meel');
         colorPicker.showView('Look an UFO', false);
         openColorPickerButton.setOn(false);
-  
       }
       
       case EVENT_ID.OPEN_COLOR_PICKER:{
-        
         if(param.getBool())
           this.setChildIndex(colorPicker, this.numChildren - 1);
           colorPicker.showView('Love Rocks', param.getBool());

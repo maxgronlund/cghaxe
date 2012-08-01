@@ -71,10 +71,19 @@ class ParameterParser
     
         case 'system_preset':{
           //trace('system_preset: ', params.system_preset);
+          
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           
+          GLOBAL.color_view.setFloat('ding dong', 0.0);
+          trace('so far so good');
+          
+          GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
+          
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
+          trace('well true');
+          
+          
         } 
         
         case 'user_preset':{
@@ -94,6 +103,7 @@ class ParameterParser
       //trace('start_load_seq: ', params.start_load_seq);
       Application.setString(EVENT_ID.START_LOAD_SEQ, 'bang');
     }
+    trace('end of parse');
 	}
 	
 

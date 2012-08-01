@@ -172,7 +172,7 @@ class DesktopView extends View, implements IView{
   
   private function onPlaceholderCount(e:KEvent):Void{
     placeholders = e.getInt();
-    trace(placeholders);
+//    trace(placeholders);
   }
   
   private function onFontLoaded(e:KEvent):Void{
@@ -194,7 +194,7 @@ class DesktopView extends View, implements IView{
   
   private function setSizes():Void{
     
-    trace('setSizes');
+//    trace('setSizes');
     
     sizeX = pagesView.width;
     sizeY = pagesView.height;
@@ -208,7 +208,7 @@ class DesktopView extends View, implements IView{
   }
   
   private function updateZoom():Void{
-    trace('updateZoom');
+//    trace('updateZoom');
     pagesView.width 	= sizeX * Zoom.getZoomFactor();
     pagesView.height 	= sizeY * Zoom.getZoomFactor();
     //backdrop.x = -this.x;

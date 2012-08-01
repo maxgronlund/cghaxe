@@ -13,19 +13,7 @@ class SideView extends View, implements IView
 {
   private var views:Vector<AView>;
   private var selectedView:AView;
-  
-  private var verticalLine:Shape;
-  
-  //private var textView:AView;
-  //private var textSuggestionView:AView;
-  //private var designView:AView;
-  //private var foilView:AView;
-  //private var addOnsView:AView;
-  //private var garamondView:AView;
-  //private var logoView:AView;
-  //private var priceView:AView;
-  //private var blindView:AView;
-//  private var vPos:Int;
+//  private var verticalLine:Shape;
   private var posY:Float;
   private var index:Int;
   
@@ -58,14 +46,12 @@ class SideView extends View, implements IView
   
   private function onLoadDefaultSiteView(e:IKEvent):Void{
     selectedView = views[0];
-    //showView(views[0].getString('viewId'));
     showView(EVENT_ID.SHOW_TEXT, true);
-    //showView(EVENT_ID.SHOW_TEXT,true);
-    //showView(views[0].getString('viewId'), true);
   }
   
   override public function showView(id:String, b:Bool):Void{
     
+    trace(id);
     selectedView.update('deselect', 0 , 'na');
     posY = 0;
     
