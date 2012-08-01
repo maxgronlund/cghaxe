@@ -7,8 +7,11 @@ import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 import flash.net.FileReference;
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.geom.Point;
 import flash.Vector;
+
+import flash.external.ExternalInterface;
 
 
 class PresetModel extends Model, implements IModel
@@ -99,7 +102,6 @@ class PresetModel extends Model, implements IModel
       } 
     }
     for(xml_data in xml.elementsNamed("xml-data") ) {
-      //trace('-----------------xml-data--------------');
       parseXmlData(xml_data);
     }
     
@@ -108,9 +110,7 @@ class PresetModel extends Model, implements IModel
     }
     
     for(user_tags in xml.elementsNamed("user-tags")){
-      //trace(user_tags.toString());
       GLOBAL.userParser.parseUser(user_tags);
-      //parseUser(user_tags);
     }
     
 /*    var page_index:Int = 0;
@@ -303,6 +303,8 @@ class PresetModel extends Model, implements IModel
   
   public function savePreset(e:IKEvent):Void{
     
+    ExternalInterface.call("openSavingBox()");
+
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
@@ -315,13 +317,27 @@ class PresetModel extends Model, implements IModel
     variables._method = 'put';
     request.data = variables;
     
+    loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
     
+    
+    
+
   }
   
   private function onSavedComplete(e:Event):Void{
-    // confirm save completed to enduser here
-  	trace('save completed');
+  	onComplete();
+  }
+  
+  private function onError(e:Event):Void{
+    onComplete();
+    ExternalInterface.call("showSavingError()");
+  }
+  
+  private function onComplete():Void{
+    ExternalInterface.call("closeSavingBox()");
+    loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+    loader.removeEventListener(Event.COMPLETE, onSavedComplete);
   }
 }
