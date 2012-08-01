@@ -82,7 +82,7 @@ class VectorPlaceholderView extends APlaceholder {
     foilTexture                       = new FoilTexture();
     lines                             = new Vector<Shape>();
     
-    trace('new');
+//    trace('new');
 
   }
   
@@ -242,8 +242,7 @@ class VectorPlaceholderView extends APlaceholder {
       foiled = false;
     }
   }
-  
-  
+
   private function onAddedToStage(e:Event){
     
     loadVectorFile();
@@ -316,17 +315,6 @@ class VectorPlaceholderView extends APlaceholder {
   
   private function onVectorFileLoaded(event:Event):Void { 
 
-    //trace('loaded 0');
-    //var vectorFile            = cast event.target.loader.content;
-    //trace('loaded 1', vectorFile == null);
-    //
-    //vectorMovie               = vectorMovie.getMovieClip();
-    //trace('loaded 2');
-    //
-    //
-    //addChild(vectorMovie);
-    
-    //var loadedMovieClip:MovieClip =  cast event.target.loader.content;
     vectorMovie =  cast event.target.loader.content;
     
     var scale:Float = 0.5;
@@ -345,9 +333,9 @@ class VectorPlaceholderView extends APlaceholder {
     bitmapInfo.draw(vectorMovie, matrix, null, null, null, true);
     bitmap = new Bitmap(bitmapInfo);
     
-    trace("size_diffrence");
-    trace(bitmap.width);
-    trace(vectorMovie.width);
+//    trace("size_diffrence");
+//    trace(bitmap.width);
+//    trace(vectorMovie.width);
     
     updateBackdrop(0x888888);
     createLines();
@@ -373,18 +361,15 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function onUpdatePlaceholder(event:Event):Void{
-    //storedAlign       = vectorFileAlign;
-    ////vectorFile.setText(insertTags(textWithTags));
-    //anchorPoint       = calculateAnchorPoint();
-    //repossition       = true;
-    //storeTags();
-    //removeChild(vectorMovie);
-    //vectorFile = null;
-    //loadVectorFile();
+
     
-    trace('update vectorView');
-    
-    
+    switch ( GLOBAL.printType )
+    {
+      case CONST.STD_PMS_COLOR:{
+        unfoilify();
+        trace(GLOBAL.stdPmsColor);
+      }
+    }
   }
   
   override public function setFocus(b:Bool):Void{
@@ -464,7 +449,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onRemovedFromStage(e:Event){
-    trace('onRemovedFromStage');
+    //trace('onRemovedFromStage');
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }

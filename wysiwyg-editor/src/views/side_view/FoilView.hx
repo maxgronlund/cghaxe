@@ -7,9 +7,9 @@ class FoilView extends PropertyView, implements IView{
 	}
 	
 	override public function init():Void{
-		selectButton.init( controller,
-						new Point(190,30), 
-						new FoilViewButton(), 
-						new Parameter( EVENT_ID.SHOW_FOIL));
+    selectButton.init( controller,
+                        new Point(190,30), 
+                        new FoilViewButton(), 
+                        new Parameter( EVENT_ID.SHOW_FOIL));
 	}
 }

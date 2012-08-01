@@ -94,15 +94,15 @@
         <!-- V 2.0 -->
         <bitmap id="AddOnsViewBack" import="library/images/add_ons_view.png" />
         <bitmap id="BlankBack" import="library/images/blank_back.png" />
-        <bitmap id="ColorPickerBitmap" import="library/images/color_picker.jpg" />
-        <bitmap id="CustomPMSPickerBitmap" import="library/images/custom_pms_picker.jpg" />
+        <bitmap id="ColorPickerBitmap" import="library/images/color_picker.png" />
+        <bitmap id="CustomPMSPickerBitmap" import="library/images/custom_pms_picker.png" />
         <bitmap id="GaramondViewBack" import="library/images/garamond_view.png" />
         <bitmap id="GreetingsPickerBack" import="library/images/greetings_picker.png" />
-        <bitmap id="FoilPickerBitmap" import="library/images/foil_picker.jpg" />
+        <bitmap id="FoilPickerBitmap" import="library/images/foil_picker.png" />
         <bitmap id="FoilTexture" import="library/images/foil_texture.jpg" />		
         <bitmap id="FoilViewBack" import="library/images/foil_view.png" />
         <bitmap id="LogoViewBack" import="library/images/logo_view.png" />
-        <bitmap id="StdPMSPickerBitmap" import="library/images/std_pms_picker.jpg" />
+        <bitmap id="StdPMSPickerBitmap" import="library/images/std_pms_picker.png" />
         <bitmap id="PlaceholdersBackBitmap" import="library/images/placeholder_view.png" />
         <bitmap id="PriceViewBack" import="library/images/price_view.png" />
         <bitmap id="ColorPickerBitmap" import="library/images/color_picker.jpg" />

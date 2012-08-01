@@ -256,9 +256,17 @@ class TextPlaceholderView extends APlaceholder{
 
   private function loadFont():Void{
     
+    switch ( GLOBAL.printType )
+    {
+      case CONST.STD_PMS_COLOR:{
+        //unfoilify();
+        fontColor = GLOBAL.stdPmsColor;
+      }
+    }
+    
     fontFileName                  = GLOBAL.Font.fileName;
     fontSize                      = GLOBAL.Font.fontSize;
-    fontColor                     = GLOBAL.Font.fontColor;
+    
     fontAlign                     = GLOBAL.Font.fontAlign;
     fontLeading                   = GLOBAL.Font.leading;
     letterSpacing                 = GLOBAL.Font.letterSpacing;
@@ -444,9 +452,6 @@ class TextPlaceholderView extends APlaceholder{
     param.setString(getPlaceholderType());
     GLOBAL.Application.dispatchParameter(param);
   }
-  
-  
-  
   
   override private function onMouseOut(e:MouseEvent){
     mouseOver = false;

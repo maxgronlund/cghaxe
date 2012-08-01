@@ -70,7 +70,6 @@ class TextController extends Controller, implements IController{
     GLOBAL.Font.fontColor = param.getUInt();
     GLOBAL.text_view.setParam(param);
     updatePlaceholder();
-    
   }
   
   private function onLineSpaceSelected(param:IParameter):Void{
