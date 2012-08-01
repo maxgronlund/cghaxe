@@ -236,14 +236,14 @@ class PageView extends View{
   
   private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
     
-    trace('parseVectorPlaceholder\n', xml.toString());
+//    trace('parseVectorPlaceholder\n', xml.toString());
     
     var url:String;
     for(url_xml in xml.elementsNamed("url") ) {
       url = url_xml.firstChild().nodeValue.toString();
     }
     
-    trace(url);
+  //  trace(url);
     
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);

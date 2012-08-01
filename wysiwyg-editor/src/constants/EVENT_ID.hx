@@ -180,7 +180,7 @@ class EVENT_ID  {
   public static inline var FONT                              = "font";
   public static inline var FONT_STYLE                        = "text_style";
   
-  public static inline var FONT_COLOR_SELECTED                = "font_color_selected";
+  public static inline var FONT_COLOR_SELECTED                = "font_color_selected"; //!!!
   public static inline var NO_COLOR_SELECTED                  = "no_color_selected";
   public static inline var TEXT_ALIGN:String                  = "text_align";
   public static inline var SET_PLACEHOLDER_XML:String        = "set_placeholder_xml"; 
@@ -230,6 +230,10 @@ class EVENT_ID  {
   public static inline var ENABLE_FOIL_PICKER                 = "enable_foil_picker";
   public static inline var ENABLE_COLOR_PICKER                = "enable_color_picker";
   public static inline var POSITION_PICKERS                   = "positions_pickers";
+  
+  public static inline var STD_PMS_COLOR_SELECTED             = "std_pms_color_selected";
+  
+  
   
   
   

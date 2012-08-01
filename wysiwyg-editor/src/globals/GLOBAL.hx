@@ -56,10 +56,14 @@ class GLOBAL  {
   public static var selection_view:IView;
   public static var greetingsView:IView;
   public static var foil:Foil;
-  public static var greetingColor:UInt;
+ 
+  
+  public static var printType:String;
+  public static var stdPmsColor:UInt;
   public static var foilColor:UInt;
   public static var pms1Color:UInt;
-  public static var gpms2Color:UInt;
+  public static var pms2Color:UInt;
+  public static var color:UInt;
   
   // controllers
   public static var text_controller:IController;

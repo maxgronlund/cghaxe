@@ -11,8 +11,6 @@ class TextView extends PropertyView, implements IView{
   private var fontSizePopup:FontSizePopup;
   private var addTextfieldButton:OneStateButton;
   private var textAlign:TextAlign;
-  private var openColorPickerButton:TwoStateButton;
-  private var colorPicker:ColorPicker;
   
   public function new(textController:IController){	
     super(textController);
@@ -24,10 +22,7 @@ class TextView extends PropertyView, implements IView{
     lineSpacePopup 				= new LineSpacePopup(textController);
     textAlign 	 					= new TextAlign(textController);
     fontSizePopup 				= new FontSizePopup(textController);
-    openColorPickerButton = new TwoStateButton();
-    colorPicker						= new ColorPicker(textController);
     addTextfieldButton 		= new OneStateButton();
-    colorPicker.visible 	= false;
   }
   
   override public function init():Void {
@@ -38,11 +33,7 @@ class TextView extends PropertyView, implements IView{
         new Parameter( EVENT_ID.SHOW_TEXT)); //!!! rename
         
     textAlign.init();
-    
-    openColorPickerButton.init(controller,
-                    new Point(32,32), 
-                    new ColorPickerButton(), 
-                    new Parameter( EVENT_ID.OPEN_COLOR_PICKER));
+
                     
     addTextfieldButton.init(controller,
                     new Point(150,22), 
@@ -72,14 +63,6 @@ class TextView extends PropertyView, implements IView{
     addChild(textAlign);
     textAlign.x = 8;
     textAlign.y = 258;
-    
-    addChild(openColorPickerButton);
-    openColorPickerButton.x = 125;
-    openColorPickerButton.y = 258;
-    
-    addChild(colorPicker);
-    colorPicker.x = 5;
-    colorPicker.y = 294;
     
     addChild(addTextfieldButton);
     addTextfieldButton.x = 20;
@@ -134,24 +117,6 @@ class TextView extends PropertyView, implements IView{
       }
       case EVENT_ID.ALIGN_RIGHT:{
         textAlign.setParam(param);
-      }
-      
-      case EVENT_ID.FONT_COLOR_SELECTED:{
-        trace('is there a free meel');
-        colorPicker.showView('Look an UFO', false);
-        openColorPickerButton.setOn(false);
-      }
-      
-      case EVENT_ID.OPEN_COLOR_PICKER:{
-        if(param.getBool())
-          this.setChildIndex(colorPicker, this.numChildren - 1);
-          colorPicker.showView('Love Rocks', param.getBool());
-      }
-      
-      case EVENT_ID.NO_COLOR_SELECTED:{
-        trace('no color');
-        colorPicker.showView('Love Rocks', false);
-        openColorPickerButton.setOn(false);
       }
       
       case EVENT_ID.UPDATE_FONT_PANE:{

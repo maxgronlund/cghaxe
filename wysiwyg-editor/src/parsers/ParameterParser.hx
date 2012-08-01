@@ -76,12 +76,12 @@ class ParameterParser
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           
           GLOBAL.color_view.setFloat('ding dong', 0.0);
-          trace('so far so good');
+          //trace('so far so good');
           
           GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
-          trace('well true');
+          //trace('well true');
           
           
         } 
@@ -103,7 +103,7 @@ class ParameterParser
       //trace('start_load_seq: ', params.start_load_seq);
       Application.setString(EVENT_ID.START_LOAD_SEQ, 'bang');
     }
-    trace('end of parse');
+    //trace('end of parse');
 	}
 	
 

@@ -85,7 +85,7 @@ class VectorPlaceholderView extends APlaceholder {
     foilTexture                       = new FoilTexture();
     lines                             = new Vector<Shape>();
     
-    trace('new');
+//    trace('new');
 
   }
   
@@ -256,8 +256,7 @@ class VectorPlaceholderView extends APlaceholder {
       foiled = false;
     }
   }
-  
-  
+
   private function onAddedToStage(e:Event){
     
     loadVectorFile();
@@ -349,9 +348,9 @@ class VectorPlaceholderView extends APlaceholder {
     bitmapInfo.draw(vectorMovie, matrix, null, null, null, true);
     bitmap = new Bitmap(bitmapInfo);
     
-    trace("size_diffrence");
-    trace(bitmap.width);
-    trace(vectorMovie.width);
+//    trace("size_diffrence");
+//    trace(bitmap.width);
+//    trace(vectorMovie.width);
     
     updateBackdrop(0x888888);
     createLines();
@@ -376,22 +375,16 @@ class VectorPlaceholderView extends APlaceholder {
   
   private function hitTest():Void{
     pageView.hitTest();
-  }
-  
-  override public function onUpdatePlaceholder(event:Event):Void {
-    foilify(GLOBAL.Font.fontColor);
-    //storedAlign       = vectorFileAlign;
-    ////vectorFile.setText(insertTags(textWithTags));
-    //anchorPoint       = calculateAnchorPoint();
-    //repossition       = true;
-    //storeTags();
-    //removeChild(vectorMovie);
-    //vectorFile = null;
-    //loadVectorFile();
+  }    
     
-    trace('update vectorView');
-    
-    
+  override public function onUpdatePlaceholder(event:Event):Void{    
+    switch ( GLOBAL.printType )
+    {
+      case CONST.STD_PMS_COLOR:{
+        unfoilify();
+        trace(GLOBAL.stdPmsColor);
+      }
+    }
   }
   
   override public function setFocus(b:Bool):Void{
@@ -471,7 +464,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onRemovedFromStage(e:Event){
-    trace('onRemovedFromStage');
+    //trace('onRemovedFromStage');
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }
