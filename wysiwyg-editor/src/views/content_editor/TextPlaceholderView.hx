@@ -109,7 +109,6 @@ class TextPlaceholderView extends APlaceholder{
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
     loadFont();
-    
   }
    
   private function handleKeyboard(b:Bool):Void{
@@ -155,7 +154,8 @@ class TextPlaceholderView extends APlaceholder{
   
   private function onKeyPressed(event:KeyboardEvent):Void{
     var step:Float = 150/72;
-    //trace(event.keyCode);
+    trace("Keycode: ");
+    trace(event.keyCode);
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 

@@ -31,6 +31,7 @@ import flash.display.Shape;
 import flash.Vector;
 import flash.display.Sprite;
 import flash.geom.Matrix;
+import flash.geom.ColorTransform;
 
 
 
@@ -63,6 +64,8 @@ class VectorPlaceholderView extends APlaceholder {
   private var lines:Vector<Shape>;
   
   private var bitmap:Bitmap;
+  private var colorTransform:ColorTransform;
+  private var default_colorTransform:ColorTransform;
   
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
@@ -214,12 +217,23 @@ class VectorPlaceholderView extends APlaceholder {
     return foilTextureOverlay;
   }
   
+  public function color(color:Int):Void {
+    colorTransform = vectorMovie.transform.colorTransform;
+    colorTransform.color = color;
+    vectorMovie.transform.colorTransform = colorTransform;
+  }
+  
+  public function uncolor():Void{
+    vectorMovie.transform.colorTransform = default_colorTransform;
+  }
+  
   public function isFoiled():Bool {
     return foiled == true;
   }
   
   public function foilify(color = 0xFFFFFF):Void {
     unfoilify();
+    uncolor();
     foilTextureOverlay = generateFoilOverlay(color);
     
     foil.addChild(foilTexture);
@@ -289,7 +303,7 @@ class VectorPlaceholderView extends APlaceholder {
   
   private function onKeyPressed(event:KeyboardEvent):Void{
     var step:Float = 150/72;
-
+    trace(event.keyCode);
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 
@@ -320,6 +334,7 @@ class VectorPlaceholderView extends APlaceholder {
     var scale:Float = 0.5;
     
     addChild(vectorMovie);
+    default_colorTransform = vectorMovie.transform.colorTransform;
     vectorMovie.width *= scale;
     vectorMovie.height *= scale;
     
@@ -341,7 +356,9 @@ class VectorPlaceholderView extends APlaceholder {
     createLines();
     createAlertBox();
     
-    foilify(0x00FF00);
+    //
+    color(0xFF0000);
+    //foilify(0x00FF00);
     
     backdrop.width = vectorMovie.width;
     backdrop.height = vectorMovie.height;
@@ -358,11 +375,9 @@ class VectorPlaceholderView extends APlaceholder {
   
   private function hitTest():Void{
     pageView.hitTest();
-  }
-  
-  override public function onUpdatePlaceholder(event:Event):Void{
-
+  }    
     
+  override public function onUpdatePlaceholder(event:Event):Void{    
     switch ( GLOBAL.printType )
     {
       case CONST.STD_PMS_COLOR:{

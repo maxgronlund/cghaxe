@@ -53,7 +53,7 @@ class CGHitTest
     maskX = 0;
     maskY = 0;
     var count = 0;
-    var non_transparent_pixels = 0;
+    //var non_transparent_pixels = 0;
     
     var hitColor:UInt = 0xFF000000;
     
@@ -63,7 +63,7 @@ class CGHitTest
     	{	
     		if(bitmapData.getPixel32(Std.int(x), Std.int(y)) != 0x00000000)
     		{
-    		  non_transparent_pixels += 1;
+    		  //non_transparent_pixels += 1;
     		  
     		  var pixelX:Int = Std.int((x-bitmapX+maskX)*(150/71));
     			var pixelY:Int = Std.int((y-bitmapY+maskY)*(150/72));
@@ -77,8 +77,8 @@ class CGHitTest
     	}
     }
     
-//    trace("Nontransparent_pixels:");
-//    trace(non_transparent_pixels);
+    //trace("Nontransparent_pixels:");
+    //trace(non_transparent_pixels);
     
     return count;
   }
