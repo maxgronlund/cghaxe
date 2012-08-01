@@ -194,7 +194,7 @@ class PageView extends View{
   }
   
   private function loadPagePresetXML():Void{
-    trace('+++++++++++++++++++++++++++++++++++++++++++++++++loadPagePresetXML');
+//    trace('+++++++++++++++++++++++++++++++++++++++++++++++++loadPagePresetXML');
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -222,7 +222,7 @@ class PageView extends View{
     for( plc_type in xml.elementsNamed("placeholder-type") ){
       placeholder_type = plc_type.firstChild().nodeValue;
     }
-    trace(placeholder_type);
+//    trace(placeholder_type);
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
@@ -371,17 +371,30 @@ class PageView extends View{
   }
   
   public function hitTest():Void {
-    if(inFocus.getPlaceholderType() == 'text_place_holder'){
-      var textField:TextField = inFocus.getTextField();
-      if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-                        
-        if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
-          inFocus.alert(true);
-        else
-          inFocus.alert(false);
-          
-      }
+    switch(inFocus.getPlaceholderType()) {
+      case 'text_place_holder':
+        hitTestTextPlaceholder();
+        
+      case "vector_placeholder":
+        hitTestVectorPlaceholder();
     }
+  }
+  
+  private function hitTestTextPlaceholder():Void {
+    var textField:TextField = inFocus.getTextField();
+    if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
+      if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
+        inFocus.alert(true);
+      else
+        inFocus.alert(false);
+    }
+  }
+  
+  private function hitTestVectorPlaceholder():Void {
+    if(GLOBAL.hitTest.bitmapHitBitmapMask(inFocus.getBitmapMask(), -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
+      inFocus.alert(true);
+    else
+      inFocus.alert(false);
   }
 
   private function onMouseOver(e:MouseEvent):Void{
@@ -523,7 +536,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    trace('allImagesLoaded');
+//    trace('allImagesLoaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;

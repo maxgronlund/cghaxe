@@ -30,6 +30,8 @@ import flash.events.KeyboardEvent;
 import flash.display.Shape;
 import flash.Vector;
 import flash.display.Sprite;
+import flash.geom.Matrix;
+
 
 
 class VectorPlaceholderView extends APlaceholder {
@@ -51,6 +53,7 @@ class VectorPlaceholderView extends APlaceholder {
 
   private var focus:Bool;
   private var collition:Bool;
+  private var alertBox:Sprite;
   private var foiled:Bool;
   private var foil:Sprite;
   private var foilTexture:Bitmap;
@@ -58,6 +61,8 @@ class VectorPlaceholderView extends APlaceholder {
   private var foilBitmapDataForOverlay:BitmapData;
   private var backdrop:Sprite;
   private var lines:Vector<Shape>;
+  
+  private var bitmap:Bitmap;
   
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
@@ -79,6 +84,10 @@ class VectorPlaceholderView extends APlaceholder {
     
     trace('new');
 
+  }
+  
+  override public function getBitmapMask():Bitmap {
+    return bitmap;
   }
   
   private function updateBackdrop(c:UInt):Void{
@@ -122,6 +131,7 @@ class VectorPlaceholderView extends APlaceholder {
     
   }
   
+  
   private function createLine(start:Point, end:Point):Void{
     var line:Shape = new Shape();
     line.graphics.lineStyle(1, 0x000000, 1);
@@ -135,7 +145,7 @@ class VectorPlaceholderView extends APlaceholder {
     // left 
     drawVertical( 0, backdrop.x);
     // bottom
-    drawHorizontal( 3, this.height-8);
+    drawHorizontal( 3, backdrop.height);
     // right
     drawVertical( 6, backdrop.x+backdrop.width );
     // top
@@ -163,6 +173,21 @@ class VectorPlaceholderView extends APlaceholder {
      lines[offset+1].y  = backdrop.height/2;
      lines[offset+2].y  = backdrop.height;
   }
+  
+  private function createAlertBox():Void{
+    
+    alertBox = new Sprite();
+    alertBox.graphics.lineStyle(72/150,0xff0000);
+    alertBox.graphics.beginFill(0xff8888);
+    alertBox.graphics.drawRect(0,0,100,100);
+    alertBox.graphics.endFill();
+    alertBox.visible = false;
+    alertBox.width        = vectorMovie.width;
+    alertBox.height       = vectorMovie.height;
+    addChild(alertBox);
+  }
+  
+  
   
   private function generateFoilOverlay(color):Bitmap {
     if(foilBitmapDataForOverlay == null) {
@@ -301,22 +326,34 @@ class VectorPlaceholderView extends APlaceholder {
     //
     //addChild(vectorMovie);
     
-    var loadedMovieClip:MovieClip =  cast event.target.loader.content;
+    vectorMovie =  cast event.target.loader.content;
+    
+    var scale:Float = 0.5;
+    
+    addChild(vectorMovie);
+
+    vectorMovie.width *= scale;
+    vectorMovie.height *= scale;
+    
+    
+    var bitmapScale:Float = 72/150 * scale;
+    var bounds = vectorMovie.getBounds(vectorMovie);
+    var bitmapInfo:BitmapData = new BitmapData(Std.int(bounds.width*bitmapScale+0.5), Std.int(bounds.height*bitmapScale+0.5), true, 0x00000000);
+    var matrix:Matrix = new Matrix();
+    matrix.scale(bitmapScale, bitmapScale);
+    
+    bitmapInfo.draw(vectorMovie, matrix, null, null, null, true);
+    bitmap = new Bitmap(bitmapInfo);
+    
+    trace("size_diffrence");
+    trace(bitmap.width);
+    trace(vectorMovie.width);
     
     updateBackdrop(0x888888);
     createLines();
-    addChild(loadedMovieClip);
-    //loadedMovieClip.width *= 0.5;
-    //loadedMovieClip.height *= 0.5;
+    createAlertBox();
     
-    vectorMovie =  cast event.target.loader.content;
-    
-    addChild(vectorMovie);
-    vectorMovie.width *= 0.5;
-    vectorMovie.height *= 0.5;
-    
-    
-    foilify(0xFF0000);
+    foilify(0x00FF00);
     
     backdrop.width = vectorMovie.width;
     backdrop.height = vectorMovie.height;
@@ -325,6 +362,8 @@ class VectorPlaceholderView extends APlaceholder {
     var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
     param.setInt(id);
     model.setParam(param);
+    
+    setFocus(false);
     
 
   }
@@ -343,6 +382,10 @@ class VectorPlaceholderView extends APlaceholder {
     //removeChild(vectorMovie);
     //vectorFile = null;
     //loadVectorFile();
+    
+    trace('update vectorView');
+    
+    
   }
   
   override public function setFocus(b:Bool):Void{
@@ -389,6 +432,15 @@ class VectorPlaceholderView extends APlaceholder {
     pageView.setPlaceholderInFocus(this);
     
     if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+    
+    updateSideView();
+  }
+  
+  //!!! move this to super class
+  private function updateSideView(): Void{
+    var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
+    param.setString(getPlaceholderType());
+    GLOBAL.Application.dispatchParameter(param);
   }
   
   override private function onMouseOut(e:MouseEvent){
@@ -422,8 +474,7 @@ class VectorPlaceholderView extends APlaceholder {
     return 'vector_placeholder';
   }
   
-//  override public function alert(b:Bool):Void{
-//      collition = b;
-//      vectorFile.alert(b);
-//  }
+  override public function alert(b:Bool):Void{
+      alertBox.visible = b;
+  }
 }

@@ -26,6 +26,7 @@ class Main
   
   // controlers
   private var applicationController:IController;
+  private var colorController:IController;
   private var textController:IController;
   private var textSuggestionController:IController;
   private var designsController:IController;
@@ -47,6 +48,7 @@ class Main
   
   // views
   private var applicationView:ApplicationView;
+  private var colorView:AView;
   private var sideView:AView;
   private var textView:AView;
   private var textSuggestionView:AView;
@@ -105,7 +107,6 @@ class Main
   private function buildApp():Void {
     // system   
     Fonts                       = new SystemFonts();
-    //userParser                  = new UserParser();
     TEXT_SUGGESTION.text        = 'please';
     
     // models
@@ -123,6 +124,7 @@ class Main
     
     // controllers
     applicationController       = new ApplicationController();
+    colorController             = new ColorController();
     sidebarController           = new SidebarController();
     pageSelectController        = new PageController();
     menuController              = new MenuController();
@@ -143,6 +145,7 @@ class Main
                                 
     // views                    
     applicationView             = new ApplicationView(applicationController);
+    colorView                   = new ColorView(colorController);
     sideView                    = new SideView(sidebarController);
     textView                    = new TextView(textController);
     textSuggestionView          = new TextSuggestionView(textSuggestionController);
@@ -166,7 +169,6 @@ class Main
     setGlobalViews();
     
     // system
-    //hitTest = new CGHitTest();
     GLOBAL.hitTest = new CGHitTest();
     
     init();
@@ -182,7 +184,6 @@ class Main
     GLOBAL.Pages          = Pages;
 //    GLOBAL.DesignImages   = DesignImages;
 //    GLOBAL.Vectors        = Vectors;
-    
     GLOBAL.Designs        = Designs;
     GLOBAL.Greetings      = Greetings;
     GLOBAL.Zoom         	= new ZoomTools();
@@ -191,8 +192,8 @@ class Main
   }
   
   private function setGlobalViews():Void{
-  	// only for use by dedicated controllers
     GLOBAL.text_view                  = textView;
+    GLOBAL.color_view                 = colorView;
     GLOBAL.text_suggestion_view       = textSuggestionView;
     GLOBAL.designs_view               = designsView;
 //    GLOBAL.vectors_view               = vectorsView;
@@ -213,6 +214,7 @@ class Main
   }
   
   private function setGlobalControllers():Void{
+    GLOBAL.color_controller           = colorController;
     GLOBAL.text_controller            = textController;
     GLOBAL.text_suggestion_controller = textSuggestionController;
     GLOBAL.designs_controller         = designsController;
@@ -238,6 +240,7 @@ class Main
 
     // views
     menuView.init();
+    colorView.init();
     textView.init();
     textSuggestionView.init();
     designsView.init();
@@ -279,13 +282,7 @@ class Main
     applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
     gridView.mouseChildren = false;
     gridView.mouseEnabled = false;
-    
-    //Lib.current.addChild(foil);
-    
-    //applicationView.addView(selectionView, 0,0);
-    //selectionView.addView(greetingsView, 0, 0, 'greetings');
 
-    
     // position views
     sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
   }

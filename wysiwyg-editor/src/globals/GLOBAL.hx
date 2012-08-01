@@ -37,6 +37,7 @@ class GLOBAL  {
   
   // views
   public static var text_view:AView;
+  public static var color_view:AView;
   public static var text_suggestion_view:AView;
   public static var designs_view:AView;
 //  public static var vectors_view:AView;
@@ -55,9 +56,14 @@ class GLOBAL  {
   public static var selection_view:IView;
   public static var greetingsView:IView;
   public static var foil:Foil;
+  public static var greetingColor:UInt;
+  public static var foilColor:UInt;
+  public static var pms1Color:UInt;
+  public static var gpms2Color:UInt;
   
   // controllers
   public static var text_controller:IController;
+  public static var color_controller:IController;
   public static var text_suggestion_controller:IController;
   public static var designs_controller:IController;
 //  public static var vectors_controller:IController;

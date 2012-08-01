@@ -39,12 +39,14 @@ class TextController extends Controller, implements IController{
 	}
   
   private function onPlaceholderSelected(param:IParameter):Void{
+    
+    trace('onPlaceholderSelected', param.getLabel());
     GLOBAL.Font.setXml(param.getString());
   }
 
   
   private function onFontSelected(param:IParameter):Void {
-//    trace('onFontSelected');
+//   trace('onFontSelected');
     
     fontStyleIndex = 0;
     // feedback to deselect old selected button
@@ -65,8 +67,6 @@ class TextController extends Controller, implements IController{
   }
   
   private function onFontColorSelected(param:IParameter):Void{
-    
-
     GLOBAL.Font.fontColor = param.getUInt();
     GLOBAL.text_view.setParam(param);
     updatePlaceholder();
@@ -102,8 +102,6 @@ class TextController extends Controller, implements IController{
   
   
   private function updatePlaceholder():Void{
-//    trace('update placeholder --------------------------------');
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
-  
   }
 }

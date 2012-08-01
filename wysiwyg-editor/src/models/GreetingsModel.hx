@@ -16,7 +16,7 @@ class GreetingsModel extends Model, implements IModel {
  }
  
   override public function setParam(param:IParameter):Void{
-
+    //trace(param.getLabel());
     switch ( param.getLabel() ){
       case EVENT_ID.GREETING_SELECTED:{
         greetingsXml = param.getXml();

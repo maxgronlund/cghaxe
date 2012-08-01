@@ -42,6 +42,10 @@ class PageModel extends Model, implements IModel
       case EVENT_ID.UPDATE_TEXT_TOOLS:{
         GLOBAL.text_view.setParam(param);
       }
+      
+      //case EVENT_ID.UPDATE_SIDE_VIEWS:{
+      //
+      //}
     }
 	}
 

@@ -28,11 +28,11 @@ class FoilController extends Controller, implements IController
 //		
 //	}
 	
-	override public function setParam(param:IParameter):Void{
-		switch ( param.getLabel() )
-		{
-			case EVENT_ID.SHOW_FOIL:
-				GLOBAL.side_view.showView(EVENT_ID.SHOW_FOIL, true);
-		}	
-	}
+  override public function setParam(param:IParameter):Void{
+  	switch ( param.getLabel() )
+  	{
+  		case EVENT_ID.SHOW_FOIL:
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_FOIL, true);
+  	}	
+  }
 }

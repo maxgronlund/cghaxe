@@ -37,7 +37,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function onParsePreset(e:IKEvent):Void{
-    trace('onParsePreset');
+//    trace('onParsePreset');
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
     //trace('-----------------');
     //trace(e.getXml().toString() );
@@ -69,7 +69,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function countPlaceholders(xml:Xml):Void{
-    trace('..countPlaceholders.');
+//    trace('..countPlaceholders.');
     var placeholders:UInt = 0;
     for(pages in xml.elementsNamed("pages") ) {
        for(page in pages.elementsNamed("page") ) {
@@ -312,6 +312,7 @@ class PresetModel extends Model, implements IModel
     variables.authenticity_token 			  = GLOBAL.authenticity_token;
     variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
     variables.xml_data 				          = Pages.getString('file_xml');
+    variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.preset_sibling_selected 	= productSelected;
     
     variables._method = 'put';

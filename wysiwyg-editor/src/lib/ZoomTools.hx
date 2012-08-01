@@ -30,7 +30,7 @@ class ZoomTools
       zoomFactor = Std.parseFloat(stage_zoom.firstChild().nodeValue.toString())/1000;
       
     zoomFactor;//  *= toScreenFactor;
-    trace(zoomFactor);
+    //trace(zoomFactor);
   }
   
 
@@ -59,7 +59,7 @@ class ZoomTools
   }	
   
   public function resetZoom():Void{
-    trace('resetZoom');
+    //trace('resetZoom');
     zoomFactor = 1;
     zoom = 1/zoom;
     updateGui();
@@ -75,7 +75,7 @@ class ZoomTools
   }
   
   public function getZoomFactor():Float{
-    trace(zoomFactor * toScreenFactor);
+    //trace(zoomFactor * toScreenFactor);
     return zoomFactor * toScreenFactor;
     //return 0.48;
   }
