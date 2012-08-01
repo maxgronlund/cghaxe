@@ -189,9 +189,7 @@ class VectorPlaceholderView extends APlaceholder {
     alertBox.height       = vectorMovie.height;
     addChild(alertBox);
   }
-  
-  
-  
+
   private function generateFoilOverlay(color):Bitmap {
     if(foilBitmapDataForOverlay == null) {
       foilBitmapDataForOverlay = foilTexture.bitmapData.clone();
@@ -217,7 +215,7 @@ class VectorPlaceholderView extends APlaceholder {
     return foilTextureOverlay;
   }
   
-  public function color(color:Int):Void {
+  public function color(color:UInt):Void {
     colorTransform = vectorMovie.transform.colorTransform;
     colorTransform.color = color;
     vectorMovie.transform.colorTransform = colorTransform;
@@ -357,7 +355,7 @@ class VectorPlaceholderView extends APlaceholder {
     createAlertBox();
     
     //
-    color(0xFF0000);
+    //color(0xFF0000);
     //foilify(0x00FF00);
     
     backdrop.width = vectorMovie.width;
@@ -378,11 +376,17 @@ class VectorPlaceholderView extends APlaceholder {
   }    
     
   override public function onUpdatePlaceholder(event:Event):Void{    
-    switch ( GLOBAL.printType )
-    {
+    switch ( GLOBAL.printType ){
       case CONST.STD_PMS_COLOR:{
         unfoilify();
-        trace(GLOBAL.stdPmsColor);
+        color(GLOBAL.stdPmsColor);
+
+      }
+      
+      case CONST.FOIL_COLOR:{
+        //unfoilify();
+        //color(GLOBAL.stdPmsColor);
+        foilify(GLOBAL.stdPmsColor);
       }
     }
   }
@@ -464,7 +468,6 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onRemovedFromStage(e:Event){
-    //trace('onRemovedFromStage');
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }

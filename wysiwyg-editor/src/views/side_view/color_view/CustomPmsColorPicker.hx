@@ -12,7 +12,7 @@ class CustomPmsColorPicker extends View{
    }
 
    override public function init():Void{
-     backdrop           = new StdPMSPickerBitmap();
+     backdrop           = new CustomPMSPickerBitmap();
    }
     
    override public function onAddedToStage(e:Event){

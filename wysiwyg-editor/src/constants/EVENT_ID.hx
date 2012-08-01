@@ -232,6 +232,7 @@ class EVENT_ID  {
   public static inline var POSITION_PICKERS                   = "positions_pickers";
   
   public static inline var STD_PMS_COLOR_SELECTED             = "std_pms_color_selected";
+  public static inline var FOIL_COLOR_SELECTED                = "foil_color_selected";
   
   
   

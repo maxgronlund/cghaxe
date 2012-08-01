@@ -8,11 +8,11 @@ class FoilColorPicker extends View{
   
   public function new(controller:IController){
     super(controller);
-    backdrop     = new StdPMSPickerBitmap();
+    
    }
 
    override public function init():Void{
-     backdrop           = new StdPMSPickerBitmap();
+     backdrop     = new FoilPickerBitmap();
    }
     
    override public function onAddedToStage(e:Event){
@@ -38,7 +38,7 @@ class FoilColorPicker extends View{
      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
      
      var pixelValue:UInt = backdrop.bitmapData.getPixel(Std.int(e.localX), Std.int(e.localY));
-     var param:Parameter = new Parameter(EVENT_ID.STD_PMS_COLOR_SELECTED);
+     var param:Parameter = new Parameter(EVENT_ID.FOIL_COLOR_SELECTED);
      param.setUInt(pixelValue);
      controller.setParam(param);
    }
