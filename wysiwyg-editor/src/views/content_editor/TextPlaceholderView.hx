@@ -83,6 +83,7 @@ class TextPlaceholderView extends APlaceholder{
     repossition                       = false;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     collition                         = false;
+    foiled = false;
     
   }
   
@@ -92,17 +93,13 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   public function foilify():Void {
-    if( !this.isFoiled() ){
       Foil.initFiltersOn(this);
       foiled = true;
-    }
   }
   
   public function unfoilify():Void {
-    if( this.isFoiled() ){
       Foil.removeFiltersFrom(this);
       foiled = false;
-    }
   }
   
   private function onAddedToStage(e:Event){
@@ -284,7 +281,7 @@ class TextPlaceholderView extends APlaceholder{
     fontMovie             =  cast event.target.loader.content;
     addChild(fontMovie);
 	  
-	  //this.foilify();
+	  
 	  
 	
     font                  = fontMovie.font;
@@ -303,6 +300,8 @@ class TextPlaceholderView extends APlaceholder{
     var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
     param.setInt(id);
     model.setParam(param);
+    
+    this.foilify();
     
     //if(collition){
     //  font.alert(true);
