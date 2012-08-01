@@ -6,9 +6,11 @@ import flash.display.Bitmap;
 class ColorView extends PropertyView, implements IView{
   
   private var stdPmsColorPicker:StdPmsColorPicker;
+  private var customPms1ColorPicker:CustomPmsColorPicker;
+  private var customPms2ColorPicker:CustomPmsColorPicker;
   //private var stdPmsPickerBmp:Bitmap;
-  private var customPms1PickerBmp:Bitmap;
-  private var customPms2PickerBmp:Bitmap;
+  //private var customPms1PickerBmp:Bitmap;
+  //private var customPms2PickerBmp:Bitmap;
   private var foilPickerBmp:Bitmap;
   private var colorPickerBmp:Bitmap;
   
@@ -28,8 +30,8 @@ class ColorView extends PropertyView, implements IView{
     
     
     stdPmsColorPicker       = new StdPmsColorPicker(controller);
-    
-    
+    customPms1ColorPicker   = new CustomPmsColorPicker(controller);
+    customPms2ColorPicker   = new CustomPmsColorPicker(controller);
   }
   
   
@@ -43,10 +45,12 @@ class ColorView extends PropertyView, implements IView{
    
             
     
-    stdPmsColorPicker.init(); 
+    stdPmsColorPicker.init();
+    customPms1ColorPicker.init(); 
+    customPms2ColorPicker.init();
     //stdPmsPickerBmp         = new StdPMSPickerBitmap();
-    customPms1PickerBmp     = new CustomPMSPickerBitmap();
-    customPms2PickerBmp     = new CustomPMSPickerBitmap();
+    //customPms1PickerBmp     = new CustomPMSPickerBitmap();
+    //customPms2PickerBmp     = new CustomPMSPickerBitmap();
     foilPickerBmp           = new FoilPickerBitmap();
     colorPickerBmp          = new ColorPickerBitmap();
     
@@ -69,12 +73,7 @@ class ColorView extends PropertyView, implements IView{
     stdColorText.setColor(0x868686);
     stdColorText.visible = false;
     stdColorText.x = 10;
-    //
-    
-    addChild(stdPmsColorPicker);
-    stdPmsColorPicker.visible = false;
-    stdPmsColorPicker.x = 10;
-    
+
     addChild(customColor1Text);
     customColor1Text.setColor(0x868686);
     customColor1Text.visible = false;
@@ -100,6 +99,19 @@ class ColorView extends PropertyView, implements IView{
     //addChild(stdPmsPickerBmp);
     //stdPmsPickerBmp.x = 10;
     
+    addChild(stdPmsColorPicker);
+    stdPmsColorPicker.visible = false;
+    stdPmsColorPicker.x = 10;
+    
+    addChild(customPms1ColorPicker);
+    customPms1ColorPicker.visible = false;
+    customPms1ColorPicker.x = 10;
+    
+    addChild(customPms2ColorPicker);
+    customPms2ColorPicker.visible = false;
+    customPms2ColorPicker.x = 10;
+    
+    /*
     customPms1PickerBmp.visible = false;
     addChild(customPms1PickerBmp);
     customPms1PickerBmp.x = 10;
@@ -107,7 +119,7 @@ class ColorView extends PropertyView, implements IView{
     customPms2PickerBmp.visible = false;
     addChild(customPms2PickerBmp);
     customPms2PickerBmp.x = 10;
-    
+    */
     foilPickerBmp.visible = false;
     addChild(foilPickerBmp);
     foilPickerBmp.x = 10;
@@ -129,17 +141,19 @@ class ColorView extends PropertyView, implements IView{
       case 'vector_placeholder':{
         trace('to do: open color tool, hide test tool, dimm text selector button');
         //stdPmsPickerBmp.alpha         = 1.0;
-        stdPmsColorPicker.alpha       = 1.0;
-        customPms1PickerBmp.alpha     = 1.0;
-        customPms2PickerBmp.alpha     = 1.0;
-        foilPickerBmp.alpha           = 1.0;
-        colorPickerBmp.alpha          = 1.0;
+        stdPmsColorPicker.alpha         = 1.0;
+        customPms1ColorPicker.alpha     = 1.0;
+        customPms2ColorPicker.alpha     = 1.0;
+        //customPms1PickerBmp.alpha     = 1.0;
+        //customPms2PickerBmp.alpha     = 1.0;
+        foilPickerBmp.alpha             = 1.0;
+        colorPickerBmp.alpha            = 1.0;
       }
       default:{
         //stdPmsPickerBmp.alpha         = 0.3;
         stdPmsColorPicker.alpha       = 0.3;
-        customPms1PickerBmp.alpha     = 0.3;
-        customPms2PickerBmp.alpha     = 0.3;
+        customPms1ColorPicker.alpha   = 0.3;
+        customPms2ColorPicker.alpha   = 0.3;
         foilPickerBmp.alpha           = 0.3;
         colorPickerBmp.alpha          = 0.3;
       }
@@ -152,13 +166,13 @@ class ColorView extends PropertyView, implements IView{
     switch( param.getLabel() ){
       case EVENT_ID.SHOW_PMS_PICKER:{ 
         //stdPmsPickerBmp.visible       = param.getBool();
-        customPms1PickerBmp.visible   = param.getBool();
-        customPms2PickerBmp.visible   = param.getBool();
+        customPms1ColorPicker.visible   = param.getBool();
+        customPms2ColorPicker.visible   = param.getBool();
       }
       case EVENT_ID.ENABLE_PMS_PICKER:{ 
         //stdPmsPickerBmp.alpha         = param.getFloat();
-        customPms1PickerBmp.alpha     = param.getFloat();
-        customPms2PickerBmp.alpha     = param.getFloat();
+        customPms1ColorPicker.alpha     = param.getFloat();
+        customPms2ColorPicker.alpha     = param.getFloat();
       }
       case EVENT_ID.SHOW_FOIL_PICKER:     { foilPickerBmp.visible = param.getBool(); }
       case EVENT_ID.SHOW_COLOR_PICKER:    { colorPickerBmp.visible = param.getBool(); }
@@ -184,9 +198,8 @@ class ColorView extends PropertyView, implements IView{
     customColor2Text.visible        = true;
     foilColorText.visible           = true;
     colorText.visible               = true;
-    //stdPmsPickerBmp.visible         = true;
-    customPms1PickerBmp.visible     = true;
-    customPms2PickerBmp.visible     = true;
+    customPms1ColorPicker.visible     = true;
+    customPms2ColorPicker.visible     = true;
     foilPickerBmp.visible           = true;
     colorPickerBmp.visible          = true;
     
@@ -207,13 +220,13 @@ class ColorView extends PropertyView, implements IView{
       
       customColor1Text.y = pos;
       pos = customColor1Text.y + customColor1Text.height;
-      customPms1PickerBmp.y = pos;
-      pos = 10 + customPms1PickerBmp.y + customPms1PickerBmp.height; 
+      customPms1ColorPicker.y = pos;
+      pos = 10 + customPms1ColorPicker.y + customPms1ColorPicker.height; 
       
       customColor2Text.y = pos;
       pos = customColor2Text.y + customColor2Text.height;
-      customPms2PickerBmp.y = pos;
-      pos = 10 + customPms2PickerBmp.y + customPms2PickerBmp.height; 
+      customPms2ColorPicker.y = pos;
+      pos = 10 + customPms2ColorPicker.y + customPms2ColorPicker.height; 
     }
     
     if(foilPickerBmp.visible){

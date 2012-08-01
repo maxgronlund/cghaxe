@@ -7,9 +7,8 @@ package;
 
 class CONST {
 
-	public static inline var PRODUCT_SELECTED 						= "product_selected";
-//	public static inline var	ADMIN_MODE:String						= "admin_mode";
-	public static inline var LEFT:Bool 				= true;
+	public static inline var PRODUCT_SELECTED             	= "product_selected";
+	public static inline var LEFT:Bool                    = true;
 	
 	public static inline var STD_PMS_COLOR                      = "std_pms_color";
   public static inline var CUSTOM_PMS1_COLOR                  = "custom_pms1_color";

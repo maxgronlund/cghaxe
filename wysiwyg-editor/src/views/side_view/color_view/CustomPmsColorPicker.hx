@@ -4,7 +4,7 @@ import flash.events.MouseEvent;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
 
-class StdPmsColorPicker extends View{
+class CustomPmsColorPicker extends View{
   
   public function new(controller:IController){
     super(controller);
