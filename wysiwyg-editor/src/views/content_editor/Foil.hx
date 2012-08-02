@@ -105,8 +105,8 @@ class Foil extends MovieClip {
 		dropShadowOuter.angle = 40;
 		dropShadowOuter.color = 0x000000;
 		dropShadowOuter.alpha = 0.45;
-		dropShadowOuter.blurX = 1.1;
-		dropShadowOuter.blurY = 1.1;
+		dropShadowOuter.blurX = 1.5;
+		dropShadowOuter.blurY = 1.5;
 		dropShadowOuter.strength = 0.5;
 		dropShadowOuter.quality = 15;
 		dropShadowOuter.inner = false;
@@ -116,7 +116,7 @@ class Foil extends MovieClip {
 		var dropShadow:DropShadowFilter = new DropShadowFilter(); 
 		dropShadow.distance = 1.1;
 		dropShadow.angle = 40;
-		dropShadow.color = 0x000000;
+		dropShadow.color = 0x333333;
 		dropShadow.alpha = 1;
 		dropShadow.blurX = 1.1;
 		dropShadow.blurY = 1.1;
@@ -131,9 +131,9 @@ class Foil extends MovieClip {
 		innerGlow.angle = 40;
 		innerGlow.color = 0xFFFFFF;
 		innerGlow.alpha = 1;
-		innerGlow.blurX = 1.1;
-		innerGlow.blurY = 1.1;
-		innerGlow.strength = 1.3;
+		innerGlow.blurX = 1.15;
+		innerGlow.blurY = 1.15;
+		innerGlow.strength = 1.7;
 		innerGlow.quality = 15;
 		innerGlow.inner = false;
 		innerGlow.knockout = false;
