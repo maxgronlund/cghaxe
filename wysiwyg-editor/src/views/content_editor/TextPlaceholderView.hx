@@ -47,6 +47,7 @@ class TextPlaceholderView extends APlaceholder{
   private var textWithTags:String;
   private var fontSize:Int;
   private var fontColor:Int;
+  private var printType:String;
   private var fontLeading:Int;
   private var letterSpacing:Int;
   private var fontPosX:Float;
@@ -282,9 +283,8 @@ class TextPlaceholderView extends APlaceholder{
     addChild(fontMovie);
 	  
 	  
-	  
 	
-    font                  = fontMovie.font;
+    font        = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 
                 fontAlign, 
@@ -301,7 +301,13 @@ class TextPlaceholderView extends APlaceholder{
     param.setInt(id);
     model.setParam(param);
     
-    this.foilify();
+    switch ( printType ){
+      case CONST.FOIL_COLOR:{
+        this.foilify();
+        trace('folify');
+      }
+    }
+
     
     //if(collition){
     //  font.alert(true);
@@ -314,6 +320,16 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   override public function onUpdatePlaceholder(event:Event):Void{
+    printType = GLOBAL.printType;
+    
+    switch ( GLOBAL.printType ){
+      case CONST.STD_PMS_COLOR:{
+        fontColor = GLOBAL.stdPmsColor;
+      }
+      case CONST.FOIL_COLOR:{
+        fontColor = GLOBAL.foilColor;
+      }
+    }
 
     storedAlign       = fontAlign;
     //font.setText(insertTags(textWithTags));
@@ -431,7 +447,7 @@ class TextPlaceholderView extends APlaceholder{
     super.onMouseDown(e);
     GLOBAL.Font.fileName        = fontFileName;
     GLOBAL.Font.fontSize        = fontSize;
-    GLOBAL.Font.fontColor       = fontColor;
+    //GLOBAL.Font.fontColor       = fontColor;
     GLOBAL.Font.fontAlign       = fontAlign;
     GLOBAL.Font.leading         = fontLeading;
     GLOBAL.Font.letterSpacing   = letterSpacing;

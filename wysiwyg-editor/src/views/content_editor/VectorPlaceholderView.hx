@@ -380,12 +380,8 @@ class VectorPlaceholderView extends APlaceholder {
       case CONST.STD_PMS_COLOR:{
         unfoilify();
         color(GLOBAL.stdPmsColor);
-
       }
-      
       case CONST.FOIL_COLOR:{
-        //unfoilify();
-        //color(GLOBAL.stdPmsColor);
         foilify(GLOBAL.stdPmsColor);
       }
     }

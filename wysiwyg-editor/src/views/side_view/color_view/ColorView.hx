@@ -145,14 +145,13 @@ class ColorView extends PropertyView, implements IView{
         foilColorPicker.alpha           = 1.0;
 
 
-        colorPickerBmp.alpha            = 1.0;
+        colorPickerBmp.alpha            = 0.3;
       }
       default:{
-        //stdPmsPickerBmp.alpha         = 0.3;
-        stdPmsColorPicker.alpha         = 0.3;
-        customPms1ColorPicker.alpha     = 0.3;
-        customPms2ColorPicker.alpha     = 0.3;
-        foilColorPicker.alpha           = 0.3;
+        stdPmsColorPicker.alpha         = 1.0;
+        customPms1ColorPicker.alpha     = 1.0;
+        customPms2ColorPicker.alpha     = 1.0;
+        foilColorPicker.alpha           = 1.0;
         colorPickerBmp.alpha            = 0.3;
 
       }
