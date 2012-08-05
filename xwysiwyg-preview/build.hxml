@@ -1,5 +1,5 @@
 #build file
--cp src
+-cp ../wysiwyg-editor/src
 # application specific libraries
 -cp ../wysiwyg-editor/src/constants
 -cp ../wysiwyg-editor/src/globals

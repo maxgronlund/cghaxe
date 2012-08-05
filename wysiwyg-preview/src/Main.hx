@@ -108,7 +108,7 @@ class Main
     // system   
     Fonts                       = new SystemFonts();
     TEXT_SUGGESTION.text        = 'please';
-    
+        
     // models
     Application                 = new ApplicationModel();
     Menu                        = new MenuModel();
@@ -265,7 +265,7 @@ class Main
     
     // add views
     Lib.current.addChild(applicationView);
-    Lib.current.addChild(sideView);
+    //Lib.current.addChild(sideView);
     applicationView.addView(desktopView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
 /*    
     sideView.addView(textView, 0,0,EVENT_ID.SHOW_TEXT);
@@ -277,8 +277,8 @@ class Main
     sideView.addView(priceView, 0,180,EVENT_ID.SHOW_PRICES);
     sideView.addView(blindView, 0,430,EVENT_ID.BLIND_VIEW);
 */    
-    applicationView.addView(menuView, 0,0);
-    applicationView.addView(pageSelectorView, 0, SIZE.MENU_VIEW_HEIGHT);
+    //applicationView.addView(menuView, 0,0);
+    applicationView.addView(pageSelectorView, 0, 520);
     applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
     gridView.mouseChildren = false;
     gridView.mouseEnabled = false;

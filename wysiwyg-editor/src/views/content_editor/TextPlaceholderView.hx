@@ -94,28 +94,8 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   public function foilify():Void {
-      var foil = new MovieClip();
-      var foilTexture = new FoilTexture();
-      foil.addChild(foilTexture);
-      foilTexture.width = this.width;
-      foilTexture.height = this.height;
-      this.addChild(foil);
-      this.addChild(fontMovie);
-      this.mask = fontMovie;
       Foil.initFiltersOn(this);
-      
       foiled = true;
-      
-      
-      
-      
-      //var foilTexture = new FoilTexture();
-      //addChild(foilTexture);
-      //
-      //foilTexture.mask = fontMovie;
-      //Foil.initFiltersOn(foilTexture);
-      //
-      //foiled = true;
   }
   
   public function unfoilify():Void {
@@ -333,7 +313,7 @@ class TextPlaceholderView extends APlaceholder{
     //  }
     //}
 
-    foilify();
+    
     //if(collition){
     //  font.alert(true);
     //}

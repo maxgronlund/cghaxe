@@ -63,7 +63,6 @@ class PageView extends View{
     startPoint                    = new Point(0,0);
     placeholderHasMouse           = false;
     hideMaskPresent               = false;
-
   }
   
   override public function onAddedToStage(e:Event): Void{
