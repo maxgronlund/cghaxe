@@ -144,7 +144,7 @@ class FontBase extends MovieClip
   private function createAlertBox():Void{
     
     alertBox = new Sprite();
-    Lib.current.addChild(alertBox);
+    //Lib.current.addChild(alertBox);
     alertBox.graphics.lineStyle(1/scale,0xff0000);
     alertBox.graphics.beginFill(0xff8888);
     alertBox.graphics.drawRect(0,0,100,100);
@@ -156,7 +156,7 @@ class FontBase extends MovieClip
   private function createBackdrop():Void{
 
     backdrop = new Sprite();
-    Lib.current.addChild(backdrop);
+    //Lib.current.addChild(backdrop);
     backdrop.graphics.lineStyle(1/scale,0x888888);
     backdrop.graphics.beginFill(0xffffff);
     backdrop.graphics.drawRect(0,0,100,100);
