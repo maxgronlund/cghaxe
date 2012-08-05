@@ -32,7 +32,7 @@ import flash.display.Shape;
 import flash.Vector;
 
 
-class TextPlaceholderView extends APlaceholder{
+class TextPlaceholderView extends APlaceholder {
 	
   private var fontMovie:MovieClip;
   private var font:Dynamic;
@@ -62,6 +62,8 @@ class TextPlaceholderView extends APlaceholder{
   private var textString:String;
   private var collition:Bool;
   private var selectBox:SelectBox;
+  private var foiled:Bool;
+  private var was_foiled:Bool;
   
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
@@ -86,10 +88,10 @@ class TextPlaceholderView extends APlaceholder{
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     collition                         = false;
     foiled = false;
-    
+    was_foiled = false;
   }
   
-  private var foiled:Bool;
+  
   public function isFoiled():Bool {
     return foiled == true;
   }
@@ -287,11 +289,12 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   private function onFontLoaded(event:Event):Void { 
-    selectBox = new SelectBox();
+    selectBox = new SelectBox();    
     fontMovie             =  cast event.target.loader.content;
     
     addChild(selectBox);
     addChild(fontMovie);
+    
 	  
 	  
     font        = fontMovie.font;
@@ -302,9 +305,12 @@ class TextPlaceholderView extends APlaceholder{
                 letterSpacingToFont() , 
                 letterSpacing,
                 this); 
-    
+    trace("hmm");
+    selectBox.setFocus(false);
+    resizeBackdrop();
     restoreShowTags();
-    updateFocus();
+    //updateFocus();
+    
     if(repossition) moveToAnchorPoint();
     
     var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
@@ -435,33 +441,35 @@ class TextPlaceholderView extends APlaceholder{
       GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
       font.selectable(!GLOBAL.MOVE_TOOL);
       !GLOBAL.MOVE_TOOL ? showTags():hideTags();
-      
       selectBox.setFocus(true);  
-      trace("selectBox.setFocus(true);  ");
-      var tmp_width = fontMovie.width;
-      trace("got width");
-      trace(tmp_width);
-      //selectBox.resizeBackdrop(fontMovie.getWidth(), Std.int(fontMovie.height), Std.int(fontPosX), fontMovie.getCombindeMargins());
-      trace(fontMovie.getCombindeMargins());
-      selectBox.resizeBackdrop(Std.int(tmp_width), Std.int(fontMovie.height), Std.int(fontPosX), 150);
-      trace("selectBox.resizeBackdrop ");
-      //font.setFocus(true);
+      resizeBackdrop();
       trace("Focus set");
+      if(foiled == true){
+        unfoilify();
+        was_foiled = true;
+      }
     }else{
       hideTags();
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      if(!collition) {
+      if(!collition)
         selectBox.setFocus(false);
-        font.setFocus(false);
-      }
+      trace("Focus unset");
       super.resetMouse();
+      if(was_foiled == true){
+        foilify();
+        was_foiled = false;
+      }
     }
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
   }
   
+  private function resizeBackdrop():Void{
+    selectBox.resizeBackdrop(fontMovie.width, fontMovie.height, font.getTextField().x, font.getCombindeMargins());
+  }
+  
   public function textInputCapture():Void {
-    selectBox.resizeBackdrop(fontMovie.getWidth(), Std.int(fontMovie.height), Std.int(fontPosX), fontMovie.getCombindeMargins());
+    resizeBackdrop();
     hitTest();
     
   }
@@ -478,7 +486,7 @@ class TextPlaceholderView extends APlaceholder{
   override private function onMouseOver(e:MouseEvent){
     mouseOver = true;
     super.onMouseOver(e);
-    //font.selectable(true);
+    font.selectable(true);
   }
 
   override private function onMouseDown(e:MouseEvent){

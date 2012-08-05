@@ -45,7 +45,7 @@ class FontBase extends MovieClip
   }
   
   public function getCombindeMargins():Float {
-    return 150.0;
+    return combindeMargins;
   }
 
   public function init( size:Int, 
@@ -92,10 +92,6 @@ class FontBase extends MovieClip
     textField.scaleY                = scale;
     
     textField.x                     = 0; 
-    backdrop.width                  = textField.width-(scale* combindeMargins);
-    backdrop.height                 = textField.height;
-    backdrop.alpha                  = 0.5;
-    setFocus(false);
     textField.addEventListener(Event.CHANGE, textInputCapture);
 
       
