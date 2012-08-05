@@ -134,7 +134,15 @@ class PagesModel extends Model, implements IModel {
       	pageInFocus.onFontSelected(param);
       }
       case EVENT_ID.PAGE_SELECTED:{
-//        trace(param.getLabel(), param.getInt());
+        
+        trace(param.getLabel(), param.getInt());
+        //pageModels[param.getInt()].setParam( new Parameter(EVENT_ID.BUILD_PAGE_DESIGNS) );
+        
+        
+        
+        
+        
+        
         setPageFocus(param.getInt());
         dispatchParameter(param);
       }

@@ -17,18 +17,18 @@ class DesignsView extends PropertyView, implements IView{
     verticalScrollbar   = new VerticalScrollbar(designsController, EVENT_ID.DESIGN_SCROLL);
     addDesignButton     = new OneStateButton();
     
-    Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
-    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+    //Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
+    //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
   }
   
   
   override public function init():Void{
-//        trace('init');
+
     selectButton.init( controller,
               new Point(190,30), 
               new DesignsViewButton(), 
-              new Parameter( EVENT_ID.SHOW_PAGE_DESIGN));
+              new Parameter( EVENT_ID.SHOW_DESIGNS));
     
     addDesignButton.init(controller,
             new Point(150,22), 
@@ -57,34 +57,40 @@ class DesignsView extends PropertyView, implements IView{
     addChild(addDesignButton);
     addDesignButton.x = 20;
     addDesignButton.y = 488;
-  }
-  
-  private function onPageDesignsLoaded(e:KEvent):Void{
-    var designsXml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-
-    for(design in designsXml.elementsNamed('design')){
-      var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_BUTTON);
-      param.setXml(design);
-      designsPane.setParam(param);
-    }
-
-  }
-  
-  private function onLoadDefaultTool(e:IKEvent):Void{
-    //trace('onLoadDefaultTool');
-    //trace(designsPane.getFloat('height'));
-    //trace(designsScrollPane.getFloat('mask_height'));
     
-    verticalScrollbar.setSize(designsPane.getFloat('height'), designsScrollPane.getFloat('mask_height'));
+    
+    Pages.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onPageSelected);
   }
+  
+  private function onPageSelected(e:IKEvent):Void{
+   trace(e.getXml()); 
+  }
+  
+//  private function onPageDesignsLoaded(e:KEvent):Void{
+//    
+//    
+//    var designsXml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+//
+//    for(design in designsXml.elementsNamed('design')){
+//      var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_BUTTON);
+//      param.setXml(design);
+//      designsPane.setParam(param);
+//    }
+//
+//  }
+//  
+//  private function onLoadDefaultTool(e:IKEvent):Void{
+//  
+//   // verticalScrollbar.setSize(designsPane.getFloat('height'), designsScrollPane.getFloat('mask_height'));
+//  }
   
   override public function setParam(param:IParameter):Void{
 
-    switch( param.getLabel() ){
-      case EVENT_ID.DESIGN_SELECTED: {
-        designsPane.setParam(param);
-      }
-    }
+    //switch( param.getLabel() ){
+    //  case EVENT_ID.DESIGN_SELECTED: {
+    //    designsPane.setParam(param);
+    //  }
+    //}
 	}
 	
 	override public function setFloat(id:String, f:Float):Void{

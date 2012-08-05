@@ -54,18 +54,17 @@ class EVENT_ID  {
   public static inline var DESELECT_PLACEHOLDERS            = "deselect_placeholders";
 //  public static inline var RESET_MOUSE                      = "reset_mouse";
   
-  public static inline var PAGEDESIGN_FILE_URL              = "pagedesign_file_url";
+//  public static inline var PAGEDESIGN_FILE_URL              = "pagedesign_file_url";
 //  public static inline var PAGEDESIGNS_FILE_URL             = "pagedesigns_file_url";
   public static inline var PAGEDESIGN_FILE_LOADED           = "pagedesign_file_loaded";
 //  public static inline var PRESET_PAGEDESIGN_FILE_URL       = "preset_pagedesign_url";
-  public static inline var PRESET_PAGEDESIGN_LOADED         = "preset_pagedesign_loaded";
+//  public static inline var PRESET_PAGEDESIGN_LOADED         = "preset_pagedesign_loaded";
   public static inline var PRESET_PAGEDESIGN_XML            = "preset_pagedesign_xml";
-
   public static inline var PAGEDESIGN_FILE                  = "pagedesign_file";
-
   public static inline var PASS_DESIGN_FILE:String          = "pass_design_file";
   public static inline var PAGE_DESIGNS_LOADED:String       = "page_designs_loaded";
-  public static inline var SHOW_PAGE_DESIGN:String          = "show_page_designs";
+//  public static inline var SHOW_PAGE_DESIGN:String          = "show_page_designs";
+
   
   
   
@@ -148,9 +147,11 @@ class EVENT_ID  {
   public static inline var SHOW_PRICES                      = "show_prices";
   public static inline var SHOW_TEXT:String                 = "text_view";
   public static inline var SHOW_GREETINGS:String            = "show_greetings";
+  public static inline var SHOW_DESIGNS:String              = "show_designs";
   public static inline var SHOW_TEXT_SUGGESTIONS:String     = "show_text_suggestion_view";
   public static inline var SHOW_COLOR_PICKERS:String        = "show_color_pickers";
   public static inline var UPDATE_SIDE_VIEWS:String         = "update_side_views";
+  public static inline var BUILD_PAGE_DESIGNS:String        = "buile_page_designs";
   
   
                                                             

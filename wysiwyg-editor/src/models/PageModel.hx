@@ -12,6 +12,7 @@ class PageModel extends Model, implements IModel
   private var fileStr:String;
   private var front_of_paper:Bool;
   private var print_types:Xml;
+  private var designs:Xml;
   
 
 
@@ -45,6 +46,11 @@ class PageModel extends Model, implements IModel
       }
       case EVENT_ID.UPDATE_TEXT_TOOLS:{
         GLOBAL.text_view.setParam(param);
+      }
+      case EVENT_ID.BUILD_PAGE_DESIGNS:{
+        trace(designs.toString(),'------------------------------>>>>>>>>>>>>>>>>');
+        param.setXml(designs);
+        Pages.dispatchParameter(param);
       }
       
       //case EVENT_ID.UPDATE_SIDE_VIEWS:{
@@ -93,6 +99,7 @@ class PageModel extends Model, implements IModel
       case 'no_move':{ trace('no move'); 	}
       case EVENT_ID.SET_PAGE_XML:     fileStr         += s;
 
+
     }
   }
   
@@ -130,6 +137,17 @@ class PageModel extends Model, implements IModel
     
     for(printTypes in xml.elementsNamed('print-types')){
       print_types = printTypes;
+    }
+    
+    for(_designs in xml.elementsNamed('designs')){
+      designs = _designs;
+      
+      trace(designs.toString);
+      trace('===============================>>>>>>>>>>>', pageId);
+      //for(design in designs.elementsNamed('design')){
+      //  trace('-----------------------------');
+      //}
+      
     }
   }
 

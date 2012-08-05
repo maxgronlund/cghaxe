@@ -6,8 +6,8 @@ class DesignsController extends Controller, implements IController{
 
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
-      case EVENT_ID.SHOW_PAGE_DESIGN:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_PAGE_DESIGN, true);
+      case EVENT_ID.SHOW_DESIGNS:{
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_DESIGNS, true);
       }
 
       case EVENT_ID.DESIGN_SELECTED:{
