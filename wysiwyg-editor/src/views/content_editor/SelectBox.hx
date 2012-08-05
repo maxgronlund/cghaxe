@@ -35,6 +35,9 @@ class SelectBox extends MovieClip
     createBackdrop();
     createOutline();
     
+    alertBox.visible = false;
+    backdrop.visible = false;
+    
     backdrop.alpha                  = 0.5;
   }
   

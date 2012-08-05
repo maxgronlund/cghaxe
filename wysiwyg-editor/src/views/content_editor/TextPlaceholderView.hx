@@ -97,6 +97,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   public function foilify():Void {
+    if(foiled != true) {
       var foil = new MovieClip();
       var foilTexture = new FoilTexture();
       foil.addChild(foilTexture);
@@ -106,13 +107,14 @@ class TextPlaceholderView extends APlaceholder {
       this.addChild(fontMovie);
       this.mask = fontMovie;
       Foil.initFiltersOn(this);
-      
-      foiled = true;
+    }
+    foiled = true;
   }
   
   public function unfoilify():Void {
+    if(foiled == true)
       Foil.removeFiltersFrom(this);
-      foiled = false;
+    foiled = false;
   }
   
   private function onAddedToStage(e:Event){
@@ -288,15 +290,18 @@ class TextPlaceholderView extends APlaceholder {
     ldr.load(req, ldrContext);
   }
   
-  private function onFontLoaded(event:Event):Void { 
+  private function onFontLoaded(event:Event):Void {
+    if(selectBox != null) {
+      removeChild(selectBox);
+      selectBox.setFocus(false);
+    }
+    
     selectBox = new SelectBox();    
     fontMovie             =  cast event.target.loader.content;
     
     addChild(selectBox);
     addChild(fontMovie);
-    
-	  
-	  
+    	  
     font        = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 
@@ -305,11 +310,9 @@ class TextPlaceholderView extends APlaceholder {
                 letterSpacingToFont() , 
                 letterSpacing,
                 this); 
-    trace("hmm");
     selectBox.setFocus(false);
-    resizeBackdrop();
+    
     restoreShowTags();
-    //updateFocus();
     
     if(repossition) moveToAnchorPoint();
     
@@ -335,7 +338,6 @@ class TextPlaceholderView extends APlaceholder {
     //}
     
     
-    
     pageView.hitTest();
   }
   
@@ -345,6 +347,7 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function onUpdatePlaceholder(event:Event):Void{
     printType = GLOBAL.printType;
+    var foilIt = false;
     
     switch ( GLOBAL.printType ){
       case CONST.STD_PMS_COLOR:{
@@ -352,6 +355,7 @@ class TextPlaceholderView extends APlaceholder {
       }
       case CONST.FOIL_COLOR:{
         fontColor = GLOBAL.foilColor;
+        foilIt = true;
       }
       case CONST.LASER_COLOR:{
         fontColor = GLOBAL.laserColor;
@@ -366,6 +370,8 @@ class TextPlaceholderView extends APlaceholder {
     removeChild(fontMovie);
     font = null;
     loadFont();
+    if(foilIt)
+      foilify();
   }
   
   override public function setFocus(b:Bool):Void{
