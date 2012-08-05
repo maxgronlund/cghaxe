@@ -30,7 +30,6 @@ class PagesView extends View, implements IView{
     
     Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
 
-
   }
   
   private function onAddGreetingToPage(e:IKEvent):Void{

@@ -61,6 +61,7 @@ class TextPlaceholderView extends APlaceholder{
   private var tagsIsVisible:Bool;
   private var textString:String;
   private var collition:Bool;
+  private var selectBox:SelectBox;
   
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
@@ -105,17 +106,6 @@ class TextPlaceholderView extends APlaceholder{
       Foil.initFiltersOn(this);
       
       foiled = true;
-      
-      
-      
-      
-      //var foilTexture = new FoilTexture();
-      //addChild(foilTexture);
-      //
-      //foilTexture.mask = fontMovie;
-      //Foil.initFiltersOn(foilTexture);
-      //
-      //foiled = true;
   }
   
   public function unfoilify():Void {
@@ -130,7 +120,6 @@ class TextPlaceholderView extends APlaceholder{
   }
    
   private function handleKeyboard(b:Bool):Void{
-    
     if( b && GLOBAL.MOVE_TOOL){
       stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
       stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -298,12 +287,13 @@ class TextPlaceholderView extends APlaceholder{
   }
   
   private function onFontLoaded(event:Event):Void { 
-
+    selectBox = new SelectBox();
     fontMovie             =  cast event.target.loader.content;
+    
+    addChild(selectBox);
     addChild(fontMovie);
 	  
 	  
-	
     font        = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 
@@ -333,10 +323,13 @@ class TextPlaceholderView extends APlaceholder{
     //  }
     //}
 
-    foilify();
+    //foilify();
     //if(collition){
     //  font.alert(true);
     //}
+    
+    
+    
     pageView.hitTest();
   }
   
@@ -435,23 +428,42 @@ class TextPlaceholderView extends APlaceholder{
   	return "/assets/" + fileName+ ".swf?" + Math.random();
   }
 
-  private function updateFocus():Void{
-    
+  public function updateFocus():Void{
+    trace("updateFocus");
     if(focus){
       GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
       GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
       font.selectable(!GLOBAL.MOVE_TOOL);
       !GLOBAL.MOVE_TOOL ? showTags():hideTags();
-      font.setFocus(true);
+      
+      selectBox.setFocus(true);  
+      trace("selectBox.setFocus(true);  ");
+      var tmp_width = fontMovie.width;
+      trace("got width");
+      trace(tmp_width);
+      //selectBox.resizeBackdrop(fontMovie.getWidth(), Std.int(fontMovie.height), Std.int(fontPosX), fontMovie.getCombindeMargins());
+      trace(fontMovie.getCombindeMargins());
+      selectBox.resizeBackdrop(Std.int(tmp_width), Std.int(fontMovie.height), Std.int(fontPosX), 150);
+      trace("selectBox.resizeBackdrop ");
+      //font.setFocus(true);
+      trace("Focus set");
     }else{
       hideTags();
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      if(!collition)
+      if(!collition) {
+        selectBox.setFocus(false);
         font.setFocus(false);
+      }
       super.resetMouse();
     }
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
+  }
+  
+  public function textInputCapture():Void {
+    selectBox.resizeBackdrop(fontMovie.getWidth(), Std.int(fontMovie.height), Std.int(fontPosX), fontMovie.getCombindeMargins());
+    hitTest();
+    
   }
   
   private function onMoveTool(e:IKEvent):Void {
@@ -466,7 +478,7 @@ class TextPlaceholderView extends APlaceholder{
   override private function onMouseOver(e:MouseEvent){
     mouseOver = true;
     super.onMouseOver(e);
-    font.selectable(true);
+    //font.selectable(true);
   }
 
   override private function onMouseDown(e:MouseEvent){
@@ -538,6 +550,6 @@ class TextPlaceholderView extends APlaceholder{
   
   override public function alert(b:Bool):Void{
       collition = b;
-      font.alert(b);
+      selectBox.alert(b);
   }
 }
