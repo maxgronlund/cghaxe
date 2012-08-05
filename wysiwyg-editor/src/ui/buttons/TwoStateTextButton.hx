@@ -30,11 +30,11 @@ class TwoStateTextButton extends MouseHandler
 	}
 	
 	public function init( controller:IController,  
-												param:IParameter, 
-												text:String,
-												id:Int, 
-												font:String,
-												backdropHeight:Int){
+                        param:IParameter, 
+                        text:String,
+                        id:Int, 
+                        font:String,
+                        backdropHeight:Int){
 
 		this.controller = controller;
 		this.param	 		= param;
@@ -105,6 +105,11 @@ class TwoStateTextButton extends MouseHandler
 	}	
 	public function getWidth():Float{
 		return width;
+	}
+	
+	public function bang():Void{
+	  controller.setParam(param);
+	  setOn(true);
 	}
 	
 	public function getId():Int{

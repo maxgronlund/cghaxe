@@ -60,7 +60,7 @@ class PageView extends View{
     //trace('------- page is added to stage ----------');
     super.onAddedToStage(e);
 //    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
+//    Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
     
@@ -187,7 +187,7 @@ class PageView extends View{
   }
   
   private function onDestroyPlaceholder(e:IKEvent){
-    trace('onDestroyPlaceholder');
+    //trace('onDestroyPlaceholder');
     var index:UInt = 0;
     for(i in 0...placeholders.length){
       if(placeholders[i] == inFocus) index = i;
@@ -234,17 +234,17 @@ class PageView extends View{
   
   public function setPlaceholderInFocus(placeholder:Placeholder):Void{
     
-    //if(inFocus != null){
-    //  // clean up
-    //  inFocus.setFocus(false);
-    //  model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
-    //} 
-    //if(placeholder != null) {
-    //  // set focus
-    //  inFocus = placeholder;
-    //  inFocus.setFocus(true);
-    //  model.addEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
-    //}
+    if(inFocus != null){
+      // clean up
+      inFocus.setFocus(false);
+      model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
+    } 
+    if(placeholder != null) {
+      // set focus
+      inFocus = placeholder;
+      inFocus.setFocus(true);
+      model.addEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
+    }
   }
   
   public function enableMove(e:MouseEvent):Void{
@@ -280,7 +280,7 @@ class PageView extends View{
   }
 
   private function onLoadFrontShot(e:IKEvent):Void{
-//    trace( 'onLoadFrontShot', e.getParam().getString());
+    trace( 'onLoadFrontShot', e.getParam().getString());
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.load(new URLRequest(e.getParam().getString()));
   }
@@ -294,45 +294,50 @@ class PageView extends View{
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     backdrop = e.target.loader.content;
     addChild(backdrop);
+    //backdrop.width *= 4.54;
+    //backdrop.height *= 4.54;
     var filter = new DropShadowFilter(2,45,5,0.2, 10.0, 10.0,1.0);
     backdrop.filters = [filter];
     
-    var mask_url:String = model.getString('mask_url');
-    //mask_url == '/assets/fallback/hide_mask.png';? allImagesLoaded(): loadGuideMask();
-    
-    if(mask_url == '')
-      pageDesignImageLoaded();
-    else
-      loadGuideMask(mask_url);
+    //var mask_url:String = model.getString('mask_url');
+    //
+    //
+    //if(mask_url == '')
+    //  pageDesignImageLoaded();
+    //else
+    //  loadGuideMask(mask_url);
+    var hide_mask_url:String = model.getString('hide_mask_url');
+    //trace(hide_mask_url);
+    loadHideMask(hide_mask_url);
 	}
 	
   private function loadGuideMask(mask_url:String):Void{
-    if(mask_url == '/assets/fallback/hide_mask.png'){
-      var hide_mask_url:String = model.getString('hide_mask_url');
-      loadHideMask(hide_mask_url);
-    }else{
-      var request:URLRequest  = new URLRequest(mask_url);
-      maskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadGuideMaskComplete);
-      maskLoader.load(request);
-    } 
+    //if(mask_url == '/assets/fallback/hide_mask.png'){
+    //  var hide_mask_url:String = model.getString('hide_mask_url');
+    //  loadHideMask(hide_mask_url);
+    //}else{
+    //  var request:URLRequest  = new URLRequest(mask_url);
+    //  maskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadGuideMaskComplete);
+    //  maskLoader.load(request);
+    //} 
   }
   
   private function onLoadGuideMaskComplete(e:Event):Void{
     
-    maskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadGuideMaskComplete);
-    guideMask = e.target.loader.content;
-    addChild(guideMask);
-    guideMask.visible = false;
-    Pages.addEventListener(EVENT_ID.SHOW_MASK, onShowMask);
-
-    var hide_mask_url:String = model.getString('hide_mask_url');
-    loadHideMask(hide_mask_url);
+    //maskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadGuideMaskComplete);
+    //guideMask = e.target.loader.content;
+    //addChild(guideMask);
+    //guideMask.visible = false;
+    //Pages.addEventListener(EVENT_ID.SHOW_MASK, onShowMask);
+    //
+    //var hide_mask_url:String = model.getString('hide_mask_url');
+    //loadHideMask(hide_mask_url);
     
   }
   
   private function loadHideMask(hide_mask_url:String):Void{
 
-    if(hide_mask_url == '/assets/fallback/hide_mask.png'){
+    if(hide_mask_url == '/assets/fallback/badge_hide_mask.png'){
       allImagesLoaded();
     }else{
       hideMaskPresent = true;
@@ -346,6 +351,8 @@ class PageView extends View{
     maskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadHideMaskComplete);
     hideMask                    = e.target.loader.content;
     addChild(hideMask);
+    //hideMask.width *= 4.54;
+    //hideMask.height *= 4.54;
     hideMask.visible            = false;
     backdrop.mask               = hideMask;
     backdrop.cacheAsBitmap      = true;

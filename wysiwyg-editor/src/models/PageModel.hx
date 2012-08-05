@@ -11,12 +11,16 @@ class PageModel extends Model, implements IModel
   private var page_name:String;
   private var fileStr:String;
   private var front_of_paper:Bool;
+  private var print_types:Xml;
+  
+
 
   public function new(){	
     super();
     fileStr   = '';
     print_mask_url  = '';
     hide_mask_url = '';
+  
     
   }
   
@@ -102,15 +106,14 @@ class PageModel extends Model, implements IModel
     }
   }
   
+ 
 
   
   override public function setXml(id:String, xml:Xml):Void{
     
     //front_of_paper = false;
     
-    for(front in xml.elementsNamed('front')){ 
-      front_of_paper = front.firstChild().nodeValue == 'true';
-    }
+    for(front in xml.elementsNamed('front')){  front_of_paper = front.firstChild().nodeValue == 'true';}
 
     for(hide_mask in xml.elementsNamed('hide-mask')){
       hide_mask_url = hide_mask.firstChild().nodeValue;
@@ -125,20 +128,34 @@ class PageModel extends Model, implements IModel
       front_shoot_url = front_shoot.firstChild().nodeValue;
     }
     
+    for(printTypes in xml.elementsNamed('print-types')){
+      print_types = printTypes;
+    }
   }
 
   override public function getXml(cmd:String):String{
-//    trace('getXml');
-    fileStr = '\t<page id="'+Std.string(pageId)+'">\n';
-
-    var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_POS_XML + Std.string(pageId));
-    dispatchParameter(param);
     
-    var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_XML + Std.string(pageId));
-    dispatchParameter(param);
-  
-    fileStr += '\t</page>\n';
-    return fileStr;
+    switch ( cmd ){
+      case CONST.XML_FILE:{
+        fileStr = '\t<page id="'+Std.string(pageId)+'">\n';
+
+        var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_POS_XML + Std.string(pageId));
+        dispatchParameter(param);
+
+        var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_XML + Std.string(pageId));
+        dispatchParameter(param);
+
+        fileStr += '\t</page>\n';
+        return fileStr;
+      }
+      case CONST.PRINT_TYPES:{
+        return print_types.toString();
+      }
+    }
+
+    
+    return null;
+    
     
   }
   

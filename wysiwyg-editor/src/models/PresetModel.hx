@@ -302,7 +302,7 @@ class PresetModel extends Model, implements IModel
   }
   
   public function savePreset(e:IKEvent):Void{
-    
+
     ExternalInterface.call("openSavingBox()");
 
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
@@ -321,9 +321,6 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
-    
-    
-    
 
   }
   

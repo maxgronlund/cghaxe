@@ -47,15 +47,15 @@ class ZoomTools
 
   public function zoomIn():Void{
     //trace('zoomIn');
-    zoomFactor *= 1.1;
-    zoom = 1.1;
+    zoomFactor *= 1.05;
+    zoom = 1.05;
     updateGui();
     //trace(  zoomFactor);
   }
   
   public function zoomOut():Void{
     //trace('zoomOut');
-    zoom = 1/1.1;
+    zoom = 1/1.05;
     zoomFactor *= zoom;
     updateGui();
   }	

@@ -5,38 +5,40 @@ import flash.geom.Point;
 import flash.Vector;
 
 class DesignsPane extends View, implements IView{
+  
+  private var selectedButton:Int;
+  private var designsButtons:Vector<OneStateTextAndImageButton>;
+  private var buttonIndex:UInt;
+  private var buttonPos:UInt;
+  
+  
+  
+  public function new(designsController:IController){	
+    super(designsController);
+    bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
+    backdrop				= new Bitmap(bmpData);
+    
+    designsButtons = new Vector<OneStateTextAndImageButton>();
+    buttonIndex	= 0;
+    selectedButton = 0;
+    buttonPos	= 0;
+    selectedButton = 0;
+    
+    
+  }
+  
+  override public function init():Void{
+  
+  }
+  
+  override public function onAddedToStage(e:Event):Void{
+  
+  	super.onAddedToStage(e);
+  	addChild(backdrop);
+  
+  }
 
-	private var selectedButton:Int;
-	private var designsButtons:Vector<OneStateTextAndImageButton>;
-	private var buttonIndex:UInt;
-	private var buttonPos:UInt;
 
-	
-	
-	public function new(designsController:IController){	
-		super(designsController);
-		bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
-		backdrop				= new Bitmap(bmpData);
-		
-		designsButtons = new Vector<OneStateTextAndImageButton>();
-		buttonIndex	= 0;
-		selectedButton = 0;
-		buttonPos	= 0;
-		selectedButton = 0;
-	}
-	
-	override public function init():Void{
-
-	}
-	
-	override public function onAddedToStage(e:Event):Void{
-
-		super.onAddedToStage(e);
-		addChild(backdrop);
-
-	}
-
-	
   override public function setParam(param:IParameter):Void{
     
     switch ( param.getLabel() ){
@@ -67,9 +69,6 @@ class DesignsPane extends View, implements IView{
     for( title in param.getXml().elementsNamed("title") ) {
       designTitle = title.firstChild().nodeValue;
       param.setString(designTitle);
-      //trace(param.getXml().toString());
-      //trace(param.getXml().toString());
-      //param.setXml(param.getXml());
     }
     param.setInt(buttonIndex);
     var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
@@ -92,28 +91,28 @@ class DesignsPane extends View, implements IView{
 	}
 
 
-	override public function getFloat(id:String):Float{
-		//switch ( id ){
-		//	case 'height':
-		//		return buttonPos;
-		//}
-		return 0;
-	}
-	
-	override public function setString(id:String, s:String):Void{
-		
-		//switch ( id )	{
-		//	case 'load_default_font':{
-		//		fontButtons[0].setOn(true);
-		//	}
-		//	case EVENT_ID.FONT: selectFont(s);
-		//}
-	}
-	
-	public function doStuff():Void{
-	  
-	}
-	
-
-	
+  override public function getFloat(id:String):Float{
+    switch ( id ){
+      case 'height':
+        return buttonPos;
+    }
+    return 0;
+  }
+  
+  override public function setString(id:String, s:String):Void{
+    
+    //switch ( id )	{
+    //	case 'load_default_font':{
+    //		fontButtons[0].setOn(true);
+    //	}
+    //	case EVENT_ID.FONT: selectFont(s);
+    //}
+  }
+  
+  //public function doStuff():Void{
+  //  
+  //}
+  
+  
+  
 }

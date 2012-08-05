@@ -25,19 +25,12 @@ class DesktopView extends View, implements IView{
   	super(desktopController);
   	pagesView = new PagesView(desktopController);
   	Application.addEventListener(EVENT_ID.ZOOM, onZoom);
-//  	Application.addEventListener(EVENT_ID.GET_DESKTOP_POS, onGetDesktopPos);
-    //Application.addEventListener(EVENT_ID.INIT_ZOOM, onInitZoom);
-//    Preset.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPagePosAndZoom);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
     Pages.addEventListener(EVENT_ID.FONT_LOADED, onFontLoaded);
     Application.addEventListener(EVENT_ID.ALL_IMAGES_LOADED, onAllImagesLoaded);
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
-    
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-//    Application.addEventListener(EVENT_ID.SET_DESKTOP_POS, onSetDesktopPos);
-
-
     Designs.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
     Preset.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
   }
@@ -55,21 +48,15 @@ class DesktopView extends View, implements IView{
   	pagesView.y = 10;
   	
   }
-  
-  //private function onLoadPagePosAndZoom(e:KEvent):Void{
-  //  this.x = e.getPoint().x-1000;
-  //  this.y = e.getPoint().y-1000;
-  //  GLOBAL.pos_x = this.x;
-  //  GLOBAL.pos_y = this.y;
-  //}
+
   
   private function onLoadPos(e:KEvent):Void{
-    trace(e.getXml().toString());
+//    trace(e.getXml().toString());
     for( pos_x in e.getXml().elementsNamed('pos_x') )
       this.x = Std.parseInt(pos_x.firstChild().nodeValue.toString());
     
     for( pos_y in e.getXml().elementsNamed('pos_y') )
-      this.y = Std.parseInt(pos_y.firstChild().nodeValue.toString()) -SIZE.MENU_VIEW_HEIGHT;
+      this.y = Std.parseInt(pos_y.firstChild().nodeValue.toString()) - (SIZE.PAGESELESCTOR_HEIGHT);
       
     GLOBAL.pos_x = this.x;
     GLOBAL.pos_y = this.y;
@@ -108,6 +95,8 @@ class DesktopView extends View, implements IView{
     sizeY = pagesView.height/Zoom.getZoomFactor();
   }
   
+  
+
   private function onZoom(e:Event):Void{
     updateZoom();
   }
@@ -120,36 +109,36 @@ class DesktopView extends View, implements IView{
   }
   
   private function onMouseOver(e:MouseEvent):Void{
-    //removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    //addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    //addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
+    removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
   }
   
   private function onMouseOut(e:MouseEvent){
-    //removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-    //addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    //addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
   }
   
   private function onMouseDown(e:MouseEvent){	
     
-    //if(MouseTrap.capture()){
-    //  //trace('on mouse down');
-    //  removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    //  hitPointX = e.stageX - this.x;
-    //  hitPointY = e.stageY - this.y;
-    //  stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-    //  stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-    //  
-    //  Application.dispatchParameter(new Parameter(EVENT_ID.DESELECT_PLACEHOLDERS));
-    //}
+    if(MouseTrap.capture()){
+      //trace('on mouse down');
+      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      hitPointX = e.stageX - this.x;
+      hitPointY = e.stageY - this.y;
+      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+      stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+      
+      Application.dispatchParameter(new Parameter(EVENT_ID.DESELECT_PLACEHOLDERS));
+    }
   }
   
   private function onMouseUp(e:MouseEvent){	
-  	//MouseTrap.release();
-  	//stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-  	//stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-  	//addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+  	MouseTrap.release();
+  	stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+  	stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+  	addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
   }
   
   private function onMouseMove(e:MouseEvent){

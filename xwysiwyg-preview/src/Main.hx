@@ -44,15 +44,6 @@ class Main
   // views
   private var applicationView:ApplicationView;
   private var sideView:AView;
-//  private var textView:AView;
-//  private var textSuggestionView:AView;
-//  private var designsView:AView;
-//  private var foilView:AView;
-//  private var addOnsView:AView;
-//  private var garamondView:AView;
-//  private var logoView:AView;
-//  private var priceView:AView;
-//  private var menuView:AView;
   private var pageSelectorView:AView;
   private var desktopView:AView;
   
@@ -164,7 +155,7 @@ class Main
 //    GLOBAL.logo_view                  = logoView;
 //    GLOBAL.price_view                 = priceView;
 //    GLOBAL.menu_view                  = menuView;
-    GLOBAL.page_selector_view		      = pageSelectorView;
+    GLOBAL.page_selector_view         = pageSelectorView;
     GLOBAL.desktop_view               = desktopView;
           		
   }
@@ -209,15 +200,15 @@ class Main
   }
   
   private function buildInterface():Void{
-
-    Lib.current.addChild(applicationView);
-
-    applicationView.addView(desktopView, 0, SIZE.PAGESELESCTOR_HEIGHT);
-
-    applicationView.addView(pageSelectorView, 0, 0);
     
+    // add views
+    Lib.current.addChild(applicationView);
+//    Lib.current.addChild(sideView);
+    applicationView.addView(desktopView, 0, SIZE.PAGESELESCTOR_HEIGHT);
+    applicationView.addView(pageSelectorView, 0, 0);
+
     // position views
-    sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
+    //sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
   }
   
   private function loadParams():Void{

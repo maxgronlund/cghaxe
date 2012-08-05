@@ -28,5 +28,7 @@ interface IView
 	function setModel(model:IModel):Void;
 	function getModel():IModel;
 	function getView(i:Int):AView;
+	function getPosX():Float;
+	function getPosY():Float;
 
 }

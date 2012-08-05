@@ -21,18 +21,25 @@ class DesignsModel extends Model, implements IModel {
   private var party_place_location:String;
   private var reply_by_date:String;
   private var reply_to_phone:String;
+  private var reply_to_phone2:String;
+  private var mobile:String;
   private var reply_to_email:String;
   private var dress_code:String;
   private var company_name:String;
   private var location_name:String;
   private var location:String;
-  //private var placeHoldersXml:Xml;
+  private var reply_to_people:String;
+  private var reply_to_people2:String;
+  private var dinner_place_name:String;
+  private var city:String;
+  private var countrxy:String;
 
+  
   public function new(){	
     super();
   }
-  
- override public function init():Void{	
+    
+  override public function init():Void{	
    super.init();
    Application.addEventListener(EVENT_ID.PASS_DESIGN_FILE, onPassDesign);
  }
@@ -40,24 +47,15 @@ class DesignsModel extends Model, implements IModel {
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.DESIGN_SELECTED:{
-        trace('DESIGN_SELECTED');
+        //trace('DESIGN_SELECTED');
         pageDesignXml = param.getXml();
-        trace(pageDesignXml.toString());
       }
-      //case EVENT_ID.ADD_DESIGN:{
-      //  if(pageDesignXml != null){
-      //    dispatchXML(EVENT_ID.ADD_PAGE_DESIGN, pageDesignXml);
-      //  }
-      //}
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{
-        trace('ADD_DESIGN_TO_PAGE');
+        //trace('ADD_DESIGN_TO_PAGE');
         if(pageDesignXml != null){
           dispatchXML(EVENT_ID.ADD_DESIGN_TO_PAGE, pageDesignXml);
         }
       }
-      //case EVENT_ID.ADD_DESIGN_TO_PAGE:{
-      //  trace('ADD_DESIGN_TO_PAGE');
-      //}
     }
   }
   
@@ -77,15 +75,22 @@ class DesignsModel extends Model, implements IModel {
        case 'party_place_location': { party_place_location = s;}
        case 'reply_by_date':        { reply_by_date = s;}
        case 'reply_to_phone':       { reply_to_phone = s;}
+       case 'reply_to_phone2':      { reply_to_phone2 = s;}
+       case 'mobile':               { mobile = s;}
        case 'reply_to_email':       { reply_to_email = s;}
        case 'dress_code':           { dress_code = s;}
        case 'company_name':         { company_name = s;}
        case 'location_name':        { location_name = s;}
        case 'location':             { location = s;}
+       case 'reply_to_people':      { reply_to_people = s;}
+       case 'reply_to_people2':     { reply_to_people2 = s;}
+       case 'dinner_place_name':    { dinner_place_name = s;}
+       case 'city':                 { city = s;}
+       case 'countrxy':             { countrxy = s;}
      }
-   }
+  }
   
-   override public function getString(id:String):String{
+  override public function getString(id:String):String{
       switch ( id ){
         case 'brides_first_name':   {return brides_first_name;}
         case 'brides_last_name':    {return brides_last_name;}
@@ -101,30 +106,29 @@ class DesignsModel extends Model, implements IModel {
         case 'party_place_location':{return party_place_location;}
         case 'reply_by_date':       {return reply_by_date;}
         case 'reply_to_phone':      {return reply_to_phone;}
+        case 'reply_to_phone2':     {return reply_to_phone2;}
+        case 'mobile':              {return mobile;}
         case 'reply_to_email':      {return reply_to_email;}
         case 'dress_code':          {return dress_code;}
         case 'company_name':        {return company_name;}
         case 'location_name':       {return location_name;}
         case 'location':            {return location;}
+        case 'reply_to_people':     {return reply_to_people;}
+        case 'reply_to_people2':    {return reply_to_people2;}
+        case 'dinner_place_name':   {return dinner_place_name;}
+        case 'city':                {return city;}
+        case 'countrxy':            {return countrxy;}
+        
       }
       return '';
-    }
-  
-//  private function onPassDesign(e:IKEvent):Void{
-//    
-//    for( design in e.getXml().elementsNamed("design") ) {
-//       pageDesignXml = Xml.parse(StringTools.htmlUnescape(design.toString()));
-//    }
-//  }
+  }
 
   private function onPassDesign(e:IKEvent):Void{
     
     //trace('onPassDesign');
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-   
-    //var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
-    //param.setModel(this);
-    //dispatchParameter(param);
+    //trace(xml.toString());
+
     
     var param:IParameter = new Parameter(EVENT_ID.BUILD_DESIGN_PAGE);
     param.setXml(xml);
@@ -140,13 +144,12 @@ class DesignsModel extends Model, implements IModel {
         param.setString(image_url);
         param.setInt(0);
         dispatchParameter(param);
-        trace(image_url);
       }
       
       for( xml_file in design.elementsNamed("xml-file") ) {
         for(page in xml_file.elementsNamed("page") ) {
           
-          trace(page.toString());
+          //trace(page.toString());
           var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
           param.setXml(page);
           param.setInt(0);
@@ -160,6 +163,26 @@ class DesignsModel extends Model, implements IModel {
           dispatchParameter(param);
         }
       }
+      
+      for( user in design.elementsNamed("user") ){
+        GLOBAL.userParser.parseUser(user);
+      }
+      /*
+      for( design_images in design.elementsNamed("design-images") ){
+//!!!        dispatchXML(EVENT_ID.DESIGN_IMAGES_LOADED, design_images);
+        //for( design_image in design_images.elementsNamed("design-image") ){
+        //  for( image in design_image.elementsNamed("image") ){
+        //    for( url in image.elementsNamed("url") ){
+        //      trace(url.firstChild().nodeValue.toString());
+        //      var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_IMAGE_BUTTON);
+        //      param.setString(url.firstChild().nodeValue.toString());
+        //      dispatchParameter(param);
+        //    }
+        //  }
+        //}
+      }
+      */
+      
     }
     
   }
@@ -170,33 +193,4 @@ class DesignsModel extends Model, implements IModel {
     }
     return false;
   }
-  /*
-  for( design in xml.elementsNamed("design") ) {
-    for( xml_file in design.elementsNamed("xml-file") ) {
-      pagePresetXML = xml_file;
-      loadPagePresetXML();
-    }
-  }
-  */
-  
-/*  // move to page design model
-  private function onPassDesign(e:IKEvent):Void{
-
-    pageOrder       = 0;
-    pageId          = 0;
-    page_name       = 'page layout';
-    mask_url        = '';
-    buildPage();
-    
-    for( design in e.getXml().elementsNamed("design") ) {
-      for( img in design.elementsNamed("image-url") ) {
-        var image_url:String        = Std.string(img.firstChild().nodeValue);
-        var param:IParameter        = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
-        param.setString(image_url);
-        pageInFocus.dispatchParameter(param);
-      }
-    }
-  }
-*/  
-  
 }

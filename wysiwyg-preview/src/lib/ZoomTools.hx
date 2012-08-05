@@ -29,43 +29,41 @@ class ZoomTools
     for( stage_zoom in e.getXml().elementsNamed('zoom') ) 
       zoomFactor = Std.parseFloat(stage_zoom.firstChild().nodeValue.toString())/1000;
       
+    zoomFactor;//  *= toScreenFactor;
     //trace(zoomFactor);
   }
   
-  //private function onSetPagePosAndZoom(e:IKEvent):Void{
-  //  
-  //  if(loadedZoom != -1){
-  //    zoomFactor = loadedZoom;
-  //    zoom = loadedZoom;
-  //    updateGui();
-  //  }
-  //}
+
   
   public function toScreen(size:Float):Float{
   	return size * toScreenFactor;
   }
+  
+  public function zoomTo(z:Float):Void{
+    zoomFactor *= z;
+    zoom = z;
+    updateGui();
+  }
 
   public function zoomIn():Void{
-    //trace('zoomIn');
-    zoomFactor *= 1.05;
-    zoom = 1.05;
+    zoomFactor *= 1.03;
+    zoom = 1.03;
     updateGui();
-    //trace(  zoomFactor);
   }
   
   public function zoomOut():Void{
     //trace('zoomOut');
-    zoom = 1/1.05;
+    zoom = 1/1.03;
     zoomFactor *= zoom;
     updateGui();
   }	
   
   public function resetZoom():Void{
+    //trace('resetZoom');
     zoomFactor = 1;
     zoom = 1/zoom;
     updateGui();
   }
-
    public function toMouse():Float{
      return 1 / (zoomFactor * toScreenFactor);
   }
@@ -77,14 +75,17 @@ class ZoomTools
   }
   
   public function getZoomFactor():Float{
+    //trace(zoomFactor * toScreenFactor);
     return zoomFactor * toScreenFactor;
+    //return 0.48;
   }
   
   public function saveZoom():Float{
+    //trace(zoomFactor);
     return zoomFactor;
   }
   
-  public function getZoom():Float{
-    return zoom;
-  }
+  //public function getZoom():Float{
+  //  return zoom;
+  //}
 }

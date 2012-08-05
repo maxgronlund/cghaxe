@@ -18,7 +18,7 @@ class BadgePageSelectorView extends View, implements IView {
     
     super(pageSelectController);
     
-    bmpData 		= new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.PAGESELESCTOR_HEIGHT,false, 0xeeeeee );
+    bmpData 		= new BitmapData(SIZE.DESKTOP_WIDTH,29,false, 0xffffff );
     backdrop		= new Bitmap(bmpData);
     lineData 		= new BitmapData(SIZE.DESKTOP_WIDTH,1,false,COLOR.GRAY_LINE );
     line				= new Bitmap(lineData);
@@ -36,7 +36,7 @@ class BadgePageSelectorView extends View, implements IView {
     super.onAddedToStage(e);	
     addChild(backdrop);
     addChild(line);
-    backdrop.width = BADGE_SIZE.MAIN_VIEW_WIDTH;
+    backdrop.width = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
   }
   
   private function onClearConfiguration(e:IKEvent):Void{

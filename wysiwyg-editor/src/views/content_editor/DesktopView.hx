@@ -239,6 +239,14 @@ class DesktopView extends View, implements IView{
     }
   }
   
+  override public function getPosX():Float{
+		return this.x;
+	}
+	
+	override public function getPosY():Float{
+    return this.y;
+	}
+  
   private function onMouseUp(e:MouseEvent){	
     backdrop.x = -this.x;
     backdrop.y = -this.y;

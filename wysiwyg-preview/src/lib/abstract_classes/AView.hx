@@ -1,9 +1,8 @@
 package;
 
 import flash.display.Sprite;
-import flash.display.Stage;
+//import flash.display.Stage;
 import flash.events.Event;
-//import flash.events.KeyboardEvent;
 import flash.geom.Point;
 
 class AView extends Sprite, implements IView
@@ -93,16 +92,26 @@ class AView extends Sprite, implements IView
 		return null;
 	}
 
-
-	
-	
-	
 	public function setInt(id:String, i:Int):Void{
 		trace("setInt: must be overriden in a subclass");
 
 	}
-
 	
+	public function getView(i:Int):AView{
+		trace("getView: must be overriden in a subclass");
+    return null;
+	}
+	
+	public function getPosX():Float{
+		trace("getPosX: must be overriden in a subclass");
+    return 0;
+	}
+	
+	public function getPosY():Float{
+		trace("getPosY: must be overriden in a subclass");
+    return 0;
+	}
+
 }
 
 

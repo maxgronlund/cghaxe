@@ -100,11 +100,7 @@ class PageView extends View{
     loadFrontShot();
     
   }
-  
-  /*
-  gridView.mouseChildren = false;
-  gridView.mouseEnabled = false;
-  */
+
   
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
@@ -113,7 +109,7 @@ class PageView extends View{
       }
 
       case EVENT_ID.ADD_GREETING_TO_PAGE:{
-        parseVectorPlaceholder( param.getXml(), 10,10);
+        parseVectorPlaceholder( param.getXml(), onPosX(),onPosY());
         /*
         var url:String;
         for(url_xml in param.getXml().elementsNamed("url") ) {
@@ -188,13 +184,13 @@ class PageView extends View{
   }
 
   private function onPageXmlLoaded(e:IKEvent):Void{  
-    //trace('onPageXmlLoaded-1');
+
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    //trace('onPageXmlLoaded-2');
+
   }
   
   private function loadPagePresetXML():Void{
-//    trace('+++++++++++++++++++++++++++++++++++++++++++++++++loadPagePresetXML');
+
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -209,8 +205,7 @@ class PageView extends View{
   }
  
   private function parsePlaceholder(xml:Xml):Void{
-    
-    
+
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
     
@@ -222,7 +217,7 @@ class PageView extends View{
     for( plc_type in xml.elementsNamed("placeholder-type") ){
       placeholder_type = plc_type.firstChild().nodeValue;
     }
-//    trace(placeholder_type);
+
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
@@ -231,20 +226,17 @@ class PageView extends View{
       default:
         parseTextPlaceholder(xml);
     }
-    //parseTextPlaceholder(xml);
+
   }
   
   private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
-    
-//    trace('parseVectorPlaceholder\n', xml.toString());
-    
+     
     var url:String;
     for(url_xml in xml.elementsNamed("url") ) {
       url = url_xml.firstChild().nodeValue.toString();
     }
     
-  //  trace(url);
-    
+
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
     placeholder.x = posX;
@@ -310,11 +302,22 @@ class PageView extends View{
   }
   
   private function onAddTextPlaceholder(e:KEvent):Void {
-  	addTextPlaceholder(100,100);
+    trace( GLOBAL.desktop_view.getPosX());
+    
+  	addTextPlaceholder(onPosX() ,onPosY());
   }
   
+  private function onPosX():Float{
+    return (-GLOBAL.desktop_view.getPosX() * 2.08) - this.x;
+  }
+  
+  private function onPosY():Float{
+    return ((-GLOBAL.desktop_view.getPosY() * 2.08) - this.y)+200;
+  }
+
+  
   private function addTextPlaceholder(posX:Float, posY:Float):Void{
-    
+
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
     placeholder.x = posX;
@@ -324,17 +327,17 @@ class PageView extends View{
     
   }
   
-  private function addVectorPlaceholder(posX:Float, posY:Float, url:String):Void{
-    
-    setPlaceholderInFocus(null);
-    //var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
-    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
-    placeholder.x = posX;
-  	placeholder.y = posY;
-    placeholders.push(placeholder);
-    addChild(placeholder);
-    
-  }
+  //private function addVectorPlaceholder(posX:Float, posY:Float, url:String):Void{
+  //  
+  //  setPlaceholderInFocus(null);
+  //  //var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
+  //  var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
+  //  placeholder.x = posX;
+  //	placeholder.y = posY;
+  //  placeholders.push(placeholder);
+  //  addChild(placeholder);
+  //  
+  //}
 
   private function onReleasePageFocus(e:KEvent):Void {
     setPlaceholderInFocus(null);

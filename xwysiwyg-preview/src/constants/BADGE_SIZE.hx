@@ -1,8 +1,8 @@
 class BADGE_SIZE{
 	// dimentions pseudo CSS replace later?
-		public static inline var MAIN_VIEW_WIDTH:Int = 538;
-		public static inline var MAIN_VIEW_HEIGHT:Int = 538;
-//		public static inline var PAGESELESCTOR_HEIGHT:Int = 20;
+		public static inline var MAIN_VIEW_WIDTH:Int = 300;
+		public static inline var MAIN_VIEW_HEIGHT:Int = 300;
+		public static inline var PAGESELESCTOR_HEIGHT:Int = 24;
 //		public static inline var SIDEBAR_VIEW_WIDTH:Int = 190;
 //		public static inline var PRINTABLE_PAGES_VIEW_HEIGHT:Int = 40;
 //

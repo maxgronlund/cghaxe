@@ -63,7 +63,7 @@ class GLOBAL  {
   public static var foilColor:UInt;
   public static var pms1Color:UInt;
   public static var pms2Color:UInt;
-  public static var color:UInt;
+  public static var laserColor:UInt;
   
   // controllers
   public static var text_controller:IController;

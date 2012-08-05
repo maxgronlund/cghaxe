@@ -32,6 +32,26 @@ class SideView extends View, implements IView
   	super.onAddedToStage(e);	
   	addChild(backdrop);
   	backdrop.y = 500;
+  	
+  }
+  
+  private function onPageSelected(e:IKEvent):Void{
+
+    //GLOBAL.color_view.setString( 'na','clear');
+    //var print_types:Xml = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+    //
+    //for(print_types in print_types.elementsNamed('print-types')){
+    //  
+    //  for(print_type in print_types.elementsNamed('print-type')){
+    //    for(title in print_type.elementsNamed('title')){
+    //      
+    //      GLOBAL.color_view.setString( 'na',title.firstChild().nodeValue.toString());
+    //
+    //      
+    //    }
+    //  }
+    //}
+    //GLOBAL.color_view.setString( 'na','build');
   }
   
   override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
@@ -47,6 +67,7 @@ class SideView extends View, implements IView
   private function onLoadDefaultSiteView(e:IKEvent):Void{
     selectedView = views[0];
     showView(EVENT_ID.SHOW_TEXT, true);
+    
   }
   
   override public function showView(id:String, b:Bool):Void{

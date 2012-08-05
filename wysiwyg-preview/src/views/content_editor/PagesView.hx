@@ -19,25 +19,22 @@ class PagesView extends View, implements IView{
     
     super(desktopController);
     Application.addEventListener(EVENT_ID.RESET_WYSIWYG, onResetWysiwyg);
-    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
+//    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
     Application.addEventListener(EVENT_ID.ADD_PAGES_TO_STAGE, addPagesToStage);
-//    Application.addEventListener(EVENT_ID.GET_PAGE_SIZE, onGetPageSize);
-    
-    
-//    Pages.addEventListener(EVENT_ID.ADD_PAGEDESIGN_PAGE, onAddPagedesignPage);
 
 
-
-
-    //Designs.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);   //<<------------- move to Pages
-
-
-
+//    DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImageToPage);
     Designs.addEventListener(EVENT_ID.ADD_DESIGN_TO_PAGE, onAddPageDesignToPage);
     Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
+    
+    Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
 
 
+  }
+  
+  private function onAddGreetingToPage(e:IKEvent):Void{
+    pageInFocus.setParam(e.getParam());
   }
   
   override public function init():Void{}
@@ -47,9 +44,8 @@ class PagesView extends View, implements IView{
     pages = new Vector<PageView>();
   }
   
-  
   private function onGetPageSize(e:IKEvent):Void{
-    //trace('onGetPageSize');
+    trace('onGetPageSize');
 //    Application.removeEventListener(EVENT_ID.GET_PAGE_SIZE, onGetPageSize);
 //    pageInFocus.onGetPageSize();
   }
@@ -69,28 +65,32 @@ class PagesView extends View, implements IView{
     pages = null;
   }
   
-  
-  
   private function onAddPageDesignToPage(e:IKEvent):Void{
-    
     pageInFocus.setParam(e.getParam());
   }
-
+  /*
+  private function onAddDesignImageToPage(e:IKEvent):Void{
+    pageInFocus.setParam(e.getParam());
+  }
+*/
 //  private function onAddPagedesignPage(e:IKEvent):Void{
 //    trace('onAddPagedesignPage');
 //   // addPages();
 //  }
 
   private function onPageSelected(e:IKEvent):Void{
-    
+    //trace('update sitebar here');
     putPageOnTop( e.getInt());
   }
   
   private function onBuildPage(e:IKEvent):Void{
-    
+    trace('build page');
+    //trace(e.getXml().toString());
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
-    pages.push(pageView);  
+    pages.push(pageView); 
+    
+     
   }
   
   private function onLoadDefaultPage(e:IKEvent):Void{
@@ -115,7 +115,7 @@ class PagesView extends View, implements IView{
           pageView.visible = false;
         }
         else{
-          //trace('page has hidemask: ', i);
+//          trace('page has hidemask: ', i);
           pageView.useHideMask( i>id );
           pageView.visible = true;
         }
@@ -127,9 +127,14 @@ class PagesView extends View, implements IView{
   }
   
   private function addPages():Void{
+    //trace('addPages');
     for( i in 0...pages.length){
       addChild(pages[i]);
       pages[i].visible = false;
     }
   }
+
+  override public function getView(i:Int):AView{
+    return pages[i];
+	}
 }

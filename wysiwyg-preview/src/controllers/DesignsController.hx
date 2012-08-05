@@ -20,13 +20,16 @@ class DesignsController extends Controller, implements IController{
         trace('ADD_DESIGN_TO_PAGE');
         Designs.setParam(param);
       }
+      case EVENT_ID.DESIGN_SCROLL:{
+        GLOBAL.designs_view.setFloat(EVENT_ID.DESIGN_SCROLL, param.getFloat());
+      }
     }	
   }
   
   private function onScroll(param:IParameter):Void{
     switch ( param.getLabel() ){
-      case EVENT_ID.FONT_SCROLL:{
-        GLOBAL.text_suggestion_view.setFloat(EVENT_ID.FONT_SCROLL, param.getFloat());
+      case EVENT_ID.DESIGN_SCROLL:{
+        GLOBAL.designs_view.setFloat(EVENT_ID.DESIGN_SCROLL, param.getFloat());
       }
     }	
 	}

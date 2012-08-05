@@ -15,16 +15,19 @@ class PreviewModel extends ApplicationModel, implements IModel
     
   }
   
-  //override public function init():Void{
-  //	super.init();
-  //}
   
+  override public function init():Void{
+  	super.init();
+  }
+  
+ 
+
   override private function startLoadSeq(mode:String):Void{
-    trace('system_preview');
+
     switch (GLOBAL.edit_mode) {
       
       case 'system_preview':{
-        
+        trace('system_preview');
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
                       'pass preset',
@@ -33,6 +36,7 @@ class PreviewModel extends ApplicationModel, implements IModel
                       ];
         loadSeq();
       }
+   
     }
   }
   
@@ -83,6 +87,11 @@ class PreviewModel extends ApplicationModel, implements IModel
         loadSeq();
       }
       
+      case 'pass preset page design':{
+        var param:IParameter = new Parameter(EVENT_ID.PRESET_PAGEDESIGN_XML);
+        param.setXml(pageDesignXml);
+        dispatchParameter(param);
+      }
     }
   }
 /*
@@ -93,16 +102,17 @@ class PreviewModel extends ApplicationModel, implements IModel
   private function configureDesignSideView():Void{
     loadSeq();
   }
-  
-  private function onPresetLoaded(e:XmlEvent):Void{
+*/  
+  override private function onPresetLoaded(e:XmlEvent):Void{
+    super.onPresetLoaded(e);
     //trace('onPresetLoaded');
     //trace(e.getXml().toString());
-    presetLoader.removeEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded);
-    presetXml = e.getXml();
-    loadSeq();
+    //presetLoader.removeEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded);
+    //presetXml = e.getXml();
+    //loadSeq();
 
   }
-                   
+/*                   
   private function onPageDesignLoaded(e:XmlEvent):Void{
     pageDesignLoader.removeEventListener( EVENT_ID.PAGEDESIGN_FILE_LOADED, onPageDesignLoaded);
     pageDesignXml = e.getXml();

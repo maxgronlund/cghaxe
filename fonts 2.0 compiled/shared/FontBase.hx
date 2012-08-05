@@ -232,7 +232,7 @@ class FontBase extends MovieClip
   }
   
   public function selectable(b:Bool):Void{
-    trace(b);
+    //trace(b);
     textField.selectable    = b;
     textField.doubleClickEnabled = b;
     textField.mouseEnabled = b;
@@ -257,7 +257,7 @@ class FontBase extends MovieClip
   }
 
   public function getXml():String{
-    trace('getXml');
+    //trace('getXml');
     var escapedText:String = StringTools.htmlEscape(getText());
   	var str:String = '\t\t\t<text>'   + escapedText+ '</text>\n';
               str += '\t\t\t<html>'   + textField.htmlText + '</html>\n';

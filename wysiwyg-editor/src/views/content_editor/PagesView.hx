@@ -19,7 +19,7 @@ class PagesView extends View, implements IView{
     
     super(desktopController);
     Application.addEventListener(EVENT_ID.RESET_WYSIWYG, onResetWysiwyg);
-    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
+//    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
     Application.addEventListener(EVENT_ID.ADD_PAGES_TO_STAGE, addPagesToStage);
 
 
@@ -79,13 +79,18 @@ class PagesView extends View, implements IView{
 //  }
 
   private function onPageSelected(e:IKEvent):Void{
+    //trace('update sitebar here');
     putPageOnTop( e.getInt());
   }
   
   private function onBuildPage(e:IKEvent):Void{
+    trace('build page');
+    //trace(e.getXml().toString());
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
-    pages.push(pageView);  
+    pages.push(pageView); 
+    
+     
   }
   
   private function onLoadDefaultPage(e:IKEvent):Void{

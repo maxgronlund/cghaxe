@@ -37,7 +37,7 @@ class PagesModel extends Model, implements IModel {
     Application.addEventListener(EVENT_ID.TRASH_PLACEHOLDERS, onDestroyPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_PAGE_DESIGN, onAddPagedesign);
     Application.addEventListener(EVENT_ID.PRESET_PAGEDESIGN_XML, onPresetPagedesignXml);
-    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
+    //Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
   }
   
   private function onAddPagedesign(e:IKEvent):Void{
@@ -56,8 +56,10 @@ class PagesModel extends Model, implements IModel {
     }
     pageInFocus = pageModels[id];
     
+    
 
 	}
+	
 
   private function onDestroyPlaceholders(e:IKEvent):Void{
     pageInFocus.dispatchParameter(new Parameter(e.getLabel()));
@@ -132,7 +134,7 @@ class PagesModel extends Model, implements IModel {
       	pageInFocus.onFontSelected(param);
       }
       case EVENT_ID.PAGE_SELECTED:{
-        trace(param.getLabel(), param.getInt());
+//        trace(param.getLabel(), param.getInt());
         setPageFocus(param.getInt());
         dispatchParameter(param);
       }
@@ -175,23 +177,11 @@ class PagesModel extends Model, implements IModel {
     }
   }
   
-  //override public function getXml(cmd:String):String{
-  //  //trace('------------ get xml ----------------');
-  //  //var fileStr:String =  '<?xml version="1.0" encoding="UTF-8"?>\n';
-  //  var fileStr:String ='';
-  //    //for( i in 0...pageModels.length){
-  //    //	fileStr += pageModels[i].getXml('foo');
-  //    //}
-  //    //trace(fileStr);
-  //  return fileStr;
-  //}
   
   override function getString(id:String):String{
     switch ( id )
     {
       case'file_xml':{
-//        trace('-----------getString-----------------');
-        //var fileStr:String =  '<?xml version="1.0" encoding="UTF-8"?>\n';
         var fileStr:String ='';
         fileStr += '<stage>\n';
         fileStr += '\t<zoom>'   + Std.string(Zoom.saveZoom()*1000) + '</zoom>\n';
@@ -199,12 +189,13 @@ class PagesModel extends Model, implements IModel {
         fileStr += '\t<pos_y>'  + Std.string(GLOBAL.pos_y) + '</pos_y>\n';
         fileStr += '</stage>\n';
         for( i in 0...pageModels.length){
-        	fileStr += (pageModels[i].getXml('foo')).toString();
+        	fileStr += (pageModels[i].getXml(CONST.XML_FILE)).toString();
         }
-//        trace( fileStr);
         return fileStr;
       }
-
+      case CONST.PRINT_TYPES:{
+        return pageInFocus.getXml(CONST.PRINT_TYPES);
+      }
     }
     return 'bar';
   }

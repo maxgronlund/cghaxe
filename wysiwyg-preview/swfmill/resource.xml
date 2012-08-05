@@ -10,12 +10,15 @@
       <bitmap id="AddPlaceholderButton" import="library/images/add_placeholder_button.png" />
       <bitmap id="AddPageDesignButton" import="library/images/add_page_design_button.png" />
       <bitmap id="CardButton" import="library/images/card_button.png" />
+      <bitmap id="ColorViewButton" import="library/images/colors_view_button.png" />
       <bitmap id="CreateTextfieldButton" import="library/images/create_textfield_button.png" />
-      <bitmap id="ColorPickerButton" import="library/images/color_picker_button.png" />
+<!--  <bitmap id="ColorPickerButton" import="library/images/color_picker_button.png" /> -->
       <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
-      <bitmap id="EnvelopeButton" import="library/images/envelope_button.png" />
+      <bitmap id="DecorationsViewButton" import="library/images/decorations_view_button.png" />
+      <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
       <bitmap id="FoilViewButton" import="library/images/foil_view_button.png" />
       <bitmap id="GarmondViewButton" import="library/images/garmond_view_button.png" />
+      <bitmap id="GreetingsViewButton" import="library/images/greetings_view_button.png" />
       <bitmap id="InsertButton" import="library/images/insert_button.png" />
       <bitmap id="LogoViewButton" import="library/images/logo_view_button.png" />
       <bitmap id="MaskButton" import="library/images/mask_button.png" />
@@ -23,10 +26,12 @@
       <bitmap id="PlaceholdersButton" import="library/images/placeholders_view_button.png" />
       <bitmap id="PlaceholderButton" import="library/images/placeholder_button.png" />
       <bitmap id="PriceViewButton" import="library/images/price_view_button.png" />
+      <bitmap id="GridButton" import="library/images/grid_button.png" />
       <bitmap id="SaveButtonBitmap" import="library/images/save_button.png" />
       <bitmap id="TextAlignLeftButton" import="library/images/text_align_left.png" />
       <bitmap id="TextAlignCenterButton" import="library/images/text_align_center.png" />
       <bitmap id="TextAlignRightButton" import="library/images/text_align_right.png" />
+      <bitmap id="TextButton" import="library/images/text_button.png" />
       <bitmap id="TextViewButton" import="library/images/text_view_button.png" />
       <bitmap id="TrashButton" import="library/images/trash_button.png" />
       <bitmap id="ZoomTo100Button" import="library/images/zoom_100_button.png" />
@@ -87,21 +92,37 @@
         
         <!-- backdrops -->
         <!-- V 2.0 -->
-        <bitmap id="TextViewBack" import="library/images/text_view.png" />		
-        <bitmap id="PlaceholdersBackBitmap" import="library/images/placeholder_view.png" />
-        <bitmap id="FoilViewBack" import="library/images/foil_view.png" />
         <bitmap id="AddOnsViewBack" import="library/images/add_ons_view.png" />
+        <bitmap id="BlankBack" import="library/images/blank_back.png" />
+        <bitmap id="ColorPickerBitmap" import="library/images/color_picker.png" />
+        <bitmap id="CustomPMSPickerBitmap" import="library/images/custom_pms_picker.png" />
         <bitmap id="GaramondViewBack" import="library/images/garamond_view.png" />
-        <bitmap id="PriceViewBack" import="library/images/price_view.png" />
+        <bitmap id="GreetingsPickerBack" import="library/images/greetings_picker.png" />
+        <bitmap id="FoilPickerBitmap" import="library/images/foil_picker.png" />
+        <bitmap id="FoilTexture" import="library/images/foil_texture.jpg" />		
+        <bitmap id="FoilViewBack" import="library/images/foil_view.png" />
         <bitmap id="LogoViewBack" import="library/images/logo_view.png" />
+        <bitmap id="StdPMSPickerBitmap" import="library/images/std_pms_picker.png" />
+        <bitmap id="PlaceholdersBackBitmap" import="library/images/placeholder_view.png" />
+        <bitmap id="PriceViewBack" import="library/images/price_view.png" />
+        <bitmap id="ColorPickerBitmap" import="library/images/color_picker.jpg" />
+        <bitmap id="TextViewBack" import="library/images/text_view.png" />
+        <bitmap id="TestBack" import="library/images/test_back.png" />
         <bitmap id="ZoomOutButtonBitmap" import="library/images/zoom_out_button.png" />
         <bitmap id="ZoomInButtonBitmap" import="library/images/zoom_in_button.png" />
-        <bitmap id="TestBack" import="library/images/test_back.png" />
-        <bitmap id="ColorPickerBack" import="library/images/color_picker.png" />
-        
 
+        
+        
+                
+        
+        
+      
       <!-- system font -->
         <font id="helvetica" import="library/fonts/helvetica/helr45w.ttf" name="helvetica"/>
+        
+        
+        <!-- to go away -->
+        <bitmap id="ColorPickerBack" import="library/images/color_picker.png" />
         
         
         

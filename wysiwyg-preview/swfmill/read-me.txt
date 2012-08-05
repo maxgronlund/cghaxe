@@ -1,5 +1,7 @@
 run from terminal
 
+$ cgr
+
 cd /Users/synthmax/Dropbox/calligraphen-haxe/wysiwyg-editor/swfmill 
 
 swfmill simple resource.xml resource.swf

@@ -31,6 +31,7 @@
 -cp ../wysiwyg-editor/src/ui/scrollbars
 -cp ../wysiwyg-editor/src/views
 -cp ../wysiwyg-editor/src/views/application
+-cp ../wysiwyg-editor/src/parsers
 -cp src/views/application
 -cp ../wysiwyg-editor/src/views/content_editor
 -cp src/views/content_editor

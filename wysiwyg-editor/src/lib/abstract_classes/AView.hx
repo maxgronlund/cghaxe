@@ -101,6 +101,16 @@ class AView extends Sprite, implements IView
 		trace("getView: must be overriden in a subclass");
     return null;
 	}
+	
+	public function getPosX():Float{
+		trace("getPosX: must be overriden in a subclass");
+    return 0;
+	}
+	
+	public function getPosY():Float{
+		trace("getPosY: must be overriden in a subclass");
+    return 0;
+	}
 
 }
 
