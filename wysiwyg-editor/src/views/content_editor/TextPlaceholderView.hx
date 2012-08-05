@@ -97,7 +97,8 @@ class TextPlaceholderView extends APlaceholder{
       var foil = new MovieClip();
       var foilTexture = new FoilTexture();
       foil.addChild(foilTexture);
-      
+      foilTexture.width = this.width;
+      foilTexture.height = this.height;
       this.addChild(foil);
       this.addChild(fontMovie);
       this.mask = fontMovie;
