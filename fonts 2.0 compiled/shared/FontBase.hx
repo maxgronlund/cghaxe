@@ -12,6 +12,8 @@ import flash.Vector;
 import flash.geom.Point;
 import flash.geom.ColorTransform;
 
+import flash.events.MouseEvent;
+
 import flash.display.Sprite;
 //import flash.display.BitmapData;
 //import flash.display.Bitmap;
@@ -93,7 +95,7 @@ class FontBase extends MovieClip
     
     textField.x                     = 0; 
     textField.addEventListener(Event.CHANGE, textInputCapture);
-
+    //stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
       
   }
   
@@ -116,7 +118,12 @@ class FontBase extends MovieClip
     
   }
   
+//  private function onMouseUp(e:MouseEvent){
+//    trace('onMouseUp');
+//  }
+//  
   public function selectable(b:Bool):Void{
+    trace('selectable');
     textField.selectable    = b;
     textField.doubleClickEnabled = b;
     textField.mouseEnabled = b;

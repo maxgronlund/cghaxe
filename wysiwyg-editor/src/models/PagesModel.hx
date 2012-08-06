@@ -135,11 +135,6 @@ class PagesModel extends Model, implements IModel {
       	pageInFocus.onFontSelected(param);
       }
       case EVENT_ID.PAGE_SELECTED:{
-        
-        trace(param.getLabel(), param.getInt());
-        //pageModels[param.getInt()].setParam( new Parameter(EVENT_ID.BUILD_PAGE_DESIGNS) );
-        
-
         setPageFocus(param.getInt());
         dispatchParameter(param);
       }
@@ -153,7 +148,7 @@ class PagesModel extends Model, implements IModel {
         pageInFocus.setParam(param);
         
         trace('placeholder added check for price');
-        
+        Application.dispatchParameter( new Parameter(EVENT_ID.SELECT_MOVE_TOOL) );
       }
 
       case EVENT_ID.UPDATE_PLACEHOLDER:{
@@ -175,7 +170,6 @@ class PagesModel extends Model, implements IModel {
       }
       
       case EVENT_ID.TEXT_TOOL:{
-        trace(GLOBAL.TEXT_TOOL);
         dispatchParameter(param);
         pageInFocus.dispatchParameter(param);
       }

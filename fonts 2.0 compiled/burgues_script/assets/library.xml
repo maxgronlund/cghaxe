@@ -1,3 +1,4 @@
 <lib fps="30" width="1600" height="600" frameCount="2" compressed="true">
-	<font file="burgues_script.ttf" class="MyFont" glyphs="32-255,U+2019-U+2022"/>
+	<!--<font file="burgues_script.ttf" class="MyFont" glyphs="32-255,U+2019-U+2022"/> -->
+	<font file="burgues_script.ttf" class="MyFont" glyphs="32-255"/>
 </lib>

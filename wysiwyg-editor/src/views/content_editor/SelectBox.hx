@@ -1,3 +1,6 @@
+
+
+
 import flash.events.Event;
 import flash.text.Font;
 import flash.text.TextField;
@@ -42,36 +45,50 @@ class SelectBox extends MouseHandler
     
     alertBox.visible = false;
     //backdrop.visible = false;
-    
     backdrop.alpha                  = 0.5;
-   
     
+    //addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+    
+  }
+  private function onAddedToStage(e:Event){
+    trace('onAddedToStage');
   }
   
-  public function getPlaceHolderView():Dynamic {
-    return placeHolderView;
-  }
+  //public function getPlaceHolderView():Dynamic {
+  //  return placeHolderView;
+  //}
   
   override private function onMouseOver(e:MouseEvent){
-    trace('onMouseOver');
-  	super.onMouseOver(e); 
-  	
+    
+    super.onMouseOver(e);
+    
   }
   
   override private function onMouseDown(e:MouseEvent){
+    
   	super.onMouseDown(e); 
-  	trace('on mouse down');
   	MouseTrap.capture();
   	pageView.setPlaceholderInFocus(placeHolderView);
   	placeHolderView.updateGlobals();
-  	if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+  	if(GLOBAL.MOVE_TOOL) {
+  	  placeHolderView.setOnTop('select_box');
+  	  pageView.enableMove(e);
+  	}
+  	//else
+  	//  placeHolderView.makeFontSelecetable();
+  	
   }
   
   override private function onMouseUp(e:MouseEvent){
+//    trace('onMouseUp');
+    //placeHolderView.makeFontSelecetable();
+    placeHolderView.setOnTop('text_field');
     super.onMouseUp(e); 
     MouseTrap.release();
     pageView.disableMove();
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+    
   }
   
   private function createOutline():Void{
@@ -133,6 +150,11 @@ class SelectBox extends MouseHandler
   }
   
   public function setFocus( b:Bool ): Void{
+    
+//    trace('setFocus-----------------');
+//    resetMouse();
+    
+    
     backdrop.alpha = b?0.5:0;
     for( i in 0...outline.length){
       outline[i].visible = b;
@@ -140,7 +162,8 @@ class SelectBox extends MouseHandler
     
     //placeHolderView.setFocus(b);
     //if(!b){
-    //  resetMouse();
+    //  //placeHolderView.setOnTop('select_box');
+    //  //resetMouse();
     //}
   }
 

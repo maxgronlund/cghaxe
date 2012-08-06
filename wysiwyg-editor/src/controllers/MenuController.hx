@@ -5,9 +5,14 @@ class MenuController extends Controller, implements IController
 	public function new(){	
 		super();
 		
-		
+		Application.addEventListener(EVENT_ID.SELECT_MOVE_TOOL, onSelectMoveTool);
 	}
-	
+	private function onSelectMoveTool(e:IKEvent):Void{
+	  trace('onSelectMoveTool');
+	 //moveButton.setOn(true);
+	 
+	 setParam(new Parameter(EVENT_ID.MOVE_TOOL));
+  }
 //	override public function setParam(param:IParameter):Void{
 //			switch ( param.getType() ){
 //				case PARAM_TYPE.MENU:
@@ -27,9 +32,10 @@ class MenuController extends Controller, implements IController
       case EVENT_ID.SAVE_XML: Pages.setParam(param);
       case EVENT_ID.TRASH_PLACEHOLDER: Pages.setParam(param);
       case EVENT_ID.MOVE_TOOL:{
-        GLOBAL.MOVE_TOOL = param.getBool();
+        //GLOBAL.MOVE_TOOL = param.getBool();
         Pages.setParam(param);
         GLOBAL.menu_view.update(EVENT_ID.MOVE_TOOL, 0, 'foo');
+        GLOBAL.MOVE_TOOL = true;
         //Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
       }
       case EVENT_ID.TEXT_TOOL:{

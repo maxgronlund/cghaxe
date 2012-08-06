@@ -130,6 +130,7 @@ class EVENT_ID  {
   public static inline var TEXT_TOOL:String                 = "text_tool";
   public static inline var GRID_ON:String                   = "grid_on";
   public static inline var SET_DEFAULT_TOOL:String          = "set_default_tool";
+  public static inline var SELECT_MOVE_TOOL:String          = "select_move_tool";
   
 
                                                             

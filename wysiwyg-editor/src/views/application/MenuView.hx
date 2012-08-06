@@ -36,11 +36,13 @@ class MenuView extends View, implements IView
 		zoomOutButton       = new OneStateButton();
 		zoomTo100Button     = new OneStateButton();
 		Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onSetDefaultTool);
+		
+		
   	
 	}
-	
+
 	private function onSetDefaultTool(e:IKEvent):Void{
-	 // trace('onSetDefaultTool');
+	 //trace('onSetDefaultTool');
 	 textButton.setOn(true);
   }
 	
@@ -138,9 +140,11 @@ class MenuView extends View, implements IView
     switch ( id ){
     	case EVENT_ID.TEXT_TOOL:{
     		moveButton.setOn(false);
+    		textButton.setOn(true);
     	}
     	case EVENT_ID.MOVE_TOOL:{
     		textButton.setOn(false);
+    		moveButton.setOn(true);
     	}
     		//selectButton.setOn(false);
     }	

@@ -67,6 +67,8 @@ class VectorPlaceholderView extends APlaceholder {
   private var colorTransform:ColorTransform;
   private var default_colorTransform:ColorTransform;
   
+  private var selectBox:SelectBox;
+  
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
     super(pageView, id, model, url);
@@ -84,6 +86,7 @@ class VectorPlaceholderView extends APlaceholder {
     foil = new Sprite();
     foilTexture                       = new FoilTexture();
     lines                             = new Vector<Shape>();
+    selectBox                         = new SelectBox(pageView, this);
     
 //    trace('new');
 
@@ -92,7 +95,7 @@ class VectorPlaceholderView extends APlaceholder {
   override public function getBitmapMask():Bitmap {
     return bitmap;
   }
-  
+/*  
   private function updateBackdrop(c:UInt):Void{
     if(backdrop != null){
       removeChild(backdrop);
@@ -190,6 +193,7 @@ class VectorPlaceholderView extends APlaceholder {
     addChild(alertBox);
   }
 
+*/
   private function generateFoilOverlay(color):Bitmap {
     if(foilBitmapDataForOverlay == null) {
       foilBitmapDataForOverlay = foilTexture.bitmapData.clone();
@@ -347,14 +351,14 @@ class VectorPlaceholderView extends APlaceholder {
     bitmapInfo.draw(vectorMovie, matrix, null, null, null, true);
     bitmap = new Bitmap(bitmapInfo);
  
-    updateBackdrop(0x888888);
-    createLines();
-    createAlertBox();
-
-    
-    backdrop.width = vectorMovie.width;
-    backdrop.height = vectorMovie.height;
-    drawCuttingMarks();
+    //updateBackdrop(0x888888);
+    //createLines();
+    //createAlertBox();
+    //
+    //
+    //backdrop.width = vectorMovie.width;
+    //backdrop.height = vectorMovie.height;
+    //drawCuttingMarks();
     
     var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
     param.setInt(id);
@@ -364,7 +368,18 @@ class VectorPlaceholderView extends APlaceholder {
     this.setChildIndex(vectorMovie, this.numChildren - 1);
     setFocus(false);
     
+    addChild(selectBox);
+    resizeBackdrop();
+    selectBox.setFocus(true);
+    pageView.setPlaceholderInFocus(this);
+    
+    
+    
 
+  }
+  
+  public function resizeBackdrop():Void {
+    selectBox.resizeBackdrop(vectorMovie.width, vectorMovie.height, 0, 0);
   }
   
   private function hitTest():Void{
@@ -390,10 +405,7 @@ class VectorPlaceholderView extends APlaceholder {
     
     focus = b;
     updateFocus();
-    backdrop.alpha = b ? 0.5:0;
-    for( i in 0...lines.length){
-      lines[i].visible = b;
-    } 
+    //backdrop.alpha = b ? 0.5:0;
   }
 
   private function updateFocus():Void{
@@ -404,11 +416,14 @@ class VectorPlaceholderView extends APlaceholder {
 //      vectorFile.selectable(!GLOBAL.MOVE_TOOL);
 //      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
       //vectorFile.setFocus(true);
+      selectBox.setFocus(true);  
+      resizeBackdrop();
     }else{
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
 //      if(!collition)
         //vectorFile.setFocus(false);
 //      super.resetMouse();
+      selectBox.setFocus(false);  
     }
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
@@ -472,6 +487,6 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function alert(b:Bool):Void{
-      alertBox.visible = b;
+      selectBox.alert(b);//alertBox.visible = b;
   }
 }

@@ -171,7 +171,7 @@ class PageView extends View{
   }
   
   private function addDesignImagePlaceholder(posX:Float, posY:Float, imageUrl:String):Void{
-    trace(imageUrl);
+    //trace(imageUrl);
     setPlaceholderInFocus(null);
     
     var placeholder:APlaceholder		= new DesignImagePlaceholderView(this, placeholders.length, model, imageUrl);
@@ -302,7 +302,7 @@ class PageView extends View{
   }
   
   private function onAddTextPlaceholder(e:KEvent):Void {
-    trace( GLOBAL.desktop_view.getPosX());
+    //trace( GLOBAL.desktop_view.getPosX());
     
   	addTextPlaceholder(onPosX() ,onPosY());
   }
@@ -345,7 +345,7 @@ class PageView extends View{
   }
   
   public function setPlaceholderInFocus(placeholder:APlaceholder):Void{
-
+    //trace('setPlaceholderInFocus');
     if(inFocus != null){
       // clean up
       inFocus.setFocus(false);
@@ -361,6 +361,8 @@ class PageView extends View{
   }
   
   public function enableMove(e:MouseEvent):Void{
+    //trace('enableMove');
+    
     stage.addEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     startPoint.x = inFocus.x;
     startPoint.y = inFocus.y;
@@ -370,8 +372,6 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
-    trace('disableMove');
-    
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     hitTest();
   }
@@ -457,17 +457,16 @@ class PageView extends View{
   }
   
   private function movePlaceholder(e:MouseEvent){
-    
-      var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
-      var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
-      var pos:Float = ( moveX - hitPoint.x) + startPoint.x;
-      inFocus.x = pos;
-      pos = ( moveY - hitPoint.y) + startPoint.y;
-      inFocus.y = pos;
+//    trace('movePlaceholder');
+    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
+    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
+    var pos:Float = ( moveX - hitPoint.x) + startPoint.x;
+    inFocus.x = pos;
+    pos = ( moveY - hitPoint.y) + startPoint.y;
+    inFocus.y = pos;
   }
 
   private function loadFrontShot():Void{
-    trace(model.getString('front_shoot_url'));
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
   }
@@ -543,7 +542,6 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    trace('allImagesLoaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;

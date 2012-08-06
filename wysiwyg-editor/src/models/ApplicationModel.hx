@@ -98,7 +98,7 @@ class ApplicationModel extends Model, implements IModel
     
     var stage:String = loadStage[loadIndex];
     loadIndex++;
-    trace(stage);
+    //trace(stage);
     switch( stage ) {
       case 'reset wysiwyg':{
         dispatchParameter(new Parameter(EVENT_ID.RESET_WYSIWYG));
@@ -128,27 +128,21 @@ class ApplicationModel extends Model, implements IModel
       
       case 'add pages to stage':{
         dispatchParameter(new Parameter(EVENT_ID.ADD_PAGES_TO_STAGE));
-        trace('add pages to stage done');
+        //trace('add pages to stage done');
         
       }
       case 'add placeholders':{
-        trace('add placeholders');
+        //trace('add placeholders');
         Designs.setParam(new Parameter(EVENT_ID.ADD_DESIGN));
-        trace('add placeholders done');
+        //trace('add placeholders done');
       } 
       case 'configure preset side view': configurePresetSideView();
       case 'set defaults':{
-        trace('---- 1 -----');
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_SIDEVIEW));
-        trace('---- 2 -----');
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_FONT));
-        trace('---- 3 -----');
         dispatchParameter(new Parameter(EVENT_ID.DESELECT_PLACEHOLDERS));
-        trace('---- 4 -----');
         dispatchParameter(new Parameter(EVENT_ID.SET_DEFAULT_TOOL));
-        trace('---- 5 -----');
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_PAGE));
-        trace('---- 6 -----');
         // update DesktopView if there is no placeholders
         
         
