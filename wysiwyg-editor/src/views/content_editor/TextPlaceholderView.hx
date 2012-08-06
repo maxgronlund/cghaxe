@@ -64,6 +64,7 @@ class TextPlaceholderView extends APlaceholder {
 
 
   private var selectBox:SelectBox;
+  private var foilTexture:Dynamic;
   private var foil:Dynamic;
   private var foiled:Bool;
   private var was_foiled:Bool;
@@ -107,13 +108,33 @@ class TextPlaceholderView extends APlaceholder {
     return foiled == true;
   }
   
-  public function foilify():Void {
+  public function foilify(color:String):Void {
     if(foiled != true) {
-      foil = new MovieClip();
-      var foilTexture = new FoilTexture();
       
-      //foilTexture.width = this.width;
-      //foilTexture.height = this.height;
+      switch ( color )
+      {
+        case "silver":
+          foilTexture = new SilverFoilTexture();
+        case "gold":
+          foilTexture = new GoldFoilTexture();
+        case "yellow":
+          foilTexture = new YellowFoilTexture();
+        case "red":
+          foilTexture = new RedFoilTexture();
+        case "green":
+          foilTexture = new GreenFoilTexture();
+        case "blue":
+          foilTexture = new BlueFoilTexture();
+        default:
+          foilTexture = new SilverFoilTexture();
+      }
+      
+      
+      
+      foil = new MovieClip();
+      
+      foilTexture.width = this.width;
+      foilTexture.height = this.height;
       
       foil.addChild(foilTexture);
       foil.addChild(fontMovie);
@@ -345,7 +366,7 @@ class TextPlaceholderView extends APlaceholder {
     //  }
     //}
 
-    this.foilify();
+    this.foilify('gold');
     //if(collition){
     //  font.alert(true);
     //}
@@ -387,7 +408,10 @@ class TextPlaceholderView extends APlaceholder {
     font = null;
     loadFont();
     if(foilIt)
-      foilify();
+      foilify('gold');
+    
+    foilTexture.width = this.width;
+    foilTexture.height = this.height;
       
   }
   
@@ -467,11 +491,12 @@ class TextPlaceholderView extends APlaceholder {
 
       selectBox.setFocus(true);  
       resizeBackdrop();
-
-      if(foiled == true){
-        unfoilify();
-        was_foiled = true;
-      }
+      
+      // !!! Unfoilify when selected part 1
+      //if(foiled == true){
+      //  unfoilify();
+      //  was_foiled = true;
+      //}
     }else{
       hideTags();
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
@@ -479,10 +504,12 @@ class TextPlaceholderView extends APlaceholder {
         selectBox.setFocus(false);
 
 //      super.resetMouse();
-      if(was_foiled == true){
-        foilify();
-        was_foiled = false;
-      }
+
+      // !!! Unfoilify when selected part 2 (final)
+      //if(was_foiled == true){
+      //  foilify('gold');
+      //  was_foiled = false;
+      //}
     }
     handleKeyboard( focus );
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
