@@ -110,7 +110,7 @@ class TextPlaceholderView extends APlaceholder {
   public function foilify():Void {
     if(foiled != true) {
       var foil = new MovieClip();
-      var foilTexture = new FoilTexture();
+      var foilTexture = new SilverFoilTexture();
       foil.addChild(foilTexture);
       foilTexture.width = this.width;
       foilTexture.height = this.height;
@@ -525,7 +525,6 @@ class TextPlaceholderView extends APlaceholder {
   public function textInputCapture():Void {
     resizeBackdrop();
     hitTest();
-    
   }
   
 //  private function onMoveTool(e:IKEvent):Void {

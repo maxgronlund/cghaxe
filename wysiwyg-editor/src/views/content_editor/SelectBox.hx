@@ -60,7 +60,6 @@ class SelectBox extends MouseHandler
   //}
   
   override private function onMouseOver(e:MouseEvent){
-    
     super.onMouseOver(e);
     
   }
