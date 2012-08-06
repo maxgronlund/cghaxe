@@ -11,6 +11,9 @@ class View extends AView{
   private var Preset:IModel;
   private var Pages:IModel;
   private var Designs:IModel;
+//  private var DesignImages:IModel;
+  private var Vectors:IModel;
+  private var Greetings:IModel;
   private var controller:IController;
   private var bmpData:BitmapData;
   private var backdrop:Bitmap;
@@ -23,14 +26,17 @@ class View extends AView{
     Zoom              = GLOBAL.Zoom;
     Application	      = GLOBAL.Application;
     Menu      	      = GLOBAL.Menu;
-    Configuration     = GLOBAL.Configuration;
     Preset            = GLOBAL.Preset;
     Pages             = GLOBAL.Pages;
     Designs           = GLOBAL.Designs;
+//    DesignImages      = GLOBAL.DesignImages;
+    //Vectors           = GLOBAL.Vectors;
+    Greetings         = GLOBAL.Greetings;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   }
   
   override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
+    view.setString('viewId', id);
     addChild(view);
     view.x = posX;
     view.y = posY;

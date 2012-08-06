@@ -1,0 +1,4 @@
+color picker button jumps up on mouse release
+hover on menu items dont fit
+
+text align center and right images are swaped in ill file

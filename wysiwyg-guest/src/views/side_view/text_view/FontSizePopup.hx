@@ -33,7 +33,7 @@ class FontSizePopup extends AView {
     
     dropDownMenu.removeItems();
     //var sizes:Array<Int> = new Array<Int>();
-    sizes = [9,10,11,12,14,16,18,21,24,28,34,40,48,60,76,100,120,140,150];
+    sizes = [8,9,10,11,12,13,14,15,16,18,21,24,28,32,34,36,38,40,42,45,48,60,76,100,120,140,150];
     
     for (i in 0...sizes.length){
       var param = new Parameter( EVENT_ID.FONT_SIZE_SELECTED);

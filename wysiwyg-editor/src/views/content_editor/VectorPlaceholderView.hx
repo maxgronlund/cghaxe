@@ -84,7 +84,7 @@ class VectorPlaceholderView extends APlaceholder {
     
     this.url = url;
     foil = new Sprite();
-    foilTexture                       = new FoilTexture();
+    foilTexture                       = new SilverFoilTexture();
     lines                             = new Vector<Shape>();
     selectBox                         = new SelectBox(pageView, this);
     

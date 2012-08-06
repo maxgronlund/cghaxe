@@ -34,7 +34,7 @@ class LineSpacePopup extends AView {
     dropDownMenu.removeItems();
     
     //sizes = [0,1,2,3,5,7,9,12,15,18,22];
-    sizes = [-50,-40,-32,-26,-20 ,-16,-12,-9,-6,-4,-2,0,2,4,6,9,12,16,20,26,32];
+    sizes = [-50,-40,-32,-26,-24,-22,-20,-18,-16,-13,-12,-10,-9,-6,-4,-2,0,2,4,5,6,9,10,12,16,20,26,32];
     
     for (i in 0...sizes.length){
       //var param = new Parameter( EVENT_ID.FONT_SIZE_SELECTED);

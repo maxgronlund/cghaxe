@@ -157,7 +157,7 @@ class FontPane extends View, implements IView{
   }
   
   private function onUpdateFontPane(fontName:String):Void{
-    
+    trace('onUpdateFontPane');
     fontButtons[selectedButton].setOn(false);
     
     for(i in 0...fontButtons.length){

@@ -10,16 +10,18 @@ class DesignsView extends PropertyView, implements IView{
   
   public function new(designsController:IController){	
     super(designsController);
-    backdrop				= new PlaceholdersBackBitmap();
+    backdrop            = new PlaceholdersBackBitmap();
     
     designsScrollPane   = new ScrollPane(designsController);
     designsPane         = new DesignsPane(designsController);
-    verticalScrollbar   = new VerticalScrollbar(designsController);
+    verticalScrollbar   = new VerticalScrollbar(designsController, EVENT_ID.DESIGN_SCROLL);
     addDesignButton     = new OneStateButton();
     
     Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
   }
+  
   
   override public function init():Void{
 //        trace('init');
@@ -42,7 +44,7 @@ class DesignsView extends PropertyView, implements IView{
 
     // font selection pane
     addChild(designsScrollPane);
-    designsScrollPane.setSize(174,133);
+    designsScrollPane.setSize(174,410);
     designsScrollPane.x = 9;
     designsScrollPane.y = 56;
     designsScrollPane.addView(designsPane, 0,0);	
@@ -58,20 +60,22 @@ class DesignsView extends PropertyView, implements IView{
   }
   
   private function onPageDesignsLoaded(e:KEvent):Void{
-    trace('onPageDesignsLoaded');
-  //  trace(e.getXml().toString());
-    
-    
     var designsXml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    
 
     for(design in designsXml.elementsNamed('design')){
       var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_BUTTON);
       param.setXml(design);
       designsPane.setParam(param);
-      
     }
 
+  }
+  
+  private function onLoadDefaultTool(e:IKEvent):Void{
+    //trace('onLoadDefaultTool');
+    //trace(designsPane.getFloat('height'));
+    //trace(designsScrollPane.getFloat('mask_height'));
+    
+    verticalScrollbar.setSize(designsPane.getFloat('height'), designsScrollPane.getFloat('mask_height'));
   }
   
   override public function setParam(param:IParameter):Void{
@@ -79,6 +83,14 @@ class DesignsView extends PropertyView, implements IView{
     switch( param.getLabel() ){
       case EVENT_ID.DESIGN_SELECTED: {
         designsPane.setParam(param);
+      }
+    }
+	}
+	
+	override public function setFloat(id:String, f:Float):Void{
+    switch ( id ) {
+      case EVENT_ID.DESIGN_SCROLL:{
+        designsPane.y = -(designsPane.getFloat('height')-designsScrollPane.getFloat('mask_height')) * f;
       }
     }
 	}

@@ -5,21 +5,23 @@ class PageModel extends Model, implements IModel
 {
   private var pageId:Int;
   private var pageOrder:Int;
-  private var mask_url:String;
+  private var print_mask_url:String;
   private var hide_mask_url:String;
+  private var front_shoot_url:String;
   private var page_name:String;
   private var fileStr:String;
   private var front_of_paper:Bool;
+  private var print_types:Xml;
   
-  
-  
-  
+
+
   public function new(){	
-  	super();
-  	fileStr   = '';
-  	mask_url  = '';
-  	hide_mask_url = '';
+    super();
+    fileStr   = '';
+    print_mask_url  = '';
+    hide_mask_url = '';
   
+    
   }
   
   override public function setParam(param:IParameter):Void{
@@ -29,7 +31,7 @@ class PageModel extends Model, implements IModel
       	dispatchParameter(param);
       	GLOBAL.text_controller.setParam(param);
       }
-      case EVENT_ID.FONT_LOADED:{
+      case EVENT_ID.SWF_LOADED:{
         Pages.dispatchParameter(param);
       }
       case EVENT_ID.ADD_PLACEHOLDER:{
@@ -38,14 +40,6 @@ class PageModel extends Model, implements IModel
       	param.setInt(pageId);
       	dispatchParameter(param);
       }
-      //case EVENT_ID.ADD_TEXT_SUGGESTION:{
-      //  trace('ADD_TEXT_SUGGESTION');
-      //  //GLOBAL.Font.leading = 0;
-      //  //param.setModel(this);
-      //	//param.setInt(0);
-      //	//dispatchParameter(param);
-      //}
-      
       case EVENT_ID.TRASH_PLACEHOLDER:{
        dispatchParameter(param); 
       }
@@ -53,6 +47,9 @@ class PageModel extends Model, implements IModel
         GLOBAL.text_view.setParam(param);
       }
       
+      //case EVENT_ID.UPDATE_SIDE_VIEWS:{
+      //
+      //}
     }
 	}
 
@@ -90,33 +87,75 @@ class PageModel extends Model, implements IModel
   override function setString(id:String, s:String):Void{
     
     switch(id) {
-      case 'mask_url':                mask_url  = s; 
-      case 'hide_mask_url':           hide_mask_url = s;
-      case 'page_name':               page_name = s; 
+      case 'print_mask_url':          print_mask_url  = s; 
+      case 'hide_mask_url':           hide_mask_url   = s;
+      case 'front_shoot_url':         front_shoot_url = s;
       case 'no_move':{ trace('no move'); 	}
-      case EVENT_ID.SET_PAGE_XML:fileStr += s;
-      
+      case EVENT_ID.SET_PAGE_XML:     fileStr         += s;
+
     }
   }
   
   override function getString(id:String):String{
     
     switch(id) {
-      case 'mask_url':          return mask_url; 
+      case 'print_mask_url':    return print_mask_url; 
       case 'hide_mask_url':     return hide_mask_url; 
-      case 'page_name':         return page_name; 
+      case 'front_shoot_url':   return front_shoot_url; 
       default:                  return '';
     }
   }
   
-  override public function getXml(cmd:String):String{
-    fileStr = '\t<page id="'+Std.string(pageId)+'">\n';
-      // placeholders returns to setString and add data to fileStr
-      var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_XML + Std.string(pageId));
-      dispatchParameter(param);
+ 
+
   
-    fileStr += '\t</page>\n';
-    return fileStr;
+  override public function setXml(id:String, xml:Xml):Void{
+    
+    //front_of_paper = false;
+    
+    for(front in xml.elementsNamed('front')){  front_of_paper = front.firstChild().nodeValue == 'true';}
+
+    for(hide_mask in xml.elementsNamed('hide-mask')){
+      hide_mask_url = hide_mask.firstChild().nodeValue;
+    }
+    
+
+    for(print_mask in xml.elementsNamed('print-mask')){
+      print_mask_url = print_mask.firstChild().nodeValue;
+    }
+    
+    for(front_shoot in xml.elementsNamed('front-shoot')){
+      front_shoot_url = front_shoot.firstChild().nodeValue;
+    }
+    
+    for(printTypes in xml.elementsNamed('print-types')){
+      print_types = printTypes;
+    }
+  }
+
+  override public function getXml(cmd:String):String{
+    
+    switch ( cmd ){
+      case CONST.XML_FILE:{
+        fileStr = '\t<page id="'+Std.string(pageId)+'">\n';
+
+        var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_POS_XML + Std.string(pageId));
+        dispatchParameter(param);
+
+        var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_XML + Std.string(pageId));
+        dispatchParameter(param);
+
+        fileStr += '\t</page>\n';
+        return fileStr;
+      }
+      case CONST.PRINT_TYPES:{
+        return print_types.toString();
+      }
+    }
+
+    
+    return null;
+    
     
   }
   

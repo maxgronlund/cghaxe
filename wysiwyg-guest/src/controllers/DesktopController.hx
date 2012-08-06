@@ -21,6 +21,8 @@ class DesktopController extends Controller, implements IController
       case EVENT_ID.ZOOM_100:{
         //trace('ZOOM_100');
         Zoom.resetZoom();
+        GLOBAL.desktop_view.setParam(param);
+        
       }
     }	
 	}

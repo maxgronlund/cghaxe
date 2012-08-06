@@ -387,12 +387,15 @@ class PageView extends View{
   }
   
   private function hitTestTextPlaceholder():Void {
-    var textField:TextField = inFocus.getPlaceHolderView().getTextField();
+    
+    var textField:TextField = inFocus.getTextField();
+    
     if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
       if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
         inFocus.alert(true);
       else
         inFocus.alert(false);
+      trace("hitTestTextPlaceholder");
     }
   }
   

@@ -14,10 +14,12 @@ class TextSuggestionView extends PropertyView, implements IView{
     backdrop                = new PlaceholdersBackBitmap();
     placeholderScrollPane   = new ScrollPane(textController);
     textSuggestionPane      = new TextSuggestionPane(textController);
-    verticalScrollbar       = new VerticalScrollbar(textController);
+    verticalScrollbar       = new VerticalScrollbar(textController, EVENT_ID.SUGGESTION_SCROLL);
     addPlaceholderButton    = new OneStateButton();
 
     Application.addEventListener(EVENT_ID.PASS_DESIGN_FILE, onPageLayoutLoaded);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
+    
   }
 
   override public function init():Void {
@@ -42,7 +44,7 @@ class TextSuggestionView extends PropertyView, implements IView{
 
     // font selection pane
     addChild(placeholderScrollPane);
-    placeholderScrollPane.setSize(174,133);
+    placeholderScrollPane.setSize(174,417);
     placeholderScrollPane.x = 9;
     placeholderScrollPane.y = 56;
     placeholderScrollPane.addView(textSuggestionPane, 0,0);	
@@ -69,14 +71,14 @@ class TextSuggestionView extends PropertyView, implements IView{
   override public function setFloat(id:String, f:Float):Void{
     
     switch ( id ) {
-      case EVENT_ID.FONT_SCROLL:{
+      case EVENT_ID.SUGGESTION_SCROLL:{
         textSuggestionPane.y = -(textSuggestionPane.getFloat('height')-placeholderScrollPane.getFloat('mask_height')) * f;
       }
     }
-	}
-
+  }
+  
   private function onPageLayoutLoaded(e:IKEvent):Void{
-
+  
     for( design in e.getXml().elementsNamed("design") ) {
       for( text_suggestion in design.elementsNamed("text-suggestion") ) {
         for( wysiwyg_placeholders in text_suggestion.elementsNamed("wysiwyg-placeholders") ) {
@@ -84,9 +86,13 @@ class TextSuggestionView extends PropertyView, implements IView{
         }
       }
     }
-	}
-	
-	private function addPlaceholders(xml:Xml):Void{
+  }
+  
+  private function onLoadDefaultToold(e:IKEvent):Void{
+    verticalScrollbar.setSize(textSuggestionPane.getFloat('height'), placeholderScrollPane.getFloat('mask_height'));
+  }
+  
+  private function addPlaceholders(xml:Xml):Void{
     
     for( wysiwyg_placeholder in xml.elementsNamed("wysiwyg-placeholder") ) {
       var param:IParameter = new Parameter(EVENT_ID.ADD_SUGGESTION_BUTTON);
