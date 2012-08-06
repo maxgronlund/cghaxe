@@ -345,7 +345,7 @@ class PageView extends View{
   }
   
   public function setPlaceholderInFocus(placeholder:APlaceholder):Void{
-    //trace('setPlaceholderInFocus');
+    trace('setPlaceholderInFocus', placeholder == null);
     if(inFocus != null){
       // clean up
       inFocus.setFocus(false);

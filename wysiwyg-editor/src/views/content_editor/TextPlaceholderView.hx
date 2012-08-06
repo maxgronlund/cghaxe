@@ -323,7 +323,7 @@ class TextPlaceholderView extends APlaceholder {
     var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
     param.setInt(id);
     model.setParam(param);
-    //pageView.setPlaceholderInFocus(this);
+
     
     //switch ( printType ){
     //  case CONST.FOIL_COLOR:{
@@ -357,10 +357,10 @@ class TextPlaceholderView extends APlaceholder {
     resizeBackdrop();
     
    // trace('set alert box size');
-
-    pageView.hitTest();
+   pageView.setPlaceholderInFocus(this);
+   pageView.hitTest();
     
-    pageView.setPlaceholderInFocus(this);
+    
     
     //addChild(selectBox);  
   }
