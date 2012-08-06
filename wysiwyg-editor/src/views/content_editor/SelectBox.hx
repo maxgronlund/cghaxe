@@ -63,6 +63,7 @@ class SelectBox extends MouseHandler
   	trace('on mouse down');
   	MouseTrap.capture();
   	pageView.setPlaceholderInFocus(placeHolderView);
+  	placeHolderView.updateGlobals();
   	if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
   }
   

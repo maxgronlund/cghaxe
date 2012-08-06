@@ -343,7 +343,7 @@ class TextPlaceholderView extends APlaceholder {
     //}
     resizeBackdrop();
     addChild(selectBox);
-    trace('set alert box size');
+   // trace('set alert box size');
 
     pageView.hitTest();
   }
@@ -353,6 +353,8 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function onUpdatePlaceholder(event:Event):Void{
+    
+    
     printType = GLOBAL.printType;
     var foilIt = false;
     
@@ -494,7 +496,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onTextTool(e:IKEvent):Void {
-    trace('onTextTool');
+    //trace('onTextTool');
     updateFocus();
   }
 
@@ -524,6 +526,24 @@ class TextPlaceholderView extends APlaceholder {
   //  if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
   //  
   //}
+  
+  
+  
+  public function updateGlobals(){
+
+    GLOBAL.Font.fileName        = fontFileName;
+    GLOBAL.Font.fontSize        = fontSize;
+    //GLOBAL.Font.fontColor       = fontColor;
+    GLOBAL.Font.fontAlign       = fontAlign;
+    GLOBAL.Font.leading         = fontLeading;
+    GLOBAL.Font.letterSpacing   = letterSpacing;
+    pageView.setPlaceholderInFocus(this);
+    model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS)); //!!! replace this
+    updateSideView();    
+    //if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+  }
+  
+  
   
   //!!! move this to super class
   private function updateSideView(): Void{

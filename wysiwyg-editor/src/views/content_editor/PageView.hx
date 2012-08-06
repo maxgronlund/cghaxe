@@ -318,12 +318,13 @@ class PageView extends View{
   
   private function addTextPlaceholder(posX:Float, posY:Float):Void{
 
-    setPlaceholderInFocus(null);
+    //setPlaceholderInFocus(null);
     var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
     placeholder.x = posX;
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
+    setPlaceholderInFocus(placeholder);
     
   }
   
