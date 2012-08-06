@@ -67,6 +67,14 @@ class TextPlaceholderView extends APlaceholder {
   private var selectBox:SelectBox;
   private var foiled:Bool;
   private var was_foiled:Bool;
+  private var foil:Dynamic;
+  private var foilTexture:Bitmap;
+  private var silverFoilTexture:Bitmap;
+  private var goldFoilTexture:Bitmap;
+  private var yellowFoilTexture:Bitmap;
+  private var redFoilTexture:Bitmap;
+  private var greenFoilTexture:Bitmap;
+  private var blueFoilTexture:Bitmap;
 
   
   
@@ -93,6 +101,13 @@ class TextPlaceholderView extends APlaceholder {
     collition                         = false;
     foiled = false;
     was_foiled = false;
+    
+    silverFoilTexture                       = new SilverFoilTexture();
+    goldFoilTexture                         = new GoldFoilTexture();
+    yellowFoilTexture                       = new YellowFoilTexture();
+    redFoilTexture                          = new RedFoilTexture();
+    greenFoilTexture                        = new GreenFoilTexture();
+    blueFoilTexture                         = new BlueFoilTexture();
   }
   
   
@@ -107,10 +122,30 @@ class TextPlaceholderView extends APlaceholder {
     return foiled == true;
   }
   
-  public function foilify():Void {
+  public function foilify(color:String):Void {
     if(foiled != true) {
-      var foil = new MovieClip();
-      var foilTexture = new SilverFoilTexture();
+      
+      
+      foilTexture = silverFoilTexture;
+
+      switch ( color )
+      {
+        case 'silver':
+          foilTexture = silverFoilTexture;
+        case 'gold': 
+          foilTexture = goldFoilTexture;
+        case 'yellow':
+          foilTexture = yellowFoilTexture;
+        case 'red': 
+          foilTexture = redFoilTexture;
+        case 'green':
+          foilTexture = greenFoilTexture;
+        case 'blue':
+          foilTexture = blueFoilTexture; 
+      }
+            
+      
+      foil = new MovieClip();
       foil.addChild(foilTexture);
       foilTexture.width = this.width;
       foilTexture.height = this.height;
@@ -118,13 +153,20 @@ class TextPlaceholderView extends APlaceholder {
       this.addChild(fontMovie);
       this.mask = fontMovie;
       Foil.initFiltersOn(this);
+      
+      
     }
     foiled = true;
   }
   
   public function unfoilify():Void {
-    if(foiled == true)
+    if(foiled == true){
+      this.mask = null;
+      //foil.removeChild(fontMovie);
+      this.removeChild(foil);
+      //this.addChild(fontMovie);
       Foil.removeFiltersFrom(this);
+    }
     foiled = false;
   }
   
@@ -337,7 +379,7 @@ class TextPlaceholderView extends APlaceholder {
     //  }
     //}
 
-    
+    foilify('gold');
     //if(collition){
     //  font.alert(true);
     //}
@@ -511,7 +553,7 @@ class TextPlaceholderView extends APlaceholder {
 
 //      super.resetMouse();
       if(was_foiled == true){
-        foilify();
+        foilify('gold');
         was_foiled = false;
       }
     }

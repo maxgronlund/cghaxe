@@ -223,6 +223,6 @@ class SelectBox extends MouseHandler
   }
   
   public function getPlaceholderType():String{
-    return 'text_place_holder';
+    return 'text_place_holder_select_box';
   }
 }
