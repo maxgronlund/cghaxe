@@ -64,6 +64,7 @@ class TextPlaceholderView extends APlaceholder {
 
 
   private var selectBox:SelectBox;
+  private var foil:Dynamic;
   private var foiled:Bool;
   private var was_foiled:Bool;
 
@@ -108,22 +109,30 @@ class TextPlaceholderView extends APlaceholder {
   
   public function foilify():Void {
     if(foiled != true) {
-      var foil = new MovieClip();
+      foil = new MovieClip();
       var foilTexture = new FoilTexture();
+      
+      //foilTexture.width = this.width;
+      //foilTexture.height = this.height;
+      
       foil.addChild(foilTexture);
-      foilTexture.width = this.width;
-      foilTexture.height = this.height;
+      foil.addChild(fontMovie);
+      foil.mask = fontMovie;
+      Foil.initFiltersOn(foil);
+      
       this.addChild(foil);
-      this.addChild(fontMovie);
-      this.mask = fontMovie;
-      Foil.initFiltersOn(this);
     }
     foiled = true;
   }
   
   public function unfoilify():Void {
-    if(foiled == true)
-      Foil.removeFiltersFrom(this);
+    if(foiled == true){
+      foil.removeChild(fontMovie);
+      foil.mask = null;
+      this.removeChild(foil);
+      foil = null;
+      this.addChild(fontMovie);
+    }
     foiled = false;
   }
   
@@ -314,7 +323,6 @@ class TextPlaceholderView extends APlaceholder {
                 letterSpacingToFont() , 
                 letterSpacing,
                 this); 
-    trace("hmm");
     selectBox.setFocus(true);
     
     restoreShowTags();
@@ -337,15 +345,14 @@ class TextPlaceholderView extends APlaceholder {
     //  }
     //}
 
-    
+    this.foilify();
     //if(collition){
     //  font.alert(true);
     //}
     resizeBackdrop();
     addChild(selectBox);
-   // trace('set alert box size');
 
-    pageView.hitTest();
+    hitTest();
   }
   
   private function hitTest():Void{
@@ -381,6 +388,7 @@ class TextPlaceholderView extends APlaceholder {
     loadFont();
     if(foilIt)
       foilify();
+      
   }
   
   override public function setFocus(b:Bool):Void{
@@ -488,7 +496,6 @@ class TextPlaceholderView extends APlaceholder {
   public function textInputCapture():Void {
     resizeBackdrop();
     hitTest();
-    
   }
   
   private function onMoveTool(e:IKEvent):Void {
@@ -600,5 +607,6 @@ class TextPlaceholderView extends APlaceholder {
   override public function alert(b:Bool):Void{
       collition = b;
       font.alert(b);
+      selectBox.alert(b);
   }
 }

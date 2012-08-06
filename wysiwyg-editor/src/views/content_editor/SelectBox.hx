@@ -48,14 +48,13 @@ class SelectBox extends MouseHandler
     
   }
   
-  public function getPlaceHolderView():Dynamic {
+  public function getPlaceholderView():Dynamic {
     return placeHolderView;
   }
   
   override private function onMouseOver(e:MouseEvent){
     trace('onMouseOver');
   	super.onMouseOver(e); 
-  	
   }
   
   override private function onMouseDown(e:MouseEvent){
@@ -193,9 +192,5 @@ class SelectBox extends MouseHandler
      lines[offset].y    = 0;
      lines[offset+1].y  = backdrop.height/2;
      lines[offset+2].y  = backdrop.height;
-  }
-  
-  public function getPlaceholderType():String{
-    return 'text_place_holder';
   }
 }
