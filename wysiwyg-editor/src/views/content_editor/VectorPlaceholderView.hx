@@ -58,6 +58,12 @@ class VectorPlaceholderView extends APlaceholder {
   private var foiled:Bool;
   private var foil:Sprite;
   private var foilTexture:Bitmap;
+  private var silverFoilTexture:Bitmap;
+  private var goldFoilTexture:Bitmap;
+  private var yellowFoilTexture:Bitmap;
+  private var redFoilTexture:Bitmap;
+  private var greenFoilTexture:Bitmap;
+  private var blueFoilTexture:Bitmap;
   private var foilTextureOverlay:Bitmap;
   private var foilBitmapDataForOverlay:BitmapData;
   private var backdrop:Sprite;
@@ -84,7 +90,12 @@ class VectorPlaceholderView extends APlaceholder {
     
     this.url = url;
     foil = new Sprite();
-    foilTexture                       = new SilverFoilTexture();
+    silverFoilTexture                       = new SilverFoilTexture();
+    goldFoilTexture                         = new GoldFoilTexture();
+    yellowFoilTexture                       = new YellowFoilTexture();
+    redFoilTexture                          = new RedFoilTexture();
+    greenFoilTexture                        = new GreenFoilTexture();
+    blueFoilTexture                         = new BlueFoilTexture();
     lines                             = new Vector<Shape>();
     selectBox                         = new SelectBox(pageView, this);
     
@@ -233,13 +244,33 @@ class VectorPlaceholderView extends APlaceholder {
     return foiled == true;
   }
   
-  public function foilify(color = 0xFFFFFF):Void {
+  public function foilify(color:String):Void {
     unfoilify();
     uncolor();
-    foilTextureOverlay = generateFoilOverlay(color);
+    //foilTextureOverlay = generateFoilOverlay(color);
+    
+    //default
+    foilTexture = silverFoilTexture;
+    
+    switch ( color )
+    {
+      case 'silver':
+        foilTexture = silverFoilTexture;
+      case 'gold': 
+        foilTexture = goldFoilTexture;
+      case 'yellow':
+        foilTexture = yellowFoilTexture;
+      case 'red': 
+        foilTexture = redFoilTexture;
+      case 'green':
+        foilTexture = greenFoilTexture;
+      case 'blue':
+        foilTexture = blueFoilTexture; 
+    }
+    
     
     foil.addChild(foilTexture);
-    foil.addChild(foilTextureOverlay);
+    //foil.addChild(foilTextureOverlay);
     addChild(foil);
     
     foil.mask = vectorMovie;
@@ -396,7 +427,7 @@ class VectorPlaceholderView extends APlaceholder {
         color(GLOBAL.stdPmsColor);
       }
       case CONST.FOIL_COLOR:{
-        foilify(GLOBAL.foilColor);
+        foilify('silver');
       }
     }
   }

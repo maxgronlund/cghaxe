@@ -378,6 +378,7 @@ class PageView extends View{
   }
   
   public function hitTest():Void {
+
     switch(inFocus.getPlaceholderType()) {
       case 'text_place_holder':
         hitTestTextPlaceholder();
@@ -396,7 +397,7 @@ class PageView extends View{
         inFocus.alert(true);
       else
         inFocus.alert(false);
-//      trace("hitTestTextPlaceholder");
+
     }
   }
   
