@@ -369,8 +369,10 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
-    hitTest();
+    trace('disableMove');
+    
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
+    hitTest();
   }
   
   public function hitTest():Void {

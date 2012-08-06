@@ -193,4 +193,8 @@ class SelectBox extends MouseHandler
      lines[offset+1].y  = backdrop.height/2;
      lines[offset+2].y  = backdrop.height;
   }
+  
+  public function getPlaceholderType():String{
+    return 'text_place_holder';
+  }
 }
