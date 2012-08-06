@@ -379,7 +379,7 @@ class TextPlaceholderView extends APlaceholder {
     //  }
     //}
 
-    foilify('gold');
+    //foilify('gold');
     //if(collition){
     //  font.alert(true);
     //}
