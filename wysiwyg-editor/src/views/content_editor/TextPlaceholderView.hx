@@ -466,7 +466,7 @@ class TextPlaceholderView extends APlaceholder {
         was_foiled = false;
       }
     }
-    handleKeyboard( focus ); 
+    handleKeyboard( focus );
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
   }
   
