@@ -39,7 +39,7 @@ class DesignsView extends PropertyView, implements IView{
   }
   
   override public function onAddedToStage(e:Event):Void{
-//    trace('on added to stage');
+    
     super.onAddedToStage(e);
 
     // font selection pane
@@ -59,11 +59,11 @@ class DesignsView extends PropertyView, implements IView{
     addDesignButton.y = 488;
     
     
-    Pages.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onPageSelected);
+    //Pages.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onPageSelected);
   }
   
   private function onPageSelected(e:IKEvent):Void{
-   trace(e.getXml()); 
+   //trace(e.getXml()); 
   }
   
 //  private function onPageDesignsLoaded(e:KEvent):Void{

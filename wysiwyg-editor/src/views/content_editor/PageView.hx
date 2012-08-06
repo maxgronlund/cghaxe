@@ -464,6 +464,7 @@ class PageView extends View{
   }
 
   private function loadFrontShot():Void{
+    trace(model.getString('front_shoot_url'));
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
   }
@@ -539,7 +540,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-//    trace('allImagesLoaded');
+    trace('allImagesLoaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;

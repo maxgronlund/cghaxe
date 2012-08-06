@@ -1,13 +1,13 @@
 package;
 
-
+import flash.display.Sprite;
 
 import flash.events.Event;
 import flash.events.MouseEvent;
 import flash.text.TextField;
 import flash.display.Bitmap;
 
-class APlaceholder extends MouseHandler{
+class APlaceholder extends Sprite{
 
   
   public function new(parrent:PageView, id:Int, model:IModel, text:String){	

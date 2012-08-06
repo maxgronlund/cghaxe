@@ -142,9 +142,9 @@ class PageModel extends Model, implements IModel
     for(_designs in xml.elementsNamed('designs')){
       designs = _designs;
       
-      trace(designs.toString);
-      trace('===============================>>>>>>>>>>>', pageId);
-      //for(design in designs.elementsNamed('design')){
+      //trace(designs.toString);
+      //trace('===============================>>>>>>>>>>>', pageId);
+      ////for(design in designs.elementsNamed('design')){
       //  trace('-----------------------------');
       //}
       

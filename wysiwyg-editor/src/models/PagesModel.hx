@@ -98,6 +98,7 @@ class PagesModel extends Model, implements IModel {
      var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
      param.setModel(pageModel);
      dispatchParameter(param);
+     
 
   }
   
@@ -138,11 +139,7 @@ class PagesModel extends Model, implements IModel {
         trace(param.getLabel(), param.getInt());
         //pageModels[param.getInt()].setParam( new Parameter(EVENT_ID.BUILD_PAGE_DESIGNS) );
         
-        
-        
-        
-        
-        
+
         setPageFocus(param.getInt());
         dispatchParameter(param);
       }

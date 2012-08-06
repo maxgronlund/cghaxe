@@ -10,13 +10,15 @@ import flash.display.Shape;
 import flash.Vector;
 import flash.geom.Point;
 import flash.geom.ColorTransform;
+import flash.events.Event;
+import flash.events.MouseEvent;
 
 import flash.display.Sprite;
 
 import flash.Lib;
 import flash.display.MovieClip;
 
-class SelectBox extends MovieClip
+class SelectBox extends MouseHandler
 {
   private var scale:Float;
   private var combindeMargins:Float;
@@ -34,7 +36,21 @@ class SelectBox extends MovieClip
     createAlertBox();
     createBackdrop();
     createOutline();
+    
+    backdrop.alpha                  = 0.5;
+    
   }
+  
+  override private function onMouseOver(e:MouseEvent){
+    trace('onMouseOver');
+		super.onMouseOver(e); 
+		
+	}
+  
+  override private function onMouseDown(e:MouseEvent){
+		super.onMouseDown(e); 
+		trace('on mouse down');
+	}
   
   private function createOutline():Void{
     
@@ -100,31 +116,31 @@ class SelectBox extends MovieClip
     }
   }
 
-  public function resizeBackdrop(width, height, x, combindeMargins):Void{
-    resizeAlertBox(width, height, x, combindeMargins);
-    resizeBack(width, height, x, combindeMargins);
-    drawCuttingMarks(width, height);
+  public function resizeBackdrop(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
+    resizeAlertBox(textfield_width, textfield_height, x, combindeMargins);
+    resizeBack(textfield_width, textfield_height, x, combindeMargins);
+    drawCuttingMarks(textfield_width, textfield_height);
   }
   
-  private function resizeBack(width, height, x, combindeMargins):Void{
-    backdrop.width        = 16+width-(scale*combindeMargins);
-    backdrop.height       = height;
+  private function resizeBack(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
+    backdrop.width        = 16+textfield_width-(scale*combindeMargins);
+    backdrop.height       = textfield_height;
     backdrop.x            = x + combindeMargins;
   }
   
-  private function resizeAlertBox(width, height, x, combindeMargins):Void{
-    alertBox.width        = 16+width-(scale*combindeMargins);
-    alertBox.height       = height;
+  private function resizeAlertBox(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
+    alertBox.width        = 16+textfield_width-(scale*combindeMargins);
+    alertBox.height       = textfield_height;
     alertBox.x            = x + combindeMargins;
   }
   
-  private function drawCuttingMarks(width, height):Void{
+  private function drawCuttingMarks(textfield_width:Float, textfield_height:Float):Void{
     // left 
     drawVertical( 0, backdrop.x, outline);
     // bottom
-    drawHorizontal( 3, height,outline);
+    drawHorizontal( 3, textfield_height,outline);
     // right
-    drawVertical( 6, backdrop.x+width, outline);
+    drawVertical( 6, backdrop.x+backdrop.width,outline );
     // top
     drawHorizontal( 9, 0,outline);
   }
