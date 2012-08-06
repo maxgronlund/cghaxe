@@ -7,22 +7,13 @@ import flash.display.BitmapData;
 import flash.display.Bitmap;
 import flash.geom.Point;
 import flash.Vector;
+import flash.display.Shape;
 
 class SideView extends View, implements IView
 {
   private var views:Vector<AView>;
   private var selectedView:AView;
-  
-  private var textView:AView;
-  private var textSuggestionView:AView;
-  private var designView:AView;
-  private var foilView:AView;
-  private var addOnsView:AView;
-  private var garamondView:AView;
-  private var logoView:AView;
-  private var priceView:AView;
-  private var blindView:AView;
-//  private var vPos:Int;
+//  private var verticalLine:Shape;
   private var posY:Float;
   private var index:Int;
   
@@ -41,10 +32,30 @@ class SideView extends View, implements IView
   	super.onAddedToStage(e);	
   	addChild(backdrop);
   	backdrop.y = 500;
+  	
+  }
+  
+  private function onPageSelected(e:IKEvent):Void{
+
+    //GLOBAL.color_view.setString( 'na','clear');
+    //var print_types:Xml = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+    //
+    //for(print_types in print_types.elementsNamed('print-types')){
+    //  
+    //  for(print_type in print_types.elementsNamed('print-type')){
+    //    for(title in print_type.elementsNamed('title')){
+    //      
+    //      GLOBAL.color_view.setString( 'na',title.firstChild().nodeValue.toString());
+    //
+    //      
+    //    }
+    //  }
+    //}
+    //GLOBAL.color_view.setString( 'na','build');
   }
   
   override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
-    
+      
       view.setString('viewId', id);
       views.push(view);
       views[index].y = posY;
@@ -55,30 +66,31 @@ class SideView extends View, implements IView
   
   private function onLoadDefaultSiteView(e:IKEvent):Void{
     selectedView = views[0];
-    //showView(views[0].getString('viewId'));
     showView(EVENT_ID.SHOW_TEXT, true);
-    //showView(EVENT_ID.SHOW_TEXT,true);
-    //showView(views[0].getString('viewId'), true);
+    
   }
   
   override public function showView(id:String, b:Bool):Void{
-  	selectedView.update('deselect', 0 , 'na');
-  	posY = 0;
-  	
-  	for( i in 0...views.length){
-  	  views[i].y = posY;
-  	  
-  	  if( getIndex(id) == i ){
-  	    posY += 516;
-  	    views[i].update('select', i , 'na');
-  	    selectedView = views[i];
-  	    this.setChildIndex(views[i], this.numChildren - 1);
-  	  }
-  	  else{
-  	    views[i].update('deselect', i , 'na');
-  	    posY += SIZE.PROPERTY_BUTTON_HEIGHT;
-  	  }
-	  }
+    
+    trace(id);
+    selectedView.update('deselect', 0 , 'na');
+    posY = 0;
+    
+    for( i in 0...views.length){
+      views[i].y = posY;
+      this.setChildIndex(views[i], this.numChildren - 1);
+      if( getIndex(id) == i ){
+        posY += 516;
+        views[i].update('select', i , 'na');
+        selectedView = views[i];
+      }
+      else{
+        views[i].update('deselect', i , 'na');
+        posY += SIZE.PROPERTY_BUTTON_HEIGHT;
+      }
+    }
+    
+    setChildIndex(selectedView, this.numChildren - 1);
   }
   
   private function getIndex(viewId:String):Int{

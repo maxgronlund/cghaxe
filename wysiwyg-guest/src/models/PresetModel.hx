@@ -7,270 +7,335 @@ import flash.net.URLRequestMethod;
 import flash.net.URLVariables;
 import flash.net.FileReference;
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.geom.Point;
+import flash.Vector;
+
+import flash.external.ExternalInterface;
 
 
 class PresetModel extends Model, implements IModel
 {
-
-//	public var productXml:Xml;						//!!! replace with a reference
-	private var preset:String;
-//	private var Application:IModel;
-
-	private var productSelected:String;
-	private var loader:URLLoader;
-//	private var productId:Int;
-	private var presetName:String;
-	private var placeholders:UInt;
-	
-	public function new()
-	{
-		super();
-		preset = '';
-		productSelected = 'na';
-		placeholders = 0;
-		loader = new URLLoader();
-//		productId = -1;
-		
-	}
-	
-	override public function init():Void{
-		super.init();
-		Application.addEventListener(EVENT_ID.PASS_PRESET_FILE, onPassPreset);
+  private var associatedProducts:Vector<Int>;   //<<------------- hack for test
+  private var assProdIndex:UInt;                //<<------------- hack for test
+  private var productSelected:String;
+  private var loader:URLLoader;
+  
+  public function new(){
+    super();
+    productSelected = 'na';
+   
+    loader = new URLLoader();
+    associatedProducts = new Vector<Int>();
+    assProdIndex = 0;
+  }
+  
+  override public function init():Void{
+  	super.init();
+  	Application.addEventListener(EVENT_ID.PASS_PRESET_FILE, onParsePreset);
     Pages.addEventListener(EVENT_ID.SAVE_XML, savePreset);
-	}
+  }
+  
+  private function onParsePreset(e:IKEvent):Void{
+//    trace('onParsePreset');
+    var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+    //trace('-----------------');
+    //trace(e.getXml().toString() );
+    //trace('-----------------');
+    for( preset in xml.elementsNamed("preset") ) {
+      countPlaceholders(preset);
+      // building the pages
+      parsePreset(preset);
+      
+/*      // loading front shots
+      parseProductPlaces(preset);
+      
+      // swap this to top of function and let parseProductPlaces pull right associated product to show
+      parsePresetAssociabled(preset);
+      
+      // parse designs for the sidebar
+      parseDesigns(preset);
+     
+      // user tags
+      parseUser(preset);
+      
+      // loading user content
+      parseXmlData(preset);
+      
+      // vector files
+      parseVectorFile(preset);
+*/ 
+    }
+  }
+  
+  private function countPlaceholders(xml:Xml):Void{
+//    trace('..countPlaceholders.');
+    var placeholders:UInt = 0;
+    for(pages in xml.elementsNamed("pages") ) {
+       for(page in pages.elementsNamed("page") ) {
+         for( placeholder in page.elementsNamed("placeholder") ) {
+             placeholders++;
+         }
+      }
+    }
+    var param:IParameter        = new Parameter(EVENT_ID.PLACEHOLDER_COUNT);
+    param.setInt(placeholders);
+    dispatchParameter(param);
+  }
+  
+  // building pages and getting url's for masks
+  private function parsePreset(xml:Xml):Void{
 
-
-	public function savePreset(e:IKEvent):Void{
+    for( preset in xml.elementsNamed("title") ) {
+       //trace(preset.toString() );
+    }
+    for(pages in xml.elementsNamed("pages") ) {
+      for(page in pages.elementsNamed("page") ) {
+        var is_associated_product:Bool = false;
+        for(associated_products in page.elementsNamed("associated-products") ) {
+          is_associated_product = true;
+          parseAssociatedProducts(associated_products);
+        }
+        if(!is_associated_product){
+          buildPage(page);
+        }
+      } 
+    }
+    for(xml_data in xml.elementsNamed("xml-data") ) {
+      parseXmlData(xml_data);
+    }
     
-    trace('savePreset+++++++++++++++++++++++++++++++++++++++++++++++++');
+    for(greetings in xml.elementsNamed("greetings")){
+      dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
+    }
+    
+    for(user_tags in xml.elementsNamed("user-tags")){
+      GLOBAL.userParser.parseUser(user_tags);
+    }
+    
+/*    var page_index:Int = 0;
+    
+    for(configurable_place in preset.elementsNamed("configurable-place") ) {
+      var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
+      //trace(configurable_place.toString());
+      param.setXml(configurable_place);
+      param.setInt(page_index);
+      dispatchParameter(param);
+      
+      for(is_associated_product in configurable_place.elementsNamed("is-associated-product") ) {
+        // store this somewhere
+        if(is_associated_product.firstChild().nodeValue.toString() == 'true'){
+          trace('page is ass prod', page_index);
+          associatedProducts.push(page_index); //<<---------------- temp hack not working
+        }
+      }
+      // store id so the default 'preset-associable' can find right page to send it's frontshot to
+      for(id in configurable_place.elementsNamed("id") ) {
+        // 
+      }
+      
+      for(default_associated_id in configurable_place.elementsNamed("default-associated-id") ) {
+        if(default_associated_id.firstChild() != null){
+          // store on a product place/ page_index
+          // remember to put it in the fileformat
+          // handle error when stored assProduct is missing
+          trace('default ass prod', default_associated_id.firstChild().nodeValue.toString(), 'on page:', page_index);
+        }
+      }
+      page_index++;
+    }
+    */
+  }
+  
+  private function parseAssociatedProducts(xml:Xml):Void{
+   
+    //trace('INSERT ASSOCIATED PRODUCTS HERE');
+    
+    var first_associated_product:Bool = true;
+    for(associated_product in xml.elementsNamed("associated-product") ) {
+
+     
+      for(item_number in associated_product.elementsNamed("item-number") ) {
+        //trace('build button in sidebar for',item_number.firstChild().nodeValue.toString());
+      }
+      for(pages in associated_product.elementsNamed("pages") ) {
+        for(page in pages.elementsNamed("page") ) {
+          if(first_associated_product)
+            buildPage(page);
+        }
+      }
+      first_associated_product = false;
+    }
+  }
+  
+  private function buildPage(xml:Xml):Void{
+    var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
+    param.setXml(xml);
+    dispatchParameter(param);
+  }
+  
+  /*
+  private function parsePresetAssociabled(preset:Xml):Void{
+    
+    for(preset_associables in preset.elementsNamed("preset-associables") ) {
+      for(preset_associable in preset_associables.elementsNamed("preset-associable") ) {
+        for(ass_product in preset_associable.elementsNamed("ass-product") ) {
+          
+          var pageIndex:UInt;
+          for(configurable_place_id in ass_product.elementsNamed("configurable-place-id") ) {
+            pageIndex = getPageIndexFromConfPlaceId(configurable_place_id);
+            
+          }
+          for(prod_conf in ass_product.elementsNamed("prod-conf") ) {
+            for(product_places in prod_conf.elementsNamed("product-places") ) {
+              for(product_place in product_places.elementsNamed("product-place") ) {
+                for(front_shoot in product_place.elementsNamed("front-shoot") ) {
+                  for(url in front_shoot.elementsNamed("url") ) {
+                    
+                    // somehow we have to show/store a list of what associated product to select from on a product place
+                    // pageOptions[ getPageIndexFromConfPlaceId(configurable_place_id)].push(ass_product)
+                    
+                    var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
+                    param.setString(url.firstChild().nodeValue.toString());
+                    param.setInt(associatedProducts[assProdIndex]); 
+                    
+                    assProdIndex++;           //<<---------------not working hack                                             
+                    dispatchParameter(param); //<<---------------not working hack use pull instead of push
+                    t
+                    trace(associatedProducts.toString());
+                    
+                    
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  */
+  /*
+  private function parseGreetings( greetings:Xml ): Void
+  {
+    dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
+    //trace(greeting.firstChild().nodeValue.toString());
+    //GLOBAL.tmp = greetings;
+    //greeting.firstChild().nodeValue.toString();
+  }
+  */
+  //private function parseDesigns(preset:Xml):Void{
+  //  for( design in preset.elementsNamed("design") ) {
+  //    //designs for the sidebar
+  //    dispatchXML(EVENT_ID.PAGE_DESIGNS_LOADED, design);
+  //  }
+  //  
+  //}
+  
+  private function parseXmlData(xml_data:Xml):Void{
+    var page_index:Int = 0;
+  
+    for(page in xml_data.elementsNamed("page") ) {
+      //countPlaceHolders(page);
+      var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
+      param.setXml(page);
+      param.setInt(page_index);
+      dispatchParameter(param);
+      page_index++;
+    }
+    
+    for( stage in xml_data.elementsNamed('stage') ) {
+      var param:IParameter = new Parameter(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM);
+      param.setXml(stage);
+      dispatchParameter(param);
+    }
+    
+  }
+/*  
+  private function parseProductPlaces(preset:Xml):Void{
+    
+//    trace(preset.toString());
+    var page_index:Int = 0;
+    
+    for(product_place in preset.elementsNamed("product-place") ) {
+      for(front_shoot in product_place.elementsNamed("front-shoot") ) {
+        for(url in front_shoot.elementsNamed("url") ) {
+          // There might be missing frontshots for associated products but that's ok
+          var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
+          param.setString(url.firstChild().nodeValue.toString());
+          param.setInt(page_index);
+          dispatchParameter(param);
+        }
+      }
+      page_index++;
+    }
+  }
+*/  
+/*
+  private function parseUser(preset:Xml):Void{
+    for( user in preset.elementsNamed("user") ){
+      GLOBAL.userParser.parseUser(user);
+    }
+  }
+ */ 
+  //private function parseVectorFile(preset:Xml):Void{
+  //  for( vector_file in preset.elementsNamed("vector-file") ){
+  //    for( file in vector_file.elementsNamed("file") ){
+  //      for( url in file.elementsNamed("url") ){
+  //          var urlstr:String = url.firstChild().nodeValue.toString();
+  //          GLOBAL.tmp = urlstr;
+  //      }
+  //    }      
+  //  }
+  //}
+    
+  //private function countPlaceHolders(xml:Xml):Void{
+  //  for( placeholder in xml.elementsNamed("placeholder") ) {
+  //      placeholders++;
+  //  }
+  //}
+  //
+  private function getPageIndexFromConfPlaceId( confPlaceId:Xml):UInt{
+    // TO do find the right page to send the front shoot to
+    // here use 'configurable_place_id' to find the right page index
+    return 0;
+  }
+  
+  public function savePreset(e:IKEvent):Void{
+
+    ExternalInterface.call("openSavingBox()");
+
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
     
     variables.authenticity_token 			  = GLOBAL.authenticity_token;
     variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
-    variables.xml_data 				          = Pages.getString('file_xml');//'get a life, become a programmer .-)';//getPresetString();
+    variables.xml_data 				          = Pages.getString('file_xml');
+    variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.preset_sibling_selected 	= productSelected;
     
     variables._method = 'put';
     request.data = variables;
     
+    loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
-    
-	}
-	
-  //override public function setXml(id:String, xml:Xml):Void{
-  //  
-  //  switch (id) {
-  //    
-  //    case EVENT_ID.PASS_PRESET_FILE:{
-  //      var xml2:Xml = Xml.parse(StringTools.htmlUnescape(xml.toString()));
-  //      passPreset(xml2);
-  //      
-  //    }
-  //  }
-	//}
 
-  private function onPassPreset(e:IKEvent):Void{
-
-    var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    
-    
-    var page_count:Int = 0;
-
-    for( preset in xml.elementsNamed("preset") ) {
-      for( title in preset.elementsNamed("title") ) {
-        presetName = title.firstChild().nodeValue;
-      }
-      
-      for(configurable_place in preset.elementsNamed("configurable-place") ) {
-        var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
-        param.setXml(configurable_place);
-        param.setInt(page_count);
-        dispatchParameter(param);
-        page_count++;
-      }
-
-      page_count=0;
-      
-      //for(product_place in preset.elementsNamed("product-place") ) {
-      //  for(front_shoot in product_place.elementsNamed("front-shoot") ) {
-      //    //trace(front_shoot.toString());
-      //    //for(url in front_shoot.elementsNamed("url") ) {
-      //    //  
-      //    //  var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
-      //    //  param.setString(url.firstChild().nodeValue.toString());
-      //    //  param.setInt(page_count);
-      //    //  dispatchParameter(param);
-      //    //}
-      //    for(badge in front_shoot.elementsNamed("badge") ) { 
-      //      for(url in badge.elementsNamed("url") ) {
-      //        var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
-      //        param.setString(url.firstChild().nodeValue.toString());
-      //        param.setInt(page_count);
-      //        dispatchParameter(param);
-      //      }
-      //    }
-      //  }
-      //  page_count++;
-      //}
-      for(product_place in preset.elementsNamed("product-place") ) {
-        for(front_shoot in product_place.elementsNamed("front-shoot") ) {
-          for(url in front_shoot.elementsNamed("url") ) {
-            var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
-            param.setString(url.firstChild().nodeValue.toString());
-            param.setInt(page_count);
-            dispatchParameter(param);
-          }
-        }
-        page_count++;
-      }
-      
-      page_count  = 0;
-      
-      for(xml_data in preset.elementsNamed("xml-data") ) {
-        
-        for(page in xml_data.elementsNamed("page") ) {
-          countPlaceHolders(page);
-          var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
-          param.setXml(page);
-          param.setInt(page_count);
-          dispatchParameter(param);
-          page_count++;
-        }
-        
-        for( stage in xml_data.elementsNamed('stage') ) {
-          //passStage(stage);
-          var param:IParameter = new Parameter(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM);
-          param.setXml(stage);
-          dispatchParameter(param);
-        }
-      }
-      
-      for( design in preset.elementsNamed("design") ) {
-        //trace(design.toString());
-        // designs for the sidebar
-        dispatchXML(EVENT_ID.PAGE_DESIGNS_LOADED, design);
-      }
-      
-      for( user in preset.elementsNamed("user") ){
-        passUser(user);
-      }
-    }
-    
-    var param:IParameter        = new Parameter(EVENT_ID.PLACEHOLDER_COUNT);
-    param.setInt(placeholders);
-    dispatchParameter(param);
   }
   
-  private function countPlaceHolders(xml:Xml):Void{
-    for( placeholder in xml.elementsNamed("placeholder") ) {
-        placeholders++;
-    }
+  private function onSavedComplete(e:Event):Void{
+  	onComplete();
   }
   
-  //move this to stage
-//  private function passStage(stage:Xml):Void{
-//    var posX:Int;
-//    var posY:Int;
-//    var zoom:Float;
-//    
-//    for( stage_zoom in stage.elementsNamed('zoom') ) 
-//      zoom = Std.parseFloat(stage_zoom.firstChild().nodeValue.toString());
-//    
-//    for( pos_x in stage.elementsNamed('pos_x') )
-//      posX = Std.parseInt(pos_x.firstChild().nodeValue.toString());
-//    
-//    for( pos_y in stage.elementsNamed('pos_y') )
-//      posY = Std.parseInt(pos_y.firstChild().nodeValue.toString());
-//    
-//    var point:Point = new Point(posX+1000,posY+1000);
-//    var param:IParameter = new Parameter(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM);
-//    param.setPoint(point);
-//    param.setFloat(zoom);
-//    dispatchParameter(param);
-//  }
-  
-  private function passUser(xml:Xml):Void{
-    for( brides_first_name in xml.elementsNamed("brides-first-name") ){
-      Designs.setString('brides_first_name', brides_first_name.firstChild().nodeValue.toString());
-    }
-    for( brides_last_name in xml.elementsNamed("brides-last-name") ){
-      Designs.setString('brides_last_name', brides_last_name.firstChild().nodeValue.toString());
-    }
-    for( grooms_first_name in xml.elementsNamed("grooms-first-name") ){
-      Designs.setString('grooms_first_name', grooms_first_name.firstChild().nodeValue.toString());
-    }
-    for( grooms_last_name in xml.elementsNamed("grooms-last-name") ){
-      Designs.setString('grooms_last_name', grooms_last_name.firstChild().nodeValue.toString());
-    }
-    for( brides_initials in xml.elementsNamed("brides-initials") ){
-      Designs.setString('brides_initials', brides_initials.firstChild().nodeValue.toString());
-    }
-    for( grooms_initials in xml.elementsNamed("grooms-initials") ){
-      Designs.setString('grooms_initials', grooms_initials.firstChild().nodeValue.toString());
-    } 
-    for( wedding_date in xml.elementsNamed("wedding-date") ){
-      Designs.setString('wedding_date', wedding_date.firstChild().nodeValue.toString());
-    }
-    for( wedding_time in xml.elementsNamed("wedding-time") ){
-      Designs.setString('wedding_time', wedding_time.firstChild().nodeValue.toString());
-    }
-    for( church_name in xml.elementsNamed("church-name") ){
-      Designs.setString('church_name', church_name.firstChild().nodeValue.toString());
-    }
-    for( church_location in xml.elementsNamed("church-location") ){
-      Designs.setString('church_location', church_location.firstChild().nodeValue.toString());
-    }
-    for( party_place_name in xml.elementsNamed("party-place-name") ){
-      Designs.setString('party_place_name', party_place_name.firstChild().nodeValue.toString());
-    }
-    for( party_place_location in xml.elementsNamed("party-place-location") ){
-      Designs.setString('party_place_location', party_place_location.firstChild().nodeValue.toString());
-    }
-    for( reply_by_date in xml.elementsNamed("reply-by-date") ){
-      Designs.setString('reply_by_date', reply_by_date.firstChild().nodeValue.toString());
-    }
-    for( reply_to_phone in xml.elementsNamed("reply-to-phone") ){
-      Designs.setString('reply_to_phone', reply_to_phone.firstChild().nodeValue.toString());
-    }
-    for( reply_to_email in xml.elementsNamed("reply-to-email") ){
-      Designs.setString('reply_to_email', reply_to_email.firstChild().nodeValue.toString());
-    }
-    for( dress_code in xml.elementsNamed("dress-code") ){
-      Designs.setString('dress_code', dress_code.firstChild().nodeValue.toString());
-    }
-    for( company_name in xml.elementsNamed("company-name") ){
-      Designs.setString('company_name', company_name.firstChild().nodeValue.toString());
-    }
-    for( location_name in xml.elementsNamed("location-name") ){
-      Designs.setString('location_name', location_name.firstChild().nodeValue.toString());
-    }
-    for( location in xml.elementsNamed("location") ){
-      Designs.setString('location', location.firstChild().nodeValue.toString());
-    }
+  private function onError(e:Event):Void{
+    onComplete();
+    ExternalInterface.call("showSavingError()");
   }
   
-  private function buildPageData(page_id:Int):Void{
-    
+  private function onComplete():Void{
+    ExternalInterface.call("closeSavingBox()");
+    loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+    loader.removeEventListener(Event.COMPLETE, onSavedComplete);
   }
-	
-	private function onSavedComplete(e:Event):Void{
-		trace('save completed');
-	}
-  
-	private function onProductSelected(e:IKEvent){
-	//	this.productXml = e.getXml();
-	//	// save sibling selected in db field so fallback image can be loaded
-	//	for( id in e.getXml().elementsNamed("id") ) {
-	//		productSelected = id.firstChild().nodeValue;
-  //
-	//	}	
-	}
-	
-//	public function getProductId():Int{
-//		return productId;
-//	}
 }

@@ -28,6 +28,9 @@ class TextSuggestionController extends Controller, implements IController{
         //Pages.setParam(param);
         Designs.dispatchParameter(param);
       }
+      case EVENT_ID.SUGGESTION_SCROLL:{
+        GLOBAL.text_suggestion_view.setFloat(EVENT_ID.SUGGESTION_SCROLL, param.getFloat());
+      }
       
     }	
   }

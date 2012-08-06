@@ -19,10 +19,6 @@
 -cp ../wysiwyg-editor/src/lib
 -cp ../wysiwyg-editor/src/lib/macros
 -cp ../wysiwyg-editor/src/models
-
--cp src/models
--cp src/constants
-
 -cp ../wysiwyg-editor/src/system
 -cp ../wysiwyg-editor/src/ui
 -cp ../wysiwyg-editor/src/ui/buttons
@@ -31,18 +27,23 @@
 -cp ../wysiwyg-editor/src/ui/scrollbars
 -cp ../wysiwyg-editor/src/views
 -cp ../wysiwyg-editor/src/views/application
--cp src/views/application
-#-cp ../wysiwyg-editor/src/views/content_editor
--cp src/views/content_editor
-
+-cp ../wysiwyg-editor/src/views/content_editor
+-cp ../wysiwyg-editor/src/views/content_editor/placeholder
 -cp ../wysiwyg-editor/src/views/side_view
 -cp ../wysiwyg-editor/src/views/side_view/text_view
+-cp ../wysiwyg-editor/src/views/side_view/color_view
 -cp ../wysiwyg-editor/src/views/side_view/designs_view
+-cp ../wysiwyg-editor/src/views/side_view/design_images_view
 -cp ../wysiwyg-editor/src/views/side_view/text_suggestions_view
+#-cp src/views/side_view/vectors_view
+-cp ../wysiwyg-editor/src/views/side_view/greetings_view
+-cp ../wysiwyg-editor/src/views/selection_view
+-cp ../wysiwyg-editor/src/views/selection_view/greetings_view
 -cp ../wysiwyg-editor/src/lib/text_editor
 #-cp src/old_stuff
 -cp ../wysiwyg-editor/src/lib/abstract_classes
 -cp ../wysiwyg-editor/src/lib/interfaces
+-cp ../wysiwyg-editor/src/parsers
 
 
 
@@ -64,4 +65,3 @@
 -swf ../../Calligraphen/app/assets/flash/wysiwyg_guest.swf
 -swf-header 300:300:30:F4F6F1
 -swf-version 10
-

@@ -109,10 +109,10 @@ class TextSuggestionPane extends View, implements IView{
 
 
 	override public function getFloat(id:String):Float{
-		//switch ( id ){
-		//	case 'height':
-		//		return buttonPos;
-		//}
+		switch ( id ){
+			case 'height':
+				return buttonPos;
+		}
 		return 0;
 	}
 	

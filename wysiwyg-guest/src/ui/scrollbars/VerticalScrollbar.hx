@@ -17,46 +17,45 @@ private var bmpData:BitmapData;
 //private var backdrop:Bitmap;
 	
 //	private var scrollPaneSize:Point;
-	private var minHandleWidth:Int;
-	private var scrollbarHandle:VerticalScrollbarHandle;
-	private var sizeX:Float;
-	private var sizeY:Float;
-	private var hitPoint:Float;
-	private var startPos:Float;
-	private var endPos:Float;
-	private var lastVal:Float;
-	private var controller:IController;
-	private var mouseRange:Float;
-	private var ratio:Float;
-	private var pos:Float;
-	private var mouseIsOverHandle:Bool;
-
-	
-	public function new(controller:IController){	
-		super();
-		
-//		bmpData 				= new BitmapData(8,100,false,0xff0000 );
-//		backdrop				= new Bitmap(bmpData);
-		
-		
-		this.controller 	= controller;	
-		scrollbarHandle		= new VerticalScrollbarHandle(controller);
-	
-		lastVal = 0;
-		endPos = 0;
-	  startPos = 0;
-
-		mouseRange = 1;
-		mouseIsOverHandle = false;
-		pos = 0;
-		
-		addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);	
-	}
-	
-
-	
-	 public function onAddedToStage(e:Event):Void{
-		removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+  private var minHandleWidth:Int;
+  private var scrollbarHandle:VerticalScrollbarHandle;
+  private var sizeX:Float;
+  private var sizeY:Float;
+  private var hitPoint:Float;
+  private var startPos:Float;
+  private var endPos:Float;
+  private var lastVal:Float;
+  private var controller:IController;
+  private var mouseRange:Float;
+  private var ratio:Float;
+  private var pos:Float;
+  private var mouseIsOverHandle:Bool;
+  private var param:IParameter;
+  
+  
+  public function new(controller:IController, paramId:String){	
+  	super();
+  
+  	
+  	
+  	this.controller 	= controller;	
+  	scrollbarHandle		= new VerticalScrollbarHandle(controller);
+    param = new Parameter( paramId);
+  	lastVal = 0;
+  	endPos = 0;
+    startPos = 0;
+  
+  	mouseRange = 1;
+  	mouseIsOverHandle = false;
+  	pos = 0;
+  	
+  	addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);	
+  }
+  
+  
+  
+  public function onAddedToStage(e:Event):Void{
+  	removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
 //		addChild(backdrop);
 		addChild(scrollbarHandle);
 		
@@ -94,7 +93,7 @@ private var bmpData:BitmapData;
 		this.pos = pos;
 		
 //		trace(pos);
-		var param:IParameter = new Parameter( EVENT_ID.FONT_SCROLL);
+		//var param:IParameter = new Parameter( EVENT_ID.FONT_SCROLL);
 		param.setFloat(pos);
 		controller.setParam(param);
 		setPos(pos);
