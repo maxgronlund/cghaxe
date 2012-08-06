@@ -25,11 +25,14 @@ class SelectBox extends MouseHandler
   private var backdrop:Sprite;
   private var alertBox:Sprite;
   private var outline:Vector<Shape>;
-  private var placeholderView:Dynamic;
+  private var pageView:Dynamic;
+  private var placeHolderView:Dynamic;
   
-  public function new()
+  public function new(pageView:Dynamic, placeHolderView:Dynamic)
   {
     super();
+    this.pageView = pageView;
+    this.placeHolderView = placeHolderView;
     scale = 150/72;
     outline = new Vector<Shape>();
     
@@ -38,19 +41,31 @@ class SelectBox extends MouseHandler
     createOutline();
     
     backdrop.alpha                  = 0.5;
+   
     
   }
   
   override private function onMouseOver(e:MouseEvent){
     trace('onMouseOver');
-		super.onMouseOver(e); 
-		
-	}
+  	super.onMouseOver(e); 
+  	
+  }
   
   override private function onMouseDown(e:MouseEvent){
-		super.onMouseDown(e); 
-		trace('on mouse down');
-	}
+  	super.onMouseDown(e); 
+  	trace('on mouse down');
+  	MouseTrap.capture();
+  	pageView.setPlaceholderInFocus(placeHolderView);
+  	if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+  }
+  
+  override private function onMouseUp(e:MouseEvent){
+    
+    MouseTrap.release();
+    pageView.disableMove();
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+    
+  }
   
   private function createOutline():Void{
     
@@ -92,7 +107,7 @@ class SelectBox extends MouseHandler
     alertBox.graphics.beginFill(0xff8888);
     alertBox.graphics.drawRect(0,0,100,100);
     alertBox.graphics.endFill();
-    alertBox.visible = false;
+    //alertBox.visible = false;
     
   }
   

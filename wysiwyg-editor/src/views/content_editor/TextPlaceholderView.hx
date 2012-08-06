@@ -95,6 +95,13 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   
+  
+  private function onAddedToStage(e:Event){
+    model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
+    addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+    loadFont();
+  }
+  
   public function isFoiled():Bool {
     return foiled == true;
   }
@@ -109,11 +116,6 @@ class TextPlaceholderView extends APlaceholder {
       foiled = false;
   }
   
-  private function onAddedToStage(e:Event){
-    model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
-    addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-    loadFont();
-  }
    
   private function handleKeyboard(b:Bool):Void{
     
@@ -285,7 +287,7 @@ class TextPlaceholderView extends APlaceholder {
   
   private function onFontLoaded(event:Event):Void { 
 
-    selectBox = new SelectBox();    
+    selectBox = new SelectBox(pageView, this);    
 
     fontMovie             =  cast event.target.loader.content;
     addChild(fontMovie);
@@ -302,8 +304,8 @@ class TextPlaceholderView extends APlaceholder {
                 letterSpacing,
                 this); 
     trace("hmm");
-    selectBox.setFocus(false);
-    resizeBackdrop();
+    selectBox.setFocus(true);
+    
     restoreShowTags();
     //updateFocus();
     
@@ -329,6 +331,9 @@ class TextPlaceholderView extends APlaceholder {
     //if(collition){
     //  font.alert(true);
     //}
+    resizeBackdrop();
+    addChild(selectBox);
+    trace('set alert box size');
     pageView.hitTest();
   }
   
@@ -437,7 +442,7 @@ class TextPlaceholderView extends APlaceholder {
 
       selectBox.setFocus(true);  
       resizeBackdrop();
-      trace("Focus set");
+
       if(foiled == true){
         unfoilify();
         was_foiled = true;
@@ -447,8 +452,8 @@ class TextPlaceholderView extends APlaceholder {
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
       if(!collition)
         selectBox.setFocus(false);
-      trace("Focus unset");
-      super.resetMouse();
+
+//      super.resetMouse();
       if(was_foiled == true){
         foilify();
         was_foiled = false;
@@ -477,6 +482,7 @@ class TextPlaceholderView extends APlaceholder {
     trace('onTextTool');
     updateFocus();
   }
+
 
   //override private function onMouseOver(e:MouseEvent){
   //  mouseOver = true;

@@ -162,16 +162,10 @@ class DesignImagePlaceholderView extends APlaceholder{
   private function updateFocus():Void{
     
     if(focus){
-//      GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-//      GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
-      //font.selectable(!GLOBAL.MOVE_TOOL);
-      //!GLOBAL.MOVE_TOOL ? showTags():hideTags();
-      //font.setFocus(true);
+
     }else{
-  //    hideTags();
-    //  GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      //font.setFocus(false);
-      super.resetMouse();
+
+//      super.resetMouse();
     }
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
@@ -179,41 +173,41 @@ class DesignImagePlaceholderView extends APlaceholder{
   
 
   
-  override private function onMouseOver(e:MouseEvent){
-    mouseOver = true;
-    super.onMouseOver(e);
-  }
-
-  override private function onMouseDown(e:MouseEvent){
-//    trace('on mouse down');
-    MouseTrap.capture();
-    super.onMouseDown(e);
-    //GLOBAL.Font.fileName        = fontFileName;
-    //GLOBAL.Font.fontSize        = fontSize;
-    //GLOBAL.Font.fontColor       = fontColor;
-    //GLOBAL.Font.fontAlign       = fontAlign;
-    //GLOBAL.Font.leading         = fontLeading;
-    //GLOBAL.Font.letterSpacing   = letterSpacing;
-    parrent.setPlaceholderInFocus(this);
-    //model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS));
-    if(GLOBAL.MOVE_TOOL) parrent.enableMove(e);
-  }
-  
-  override private function onMouseOut(e:MouseEvent){
-    mouseOver = false;
-    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-  }
-  
-  override private function onMouseUp(e:MouseEvent){
-    
-    MouseTrap.release();
-    super.onMouseUp(e);
-    parrent.disableMove();
-    
-    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    
-  }
+//  override private function onMouseOver(e:MouseEvent){
+//    mouseOver = true;
+//    super.onMouseOver(e);
+//  }
+//
+//  override private function onMouseDown(e:MouseEvent){
+//
+//    MouseTrap.capture();
+//    super.onMouseDown(e);
+//    //GLOBAL.Font.fileName        = fontFileName;
+//    //GLOBAL.Font.fontSize        = fontSize;
+//    //GLOBAL.Font.fontColor       = fontColor;
+//    //GLOBAL.Font.fontAlign       = fontAlign;
+//    //GLOBAL.Font.leading         = fontLeading;
+//    //GLOBAL.Font.letterSpacing   = letterSpacing;
+//    parrent.setPlaceholderInFocus(this);
+//    //model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS));
+//    if(GLOBAL.MOVE_TOOL) parrent.enableMove(e);
+//  }
+//  
+//  override private function onMouseOut(e:MouseEvent){
+//    mouseOver = false;
+//    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+//    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+//  }
+//  
+//  override private function onMouseUp(e:MouseEvent){
+//    
+//    MouseTrap.release();
+//    super.onMouseUp(e);
+//    parrent.disableMove();
+//    
+//    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+//    
+//  }
   
   
   private function onGetXml(event:Event):Void{

@@ -406,9 +406,9 @@ class VectorPlaceholderView extends APlaceholder {
       //vectorFile.setFocus(true);
     }else{
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      if(!collition)
+//      if(!collition)
         //vectorFile.setFocus(false);
-      super.resetMouse();
+//      super.resetMouse();
     }
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
@@ -418,21 +418,21 @@ class VectorPlaceholderView extends APlaceholder {
     updateFocus();
   }
 
-  override private function onMouseOver(e:MouseEvent){
-    mouseOver = true;
-    super.onMouseOver(e);
-  }
-
-  override private function onMouseDown(e:MouseEvent){
-    
-    MouseTrap.capture();
-    super.onMouseDown(e);
-    pageView.setPlaceholderInFocus(this);
-    
-    if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
-    
-    updateSideView();
-  }
+//  override private function onMouseOver(e:MouseEvent){
+//    mouseOver = true;
+//    super.onMouseOver(e);
+//  }
+//
+//  override private function onMouseDown(e:MouseEvent){
+//    
+//    MouseTrap.capture();
+//    super.onMouseDown(e);
+//    pageView.setPlaceholderInFocus(this);
+//    
+//    if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+//    
+//    updateSideView();
+//  }
   
   //!!! move this to super class
   private function updateSideView(): Void{
@@ -441,21 +441,21 @@ class VectorPlaceholderView extends APlaceholder {
     GLOBAL.Application.dispatchParameter(param);
   }
   
-  override private function onMouseOut(e:MouseEvent){
-    mouseOver = false;
-    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-  }
-  
-  override private function onMouseUp(e:MouseEvent){
-    
-    MouseTrap.release();
-    super.onMouseUp(e);
-    pageView.disableMove();
-    
-    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    
-  }
+//  override private function onMouseOut(e:MouseEvent){
+//    mouseOver = false;
+//    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+//    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+//  }
+//  
+//  override private function onMouseUp(e:MouseEvent){
+//    
+//    MouseTrap.release();
+//    super.onMouseUp(e);
+//    pageView.disableMove();
+//    
+//    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+//    
+//  }
 
   private function onGetXml(event:Event):Void{
     
