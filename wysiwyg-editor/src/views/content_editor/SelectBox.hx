@@ -30,6 +30,7 @@ class SelectBox extends MouseHandler
   private var outline:Vector<Shape>;
   private var pageView:Dynamic;
   private var placeHolderView:Dynamic;
+  private var selected:Bool;
   
   public function new(pageView:Dynamic, placeHolderView:Dynamic)
   {
@@ -44,6 +45,7 @@ class SelectBox extends MouseHandler
     createOutline();
     
     alertBox.visible = false;
+    selected = false;
     //backdrop.visible = false;
     backdrop.alpha                  = 0.5;
     
@@ -66,25 +68,28 @@ class SelectBox extends MouseHandler
   }
   
   override private function onMouseDown(e:MouseEvent){
-    
+    if(selected)
+      placeHolderView.setTextOnTop(true);
+    selected          =     true;
   	super.onMouseDown(e); 
   	MouseTrap.capture();
   	pageView.setPlaceholderInFocus(placeHolderView);
   	placeHolderView.updateGlobals();
-  	if(GLOBAL.MOVE_TOOL) {
-  	  placeHolderView.setOnTop('select_box');
+  	//if(GLOBAL.MOVE_TOOL) {
+  	  //placeHolderView.setOnTop('select_box');
   	  pageView.enableMove(e);
-  	}
+  	//}
   	//else
   	//  placeHolderView.makeFontSelecetable();
   	
   }
   
   override private function onMouseUp(e:MouseEvent){
-//    trace('onMouseUp');
+    super.onMouseUp(e);
+    trace('onMouseUp');
     //placeHolderView.makeFontSelecetable();
-    placeHolderView.setOnTop('text_field');
-    super.onMouseUp(e); 
+    //placeHolderView.setOnTop('text_field');
+     
     MouseTrap.release();
     pageView.disableMove();
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));

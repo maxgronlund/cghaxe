@@ -324,7 +324,7 @@ class PageView extends View{
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
-    setPlaceholderInFocus(placeholder);
+    //setPlaceholderInFocus(placeholder);
     
   }
   
@@ -372,6 +372,7 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
+    trace('disableMove');
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     hitTest();
   }

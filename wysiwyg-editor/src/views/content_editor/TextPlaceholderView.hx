@@ -110,7 +110,7 @@ class TextPlaceholderView extends APlaceholder {
   public function foilify():Void {
     if(foiled != true) {
       var foil = new MovieClip();
-      var foilTexture = new FoilTexture();
+      var foilTexture = new SilverFoilTexture();
       foil.addChild(foilTexture);
       foilTexture.width = this.width;
       foilTexture.height = this.height;
@@ -302,7 +302,7 @@ class TextPlaceholderView extends APlaceholder {
     
     fontMovie             =  cast event.target.loader.content;
     
-    
+
     addChild(fontMovie);
 
     font        = fontMovie.font;
@@ -352,6 +352,8 @@ class TextPlaceholderView extends APlaceholder {
       addChild(selectBox);
       
       
+      
+      
     resizeBackdrop();
     
    // trace('set alert box size');
@@ -366,18 +368,12 @@ class TextPlaceholderView extends APlaceholder {
   public function setTextOnTop(b:Bool):Void {
     
     textOnTop= b;
-    //removeChild(fontMovie);
-    //removeChild(selectBox);
-    //trace(str);
-    //switch ( str )
-    //{
-    //  case "select_box":
-    //    addChild(fontMovie);
-    //    addChild(selectBox);
-    //  case "text_field":
-    //    addChild(selectBox);
-    //    addChild(fontMovie);
-    //}
+    
+    if(b){
+      this.setChildIndex(fontMovie, this.numChildren - 1);
+    }else{
+      this.setChildIndex(selectBox, this.numChildren - 1);
+    }
   }
   
   private function hitTest():Void{
@@ -418,7 +414,12 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus = b;
+    //if(!b)
+    //  setTextOnTop(false);
     updateFocus();
+    
+    trace(b);
+    
   }
 
   private function showTags():Void{
