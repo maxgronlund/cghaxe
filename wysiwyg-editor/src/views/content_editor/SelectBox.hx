@@ -40,9 +40,16 @@ class SelectBox extends MouseHandler
     createBackdrop();
     createOutline();
     
+    alertBox.visible = false;
+    //backdrop.visible = false;
+    
     backdrop.alpha                  = 0.5;
    
     
+  }
+  
+  public function getPlaceHolderView():Dynamic {
+    return placeHolderView;
   }
   
   override private function onMouseOver(e:MouseEvent){
@@ -60,11 +67,10 @@ class SelectBox extends MouseHandler
   }
   
   override private function onMouseUp(e:MouseEvent){
-    
+    super.onMouseUp(e); 
     MouseTrap.release();
     pageView.disableMove();
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    
   }
   
   private function createOutline():Void{
@@ -122,13 +128,19 @@ class SelectBox extends MouseHandler
   
   public function alert(b:Bool):Void{
     alertBox.visible = b;
+    placeHolderView.alert(b);
   }
   
   public function setFocus( b:Bool ): Void{
-    backdrop.visible = b;
+    backdrop.alpha = b?0.5:0;
     for( i in 0...outline.length){
       outline[i].visible = b;
     }
+    
+    //placeHolderView.setFocus(b);
+    //if(!b){
+    //  resetMouse();
+    //}
   }
 
   public function resizeBackdrop(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
