@@ -123,7 +123,7 @@ class FontBase extends MovieClip
 //  }
 //  
   public function selectable(b:Bool):Void{
-    trace('selectable');
+
     textField.selectable    = b;
     textField.doubleClickEnabled = b;
     textField.mouseEnabled = b;

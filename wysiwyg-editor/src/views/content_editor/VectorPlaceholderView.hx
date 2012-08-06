@@ -371,7 +371,7 @@ class VectorPlaceholderView extends APlaceholder {
     addChild(selectBox);
     resizeBackdrop();
     selectBox.setFocus(true);
-    pageView.setPlaceholderInFocus(this);
+    //pageView.setPlaceholderInFocus(this);
     
     
     

@@ -299,9 +299,7 @@ class TextPlaceholderView extends APlaceholder {
   
   private function onFontLoaded(event:Event):Void {
     
-    
-    fontMovie             =  cast event.target.loader.content;
-    
+    fontMovie   =  cast event.target.loader.content;
 
     addChild(fontMovie);
 
@@ -314,7 +312,6 @@ class TextPlaceholderView extends APlaceholder {
                 letterSpacing,
                 this); 
 
-    //selectBox.setFocus(true);
     
     restoreShowTags();
     
@@ -324,24 +321,7 @@ class TextPlaceholderView extends APlaceholder {
     param.setInt(id);
     model.setParam(param);
 
-    
-    //switch ( printType ){
-    //  case CONST.FOIL_COLOR:{
-    //    this.foilify();
-    //  }
-    //  case CONST.LASER_COLOR:{
-    //    this.unfoilify();
-    //  }
-    //  case CONST.STD_PMS_COLOR:{
-    //    this.unfoilify();
-    //  }
-    //}
 
-    
-    //if(collition){
-    //  font.alert(true);
-    //}
-    
      if(selectBox != null) {
         removeChild(selectBox);
         selectBox.setFocus(false);
@@ -356,26 +336,11 @@ class TextPlaceholderView extends APlaceholder {
       
     resizeBackdrop();
     
-   // trace('set alert box size');
-   pageView.setPlaceholderInFocus(this);
-   pageView.hitTest();
-    
-    
-    
-    //addChild(selectBox);  
+    pageView.setPlaceholderInFocus(null);
+    pageView.hitTest();
+
   }
-  
-  public function setTextOnTop(b:Bool):Void {
-    
-    textOnTop= b;
-    
-    if(b){
-      this.setChildIndex(fontMovie, this.numChildren - 1);
-    }else{
-      this.setChildIndex(selectBox, this.numChildren - 1);
-    }
-  }
-  
+
   private function hitTest():Void{
     pageView.hitTest();
   }
@@ -412,15 +377,7 @@ class TextPlaceholderView extends APlaceholder {
     //  foilify();
   }
   
-  override public function setFocus(b:Bool):Void{
-    focus = b;
-    //if(!b)
-    //  setTextOnTop(false);
-    updateFocus();
-    
-    trace(b);
-    
-  }
+  
 
   private function showTags():Void{
     storeTags();
@@ -483,18 +440,24 @@ class TextPlaceholderView extends APlaceholder {
   private function buildUrl(fileName:String):String{
   	return "/assets/" + fileName+ ".swf?" + Math.random();
   }
-
+  
+  override public function setFocus(b:Bool):Void{
+    
+    focus         = b;
+    //setTextOnTop(b);
+    //textOnTop     = b;
+    //if(!b)
+    //  setTextOnTop(false);
+    updateFocus();
+    
+    trace(b);
+    
+  }
+  
   private function updateFocus():Void{
     
-    //trace(focus);
     if(focus){
-      //GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      //GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
-      
-      //font.selectable(!GLOBAL.MOVE_TOOL);
-      
-      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
-
+      //!GLOBAL.MOVE_TOOL ? showTags():hideTags();
       selectBox.setFocus(true);  
       resizeBackdrop();
 
@@ -504,12 +467,10 @@ class TextPlaceholderView extends APlaceholder {
       }
     }else{
       hideTags();
-      //GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      //GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onTextTool);
+    
       if(!collition)
         selectBox.setFocus(false);
 
-//      super.resetMouse();
       if(was_foiled == true){
         foilify();
         was_foiled = false;
@@ -518,6 +479,21 @@ class TextPlaceholderView extends APlaceholder {
     handleKeyboard( focus );
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
   }
+  
+  
+  private function setTextOnTop(b:Bool):Void {
+    
+    font.selectable(b);
+    textOnTop = b;
+    
+    if(b){
+      this.setChildIndex(fontMovie, this.numChildren - 1);
+    }else{
+      this.setChildIndex(selectBox, this.numChildren - 1);
+    }
+    
+  }
+  
   
   private function resizeBackdrop():Void{
     selectBox.resizeBackdrop(fontMovie.width, fontMovie.height, font.getTextField().x, font.getCombindeMargins());
@@ -528,69 +504,7 @@ class TextPlaceholderView extends APlaceholder {
     hitTest();
     
   }
-  
-//  private function onMoveTool(e:IKEvent):Void {
-//    trace('onMoveTool');
-//    //updateFocus();
-//  }
-//  
-//  private function onTextTool(e:IKEvent):Void {
-//    trace('onTextTool');
-//    //updateFocus();
-//  }
 
-
-  //override private function onMouseOver(e:MouseEvent){
-  //  mouseOver = true;
-  //  super.onMouseOver(e);
-  //  font.selectable(true);
-  //}
-  //
-  //override private function onMouseDown(e:MouseEvent){
-  //  
-  //  MouseTrap.capture();
-  //  super.onMouseDown(e);
-  //  GLOBAL.Font.fileName        = fontFileName;
-  //  GLOBAL.Font.fontSize        = fontSize;
-  //  //GLOBAL.Font.fontColor       = fontColor;
-  //  GLOBAL.Font.fontAlign       = fontAlign;
-  //  GLOBAL.Font.leading         = fontLeading;
-  //  GLOBAL.Font.letterSpacing   = letterSpacing;
-  //  pageView.setPlaceholderInFocus(this);
-  //  model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS)); //!!! replace this
-  //  
-  //  
-  //  updateSideView();    
-  //  
-  //  if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
-  //  
-  //}
-  
-  //override private function onMouseOut(e:MouseEvent){
-  //  
-  //  trace('onMouseOut');
-  //}
-  
-  //override private function onMouseOut(e:MouseEvent){
-  //  mouseOver = false;
-  //  removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-  //  addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-  //  font.selectable(false);
-  //}
-  //
-  //override private function onMouseUp(e:MouseEvent){
-  //  
-  //  MouseTrap.release();
-  //  super.onMouseUp(e);
-  //  pageView.disableMove();
-  //  
-  //  GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-  //  
-  //}
-  //
-  
-  
-  
   public function updateGlobals(){
 
     GLOBAL.Font.fileName        = fontFileName;
@@ -599,7 +513,7 @@ class TextPlaceholderView extends APlaceholder {
     GLOBAL.Font.fontAlign       = fontAlign;
     GLOBAL.Font.leading         = fontLeading;
     GLOBAL.Font.letterSpacing   = letterSpacing;
-    //pageView.setPlaceholderInFocus(this);
+
     model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS)); 
     updateSideView();    
     //if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);

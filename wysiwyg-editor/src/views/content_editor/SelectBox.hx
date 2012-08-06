@@ -30,7 +30,7 @@ class SelectBox extends MouseHandler
   private var outline:Vector<Shape>;
   private var pageView:Dynamic;
   private var placeHolderView:Dynamic;
-  private var selected:Bool;
+  private var transparency:Float;
   
   public function new(pageView:Dynamic, placeHolderView:Dynamic)
   {
@@ -45,9 +45,10 @@ class SelectBox extends MouseHandler
     createOutline();
     
     alertBox.visible = false;
-    selected = false;
+    //selected = false;
     //backdrop.visible = false;
-    backdrop.alpha                  = 0.5;
+    transparency                    = 0.0;
+    backdrop.alpha                  = transparency;
     
     //addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -67,9 +68,13 @@ class SelectBox extends MouseHandler
   }
   
   override private function onMouseDown(e:MouseEvent){
-    if(selected)
-      placeHolderView.setTextOnTop(true);
-    selected          =     true;
+    //if(selected)
+    //  placeHolderView.setTextOnTop(true);
+    //selected          =     true;
+    
+    if(backdrop.alpha   == transparency){
+      trace('im allready selected');
+    }
   	super.onMouseDown(e); 
   	MouseTrap.capture();
   	pageView.setPlaceholderInFocus(placeHolderView);
@@ -85,7 +90,6 @@ class SelectBox extends MouseHandler
   
   override private function onMouseUp(e:MouseEvent){
     super.onMouseUp(e);
-    trace('onMouseUp');
     //placeHolderView.makeFontSelecetable();
     //placeHolderView.setOnTop('text_field');
      

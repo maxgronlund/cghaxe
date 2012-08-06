@@ -345,7 +345,7 @@ class PageView extends View{
   }
   
   public function setPlaceholderInFocus(placeholder:APlaceholder):Void{
-    trace('setPlaceholderInFocus', placeholder == null);
+
     if(inFocus != null){
       // clean up
       inFocus.setFocus(false);
@@ -372,7 +372,7 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
-    trace('disableMove');
+//    trace('disableMove');
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     hitTest();
   }
@@ -396,7 +396,7 @@ class PageView extends View{
         inFocus.alert(true);
       else
         inFocus.alert(false);
-      trace("hitTestTextPlaceholder");
+//      trace("hitTestTextPlaceholder");
     }
   }
   
