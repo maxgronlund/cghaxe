@@ -59,10 +59,11 @@ class APlaceholder extends Sprite{
     return null;
   }
   
-  public function alert(b:Bool):Void
-  {
+  public function alert(b:Bool):Void{
      trace("alert: must be overriden in a subclass");
   }
+  
+
   
   
   

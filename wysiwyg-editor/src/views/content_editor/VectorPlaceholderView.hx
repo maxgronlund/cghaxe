@@ -51,7 +51,8 @@ class VectorPlaceholderView extends APlaceholder {
   private var url:String;
 
   private var vectorFilePosX:Float;
-
+  private var pmsColor:Int;
+  private var foilColor:String;
   private var focus:Bool;
   private var collition:Bool;
   private var alertBox:Sprite;
@@ -74,6 +75,9 @@ class VectorPlaceholderView extends APlaceholder {
   private var default_colorTransform:ColorTransform;
   
   private var selectBox:SelectBox;
+  private var printType:String;
+  
+
   
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
@@ -90,121 +94,24 @@ class VectorPlaceholderView extends APlaceholder {
     
     this.url = url;
     foil = new Sprite();
-    silverFoilTexture                       = new SilverFoilTexture();
-    goldFoilTexture                         = new GoldFoilTexture();
-    yellowFoilTexture                       = new YellowFoilTexture();
-    redFoilTexture                          = new RedFoilTexture();
-    greenFoilTexture                        = new GreenFoilTexture();
-    blueFoilTexture                         = new BlueFoilTexture();
+    silverFoilTexture                 = new SilverFoilTexture();
+    goldFoilTexture                   = new GoldFoilTexture();
+    yellowFoilTexture                 = new YellowFoilTexture();
+    redFoilTexture                    = new RedFoilTexture();
+    greenFoilTexture                  = new GreenFoilTexture();
+    blueFoilTexture                   = new BlueFoilTexture();
     lines                             = new Vector<Shape>();
-    selectBox                         = new SelectBox(pageView, this);
+    foilColor                         = GLOBAL.foilColor;
+    pmsColor                          = GLOBAL.stdPmsColor;
+    printType                         = GLOBAL.printType;
     
-//    trace('new');
 
   }
   
   override public function getBitmapMask():Bitmap {
     return bitmap;
   }
-/*  
-  private function updateBackdrop(c:UInt):Void{
-    if(backdrop != null){
-      removeChild(backdrop);
-      backdrop = null;
-    }
-      
-    var scale:Float = 150/72;
-    backdrop = new Sprite();
-    addChild(backdrop);
-    backdrop.graphics.lineStyle(1/scale,c);
-    backdrop.graphics.beginFill(0xffffff);
-    backdrop.graphics.drawRect(0,0,100,100);
-    backdrop.graphics.endFill();
-    backdrop.alpha = 0.5;
-    //backdrop.x = 100 * scale;
-  }
   
-  private function createLines():Void{
-    // left
-    createLine(new Point(-10,0), new Point(0,0));
-    createLine(new Point(-10,0), new Point(0,0));
-    createLine(new Point(-10,0), new Point(0,0));
-                                    
-    // bottom side                  
-    createLine(new Point(0,0), new Point(0,10));
-    createLine(new Point(0,0), new Point(0,10));
-    createLine(new Point(0,0), new Point(0,10));
-                                                
-    // right side                               
-    createLine(new Point(0,0), new Point(10,0));
-    createLine(new Point(0,0), new Point(10,0));
-    createLine(new Point(0,0), new Point(10,0));
-                                    
-    // top side                     
-    createLine(new Point(0,0), new Point(0,-10));
-    createLine(new Point(0,0), new Point(0,-10));
-    createLine(new Point(0,0), new Point(0,-10));
-
-    
-  }
-  
-  
-  private function createLine(start:Point, end:Point):Void{
-    var line:Shape = new Shape();
-    line.graphics.lineStyle(1, 0x000000, 1);
-    line.graphics.moveTo(start.x , start.y); 
-    line.graphics.lineTo(end.x, end.y);
-    addChild(line);
-    lines.push(line);
-  }
-  
-  private function drawCuttingMarks():Void{
-    // left 
-    drawVertical( 0, backdrop.x);
-    // bottom
-    drawHorizontal( 3, backdrop.height);
-    // right
-    drawVertical( 6, backdrop.x+backdrop.width );
-    // top
-    drawHorizontal( 9, 0);
-  }
-  
-  private function drawHorizontal(offset:UInt, posY:Float):Void{
-    
-    lines[offset].x    = backdrop.x;
-    lines[offset+1].x  = backdrop.x + (backdrop.width/2);
-    lines[offset+2].x  = backdrop.x + backdrop.width;
-    
-    lines[offset].y    = posY;
-    lines[offset+1].y  = posY;
-    lines[offset+2].y  = posY;
-  }
-  
-  private function drawVertical(offset:UInt, posX:Float):Void{
-     
-     lines[offset].x    = posX;
-     lines[offset+1].x  = posX;
-     lines[offset+2].x  = posX;
- 
-     lines[offset].y    = 0;
-     lines[offset+1].y  = backdrop.height/2;
-     lines[offset+2].y  = backdrop.height;
-  }
-  
-  private function createAlertBox():Void{
-    
-    alertBox = new Sprite();
-    alertBox.graphics.lineStyle(72/150,0xff0000);
-    alertBox.graphics.beginFill(0xff8888);
-    alertBox.graphics.drawRect(0,0,100,100);
-    alertBox.graphics.endFill();
-    alertBox.visible = false;
-    alertBox.width        = vectorMovie.width;
-    alertBox.height       = vectorMovie.height;
-    addChild(alertBox);
-  }
-
-*/
   private function generateFoilOverlay(color):Bitmap {
     if(foilBitmapDataForOverlay == null) {
       foilBitmapDataForOverlay = foilTexture.bitmapData.clone();
@@ -230,9 +137,11 @@ class VectorPlaceholderView extends APlaceholder {
     return foilTextureOverlay;
   }
   
-  public function color(color:UInt):Void {
+  public function color(_color:UInt):Void {
+    
+    pmsColor = _color;
     colorTransform = vectorMovie.transform.colorTransform;
-    colorTransform.color = color;
+    colorTransform.color = _color;
     vectorMovie.transform.colorTransform = colorTransform;
   }
   
@@ -247,10 +156,11 @@ class VectorPlaceholderView extends APlaceholder {
   public function foilify(color:String):Void {
     unfoilify();
     uncolor();
+    foilColor = color;
     //foilTextureOverlay = generateFoilOverlay(color);
     
     //default
-    foilTexture = silverFoilTexture;
+    //foilTexture = silverFoilTexture;
     
     switch ( color )
     {
@@ -293,8 +203,6 @@ class VectorPlaceholderView extends APlaceholder {
   private function onAddedToStage(e:Event){
     
     loadVectorFile();
-    
-    
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
     
@@ -303,7 +211,7 @@ class VectorPlaceholderView extends APlaceholder {
    
   private function handleKeyboard(b:Bool):Void{
     
-    if( b && GLOBAL.MOVE_TOOL){
+    if( b){
       stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
       stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     }
@@ -321,6 +229,12 @@ class VectorPlaceholderView extends APlaceholder {
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
       str += '\t\t\t<url>' + url + '</url>\n';
+      str += '\t\t\t<print-type>' + printType + '</print-type>\n';
+      if(foiled){
+        str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
+      }else{
+        str += '\t\t\t<pms-color>' + Std.string(pmsColor) + '</pms-color>\n';
+      }
     //  str += '\t\t\t<vectorFile-color>' + Std.string(vectorFileColor) + '</vectorFile-color>\n';
     //  str += '\t\t\t<line-space>' + Std.string(vectorFileLeading) + '</line-space>\n';
     //  str += '\t\t\t<vectorFile-size>' + Std.string(vectorFileSize) + '</vectorFile-size>\n';
@@ -336,7 +250,6 @@ class VectorPlaceholderView extends APlaceholder {
   
   private function onKeyPressed(event:KeyboardEvent):Void{
     var step:Float = 150/72;
-    trace(event.keyCode);
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 
@@ -349,7 +262,6 @@ class VectorPlaceholderView extends APlaceholder {
     pageView.hitTest();
   }
   
- 
   private function loadVectorFile():Void{
 
     var ldr:Loader                = new Loader(); 
@@ -363,9 +275,7 @@ class VectorPlaceholderView extends APlaceholder {
   private function onVectorFileLoaded(event:Event):Void { 
 
     vectorMovie =  cast event.target.loader.content;
-    
     var scale:Float = 0.5;
-    
     addChild(vectorMovie);
     
     default_colorTransform = vectorMovie.transform.colorTransform;
@@ -381,32 +291,29 @@ class VectorPlaceholderView extends APlaceholder {
     
     bitmapInfo.draw(vectorMovie, matrix, null, null, null, true);
     bitmap = new Bitmap(bitmapInfo);
- 
-    //updateBackdrop(0x888888);
-    //createLines();
-    //createAlertBox();
-    //
-    //
-    //backdrop.width = vectorMovie.width;
-    //backdrop.height = vectorMovie.height;
-    //drawCuttingMarks();
+
     
     var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
     param.setInt(id);
     model.setParam(param);
-    
-    
-    this.setChildIndex(vectorMovie, this.numChildren - 1);
-    setFocus(false);
-    
-    addChild(selectBox);
-    resizeBackdrop();
-    selectBox.setFocus(true);
-    //pageView.setPlaceholderInFocus(this);
-    
-    
-    
 
+    //setFocus(false);
+    if(selectBox == null) {
+       selectBox   =   new SelectBox(pageView, this); 
+       addChild(selectBox);
+    }
+    resizeBackdrop();
+    
+    
+    switch ( printType ){
+      case CONST.STD_PMS_COLOR:{
+        unfoilify();
+        color(pmsColor);
+      }
+      case CONST.FOIL_COLOR:{
+        foilify(foilColor);
+      }
+    }
   }
   
   public function resizeBackdrop():Void {
@@ -419,24 +326,22 @@ class VectorPlaceholderView extends APlaceholder {
     
   override public function onUpdatePlaceholder(event:Event):Void{    
     
+    printType = GLOBAL.printType;
     
-    trace(GLOBAL.printType);
     switch ( GLOBAL.printType ){
       case CONST.STD_PMS_COLOR:{
         unfoilify();
         color(GLOBAL.stdPmsColor);
       }
       case CONST.FOIL_COLOR:{
-        foilify('silver');
+        foilify(GLOBAL.foilColor);
       }
     }
   }
   
   override public function setFocus(b:Bool):Void{
-    
     focus = b;
     updateFocus();
-    //backdrop.alpha = b ? 0.5:0;
   }
 
   private function updateFocus():Void{
@@ -464,45 +369,12 @@ class VectorPlaceholderView extends APlaceholder {
     updateFocus();
   }
 
-//  override private function onMouseOver(e:MouseEvent){
-//    mouseOver = true;
-//    super.onMouseOver(e);
-//  }
-//
-//  override private function onMouseDown(e:MouseEvent){
-//    
-//    MouseTrap.capture();
-//    super.onMouseDown(e);
-//    pageView.setPlaceholderInFocus(this);
-//    
-//    if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
-//    
-//    updateSideView();
-//  }
-  
-  //!!! move this to super class
   private function updateSideView(): Void{
     var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
     param.setString(getPlaceholderType());
     GLOBAL.Application.dispatchParameter(param);
   }
   
-//  override private function onMouseOut(e:MouseEvent){
-//    mouseOver = false;
-//    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-//    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-//  }
-//  
-//  override private function onMouseUp(e:MouseEvent){
-//    
-//    MouseTrap.release();
-//    super.onMouseUp(e);
-//    pageView.disableMove();
-//    
-//    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-//    
-//  }
-
   private function onGetXml(event:Event):Void{
     
     model.setString(EVENT_ID.SET_PAGE_XML, getXml());
@@ -517,7 +389,11 @@ class VectorPlaceholderView extends APlaceholder {
     return 'vector_placeholder';
   }
   
+  public function updateGlobals(){
+    updateSideView();    
+  }
+
   override public function alert(b:Bool):Void{
-      selectBox.alert(b);//alertBox.visible = b;
+    selectBox.alert(b);//alertBox.visible = b;
   }
 }

@@ -7,5 +7,6 @@ interface IPlaceholder{
   function getXml() : String;
   function onUpdatePlaceholder(event:Event):Void;
   function getAnchorPoint():Float;
-  public function setFocus(b:Bool):Void;
+  function setFocus(b:Bool):Void;
+
 }

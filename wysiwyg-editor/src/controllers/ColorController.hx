@@ -35,7 +35,7 @@ class ColorController extends Controller, implements IController{
   
   private function onFoilColorSelected(param:IParameter):Void{
     GLOBAL.printType    = CONST.FOIL_COLOR;
-    GLOBAL.foilColor  = param.getUInt();
+    GLOBAL.foilColor  = param.getString();
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
   }

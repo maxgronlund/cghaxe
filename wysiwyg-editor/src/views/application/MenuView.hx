@@ -28,8 +28,9 @@ class MenuView extends View, implements IView
 		                	  
 		saveButton 		      = new OneStateButton();
 		maskButton 		      = new TwoStateButton();
-		moveButton 		      = new TwoStateButton();
+/*		moveButton 		      = new TwoStateButton();
 		textButton 		      = new TwoStateButton();
+*/
 		gridButton 		      = new TwoStateButton();
 		trashButton 		    = new OneStateButton();
 		zoomInButton 	      = new OneStateButton();
@@ -59,6 +60,7 @@ class MenuView extends View, implements IView
             new MaskButton(), 
             new Parameter( EVENT_ID.SHOW_MASK));
     
+    /*
     moveButton.init( controller,
             new Point(40,29), 
             new MoveButton(), 
@@ -68,7 +70,7 @@ class MenuView extends View, implements IView
             new Point(40,29), 
             new TextButton(), 
             new Parameter( EVENT_ID.TEXT_TOOL));
-            
+    */        
     gridButton.init( controller,
             new Point(40,29), 
             new GridButton(), 
@@ -109,8 +111,6 @@ class MenuView extends View, implements IView
     saveButton.fireOnMouseUp(false);
     
     addChild(maskButton);
-    addChild(moveButton);
-    addChild(textButton);
     addChild(gridButton);
     addChild(trashButton);
     addChild(zoomOutButton);
@@ -119,9 +119,8 @@ class MenuView extends View, implements IView
     
     
     maskButton.x			= saveButton.x + saveButton.getWidth();
-    moveButton.x			= maskButton.x + maskButton.getWidth();
-    textButton.x			= moveButton.x + moveButton.getWidth();
-    gridButton.x			= textButton.x + textButton.getWidth();
+
+    gridButton.x			= maskButton.x + maskButton.getWidth();
     
     trashButton.x		  = gridButton.x + gridButton.getWidth();
     
@@ -129,25 +128,10 @@ class MenuView extends View, implements IView
     zoomTo100Button.x		= SIZE.MENU_VIEW_WIDTH - zoomTo100Button.getWidth();
     zoomInButton.x		= zoomTo100Button.x - zoomInButton.getWidth();
     zoomOutButton.x 	= zoomInButton.x - zoomOutButton.getWidth();
-     
-    
-    
-    
+
   }
   
   override public function update(id:String, index:Int, value:String):Void{
-  	
-    switch ( id ){
-    	case EVENT_ID.TEXT_TOOL:{
-    		moveButton.setOn(false);
-    		textButton.setOn(true);
-    	}
-    	case EVENT_ID.MOVE_TOOL:{
-    		textButton.setOn(false);
-    		moveButton.setOn(true);
-    	}
-    		//selectButton.setOn(false);
-    }	
   }
 	
 }

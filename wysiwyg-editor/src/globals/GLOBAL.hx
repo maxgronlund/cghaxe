@@ -60,7 +60,7 @@ class GLOBAL  {
   
   public static var printType:String;
   public static var stdPmsColor:UInt;
-  public static var foilColor:UInt;
+  public static var foilColor:String;
   public static var pms1Color:UInt;
   public static var pms2Color:UInt;
   public static var laserColor:UInt;

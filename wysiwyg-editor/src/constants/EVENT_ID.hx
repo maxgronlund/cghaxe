@@ -32,6 +32,8 @@ class EVENT_ID  {
   public static inline var ALL_FILES_LOADED:String          = "all_files_loaded";
   public static inline var PAGE_XML:String                  = "page_xml";
   public static inline var PAGE_XML_LOADED:String           = "page_xml_loaded";
+  
+  public static inline var DISABLE_MOUSE_ON_PAGES:String    = "disable_mouse_on_pages";
 
 
   public static inline var ADD_PAGES_TO_STAGE:String        = "add_pages_to_stage";
@@ -130,7 +132,7 @@ class EVENT_ID  {
   public static inline var TEXT_TOOL:String                 = "text_tool";
   public static inline var GRID_ON:String                   = "grid_on";
   public static inline var SET_DEFAULT_TOOL:String          = "set_default_tool";
-  public static inline var SELECT_MOVE_TOOL:String          = "select_move_tool";
+  //public static inline var SELECT_MOVE_TOOL:String          = "select_move_tool";
   
 
                                                             

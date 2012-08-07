@@ -148,7 +148,7 @@ class PagesModel extends Model, implements IModel {
         pageInFocus.setParam(param);
         
         trace('placeholder added check for price');
-        Application.dispatchParameter( new Parameter(EVENT_ID.SELECT_MOVE_TOOL) );
+        //Application.dispatchParameter( new Parameter(EVENT_ID.SELECT_MOVE_TOOL) );
       }
 
       case EVENT_ID.UPDATE_PLACEHOLDER:{

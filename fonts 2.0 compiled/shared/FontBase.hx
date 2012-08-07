@@ -12,7 +12,7 @@ import flash.Vector;
 import flash.geom.Point;
 import flash.geom.ColorTransform;
 
-import flash.events.MouseEvent;
+//import flash.events.MouseEvent;
 
 import flash.display.Sprite;
 //import flash.display.BitmapData;
@@ -95,12 +95,22 @@ class FontBase extends MovieClip
     
     textField.x                     = 0; 
     textField.addEventListener(Event.CHANGE, textInputCapture);
-    //stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
       
   }
   
+  private function onFocusIn(event:Event):Void{
+    textField.removeEventListener(flash.events.FocusEvent.FOCUS_IN, onFocusIn);
+    textField.addEventListener(flash.events.FocusEvent.FOCUS_OUT, onFocusOut);
+    placeholderView.textFielsCapturedFocus(true);
+  }
+  
+  private function onFocusOut(event:Event):Void{
+    textField.removeEventListener(flash.events.FocusEvent.FOCUS_OUT, onFocusOut);
+    textField.addEventListener(flash.events.FocusEvent.FOCUS_IN, onFocusIn);
+    placeholderView.textFielsCapturedFocus(false);
+  }
+  
   public function textInputCapture(event:Event):Void { 
-    //resizeBackdrop();
     placeholderView.textInputCapture();
   }
   
@@ -111,22 +121,18 @@ class FontBase extends MovieClip
   public function getText(): String{
     return textField.text;
   }
-  
-  public function setFocus( b:Bool ): Void{
-    //backdrop.visible = b;
-    //resizeBackdrop();
-    
-  }
-  
-//  private function onMouseUp(e:MouseEvent){
-//    trace('onMouseUp');
-//  }
-//  
-  public function selectable(b:Bool):Void{
 
-    textField.selectable    = b;
-    textField.doubleClickEnabled = b;
-    textField.mouseEnabled = b;
+  public function selectable(b:Bool):Void{
+    textField.selectable            = b;
+    trace(b);
+    if(b){
+      textField.addEventListener(flash.events.FocusEvent.FOCUS_IN, onFocusIn);
+    }else{
+      textField.removeEventListener(flash.events.FocusEvent.FOCUS_IN, onFocusIn);
+      //textField.removeEventListener(flash.events.FocusEvent.FOCUS_OUT, onFocusOut);
+    }
+    //textField.doubleClickEnabled = b;
+    //textField.mouseEnabled = b;
   }
 
   private function setTextFormatAlign( align:String ): Void {
@@ -161,11 +167,7 @@ class FontBase extends MovieClip
   public function getTextField():TextField{
     return textField;
   }
-  
-  public function alert(b:Bool):Void{
-    //Depricated
-    //alertBox.visible = b;
-  }
+
 }
 
 

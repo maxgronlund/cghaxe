@@ -31,9 +31,9 @@ class SelectBox extends MouseHandler
   private var pageView:Dynamic;
   private var placeHolderView:Dynamic;
   private var transparency:Float;
-  
-  public function new(pageView:Dynamic, placeHolderView:Dynamic)
-  {
+  private var mouseOver:Bool;
+
+  public function new(pageView:Dynamic, placeHolderView:Dynamic){
     super();
     this.pageView = pageView;
     this.placeHolderView = placeHolderView;
@@ -47,56 +47,37 @@ class SelectBox extends MouseHandler
     alertBox.visible = false;
     //selected = false;
     //backdrop.visible = false;
-    transparency                    = 0.0;
+    transparency                    = 0.5;
     backdrop.alpha                  = transparency;
-    
-    //addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-    
-  }
-  private function onAddedToStage(e:Event){
-    trace('onAddedToStage');
-  }
-  
-  //public function getPlaceHolderView():Dynamic {
-  //  return placeHolderView;
-  //}
-  
-  override private function onMouseOver(e:MouseEvent){
-    super.onMouseOver(e);
-    
+
+    setFocus(false);
   }
   
   override private function onMouseDown(e:MouseEvent){
-    //if(selected)
-    //  placeHolderView.setTextOnTop(true);
-    //selected          =     true;
-    
-    if(backdrop.alpha   == transparency){
-      trace('im allready selected');
+    super.onMouseDown(e);
+    if(MouseTrap.capture()){
+      pageView.setPlaceholderInFocus(placeHolderView);
+      pageView.enableMove(e);
+      placeHolderView.updateGlobals();
     }
-  	super.onMouseDown(e); 
-  	MouseTrap.capture();
-  	pageView.setPlaceholderInFocus(placeHolderView);
-  	placeHolderView.updateGlobals();
-  	//if(GLOBAL.MOVE_TOOL) {
-  	  //placeHolderView.setOnTop('select_box');
-  	  pageView.enableMove(e);
-  	//}
-  	//else
-  	//  placeHolderView.makeFontSelecetable();
-  	
   }
   
   override private function onMouseUp(e:MouseEvent){
     super.onMouseUp(e);
-    //placeHolderView.makeFontSelecetable();
-    //placeHolderView.setOnTop('text_field');
-     
     MouseTrap.release();
     pageView.disableMove();
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     
+  }
+  
+  override private function onMouseOver(e:MouseEvent){
+    super.onMouseOver(e);
+    mouseOver = true;
+  }
+  
+  override private function onMouseOut(e:MouseEvent){
+    super.onMouseOut(e);
+    mouseOver = false;
   }
   
   private function createOutline():Void{
@@ -139,7 +120,7 @@ class SelectBox extends MouseHandler
     alertBox.graphics.beginFill(0xff8888);
     alertBox.graphics.drawRect(0,0,100,100);
     alertBox.graphics.endFill();
-    //alertBox.visible = false;
+    alertBox.alpha = 0.5;
     
   }
   
@@ -154,25 +135,14 @@ class SelectBox extends MouseHandler
   
   public function alert(b:Bool):Void{
     alertBox.visible = b;
-    placeHolderView.alert(b);
+    backdrop.alpha = b?0.0:0.5;
   }
-  
+
   public function setFocus( b:Bool ): Void{
-    
-//    trace('setFocus-----------------');
-//    resetMouse();
-    
-    
-    backdrop.alpha = b?0.5:0;
+    backdrop.alpha = b?0.5:0.0;
     for( i in 0...outline.length){
       outline[i].visible = b;
     }
-    
-    //placeHolderView.setFocus(b);
-    //if(!b){
-    //  //placeHolderView.setOnTop('select_box');
-    //  //resetMouse();
-    //}
   }
 
   public function resizeBackdrop(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{

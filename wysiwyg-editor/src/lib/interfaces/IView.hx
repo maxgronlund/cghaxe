@@ -30,5 +30,6 @@ interface IView
 	function getView(i:Int):AView;
 	function getPosX():Float;
 	function getPosY():Float;
+	function enableMouse(b:Bool):Void;
 
 }

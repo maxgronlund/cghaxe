@@ -111,7 +111,10 @@ class AView extends Sprite, implements IView
 		trace("getPosY: must be overriden in a subclass");
     return 0;
 	}
+	public function enableMouse(b:Bool):Void{
+		trace("enableMouse: must be overriden in a subclass");
 
+	}
 }
 
 

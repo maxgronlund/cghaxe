@@ -70,19 +70,37 @@ class PageView extends View{
 
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
+//    Application.addEventListener(EVENT_ID.DISABLE_MOUSE_ON_PAGES, onDisableMouse);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
     //DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImage);
     
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
 
-    
   }
-  
-  //private function onAddDesignImage(e:IKEvent):Void{
-  //  trace('onAddDesignImage');
-  //}
-  
+  /*
+  private function onDisableMouse(e:IKEvent):Void{
+    trace('onDisableMouse', e.getBool());
+    //enableMouse
+    enableMouse(e.getBool());
+  }*/
+  /*
+  override public function enableMouse(b:Bool):Void{
+		
+		if(b){
+		  addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+		}else{
+		  stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
+		  removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseUp);
+      removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+		}
+
+	}
+	*/
+	
   override public function setModel(model:IModel):Void{
     
 //    trace('model set');
@@ -101,7 +119,6 @@ class PageView extends View{
     
   }
 
-  
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{
@@ -230,12 +247,24 @@ class PageView extends View{
   }
   
   private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
-     
+   
     var url:String;
+
+    
+    
     for(url_xml in xml.elementsNamed("url") ) {
       url = url_xml.firstChild().nodeValue.toString();
     }
-    
+    for(foil_color in xml.elementsNamed("foil-color") ) {
+      GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
+      
+    }
+    for(pms_color in xml.elementsNamed("pms-color") ) {
+      GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
+    }
+    for(print_type in xml.elementsNamed("print-type") ) {
+      GLOBAL.printType = print_type.firstChild().nodeValue.toString();
+    }
 
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
@@ -273,7 +302,7 @@ class PageView extends View{
   }
   
   private function onDeselectPlaceholders(e:IKEvent):Void {
-    //trace('boom');
+    trace('onDeselectPlaceholders');
     setPlaceholderInFocus(null);
   }
   
@@ -283,6 +312,7 @@ class PageView extends View{
   
   private function onDestroyPlaceholder(e:IKEvent){
     removeChild(inFocus);
+    
     var index:UInt = 0;
     for(i in 0...placeholders.length){
       if(placeholders[i] == inFocus) index = i;
@@ -314,7 +344,6 @@ class PageView extends View{
   private function onPosY():Float{
     return ((-GLOBAL.desktop_view.getPosY() * 2.08) - this.y)+200;
   }
-
   
   private function addTextPlaceholder(posX:Float, posY:Float):Void{
 
@@ -327,30 +356,30 @@ class PageView extends View{
     //setPlaceholderInFocus(placeholder);
     
   }
-  
-  //private function addVectorPlaceholder(posX:Float, posY:Float, url:String):Void{
-  //  
-  //  setPlaceholderInFocus(null);
-  //  //var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
-  //  var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
-  //  placeholder.x = posX;
-  //	placeholder.y = posY;
-  //  placeholders.push(placeholder);
-  //  addChild(placeholder);
-  //  
-  //}
-
+  /*
+  private function addVectorPlaceholder(posX:Float, posY:Float, url:String):Void{
+    
+    setPlaceholderInFocus(null);
+    //var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
+    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
+    placeholder.x = posX;
+  	placeholder.y = posY;
+    placeholders.push(placeholder);
+    addChild(placeholder);
+    
+  }
+*/
   private function onReleasePageFocus(e:KEvent):Void {
     setPlaceholderInFocus(null);
+    MouseTrap.release();
   }
   
   public function setPlaceholderInFocus(placeholder:APlaceholder):Void{
-
     if(inFocus != null){
       // clean up
       inFocus.setFocus(false);
       model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
-
+      inFocus = null;
     } 
     if(placeholder != null) {
       // set focus
@@ -392,13 +421,13 @@ class PageView extends View{
     
     var textField:TextField = inFocus.getTextField();
     
-    if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-      if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
-        inFocus.alert(true);
-      else
-        inFocus.alert(false);
-
-    }
+    //if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
+    //  if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
+    //    inFocus.alert(true);
+    //  else
+    //    inFocus.alert(false);
+    //
+    //}
   }
   
   private function hitTestVectorPlaceholder():Void {
@@ -435,11 +464,14 @@ class PageView extends View{
   }
   
   private function onMouseUp(e:MouseEvent){	
+    trace('PageView is releasing the mouse');
     MouseTrap.release();
     stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+    
+
   	//MouseTrap.release();
   	//stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
   	//stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
