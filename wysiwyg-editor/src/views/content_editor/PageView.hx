@@ -470,7 +470,6 @@ class PageView extends View{
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    
 
   	//MouseTrap.release();
   	//stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
