@@ -49,9 +49,9 @@ class TextView extends PropertyView, implements IView{
     super.onAddedToStage(e);
     // font selection pane
     addChild(fontScrollPane);
-    fontScrollPane.setSize(174,133);
+    fontScrollPane.setSize(174,337);
     fontScrollPane.x = 9;
-    fontScrollPane.y = 56;
+    fontScrollPane.y = 136;
     fontScrollPane.addView(fontPane, 0,0);	
 	//	controller.setView('font_pane',fontPane);
     // font scroll bar
@@ -62,7 +62,7 @@ class TextView extends PropertyView, implements IView{
     
     addChild(textAlign);
     textAlign.x = 8;
-    textAlign.y = 258;
+    textAlign.y = 94;
     
     addChild(addTextfieldButton);
     addTextfieldButton.x = 20;
@@ -73,11 +73,11 @@ class TextView extends PropertyView, implements IView{
 //		fontStylePopup.y = 216;
     addChild(lineSpacePopup);
     lineSpacePopup.x = 8;
-    lineSpacePopup.y = 216;
+    lineSpacePopup.y = 52;
     
     addChild(fontSizePopup);
     fontSizePopup.x = 110;
-    fontSizePopup.y = 216;
+    fontSizePopup.y = 52;
     
   }
   
