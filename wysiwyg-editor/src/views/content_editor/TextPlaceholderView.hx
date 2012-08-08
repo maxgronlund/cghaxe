@@ -81,7 +81,7 @@ class TextPlaceholderView extends APlaceholder {
   private var blueFoilTexture:Bitmap;
 
   private var loaded_fonts:Hash<Dynamic>;
-  private var loading:Bitmap;
+  //private var loading:Bitmap;
   
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
@@ -109,11 +109,11 @@ class TextPlaceholderView extends APlaceholder {
     was_foiled = false;
     
     loaded_fonts = new Hash();
-    loading = new LoadingBitmap();
-    loading.x = 100;
-    loading.y = -40;
-    loading.width *= 150/72;
-    loading.height *= 150/72;
+    //loading = new LoadingBitmap();
+    //loading.x = 100;
+    //loading.y = -40;
+    //loading.width *= 150/72;
+    //loading.height *= 150/72;
     
     silverFoilTexture                  = new SilverFoilTexture();
     goldFoilTexture                    = new GoldFoilTexture();
@@ -363,7 +363,7 @@ class TextPlaceholderView extends APlaceholder {
       removeChild(fontMovie);
     }
     
-    addChild(loading);
+    //addChild(loading);
     
     if(loaded_fonts.get(fontFileName) == null){
       var ldr:Loader                = new Loader(); 
@@ -387,7 +387,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onFontCached():Void {
-    removeChild(loading);
+    //removeChild(loading);
     addChild(fontMovie);    
     
     font        = fontMovie.font;
