@@ -81,7 +81,6 @@ class TextPlaceholderView extends APlaceholder {
   private var blueFoilTexture:Bitmap;
 
   private var loaded_fonts:Hash<Dynamic>;
-  private var loading:Bitmap;
   
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
@@ -109,11 +108,7 @@ class TextPlaceholderView extends APlaceholder {
     was_foiled = false;
     
     loaded_fonts = new Hash();
-    loading = new LoadingBitmap();
-    loading.x = 100;
-    loading.y = -40;
-    loading.width *= 150/72;
-    loading.height *= 150/72;
+
     
     silverFoilTexture                  = new SilverFoilTexture();
     goldFoilTexture                    = new GoldFoilTexture();
@@ -356,15 +351,6 @@ class TextPlaceholderView extends APlaceholder {
     fontLeading                   = GLOBAL.Font.leading;
     letterSpacing                 = GLOBAL.Font.letterSpacing;
     
-    trace("CACHING FONT");
-    trace(loaded_fonts.get(fontFileName) == null);
-    
-    if(fontMovie != null) {
-      removeChild(fontMovie);
-    }
-    
-    addChild(loading);
-    
     if(loaded_fonts.get(fontFileName) == null){
       var ldr:Loader                = new Loader(); 
       var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
@@ -372,6 +358,7 @@ class TextPlaceholderView extends APlaceholder {
       ldrContext.applicationDomain  = new ApplicationDomain();
       ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
       ldr.load(req, ldrContext);
+      loaded_fonts.set(fontFileName, fontMovie);
     } else {
       fontMovie = loaded_fonts.get(fontFileName);
       onFontCached();
@@ -380,14 +367,11 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onFontLoaded(event:Event):Void {
-    
     fontMovie   =  cast event.target.loader.content;
-    loaded_fonts.set(fontFileName, fontMovie);
     onFontCached();
   }
   
   private function onFontCached():Void {
-    removeChild(loading);
     addChild(fontMovie);    
     
     font        = fontMovie.font;
@@ -433,7 +417,7 @@ class TextPlaceholderView extends APlaceholder {
     anchorPoint       = calculateAnchorPoint();
     repossition       = true;
     storeTags();
-    
+    removeChild(fontMovie);
     font = null;
     loadFont();
     
