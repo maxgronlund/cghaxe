@@ -194,6 +194,7 @@ class TextPlaceholderView extends APlaceholder {
   override public function getText(): Void {
     
     var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_TEXT);
+    trace( font==null);
     param.setString(font.getText());
     param.setInt(id);
     model.setParam(param);
@@ -214,6 +215,7 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
     str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
     str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
+    trace( font==null);
     str += font.getXml();
     str += '\t\t</placeholder>\n';
     restoreShowTags();
@@ -374,7 +376,7 @@ class TextPlaceholderView extends APlaceholder {
   private function onFontCached():Void {
     removeChild(loading);
     addChild(fontMovie);    
-    
+    trace( fontMovie==null);
     font        = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 
@@ -462,6 +464,7 @@ class TextPlaceholderView extends APlaceholder {
   private function showTags():Void{
     storeTags();
     tagsIsVisible   = true;
+    trace( font==null);
     font.setText(textWithTags);
     
   }
@@ -469,11 +472,12 @@ class TextPlaceholderView extends APlaceholder {
   private function hideTags():Void{
     storeTags();
     tagsIsVisible = false;
+    trace( font==null);
     font.setText(insertTags(textWithTags));
   }
   
   private function storeTags():Void{
-
+    trace( font==null);
     if(tagsIsVisible) 
       textWithTags  = font.getText();
   }
@@ -502,6 +506,7 @@ class TextPlaceholderView extends APlaceholder {
     //GLOBAL.MOVE_TOOL;
     // !!! colide with the hit test
     //font.setText(textWithTags);
+    trace( font==null);
     var anchor_point:Float = 0;
     switch(fontAlign){
       case 'left': anchor_point   = 0;
@@ -561,7 +566,7 @@ class TextPlaceholderView extends APlaceholder {
   
   private function setTextOnTop(b:Bool):Void {
     MouseTrap.capture();
-   
+   trace( font==null);
     font.selectable(b);
     textOnTop = b;
     if(b){
@@ -576,6 +581,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function resizeBackdrop():Void{
+    trace( font==null);
     selectBox.resizeBackdrop(fontMovie.width, fontMovie.height, font.getTextField().x, font.getCombindeMargins());
   }
   
@@ -592,6 +598,14 @@ class TextPlaceholderView extends APlaceholder {
     GLOBAL.Font.fontAlign       = fontAlign;
     GLOBAL.Font.leading         = fontLeading;
     GLOBAL.Font.letterSpacing   = letterSpacing;
+    
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS));
+    
+
+    
+    
+    
+    
 
     model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS)); 
     updateSideView();    
@@ -626,6 +640,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getTextField():TextField{
+    trace( font==null);
      return font.getTextField();
   }
   
