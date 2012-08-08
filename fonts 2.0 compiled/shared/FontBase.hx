@@ -129,6 +129,7 @@ class FontBase extends MovieClip
       textField.addEventListener(flash.events.FocusEvent.FOCUS_IN, onFocusIn);
     }else{
       textField.removeEventListener(flash.events.FocusEvent.FOCUS_IN, onFocusIn);
+      placeholderView.textFielsCapturedFocus(false);
       //textField.removeEventListener(flash.events.FocusEvent.FOCUS_OUT, onFocusOut);
     }
     //textField.doubleClickEnabled = b;
