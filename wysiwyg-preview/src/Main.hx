@@ -164,7 +164,7 @@ class Main
     selectionView               = new SelectionView(selectionController);
     
 //    vectorsView                 = new VectorsView(vectorsController);
-	  foil						            = new Foil(new FoilTexture());
+	  //foil						            = new Foil(new FoilTexture());
     
     setGlobalViews();
     

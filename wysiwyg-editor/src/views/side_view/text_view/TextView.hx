@@ -49,9 +49,9 @@ class TextView extends PropertyView, implements IView{
     super.onAddedToStage(e);
     // font selection pane
     addChild(fontScrollPane);
-    fontScrollPane.setSize(174,337);
+    fontScrollPane.setSize(174,312);
     fontScrollPane.x = 9;
-    fontScrollPane.y = 136;
+    fontScrollPane.y = 164;
     fontScrollPane.addView(fontPane, 0,0);	
 	//	controller.setView('font_pane',fontPane);
     // font scroll bar
