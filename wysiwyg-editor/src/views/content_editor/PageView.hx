@@ -456,6 +456,7 @@ class PageView extends View{
   private function onMouseDown(e:MouseEvent){	
     
     if(MouseTrap.capture()){
+      trace('page captured the mouse');
       setPlaceholderInFocus(null);
       removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
       stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);

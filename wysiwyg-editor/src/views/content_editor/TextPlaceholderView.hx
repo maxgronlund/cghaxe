@@ -130,7 +130,9 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   public function foilify():Void {
+    
     unfoilify();
+    
     if(foiled != true) {
       trace(foilColor);
       switch ( foilColor )
@@ -148,14 +150,27 @@ class TextPlaceholderView extends APlaceholder {
         case 'blue':
           foilTexture = blueFoilTexture; 
       }
-
+      trace(fontMovie == null);
+      
       setFoilBackdrop();
+      
+
+      
       foil = new MovieClip();
+      addChild(foil);
+      
       foil.addChild(foilTexture);
+      
+      trace("foil", foil == null);
+      trace("foilTexture", foilTexture == null);
+      trace("fontMovie", fontMovie == null);
+      trace("stage", this == stage);
+
+      //this.removeChild(fontMovie);
+      
       foil.addChild(fontMovie);
       foil.mask = fontMovie;
       
-      addChild(foil);
       Foil.initFiltersOn(foil);
       
     }
@@ -348,11 +363,13 @@ class TextPlaceholderView extends APlaceholder {
     
     if(fontMovie != null) {
       removeChild(fontMovie);
+      fontMovie = null;
     }
     
-    addChild(loading);
+    //addChild(loading);
     
-    if(loaded_fonts.get(fontFileName) == null){
+    //if(loaded_fonts.get(fontFileName) == null){
+    if(true){
       var ldr:Loader                = new Loader(); 
       var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
       var ldrContext:LoaderContext  = new LoaderContext(); 
@@ -374,8 +391,8 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onFontCached():Void {
-    removeChild(loading);
-    addChild(fontMovie);    
+    //removeChild(loading);
+    addChild(fontMovie);
     trace( fontMovie==null);
     font        = fontMovie.font;
     font.init(  fontSize, 
@@ -526,6 +543,9 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
+
+    updateFocus();
+    
     if(!focus){
       restoreShowTags();
       setTextOnTop(false);
