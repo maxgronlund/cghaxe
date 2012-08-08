@@ -164,7 +164,6 @@ class TextPlaceholderView extends APlaceholder {
       
       foil = new MovieClip();
       foil.addChild(foilTexture);
-      this.removeChild(fontMovie);
       foil.addChild(fontMovie);
       foil.mask = fontMovie;
       
@@ -545,7 +544,7 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
-    updateFocus();
+    
     
     if(!focus){
       setTextOnTop(false);
