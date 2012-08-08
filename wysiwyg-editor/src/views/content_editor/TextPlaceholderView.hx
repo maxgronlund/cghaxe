@@ -62,12 +62,7 @@ class TextPlaceholderView extends APlaceholder {
   private var tagsIsVisible:Bool;
   private var textString:String;
   private var collition:Bool;
-//  private var textOnTop:Bool;
-
-  
-
-
-
+  private var textOnTop:Bool;
   private var selectBox:TextSelectBox;
   private var foiled:Bool;
   private var was_foiled:Bool;
@@ -79,8 +74,8 @@ class TextPlaceholderView extends APlaceholder {
   private var redFoilTexture:Bitmap;
   private var greenFoilTexture:Bitmap;
   private var blueFoilTexture:Bitmap;
-
-
+  private var loaded_fonts:Hash<Dynamic>;
+  private var loading:Bitmap;
   
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
@@ -106,8 +101,13 @@ class TextPlaceholderView extends APlaceholder {
     collition                         = false;
     foiled = false;
     was_foiled = false;
-
-
+    
+    loaded_fonts = new Hash();
+    loading = new LoadingBitmap();
+    loading.x = 100;
+    loading.y = -40;
+    loading.width *= 150/72;
+    loading.height *= 150/72;
     
     silverFoilTexture                  = new SilverFoilTexture();
     goldFoilTexture                    = new GoldFoilTexture();
@@ -119,7 +119,6 @@ class TextPlaceholderView extends APlaceholder {
     printType                         = GLOBAL.printType;
   }
   
-
   private function onAddedToStage(e:Event){
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -130,18 +129,17 @@ class TextPlaceholderView extends APlaceholder {
     return foiled == true;
   }
   
-  public function foilify(color:String):Void {
+  public function foilify():Void {
+    unfoilify();
     if(foiled != true) {
-
-      foilTexture = silverFoilTexture;
-
-      switch ( color )
+      trace(foilColor);
+      switch ( foilColor )
       {
         case 'silver':
           foilTexture = silverFoilTexture;
         case 'gold': 
           foilTexture = goldFoilTexture;
-        case 'yellow':
+        case 'Yellow':
           foilTexture = yellowFoilTexture;
         case 'red': 
           foilTexture = redFoilTexture;
@@ -151,25 +149,33 @@ class TextPlaceholderView extends APlaceholder {
           foilTexture = blueFoilTexture; 
       }
 
+      setFoilBackdrop();
       foil = new MovieClip();
       foil.addChild(foilTexture);
-      foilTexture.width = this.width;
-      foilTexture.height = this.height;
-      this.addChild(foil);
-      this.addChild(fontMovie);
-      this.mask = fontMovie;
-      Foil.initFiltersOn(this);
+      foil.addChild(fontMovie);
+      foil.mask = fontMovie;
+      
+      addChild(foil);
+      Foil.initFiltersOn(foil);
+      
     }
     foiled = true;
   }
   
+  public function setFoilBackdrop():Void {
+    //Small workaround fix hack
+    foilTexture.width = this.width;
+    foilTexture.height = this.height;
+  }
+  
   public function unfoilify():Void {
     if(foiled == true){
-      this.mask = null;
-      //foil.removeChild(fontMovie);
+      foil.removeChild(foilTexture);
+      foil.removeChild(fontMovie);
+      foil.mask = null;
+      Foil.removeFiltersFrom(foil);
       this.removeChild(foil);
-      //this.addChild(fontMovie);
-      Foil.removeFiltersFrom(this);
+      this.addChild(fontMovie);
     }
     foiled = false;
   }
@@ -194,27 +200,22 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getXml() : String {
-    
     showTags();
     
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
-      str += '\t\t\t<placeholder-type>' + 'text_placeholder' + '</placeholder-type>\n';
-      str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
-      str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
-      str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
-      str += '\t\t\t<print-type>' + printType + '</print-type>\n';
-      if(foiled){
-        str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-      } else{
-        str += '\t\t\t<font-color>' + Std.string(fontColor) + '</font-color>\n';
-      }
-      str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
-      str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
-      str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
-      str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
-      str += font.getXml();
+    str += '\t\t\t<placeholder-type>' + 'text_placeholder' + '</placeholder-type>\n';
+    str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
+    str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
+    str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
+    str += '\t\t\t<print-type>' + printType + '</print-type>\n';
+    str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
+    str += '\t\t\t<font-color>' + Std.string(fontColor) + '</font-color>\n';
+    str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
+    str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
+    str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
+    str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
+    str += font.getXml();
     str += '\t\t</placeholder>\n';
-//    trace(str);
     restoreShowTags();
     return str;
   }
@@ -323,13 +324,15 @@ class TextPlaceholderView extends APlaceholder {
 
   private function loadFont():Void{
     
-    switch ( GLOBAL.printType )
-    {
-      case CONST.STD_PMS_COLOR:{
-        //unfoilify();
-        fontColor = GLOBAL.stdPmsColor;
-      }
-    }
+    
+    //setFontPrintType();
+    
+    //switch ( GLOBAL.printType )
+    //{
+    //  case CONST.STD_PMS_COLOR:{
+    //    fontColor = GLOBAL.stdPmsColor;
+    //  }
+    //}
     
     fontFileName                  = GLOBAL.Font.fileName;
     fontSize                      = GLOBAL.Font.fontSize;
@@ -337,19 +340,41 @@ class TextPlaceholderView extends APlaceholder {
     fontAlign                     = GLOBAL.Font.fontAlign;
     fontLeading                   = GLOBAL.Font.leading;
     letterSpacing                 = GLOBAL.Font.letterSpacing;
-
-    var ldr:Loader                = new Loader(); 
-    var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
-    var ldrContext:LoaderContext  = new LoaderContext(); 
-    ldrContext.applicationDomain  = new ApplicationDomain();
-    ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
-    ldr.load(req, ldrContext);
+    
+    trace("CACHING FONT");
+    trace(loaded_fonts.get(fontFileName) == null);
+    
+    if(fontMovie != null) {
+      removeChild(fontMovie);
+    }
+    
+    addChild(loading);
+    
+    if(loaded_fonts.get(fontFileName) == null){
+      var ldr:Loader                = new Loader(); 
+      var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
+      var ldrContext:LoaderContext  = new LoaderContext(); 
+      ldrContext.applicationDomain  = new ApplicationDomain();
+      ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
+      ldr.load(req, ldrContext);
+    } else {
+      fontMovie = loaded_fonts.get(fontFileName);
+      onFontCached();
+    }
+    
   }
   
   private function onFontLoaded(event:Event):Void {
+    
     fontMovie   =  cast event.target.loader.content;
-    addChild(fontMovie);
-
+    loaded_fonts.set(fontFileName, fontMovie);
+    onFontCached();
+  }
+  
+  private function onFontCached():Void {
+    removeChild(loading);
+    addChild(fontMovie);    
+    
     font        = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 
@@ -371,10 +396,10 @@ class TextPlaceholderView extends APlaceholder {
        selectBox   =   new TextSelectBox(pageView, this); 
        addChild(selectBox);
     }
+    
     resizeBackdrop();
-    //pageView.hitTest();
   }
-
+  
   private function hitTest():Void{
     pageView.hitTest();
   }
@@ -382,33 +407,56 @@ class TextPlaceholderView extends APlaceholder {
   override public function onUpdatePlaceholder(event:Event):Void{
 
     printType = GLOBAL.printType;
-    var foilIt = false;
     
-    switch ( GLOBAL.printType ){
-      case CONST.STD_PMS_COLOR:{
-        fontColor = GLOBAL.stdPmsColor;
-      }
-      case CONST.FOIL_COLOR:{
-        foilColor = GLOBAL.foilColor;
-        trace(foilColor);
-        foilIt = true;
-      }
-      case CONST.LASER_COLOR:{
-        fontColor = GLOBAL.laserColor;
-      }
-    }
+    setFontPrintType();
+    
     storedAlign       = fontAlign;
     //font.setText(insertTags(textWithTags));
     anchorPoint       = calculateAnchorPoint();
     repossition       = true;
     storeTags();
-    removeChild(fontMovie);
+    
     font = null;
     loadFont();
     
-    //!!! bue fix this
-    //if(foilIt)
-    //  foilify(foilColor);
+  }
+  
+  private function setFontPrintType():Void{
+    switch ( GLOBAL.printType ){
+      case CONST.STD_PMS_COLOR:{
+        fontColor = GLOBAL.stdPmsColor;
+        was_foiled = false;
+        unfoilify();
+      }
+      case CONST.FOIL_COLOR:{
+        foilColor = GLOBAL.foilColor;
+        was_foiled = true;
+        if(!textOnTop)
+          foilify();
+        
+        switch ( foilColor )
+        {
+          case 'silver':
+            fontColor = 0xE0E0E0;
+          case 'gold': 
+            fontColor = 0xFFD560;
+          case 'Yellow':
+            fontColor = 0xFFFF00;
+          case 'red': 
+            fontColor = 0xFF0000;
+          case 'green':
+            fontColor = 0x00FF00;
+          case 'blue':
+            fontColor = 0x0000FF;
+            
+        }
+      }
+      case CONST.LASER_COLOR:{
+        fontColor = GLOBAL.laserColor;
+        was_foiled = false;
+        unfoilify();
+      }
+    }
   }
   
   private function showTags():Void{
@@ -473,44 +521,27 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
-    updateFocus();
-    
     if(!focus){
+      restoreShowTags();
       setTextOnTop(false);
+      if(was_foiled == true)
+        foilify();
+      
     }
+    else{ showTags();}
+    updateFocus();
   }
   
   private function updateFocus():Void{
-    
-    trace('update focus');
-    
+        
     selectBox.setFocus(focus);
-//    selectBox.setFocus2();
     
     if(focus){
-      //!GLOBAL.MOVE_TOOL ? showTags():hideTags();
       resizeBackdrop();
-
-      if(foiled == true){
-        unfoilify();
-        was_foiled = true;
-      }
-    }else{
-      //hideTags();
-    
-      if(!collition){
-        //trace("here?");
-        //selectBox.setFocus(false);
-      }
-      if(was_foiled == true){
-        foilify('gold');
-        was_foiled = false;
-      }
     }
-    //selectBox.setFocus(focus);
+    
     handleKeyboard( focus );
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
-    
     
   }
   
@@ -518,6 +549,7 @@ class TextPlaceholderView extends APlaceholder {
 
     if(b){
       MouseTrap.capture();
+      unfoilify();
       pageView.setPlaceholderInFocus(this);
       setTextOnTop(true);
       trace('prevent the pageView from release the inFocus and capture the mouse here');
@@ -529,9 +561,11 @@ class TextPlaceholderView extends APlaceholder {
   
   private function setTextOnTop(b:Bool):Void {
     MouseTrap.capture();
+   
     font.selectable(b);
-    //textOnTop = b;
+    textOnTop = b;
     if(b){
+       unfoilify();
       this.setChildIndex(fontMovie, this.numChildren - 1);
       
     }else{
@@ -598,6 +632,5 @@ class TextPlaceholderView extends APlaceholder {
   override public function alert(b:Bool):Void{
       collition = b;
   }
-
 
 }

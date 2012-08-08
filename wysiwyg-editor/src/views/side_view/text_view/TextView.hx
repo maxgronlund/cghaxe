@@ -18,7 +18,6 @@ class TextView extends PropertyView, implements IView{
     fontScrollPane				= new ScrollPane(textController);
     fontPane							= new FontPane(textController);
     fontScrollbar 				= new VerticalScrollbar(textController, EVENT_ID.FONT_SCROLL);
-    //fontStylePopup 				= new FontStylePopup(textController);
     lineSpacePopup 				= new LineSpacePopup(textController);
     textAlign 	 					= new TextAlign(textController);
     fontSizePopup 				= new FontSizePopup(textController);
@@ -33,8 +32,7 @@ class TextView extends PropertyView, implements IView{
         new Parameter( EVENT_ID.SHOW_TEXT)); //!!! rename
         
     textAlign.init();
-
-                    
+               
     addTextfieldButton.init(controller,
                     new Point(150,22), 
                     new CreateTextfieldButton(), 
@@ -133,7 +131,7 @@ class TextView extends PropertyView, implements IView{
   }
   
   private function onUpdateFontPane(s):Void{
-    trace('onUpdateFontPane');
+    
     fontPane.setString(EVENT_ID.UPDATE_FONT_PANE, s);
   }
   

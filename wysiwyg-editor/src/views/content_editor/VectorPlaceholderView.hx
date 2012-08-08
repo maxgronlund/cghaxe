@@ -69,16 +69,12 @@ class VectorPlaceholderView extends APlaceholder {
   private var foilBitmapDataForOverlay:BitmapData;
   private var backdrop:Sprite;
   private var lines:Vector<Shape>;
-  
   private var bitmap:Bitmap;
   private var colorTransform:ColorTransform;
   private var default_colorTransform:ColorTransform;
-  
   private var selectBox:SelectBox;
   private var printType:String;
-  
-
-  
+ 
   public function new(pageView:PageView, id:Int, model:IModel, url:String){	
     
     super(pageView, id, model, url);
@@ -90,8 +86,7 @@ class VectorPlaceholderView extends APlaceholder {
     mouseOver                         = false;
     focus                             = false;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-    collition                         = false;
-    
+    collition                         = false;    
     this.url = url;
     foil = new Sprite();
     silverFoilTexture                 = new SilverFoilTexture();
@@ -104,8 +99,6 @@ class VectorPlaceholderView extends APlaceholder {
     foilColor                         = GLOBAL.foilColor;
     pmsColor                          = GLOBAL.stdPmsColor;
     printType                         = GLOBAL.printType;
-    
-
   }
   
   override public function getBitmapMask():Bitmap {
@@ -201,12 +194,9 @@ class VectorPlaceholderView extends APlaceholder {
   }
 
   private function onAddedToStage(e:Event){
-    
     loadVectorFile();
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-    
-    
   }
    
   private function handleKeyboard(b:Bool):Void{
@@ -222,7 +212,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function getXml() : String {
-
+    trace('getXml');
     var str:String = '\n\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
       
       str += '\t\t\t<placeholder-type>' + 'vector_placeholder' + '</placeholder-type>\n';
@@ -230,18 +220,15 @@ class VectorPlaceholderView extends APlaceholder {
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
       str += '\t\t\t<url>' + url + '</url>\n';
       str += '\t\t\t<print-type>' + printType + '</print-type>\n';
-      if(foiled){
-        str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-      }else{
-        str += '\t\t\t<pms-color>' + Std.string(pmsColor) + '</pms-color>\n';
-      }
+      str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
+      str += '\t\t\t<pms-color>' + Std.string(pmsColor) + '</pms-color>\n';
     //  str += '\t\t\t<vectorFile-color>' + Std.string(vectorFileColor) + '</vectorFile-color>\n';
     //  str += '\t\t\t<line-space>' + Std.string(vectorFileLeading) + '</line-space>\n';
     //  str += '\t\t\t<vectorFile-size>' + Std.string(vectorFileSize) + '</vectorFile-size>\n';
     //  str += '\t\t\t<vectorFile-align>' + vectorFileAlign + '</vectorFile-align>\n';
     //  str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
     //  str += vectorFile.getXml();
-    str += '\t\t</placeholder>\n';
+      str += '\t\t</placeholder>\n';
     
     //trace('\n---------- getXml ----------------\n', str);
 
@@ -263,7 +250,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function loadVectorFile():Void{
-
+    trace('loadVectorFile');
     var ldr:Loader                = new Loader(); 
     var req:URLRequest            = new URLRequest(url); 
     var ldrContext:LoaderContext  = new LoaderContext(); 
@@ -273,9 +260,9 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onVectorFileLoaded(event:Event):Void { 
-
+    trace('onVectorFileLoaded');
     vectorMovie =  cast event.target.loader.content;
-    var scale:Float = 0.5;
+    var scale:Float = 0.25;
     addChild(vectorMovie);
     
     default_colorTransform = vectorMovie.transform.colorTransform;
@@ -303,7 +290,6 @@ class VectorPlaceholderView extends APlaceholder {
        addChild(selectBox);
     }
     resizeBackdrop();
-    
     
     switch ( printType ){
       case CONST.STD_PMS_COLOR:{

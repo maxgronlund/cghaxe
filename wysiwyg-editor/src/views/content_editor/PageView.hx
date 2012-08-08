@@ -56,8 +56,8 @@ class PageView extends View{
     super(controller);
     
     imageLoader	                  = new Loader();
-    printMaskLoader	                  = new Loader();
-    placeholders              = new Vector<APlaceholder>();
+    printMaskLoader	              = new Loader();
+    placeholders                  = new Vector<APlaceholder>();
 //    designImagePlaceholders       = new Vector<APlaceholder>();
     hitPoint                      = new Point(0,0);
     startPoint                    = new Point(0,0);
@@ -222,7 +222,7 @@ class PageView extends View{
   }
  
   private function parsePlaceholder(xml:Xml):Void{
-
+    
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
     
@@ -232,7 +232,9 @@ class PageView extends View{
 
     var placeholder_type:String = '';
     for( plc_type in xml.elementsNamed("placeholder-type") ){
+      
       placeholder_type = plc_type.firstChild().nodeValue;
+      
     }
 
     switch( placeholder_type){
@@ -247,7 +249,7 @@ class PageView extends View{
   }
   
   private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
-   
+   trace(xml.toString());
     var url:String;
 
     
@@ -270,6 +272,7 @@ class PageView extends View{
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
     placeholder.x = posX;
   	placeholder.y = posY;
+  	trace(posX);
     placeholders.push(placeholder);
     addChild(placeholder);
 
@@ -302,7 +305,7 @@ class PageView extends View{
   }
   
   private function onDeselectPlaceholders(e:IKEvent):Void {
-    trace('onDeselectPlaceholders');
+//    trace('onDeselectPlaceholders');
     setPlaceholderInFocus(null);
   }
   
@@ -470,7 +473,6 @@ class PageView extends View{
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    
 
   	//MouseTrap.release();
   	//stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
