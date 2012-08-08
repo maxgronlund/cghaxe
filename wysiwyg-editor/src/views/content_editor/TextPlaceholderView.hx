@@ -80,7 +80,7 @@ class TextPlaceholderView extends APlaceholder {
   private var greenFoilTexture:Bitmap;
   private var blueFoilTexture:Bitmap;
 
-  private var loaded_fonts:Hash<Dynamic>;
+
   
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
@@ -106,8 +106,7 @@ class TextPlaceholderView extends APlaceholder {
     collition                         = false;
     foiled = false;
     was_foiled = false;
-    
-    loaded_fonts = new Hash();
+
 
     
     silverFoilTexture                  = new SilverFoilTexture();
@@ -344,36 +343,27 @@ class TextPlaceholderView extends APlaceholder {
     //  }
     //}
     
+    
+    
     fontFileName                  = GLOBAL.Font.fileName;
     fontSize                      = GLOBAL.Font.fontSize;
     
     fontAlign                     = GLOBAL.Font.fontAlign;
     fontLeading                   = GLOBAL.Font.leading;
     letterSpacing                 = GLOBAL.Font.letterSpacing;
-    
-    if(loaded_fonts.get(fontFileName) == null){
-      var ldr:Loader                = new Loader(); 
-      var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
-      var ldrContext:LoaderContext  = new LoaderContext(); 
-      ldrContext.applicationDomain  = new ApplicationDomain();
-      ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
-      ldr.load(req, ldrContext);
-      loaded_fonts.set(fontFileName, fontMovie);
-    } else {
-      fontMovie = loaded_fonts.get(fontFileName);
-      onFontCached();
-    }
-    
+
+    var ldr:Loader                = new Loader(); 
+    var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
+    var ldrContext:LoaderContext  = new LoaderContext(); 
+    ldrContext.applicationDomain  = new ApplicationDomain();
+    ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
+    ldr.load(req, ldrContext);
   }
   
   private function onFontLoaded(event:Event):Void {
     fontMovie   =  cast event.target.loader.content;
-    onFontCached();
-  }
-  
-  private function onFontCached():Void {
-    addChild(fontMovie);    
-    
+    addChild(fontMovie);
+
     font        = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 
@@ -398,8 +388,6 @@ class TextPlaceholderView extends APlaceholder {
     
     resizeBackdrop();
   }
-  
-  
 
   private function hitTest():Void{
     pageView.hitTest();
