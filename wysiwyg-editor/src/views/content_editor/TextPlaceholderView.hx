@@ -122,6 +122,8 @@ class TextPlaceholderView extends APlaceholder {
     greenFoilTexture                   = new GreenFoilTexture();
     blueFoilTexture                    = new BlueFoilTexture();
     
+    foilTexture = silverFoilTexture;
+    
     printType                         = GLOBAL.printType;
   }
   
@@ -361,6 +363,7 @@ class TextPlaceholderView extends APlaceholder {
     
     if(fontMovie != null) {
       removeChild(fontMovie);
+      fontMovie = null;
     }
     
     addChild(loading);
@@ -380,7 +383,6 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onFontLoaded(event:Event):Void {
-    
     fontMovie   =  cast event.target.loader.content;
     loaded_fonts.set(fontFileName, fontMovie);
     onFontCached();
@@ -434,6 +436,7 @@ class TextPlaceholderView extends APlaceholder {
     repossition       = true;
     storeTags();
     
+    //removeChild(fontMovie);
     font = null;
     loadFont();
     
@@ -541,15 +544,12 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
-    updateFocus();
+    
     
     if(!focus){
-      
       setTextOnTop(false);
-      if(was_foiled == true)
-        foilify();
-      
     }
+    
   }
   
   private function updateFocus():Void{
@@ -569,10 +569,9 @@ class TextPlaceholderView extends APlaceholder {
 
     if(b){
       MouseTrap.capture();
-      unfoilify();
       pageView.setPlaceholderInFocus(this);
-      setTextOnTop(true);
-      trace('prevent the pageView from release the inFocus and capture the mouse here');
+      if(font != null)
+        setTextOnTop(true);
     }else{
       MouseTrap.release();
     }
@@ -581,17 +580,18 @@ class TextPlaceholderView extends APlaceholder {
   
   private function setTextOnTop(b:Bool):Void {
     MouseTrap.capture();
-   
+    trace("FONT", font == null);
     font.selectable(b);
-    textOnTop = b;
     if(b){
-       unfoilify();
+      unfoilify();
       this.setChildIndex(fontMovie, this.numChildren - 1);
       
     }else{
       this.setChildIndex(selectBox, this.numChildren - 1);
+      if(was_foiled == true)
+        foilify();
     }
-    
+    textOnTop = b;
     selectBox.resetMouse();
   }
   
