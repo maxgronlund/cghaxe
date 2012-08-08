@@ -351,6 +351,13 @@ class TextPlaceholderView extends APlaceholder {
     fontLeading                   = GLOBAL.Font.leading;
     letterSpacing                 = GLOBAL.Font.letterSpacing;
     
+    if(fontMovie != null){
+      trace("Removing Child fontMovie");
+      removeChild(fontMovie);
+      trace("Removed Child fontMovie");
+      fontMovie = null;
+    }
+    
     if(loaded_fonts.get(fontFileName) == null){
       var ldr:Loader                = new Loader(); 
       var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
@@ -417,8 +424,9 @@ class TextPlaceholderView extends APlaceholder {
     anchorPoint       = calculateAnchorPoint();
     repossition       = true;
     storeTags();
-    removeChild(fontMovie);
+    //removeChild(fontMovie);
     font = null;
+    unfoilify();
     loadFont();
     
   }
