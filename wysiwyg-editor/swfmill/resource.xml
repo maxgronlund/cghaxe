@@ -117,7 +117,10 @@
         <bitmap id="TestBack" import="library/images/test_back.png" />
         <bitmap id="ZoomOutButtonBitmap" import="library/images/zoom_out_button.png" />
         <bitmap id="ZoomInButtonBitmap" import="library/images/zoom_in_button.png" />
-
+        
+        
+        
+        <bitmap id="LoadingBitmap" import="library/images/loading.png" />
         
         
                 
