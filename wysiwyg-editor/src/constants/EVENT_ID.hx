@@ -188,7 +188,7 @@ class EVENT_ID  {
   public static inline var NO_COLOR_SELECTED                  = "no_color_selected";
   public static inline var TEXT_ALIGN:String                  = "text_align";
   public static inline var SET_PLACEHOLDER_XML:String        = "set_placeholder_xml"; 
-  public static inline var UPDATE_TEXT_TOOLS                  = "update_text_tools";
+//  public static inline var UPDATE_TEXT_TOOLS                  = "update_text_tools";
   
   
   public static inline var START_LOAD_SEQ                     = "start_load_seq";

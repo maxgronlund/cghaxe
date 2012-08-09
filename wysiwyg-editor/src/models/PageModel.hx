@@ -44,9 +44,9 @@ class PageModel extends Model, implements IModel
       case EVENT_ID.TRASH_PLACEHOLDER:{
        dispatchParameter(param); 
       }
-      case EVENT_ID.UPDATE_TEXT_TOOLS:{
-        GLOBAL.text_view.setParam(param);
-      }
+      //case EVENT_ID.UPDATE_TEXT_TOOLS:{
+      //  GLOBAL.text_view.setParam(param);
+      //}
       case EVENT_ID.BUILD_PAGE_DESIGNS:{
         trace(designs.toString(),'------------------------------>>>>>>>>>>>>>>>>');
         param.setXml(designs);

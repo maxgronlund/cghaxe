@@ -39,31 +39,11 @@ class TextAlign extends View
           new Parameter( EVENT_ID.ALIGN_RIGHT));
   	textAlingRightButton.jumpBack(false);
   	textAlingRightButton.fireOnMouseUp(false);
-  }
-  
-  override public function onAddedToStage(e:Event){
-  	super.onAddedToStage(e);
-  	addChild(textAlingLeftButton);
-  	addChild(textAlingCenterButton);
-  	textAlingCenterButton.x = 32;
-  	addChild(textAlingRightButton);
-  	textAlingRightButton.x = 64;
   	
+  	Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
   }
   
-  override public function setParam(param:IParameter):Void{
-
-    switch ( param.getLabel() ){
-      case EVENT_ID.ALIGN_LEFT: setLeft();
-      case EVENT_ID.ALIGN_CENTER: setLCenter();
-      case EVENT_ID.ALIGN_RIGHT:  setRight();
-      case EVENT_ID.UPDATE_TEXT_TOOLS: setSelectedButton();
-
-    }
-	}
-	
-	private function setSelectedButton(): Void
-	{
+  private function onUpdateSideView(e:IKEvent):Void{
 	  if(GLOBAL.GLOBAL.Font.fontAlign == 'left'){
 	    setLeft();
 	  }
@@ -74,6 +54,29 @@ class TextAlign extends View
 	    setRight();
 	  }
 	}
+  
+  override public function onAddedToStage(e:Event){
+  	super.onAddedToStage(e);
+  	addChild(textAlingLeftButton);
+  	addChild(textAlingCenterButton);
+  	textAlingCenterButton.x = 32;
+  	addChild(textAlingRightButton);
+  	textAlingRightButton.x = 64;
+  }
+  
+  
+  
+  override public function setParam(param:IParameter):Void{
+
+    switch ( param.getLabel() ){
+      case EVENT_ID.ALIGN_LEFT: setLeft();
+      case EVENT_ID.ALIGN_CENTER: setLCenter();
+      case EVENT_ID.ALIGN_RIGHT:  setRight();
+      //case EVENT_ID.UPDATE_TEXT_TOOLS: setSelectedButton();
+
+    }
+	}
+
   
   private function setLeft():Void{
     textAlingLeftButton.setOn(true);

@@ -35,7 +35,9 @@ class FoilColorPicker extends View{
   private function onMouseDown(e:MouseEvent){	
     var posY:Float = e.stageY-this.y;
     var color:String;
-    if(posY < 63)
+    
+    trace(posY);
+    if(posY < 32)
       color = row1(e.stageX);
     else
       color = row2(e.stageX);

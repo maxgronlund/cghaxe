@@ -9,14 +9,12 @@ class MouseTrap
 	  
 		if(empty) {
 			empty = false;
-			trace('captured');
 			return true;
 		}
 		return false;
 	}
 	
 	public static function release():Void{
-	  trace('release');
 		empty = true;
 	}
 	
