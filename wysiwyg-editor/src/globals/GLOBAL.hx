@@ -11,7 +11,7 @@ class GLOBAL  {
   public static var Menu:IModel;
 //  public static var Configuration:IModel;
   public static var Preset:IModel;
-  public static var Price:IModel;
+  public static var Prices:IModel;
   public static var Pages:IModel;
   public static var Designs:IModel;
 //  public static var DesignImages:IModel;

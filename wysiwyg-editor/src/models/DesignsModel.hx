@@ -125,18 +125,13 @@ class DesignsModel extends Model, implements IModel {
 
   private function onPassDesign(e:IKEvent):Void{
     
-    //trace('onPassDesign');
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    //trace(xml.toString());
 
-    
     var param:IParameter = new Parameter(EVENT_ID.BUILD_DESIGN_PAGE);
     param.setXml(xml);
     param.setInt(0);
     dispatchParameter(param);
       
-      
-    
     for( design in xml.elementsNamed("design") ) {
       for( img in design.elementsNamed("image-url") ) {
         var image_url:String        = Std.string(img.firstChild().nodeValue);

@@ -1,42 +1,28 @@
 package;
 
-class PriceModel extends Model, implements IModel
-{
-
-
-	public function new(){	
-		super();	
+class PriceModel {
+  private var units:UInt;
+  private var foil_price:Float;
+  private var one_pms_color_price:Float;
+  private var std_color_price:Float;
+  
+  public function new(units:UInt, foil_price:Float, one_pms_color_price:Float, std_color_price:Float){	
+		this.units = units;
+		this.foil_price = foil_price;
+		this.one_pms_color_price = one_pms_color_price;
+		this.std_color_price = std_color_price;
 	}
 	
-	override public function init():Void{	
-		super.init();
-		
+	public function getUnits():UInt{
+	  return units;
 	}
-	private function parsePrice(xml:Xml):Void{
-	  trace('passing prices');
-	//	trace(xml);
-		for( prices in xml.elementsNamed("prices") ) {
-			for( price in prices.elementsNamed("price") ) {
-				for( country_id in price.elementsNamed("country-id") ) {
-					trace(country_id.firstChild().nodeValue);	
-				}
-				for( site_id in price.elementsNamed("site-id") ) {
-					trace(site_id.firstChild().nodeValue);	
-				}
-				for( price in price.elementsNamed("price") ) {
-					trace(price.firstChild().nodeValue);	
-				}
-				for( min_units in price.elementsNamed("min-units") ) {
-					trace(min_units.firstChild().nodeValue);	
-				}
-				for( max_units in price.elementsNamed("max-units") ) {
-					trace(max_units.firstChild().nodeValue);	
-				}
-			}
-		}
+	public function getFoilPrice():Float{
+	  return foil_price;
 	}
-	
-	
+	public function getOnePmsColorPrice():Float{
+	  return one_pms_color_price;
+	}
+	public function getStdColorPrice():Float{
+	  return std_color_price;
+	}
 }
-
-

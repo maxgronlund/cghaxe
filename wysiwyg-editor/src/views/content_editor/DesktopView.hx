@@ -186,7 +186,7 @@ class DesktopView extends View, implements IView{
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
-    trace('onAllImagesLoaded');
+//    trace('onAllImagesLoaded');
     if(placeholders == 0) {
       placeholders--;
       setSizes();       

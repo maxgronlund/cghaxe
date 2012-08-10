@@ -115,13 +115,14 @@ class TextPlaceholderView extends APlaceholder {
     redFoilTexture      = new RedFoilTexture();
     greenFoilTexture    = new GreenFoilTexture();
     blueFoilTexture     = new BlueFoilTexture();
-                        
+    /*                    
     printType           = GLOBAL.printType;
     foilColor           = GLOBAL.foilColor;
     stdPmsColor         = GLOBAL.stdPmsColor;
     pms1Color           = GLOBAL.pms1Color;
     pms2Color           = GLOBAL.pms2Color;
     laserColor          = GLOBAL.laserColor;
+    */
   }
   
 
@@ -142,25 +143,23 @@ class TextPlaceholderView extends APlaceholder {
       {
         case 'silver':
           foilTexture = silverFoilTexture;
-          foilGlowColor = 0xFEFEFE;
+          foilGlowColor = 0xCCCCCC;
         case 'gold': 
           foilTexture = goldFoilTexture;
-          foilGlowColor = 0xFFDF44;
+          foilGlowColor = 0xFFEF88;
         case 'Yellow':
           foilTexture = yellowFoilTexture;
-          foilGlowColor = 0xFFFF00;
+          foilGlowColor = 0xFFFF11;
         case 'red': 
           foilTexture = redFoilTexture;
-          foilGlowColor = 0xFF0000;
+          foilGlowColor = 0xFF1111;
         case 'green':
           foilTexture = greenFoilTexture;
-          foilGlowColor = 0x00FF00;
+          foilGlowColor = 0x11FF11;
         case 'blue':
           foilTexture = blueFoilTexture; 
-          foilGlowColor = 0x0000FF;
+          foilGlowColor = 0x7777FF;
       }
-      
-      foilGlowColor = 0x000000;
 
       setFoilBackdrop();
       
@@ -354,7 +353,7 @@ class TextPlaceholderView extends APlaceholder {
     pms1Color          = GLOBAL.pms1Color;
     pms2Color          = GLOBAL.pms2Color;
     laserColor         = GLOBAL.laserColor;
-
+    setFontScreenColor();
     if(fontMovie != null){
       removeChild(fontMovie);
       trace("Removed Child fontMovie");
@@ -375,17 +374,14 @@ class TextPlaceholderView extends APlaceholder {
     }
   }
   
-  
-  
   private function onFontLoaded(event:Event):Void {
-
     fontMovie   =  cast event.target.loader.content;
     onFontCached();
   }
   
   private function onFontCached():Void {
-    addChild(fontMovie);   
-    setFontPrintType();
+    addChild(fontMovie); 
+    
 
     font        = fontMovie.font;
     font.init(  fontSize, 
@@ -409,6 +405,7 @@ class TextPlaceholderView extends APlaceholder {
        addChild(selectBox);
     }
     
+    setFontPrintType();
     resizeBackdrop();
   }
   
@@ -417,7 +414,7 @@ class TextPlaceholderView extends APlaceholder {
   }
     
   override public function onUpdatePlaceholder(event:Event):Void{
-    trace('onUpdatePlaceholder');
+    //trace('onUpdatePlaceholder');
     
     fontFileName       = GLOBAL.Font.fileName;
     fontSize           = GLOBAL.Font.fontSize;       
@@ -431,7 +428,9 @@ class TextPlaceholderView extends APlaceholder {
     pms2Color          = GLOBAL.pms2Color;
     laserColor         = GLOBAL.laserColor;
     
+    setFontScreenColor();
     setFontPrintType();
+    
     storedAlign         = fontAlign;
     anchorPoint         = calculateAnchorPoint();
     repossition         = true;
@@ -447,7 +446,6 @@ class TextPlaceholderView extends APlaceholder {
     trace('setFontPrintType :: ', printType);
     switch ( printType ){
       case CONST.STD_PMS_COLOR:{
-        trace('boom');
         was_foiled = false;
         unfoilify();
       }
@@ -459,17 +457,18 @@ class TextPlaceholderView extends APlaceholder {
         was_foiled = false;
         unfoilify();
       }
-      //case CONST.FOIL_COLOR:{
-      //  was_foiled = true;
-      //  if(!textOnTop)
-      //    foilify();
-      //}
+      case CONST.FOIL_COLOR:{
+        setFontScreenColorForFoil();
+        was_foiled = true;
+        if(!textOnTop)
+          foilify();
+      }
       case CONST.LASER_COLOR:{
         was_foiled = false;
         unfoilify();
       }
     }
-    setFontScreenColor();
+    
   }
 
   private function setFontScreenColor():Void{
@@ -631,9 +630,6 @@ class TextPlaceholderView extends APlaceholder {
     GLOBAL.pms2Color            = pms2Color;   
     GLOBAL.laserColor           = laserColor;  
     
-    var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
-    param.setString(getPlaceholderType());
-    GLOBAL.Application.dispatchParameter(param);
     updateSideView();
   }
   
@@ -644,7 +640,6 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function onGetXml(event:Event):Void{
-    
     model.setString(EVENT_ID.SET_PAGE_XML, getXml());
   }
   

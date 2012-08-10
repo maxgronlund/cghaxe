@@ -55,12 +55,9 @@ class PagesModel extends Model, implements IModel {
       pageInFocus.releaseFocus();
     }
     pageInFocus = pageModels[id];
-    
-    
 
 	}
 	
-
   private function onDestroyPlaceholders(e:IKEvent):Void{
     pageInFocus.dispatchParameter(new Parameter(e.getLabel()));
   }
@@ -72,10 +69,7 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onPageXmlLoaded(e:IKEvent):Void{
-   
-    //Preset.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
-    //Designs.removeEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
-    
+
     var param:IParameter        = new Parameter(EVENT_ID.PAGE_XML_LOADED);
     param.setXml(e.getXml());
     pageModels[e.getInt()].dispatchParameter(param);
@@ -97,9 +91,9 @@ class PagesModel extends Model, implements IModel {
      // picked up by PagesView
      var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
      param.setModel(pageModel);
+     param.setXml(e.getXml());
      dispatchParameter(param);
      
-
   }
   
   private function onLoadFrontShot( e:IKEvent ):Void{
@@ -127,7 +121,6 @@ class PagesModel extends Model, implements IModel {
     }
   }
 
-  
   override public function setParam(param:IParameter):Void{
     
     switch ( param.getLabel() ){
@@ -175,7 +168,6 @@ class PagesModel extends Model, implements IModel {
       }
     }
   }
-  
   
   override function getString(id:String):String{
     switch ( id )

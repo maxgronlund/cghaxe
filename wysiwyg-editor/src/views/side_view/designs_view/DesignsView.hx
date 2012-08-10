@@ -1,5 +1,6 @@
 import flash.geom.Point;
 import flash.events.Event;
+import flash.Vector;
 
 class DesignsView extends PropertyView, implements IView{
   
@@ -7,6 +8,9 @@ class DesignsView extends PropertyView, implements IView{
   private var designsPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
   private var addDesignButton:OneStateButton;
+  
+ 
+  private var page:Vector<Xml>;
   
   public function new(designsController:IController){	
     super(designsController);
@@ -16,9 +20,13 @@ class DesignsView extends PropertyView, implements IView{
     designsPane         = new DesignsPane(designsController);
     verticalScrollbar   = new VerticalScrollbar(designsController, EVENT_ID.DESIGN_SCROLL);
     addDesignButton     = new OneStateButton();
+    page                 = new Vector<Xml>();
     
     //Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
     //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+    
+    //Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
+    Preset.addEventListener(EVENT_ID.ADD_DESIGN_PAGE_TO_SIDEBAR, onBuildPage);
     
   }
   
@@ -37,6 +45,21 @@ class DesignsView extends PropertyView, implements IView{
     
     addDesignButton.fireOnMouseUp(false);
   }
+  
+  
+  private function onBuildPage(e:IKEvent):Void{
+    //trace(e.getXml().toString());
+    trace('onBuidPage');
+    //for(designs in e.getXml().elementsNamed("designs") ) {
+    //  page.push(designs);
+    //  trace('Designs', designs.toString());
+    //  //addPageSelectorLink(title.firstChild().nodeValue.toString());
+    //}
+    //trace('--------------------------------------------------------------');
+    //trace(e.getXml().toString());
+    //pages++;
+  }
+  
   
   override public function onAddedToStage(e:Event):Void{
     

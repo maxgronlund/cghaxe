@@ -26,6 +26,8 @@ class EVENT_ID  {
 //  public static inline var ADD_ADD_ONS_VIEW:String          = "add_add_ons_view";
 //  public static inline var ADD_LOGO_VIEW:String             = "add_logo_view";
 
+  public static inline var PRESET_PRICES:String             = "preset_prices";
+
   
   // Events
   public static inline var RESET_WYSIWYG:String             = "RESET_WYSIWYG";
@@ -103,6 +105,7 @@ class EVENT_ID  {
   public static inline var PAGE_SELECTED:String             = "page_selected";
   public static inline var BUILD_PAGE:String                = "build_page";
   public static inline var BUILD_DESIGN_PAGE:String         = "build_design_page";
+  public static inline var ADD_DESIGN_PAGE_TO_SIDEBAR:String  = "add_design_page_to_sidebar";
   
   public static inline var ADD_PAGE_DESIGN:String           = "add_page_design";
   public static inline var ZAP_PAGES:String                 = "zap_pages";

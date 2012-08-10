@@ -17,7 +17,7 @@ class Main
   private var Configuration:IModel;
   private var Greetings:IModel;
   private var Preset:IModel;
-  private var Price:IModel;
+  private var Prices:IModel;
   private var Pages:IModel;
   private var Designs:IModel;
 //  private var DesignImages:IModel;
@@ -38,7 +38,7 @@ class Main
   private var addOnsController:IController;
   private var garamondController:IController;
   private var logoController:IController;
-  private var priceController:IController;
+  private var pricesController:IController;
   private var menuController:IController;
   private var pageSelectController:IController;
   private var selectionController:IController;
@@ -114,7 +114,7 @@ class Main
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
     Greetings                   = new GreetingsModel();
-    Price                       = new PriceModel();
+    Prices                       = new PricesModel();
 //    DesignImages                = new DesignImagesModel();
 //    Vectors                     = new VectorsModel();             
     setGlobalModels();
@@ -155,7 +155,7 @@ class Main
     addOnsView                  = new AddOnsView(addOnsController);
     garamondView                = new GaramondView(garamondController);
     logoView                    = new LogoView(logoController);
-    priceView                   = new PriceView(priceController);
+    priceView                   = new PriceView(pricesController);
     menuView                    = new MenuView(menuController);
     pageSelectorView            = new PageSelectorView(pageSelectController);
     desktopView                 = new DesktopView(desktopController);
@@ -180,7 +180,7 @@ class Main
     GLOBAL.Menu           = Menu;
 //    GLOBAL.Configuration  = Configuration;
     GLOBAL.Preset         = Preset;
-    GLOBAL.Price          = Price;
+    GLOBAL.Prices         = Prices;
     GLOBAL.Pages          = Pages;
 //    GLOBAL.DesignImages   = DesignImages;
 //    GLOBAL.Vectors        = Vectors;
@@ -244,7 +244,7 @@ class Main
     Menu.init();
 //    Configuration.init();
     Preset.init();
-    Price.init();
+    Prices.init();
     Pages.init();
 
     // views
