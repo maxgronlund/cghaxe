@@ -563,16 +563,17 @@ class PageView extends View{
   
   private function loadHideMask():Void{
     
-    var hide_mask_url:String = model.getString('hide_mask_url');
-
-    if(hide_mask_url == ''){
-      allImagesLoaded();
-    }else{
-      hideMaskPresent = true;
-      var request:URLRequest  = new URLRequest(hide_mask_url);
-      printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
-      printMaskLoader.load(request);
-    }
+    //var hide_mask_url:String = model.getString('hide_mask_url');
+    //
+    //if(hide_mask_url == '' || hide_mask_url == null){
+    //  allImagesLoaded();
+    //}else{
+    //  hideMaskPresent = true;
+    //  var request:URLRequest  = new URLRequest(hide_mask_url);
+    //  printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
+    //  printMaskLoader.load(request);
+    //}
+    allImagesLoaded();
   }
   
   private function onLoadHideMaskComplete(e:Event):Void{

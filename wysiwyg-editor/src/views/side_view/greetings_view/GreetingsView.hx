@@ -63,7 +63,7 @@ class GreetingsView extends PropertyView, implements IView{
     
     // font selection pane
     addChild(greetingsScrollPane);
-    greetingsScrollPane.setSize( 174, 410-52);
+    greetingsScrollPane.setSize( 174, 430);
     greetingsScrollPane.x = 9;
     greetingsScrollPane.y = 44;
     greetingsScrollPane.addView(greetingsPane, 0,0);	
@@ -129,11 +129,21 @@ class GreetingsView extends PropertyView, implements IView{
     }
 	}
 	
+	//override public function setFloat(id:String, f:Float):Void{
+  //  
+  //  switch ( id ) {
+  //    
+  //    case EVENT_ID.FONT_SCROLL:{
+  //      fontPane.y = -(fontPane.getFloat('height')-fontScrollPane.getFloat('mask_height')) * f;
+  //    }
+  //  }
+  //}
+	
 	override public function setFloat(id:String, f:Float):Void{
-    //switch ( id ) {
-    //  case EVENT_ID.DESIGN_SCROLL:{
-    //    greetingsPane.y = -(greetingsPane.getFloat('height')-greetingsScrollPane.getFloat('mask_height')) * f;
-    //  }
-    //}
+    switch ( id ) {
+      case EVENT_ID.GREETING_SCROLL:{
+        greetingsPane.y = -(greetingsPane.getFloat('height')-greetingsScrollPane.getFloat('mask_height')) * f;
+      }
+    }
 	}
 }

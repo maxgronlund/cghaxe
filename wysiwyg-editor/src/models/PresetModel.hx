@@ -92,9 +92,15 @@ class PresetModel extends Model, implements IModel
     for(pages in xml.elementsNamed("pages") ) {
       for(page in pages.elementsNamed("page") ) {
         var is_associated_product:Bool = false;
+        var firstAssPage = true;
         for(associated_products in page.elementsNamed("associated-products") ) {
           is_associated_product = true;
           parseAssociatedProducts(associated_products);
+          if(firstAssPage){
+            firstAssPage  =false;
+            pickUpDesignsforAssProduct(page);
+          }
+            
         }
         if(!is_associated_product){
           buildPage(page);
@@ -147,20 +153,27 @@ class PresetModel extends Model, implements IModel
     */
   }
   
+  private function pickUpDesignsforAssProduct(xml:Xml):Void{
+    
+    var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_PAGE_TO_SIDEBAR);
+    param.setXml(xml);
+    dispatchParameter(param);
+  }
+  
   private function parseAssociatedProducts(xml:Xml):Void{
    
     //trace('INSERT ASSOCIATED PRODUCTS HERE');
-    
+    //trace(xml.toString());
     var first_associated_product:Bool = true;
     for(associated_product in xml.elementsNamed("associated-product") ) {
 
-     
       for(item_number in associated_product.elementsNamed("item-number") ) {
         //trace('build button in sidebar for',item_number.firstChild().nodeValue.toString());
       }
       for(pages in associated_product.elementsNamed("pages") ) {
         for(page in pages.elementsNamed("page") ) {
           if(first_associated_product)
+            
             buildPage(page);
         }
       }
@@ -169,6 +182,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function buildPage(xml:Xml):Void{
+    trace('build page');
     var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
     param.setXml(xml);
     dispatchParameter(param);

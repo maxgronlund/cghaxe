@@ -103,6 +103,7 @@ class EVENT_ID  {
   public static inline var PAGE_SELECTED:String             = "page_selected";
   public static inline var BUILD_PAGE:String                = "build_page";
   public static inline var BUILD_DESIGN_PAGE:String         = "build_design_page";
+  public static inline var ADD_DESIGN_PAGE_TO_SIDEBAR:String  = "add_design_page_to_sidebar";
   
   public static inline var ADD_PAGE_DESIGN:String           = "add_page_design";
   public static inline var ZAP_PAGES:String                 = "zap_pages";
