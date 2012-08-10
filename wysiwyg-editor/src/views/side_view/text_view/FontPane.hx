@@ -25,6 +25,7 @@ class FontPane extends View, implements IView{
     selectedButton = 0;
     buttonPos	= 0;
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_FONT, onLoadDefaultFont);
+    Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
   }
   
   override public function init():Void{
@@ -84,14 +85,17 @@ class FontPane extends View, implements IView{
     
     buttonPos += 27;
     buttonIndex++;
-    
-//		if(defaultParam == null) defaultParam = param;
+
 	}
 	
 	private function onLoadDefaultFont(e:IKEvent):Void{
 	  
 	  this.selectedButton = 1;
 	  fontButtons[0].fire();
+	}
+	
+	private function onUpdateSideView(e:IKEvent):Void{
+	  setSelectedButton(GLOBAL.Font.fileName);
 	}
 	
 	override public function setParam(param:IParameter):Void{
@@ -101,22 +105,9 @@ class FontPane extends View, implements IView{
 	    case EVENT_ID.FONT_SELECTED:{
  	      deselectFont(param.getInt());
 	    }
-	    case EVENT_ID.UPDATE_TEXT_TOOLS:{
-	      //trace( GLOBAL.Font.fileName);
-	      setSelectedButton(GLOBAL.Font.fileName);
-	      /*
-	      public function setItem(s:String):Void{
-      	  for( index in 0...twoStateTextButtons.length){
-      	    if ( s == twoStateTextButtons[index].getText() ) selectButton(index);
-      	  }
-      	}
-        
-        */
-      }
 	  }
 	}
-	
-	
+
   private function setSelectedButton(fontName:String):Void{
     //trace(GLOBAL.Font.fileName);
     for( index in 0...fontButtons.length){

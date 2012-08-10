@@ -95,9 +95,6 @@ class VectorPlaceholderView extends APlaceholder {
     redFoilTexture                    = new RedFoilTexture();
     greenFoilTexture                  = new GreenFoilTexture();
     blueFoilTexture                   = new BlueFoilTexture();
-    
-    foilTexture = silverFoilTexture;
-    
     lines                             = new Vector<Shape>();
     foilColor                         = GLOBAL.foilColor;
     pmsColor                          = GLOBAL.stdPmsColor;
@@ -164,7 +161,7 @@ class VectorPlaceholderView extends APlaceholder {
         foilTexture = silverFoilTexture;
       case 'gold': 
         foilTexture = goldFoilTexture;
-      case 'Yellow':
+      case 'yellow':
         foilTexture = yellowFoilTexture;
       case 'red': 
         foilTexture = redFoilTexture;
@@ -188,8 +185,8 @@ class VectorPlaceholderView extends APlaceholder {
     if( this.isFoiled() ){
       removeChild(foil);
       foil.removeChild(foilTexture);
-      //foil.removeChild(foilTextureOverlay);
-      //foilTextureOverlay = null;
+      foil.removeChild(foilTextureOverlay);
+      foilTextureOverlay = null;
       foil.mask = null;
       Foil.removeFiltersFrom(foil);
       foiled = false;
@@ -253,6 +250,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function loadVectorFile():Void{
+    trace('loadVectorFile');
     var ldr:Loader                = new Loader(); 
     var req:URLRequest            = new URLRequest(url); 
     var ldrContext:LoaderContext  = new LoaderContext(); 
@@ -262,6 +260,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onVectorFileLoaded(event:Event):Void { 
+    trace('onVectorFileLoaded');
     vectorMovie =  cast event.target.loader.content;
     var scale:Float = 0.25;
     addChild(vectorMovie);

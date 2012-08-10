@@ -17,6 +17,7 @@ class Main
   private var Configuration:IModel;
   private var Greetings:IModel;
   private var Preset:IModel;
+  private var Price:IModel;
   private var Pages:IModel;
   private var Designs:IModel;
 //  private var DesignImages:IModel;
@@ -113,6 +114,7 @@ class Main
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
     Greetings                   = new GreetingsModel();
+    Price                       = new PriceModel();
 //    DesignImages                = new DesignImagesModel();
 //    Vectors                     = new VectorsModel();             
     setGlobalModels();
@@ -178,6 +180,7 @@ class Main
     GLOBAL.Menu           = Menu;
 //    GLOBAL.Configuration  = Configuration;
     GLOBAL.Preset         = Preset;
+    GLOBAL.Price          = Price;
     GLOBAL.Pages          = Pages;
 //    GLOBAL.DesignImages   = DesignImages;
 //    GLOBAL.Vectors        = Vectors;
@@ -241,6 +244,7 @@ class Main
     Menu.init();
 //    Configuration.init();
     Preset.init();
+    Price.init();
     Pages.init();
 
     // views

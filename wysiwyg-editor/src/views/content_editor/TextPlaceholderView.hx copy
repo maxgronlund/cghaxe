@@ -46,6 +46,9 @@ class TextPlaceholderView extends APlaceholder {
   private var fontScreenName:String;
   private var textWithTags:String;
   private var fontSize:Int;
+  private var fontColor:Int;
+  private var foilColor:String;
+  private var printType:String;
   private var fontLeading:Int;
   private var letterSpacing:Int;
   private var fontPosX:Float;
@@ -71,16 +74,9 @@ class TextPlaceholderView extends APlaceholder {
   private var redFoilTexture:Bitmap;
   private var greenFoilTexture:Bitmap;
   private var blueFoilTexture:Bitmap;
-  private var foilGlowColor:UInt;
-  private var printType:String;
-  private var foilColor:String; 
-  private var stdPmsColor:UInt;
-  private var pms1Color:UInt; 
-  private var pms2Color:UInt; 
-  private var laserColor:UInt;
-  private var fontScreenColor:UInt;
   private var loaded_fonts:Hash<Dynamic>;
-
+  private var loading:Bitmap;
+  
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
     
@@ -107,24 +103,21 @@ class TextPlaceholderView extends APlaceholder {
     was_foiled = false;
     
     loaded_fonts = new Hash();
-
+    loading = new LoadingBitmap();
+    loading.x = 100;
+    loading.y = -40;
+    loading.width *= 150/72;
+    loading.height *= 150/72;
     
-    silverFoilTexture   = new SilverFoilTexture();
-    goldFoilTexture     = new GoldFoilTexture();
-    yellowFoilTexture   = new YellowFoilTexture();
-    redFoilTexture      = new RedFoilTexture();
-    greenFoilTexture    = new GreenFoilTexture();
-    blueFoilTexture     = new BlueFoilTexture();
-                        
-    printType           = GLOBAL.printType;
-    foilColor           = GLOBAL.foilColor;
-    stdPmsColor         = GLOBAL.stdPmsColor;
-    pms1Color           = GLOBAL.pms1Color;
-    pms2Color           = GLOBAL.pms2Color;
-    laserColor          = GLOBAL.laserColor;
+    silverFoilTexture                  = new SilverFoilTexture();
+    goldFoilTexture                    = new GoldFoilTexture();
+    yellowFoilTexture                  = new YellowFoilTexture();
+    redFoilTexture                     = new RedFoilTexture();
+    greenFoilTexture                   = new GreenFoilTexture();
+    blueFoilTexture                    = new BlueFoilTexture();
+    printType                         = GLOBAL.printType;
   }
   
-
   private function onAddedToStage(e:Event){
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -136,41 +129,48 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   public function foilify():Void {
+    
     unfoilify();
+    
     if(foiled != true) {
+      trace(foilColor);
       switch ( foilColor )
       {
         case 'silver':
           foilTexture = silverFoilTexture;
-          foilGlowColor = 0xFEFEFE;
         case 'gold': 
           foilTexture = goldFoilTexture;
-          foilGlowColor = 0xFFDF44;
         case 'Yellow':
           foilTexture = yellowFoilTexture;
-          foilGlowColor = 0xFFFF00;
         case 'red': 
           foilTexture = redFoilTexture;
-          foilGlowColor = 0xFF0000;
         case 'green':
           foilTexture = greenFoilTexture;
-          foilGlowColor = 0x00FF00;
         case 'blue':
           foilTexture = blueFoilTexture; 
-          foilGlowColor = 0x0000FF;
       }
+      trace(fontMovie == null);
       
-      foilGlowColor = 0x000000;
-
       setFoilBackdrop();
       
+
+      
       foil = new MovieClip();
+      addChild(foil);
+      
       foil.addChild(foilTexture);
+      
+      trace("foil", foil == null);
+      trace("foilTexture", foilTexture == null);
+      trace("fontMovie", fontMovie == null);
+      trace("stage", this == stage);
+
+      //this.removeChild(fontMovie);
+      
       foil.addChild(fontMovie);
       foil.mask = fontMovie;
       
-      addChild(foil);
-      Foil.initFiltersOn(foil, foilGlowColor);
+      Foil.initFiltersOn(foil);
       
     }
     foiled = true;
@@ -208,13 +208,13 @@ class TextPlaceholderView extends APlaceholder {
   override public function getText(): Void {
     
     var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_TEXT);
+    trace( font==null);
     param.setString(font.getText());
     param.setInt(id);
     model.setParam(param);
   }
   
   override public function getXml() : String {
-
     showTags();
     
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
@@ -224,10 +224,7 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
     str += '\t\t\t<print-type>' + printType + '</print-type>\n';
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-    str += '\t\t\t<std_pms_color>' + Std.string(stdPmsColor) + '</std_pms_color>\n';
-    str += '\t\t\t<laser-color>' + Std.string(laserColor) + '</laser-color>\n';
-    str += '\t\t\t<pms1-color>' + Std.string(pms1Color) + '</pms1-color>\n';
-    str += '\t\t\t<pms2-color>' + Std.string(pms2Color) + '</pms2-color>\n';
+    str += '\t\t\t<font-color>' + Std.string(fontColor) + '</font-color>\n';
     str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
     str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
     str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
@@ -342,54 +339,63 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function loadFont():Void{
-    trace('load font');
-    fontFileName       = GLOBAL.Font.fileName;
-    fontSize           = GLOBAL.Font.fontSize;       
-    fontAlign          = GLOBAL.Font.fontAlign;
-    fontLeading        = GLOBAL.Font.leading;
-    letterSpacing      = GLOBAL.Font.letterSpacing;
-    printType          = GLOBAL.printType; 
-    foilColor          = GLOBAL.foilColor;
-    stdPmsColor        = GLOBAL.stdPmsColor;
-    pms1Color          = GLOBAL.pms1Color;
-    pms2Color          = GLOBAL.pms2Color;
-    laserColor         = GLOBAL.laserColor;
-
-    if(fontMovie != null){
+    
+    
+    //setFontPrintType();
+    
+    //switch ( GLOBAL.printType )
+    //{
+    //  case CONST.STD_PMS_COLOR:{
+    //    fontColor = GLOBAL.stdPmsColor;
+    //  }
+    //}
+    
+    fontFileName                  = GLOBAL.Font.fileName;
+    fontSize                      = GLOBAL.Font.fontSize;
+    
+    fontAlign                     = GLOBAL.Font.fontAlign;
+    fontLeading                   = GLOBAL.Font.leading;
+    letterSpacing                 = GLOBAL.Font.letterSpacing;
+    
+    trace("CACHING FONT");
+    trace(loaded_fonts.get(fontFileName) == null);
+    
+    if(fontMovie != null) {
       removeChild(fontMovie);
-      trace("Removed Child fontMovie");
       fontMovie = null;
     }
     
-    if(loaded_fonts.get(fontFileName) == null){
+    //addChild(loading);
+    
+    //if(loaded_fonts.get(fontFileName) == null){
+    if(true){
       var ldr:Loader                = new Loader(); 
       var req:URLRequest            = new URLRequest(buildUrl(fontFileName)); 
       var ldrContext:LoaderContext  = new LoaderContext(); 
       ldrContext.applicationDomain  = new ApplicationDomain();
       ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
       ldr.load(req, ldrContext);
-      loaded_fonts.set(fontFileName, fontMovie);
     } else {
       fontMovie = loaded_fonts.get(fontFileName);
       onFontCached();
     }
+    
   }
   
-  
-  
   private function onFontLoaded(event:Event):Void {
-
+    
     fontMovie   =  cast event.target.loader.content;
+    loaded_fonts.set(fontFileName, fontMovie);
     onFontCached();
   }
   
   private function onFontCached():Void {
-    addChild(fontMovie);   
-    setFontPrintType();
-
+    //removeChild(loading);
+    addChild(fontMovie);
+    trace( fontMovie==null);
     font        = fontMovie.font;
     font.init(  fontSize, 
-                fontScreenColor, 
+                fontColor, 
                 fontAlign, 
                 textWithTags, 
                 letterSpacingToFont() , 
@@ -415,99 +421,79 @@ class TextPlaceholderView extends APlaceholder {
   private function hitTest():Void{
     pageView.hitTest();
   }
-    
+  
   override public function onUpdatePlaceholder(event:Event):Void{
-    trace('onUpdatePlaceholder');
-    
-    fontFileName       = GLOBAL.Font.fileName;
-    fontSize           = GLOBAL.Font.fontSize;       
-    fontAlign          = GLOBAL.Font.fontAlign;
-    fontLeading        = GLOBAL.Font.leading;
-    letterSpacing      = GLOBAL.Font.letterSpacing;
-    printType          = GLOBAL.printType; 
-    foilColor          = GLOBAL.foilColor;
-    stdPmsColor        = GLOBAL.stdPmsColor;
-    pms1Color          = GLOBAL.pms1Color;
-    pms2Color          = GLOBAL.pms2Color;
-    laserColor         = GLOBAL.laserColor;
+
+    printType = GLOBAL.printType;
     
     setFontPrintType();
-    storedAlign         = fontAlign;
-    anchorPoint         = calculateAnchorPoint();
-    repossition         = true;
+    
+    storedAlign       = fontAlign;
+    //font.setText(insertTags(textWithTags));
+    anchorPoint       = calculateAnchorPoint();
+    repossition       = true;
     storeTags();
+    
     font = null;
-    unfoilify();
     loadFont();
     
   }
-    
+  
   private function setFontPrintType():Void{
-    
-    trace('setFontPrintType :: ', printType);
-    switch ( printType ){
+    switch ( GLOBAL.printType ){
       case CONST.STD_PMS_COLOR:{
-        trace('boom');
+        fontColor = GLOBAL.stdPmsColor;
         was_foiled = false;
         unfoilify();
       }
-      case CONST.CUSTOM_PMS1_COLOR:{
-        was_foiled = false;
-        unfoilify();
+      case CONST.FOIL_COLOR:{
+        foilColor = GLOBAL.foilColor;
+        was_foiled = true;
+        if(!textOnTop)
+          foilify();
+        
+        switch ( foilColor )
+        {
+          case 'silver':
+            fontColor = 0xE0E0E0;
+          case 'gold': 
+            fontColor = 0xFFD560;
+          case 'Yellow':
+            fontColor = 0xFFFF00;
+          case 'red': 
+            fontColor = 0xFF0000;
+          case 'green':
+            fontColor = 0x00FF00;
+          case 'blue':
+            fontColor = 0x0000FF;
+            
+        }
       }
-      case CONST.CUSTOM_PMS2_COLOR:{
-        was_foiled = false;
-        unfoilify();
-      }
-      //case CONST.FOIL_COLOR:{
-      //  was_foiled = true;
-      //  if(!textOnTop)
-      //    foilify();
-      //}
       case CONST.LASER_COLOR:{
+        fontColor = GLOBAL.laserColor;
         was_foiled = false;
         unfoilify();
       }
     }
-    setFontScreenColor();
-  }
-
-  private function setFontScreenColor():Void{
-    switch ( printType ){
-      case CONST.STD_PMS_COLOR: fontScreenColor           = stdPmsColor;
-      case CONST.CUSTOM_PMS1_COLOR: fontScreenColor       = pms1Color;
-      case CONST.CUSTOM_PMS2_COLOR: fontScreenColor       = pms2Color;  
-      case CONST.FOIL_COLOR: setFontScreenColorForFoil(); 
-      case CONST.LASER_COLOR:  fontScreenColor            = laserColor; 
-    }
   }
   
-  private function setFontScreenColorForFoil():Void{
-    switch ( foilColor ){
-      case 'silver'     :fontScreenColor  = 0xE0E0E0;
-      case 'gold'       :fontScreenColor  = 0xFFD560;
-      case 'Yellow'     :fontScreenColor  = 0xFFFF00;
-      case 'red'        :fontScreenColor  = 0xFF0000;
-      case 'green'      :fontScreenColor  = 0x00FF00;
-      case 'blue'       :fontScreenColor  = 0x0000FF;
-    }
-  }
-  
-   
   private function showTags():Void{
     storeTags();
     tagsIsVisible   = true;
-    font.setText(textWithTags);  
+    trace( font==null);
+    font.setText(textWithTags);
+    
   }
   
   private function hideTags():Void{
     storeTags();
     tagsIsVisible = false;
+    trace( font==null);
     font.setText(insertTags(textWithTags));
   }
   
   private function storeTags():Void{
-
+    trace( font==null);
     if(tagsIsVisible) 
       textWithTags  = font.getText();
   }
@@ -536,6 +522,7 @@ class TextPlaceholderView extends APlaceholder {
     //GLOBAL.MOVE_TOOL;
     // !!! colide with the hit test
     //font.setText(textWithTags);
+    trace( font==null);
     var anchor_point:Float = 0;
     switch(fontAlign){
       case 'left': anchor_point   = 0;
@@ -555,22 +542,28 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
+
+    updateFocus();
     
     if(!focus){
-      hideTags();
+      restoreShowTags();
       setTextOnTop(false);
       if(was_foiled == true)
         foilify();
-    }else{
-      showTags();
+      
     }
-    updateFocus(); 
+    else{ showTags();}
+    updateFocus();
   }
   
   private function updateFocus():Void{
         
-    resizeBackdrop();
     selectBox.setFocus(focus);
+    
+    if(focus){
+      resizeBackdrop();
+    }
+    
     handleKeyboard( focus );
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
     
@@ -592,7 +585,7 @@ class TextPlaceholderView extends APlaceholder {
   
   private function setTextOnTop(b:Bool):Void {
     MouseTrap.capture();
-   
+   trace( font==null);
     font.selectable(b);
     textOnTop = b;
     if(b){
@@ -606,9 +599,8 @@ class TextPlaceholderView extends APlaceholder {
     selectBox.resetMouse();
   }
   
-  //!!!
   private function resizeBackdrop():Void{
-    // inform the page that the select box has 'moved' to avoid sudden jump on mouse move
+    trace( font==null);
     selectBox.resizeBackdrop(fontMovie.width, fontMovie.height, font.getTextField().x, font.getCombindeMargins());
   }
   
@@ -618,23 +610,27 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   public function updateGlobals(){
-    
+
     GLOBAL.Font.fileName        = fontFileName;
     GLOBAL.Font.fontSize        = fontSize;
+    //GLOBAL.Font.fontColor       = fontColor;
     GLOBAL.Font.fontAlign       = fontAlign;
     GLOBAL.Font.leading         = fontLeading;
     GLOBAL.Font.letterSpacing   = letterSpacing;
-    GLOBAL.printType            = printType; 
-    GLOBAL.foilColor            = foilColor;
-    GLOBAL.stdPmsColor          = stdPmsColor; 
-    GLOBAL.pms1Color            = pms1Color;   
-    GLOBAL.pms2Color            = pms2Color;   
-    GLOBAL.laserColor           = laserColor;  
     
-    var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
-    param.setString(getPlaceholderType());
-    GLOBAL.Application.dispatchParameter(param);
-    updateSideView();
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS));
+    
+
+    
+    
+    
+    
+
+    model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS)); 
+    updateSideView();    
+    //if(GLOBAL.MOVE_TOOL) pageView.enableMove(e);
+    
+    //this.setChildIndex(font.getTextField(), this.numChildren - 1);
   }
   
   private function updateSideView(): Void{
@@ -642,7 +638,7 @@ class TextPlaceholderView extends APlaceholder {
     param.setString(getPlaceholderType());
     GLOBAL.Application.dispatchParameter(param);
   }
-
+  
   private function onGetXml(event:Event):Void{
     
     model.setString(EVENT_ID.SET_PAGE_XML, getXml());
@@ -663,12 +659,12 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getTextField():TextField{
+    trace( font==null);
      return font.getTextField();
   }
   
   override public function alert(b:Bool):Void{
       collition = b;
   }
-
 
 }

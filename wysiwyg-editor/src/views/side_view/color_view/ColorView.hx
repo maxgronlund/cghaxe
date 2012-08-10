@@ -54,7 +54,7 @@ class ColorView extends PropertyView, implements IView{
 
     stdColorText 	          = new FormatedText('helvetica', 'STANDARD PMS', 11, false);
     customColor1Text 	      = new FormatedText('helvetica', 'CUSTOM PMS 1', 11, false);
-    customColor2Text 	      = new FormatedText('helvetica', 'CUSTOM PMS 1', 11, false);
+    customColor2Text 	      = new FormatedText('helvetica', 'CUSTOM PMS 2', 11, false);
     foilColorText 	        = new FormatedText('helvetica', 'FOIL', 11, false);
     colorText        	      = new FormatedText('helvetica', 'LASER COLOR', 11, false);
     
@@ -196,13 +196,12 @@ class ColorView extends PropertyView, implements IView{
   
   private function onEnableTool(cmd:String):Void{
     switch ( cmd ){
-    
       case 'Laser':{
         colorText.visible                 = true;
         colorPicker.visible               = true;
       }
       case 'Foil':{
-        foilColorText.visible             = false;
+        foilColorText.visible             = true;
         foilColorPicker.visible           = true;
       }
       case 'PMS':{

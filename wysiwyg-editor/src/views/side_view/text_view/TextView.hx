@@ -24,6 +24,8 @@ class TextView extends PropertyView, implements IView{
     addTextfieldButton 		= new OneStateButton();
   }
   
+
+  
   override public function init():Void {
     
     selectButton.init( controller,
@@ -120,13 +122,13 @@ class TextView extends PropertyView, implements IView{
       case EVENT_ID.UPDATE_FONT_PANE:{
         onUpdateFontPane(param.getString());
       }
-      case EVENT_ID.UPDATE_TEXT_TOOLS:{
-        textAlign.setParam(param);
-        fontSizePopup.setParam(param);
-        lineSpacePopup.setParam(param);
-      	fontPane.setParam(param);
-      	
-      }
+      //case EVENT_ID.UPDATE_TEXT_TOOLS:{
+      //  textAlign.setParam(param);
+      //  fontSizePopup.setParam(param);
+      //  lineSpacePopup.setParam(param);
+      //	fontPane.setParam(param);
+      //	
+      //}
     }
   }
   

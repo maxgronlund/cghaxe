@@ -11,6 +11,7 @@ class GLOBAL  {
   public static var Menu:IModel;
 //  public static var Configuration:IModel;
   public static var Preset:IModel;
+  public static var Price:IModel;
   public static var Pages:IModel;
   public static var Designs:IModel;
 //  public static var DesignImages:IModel;
@@ -60,9 +61,9 @@ class GLOBAL  {
   
   public static var printType:String;
   public static var stdPmsColor:UInt;
-  public static var foilColor:String;
   public static var pms1Color:UInt;
   public static var pms2Color:UInt;
+  public static var foilColor:String;
   public static var laserColor:UInt;
   
   // controllers

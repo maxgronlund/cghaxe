@@ -22,7 +22,13 @@ class FontSizePopup extends AView {
                                       
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     GLOBAL.Application.addEventListener(EVENT_ID.LOAD_DEFAULT_FONT, addSizes);
+    GLOBAL.Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
   }
+  
+  
+  private function onUpdateSideView(e:IKEvent):Void{
+	  dropDownMenu.setItem(Std.string(GLOBAL.Font.fontSize));
+	}
   
   override public function onAddedToStage(e:Event){
     removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -47,14 +53,15 @@ class FontSizePopup extends AView {
     setInt('display', 3);
   }
   
+  /*
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
-      case EVENT_ID.UPDATE_TEXT_TOOLS:{
-        dropDownMenu.setItem(Std.string(GLOBAL.Font.fontSize));
-      }
+      //case EVENT_ID.UPDATE_TEXT_TOOLS:{
+      //  
+      //}
     }
   }
-  
+  */
   public function deselectItem(id:Int):Void{
   	dropDownMenu.deselectItem(id);
   }

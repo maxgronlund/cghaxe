@@ -249,11 +249,9 @@ class PageView extends View{
   }
   
   private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
-   trace(xml.toString());
+
     var url:String;
 
-    
-    
     for(url_xml in xml.elementsNamed("url") ) {
       url = url_xml.firstChild().nodeValue.toString();
     }
@@ -272,7 +270,6 @@ class PageView extends View{
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
     placeholder.x = posX;
   	placeholder.y = posY;
-  	trace(posX);
     placeholders.push(placeholder);
     addChild(placeholder);
 
@@ -285,10 +282,25 @@ class PageView extends View{
     
     for( font_file_name in xml.elementsNamed("font-file-name") ) 
       GLOBAL.Font.fileName =  font_file_name.firstChild().nodeValue.toString();
-    
-    for( font_color in xml.elementsNamed("font-color") ) 
-      GLOBAL.Font.fontColor =  Std.parseInt(font_color.firstChild().nodeValue);
-    
+
+    for( print_type in xml.elementsNamed("print-type") ) 
+      GLOBAL.printType =  print_type.firstChild().nodeValue;
+      
+    for( std_pms_color in xml.elementsNamed("std_pms_color") ) 
+      GLOBAL.stdPmsColor =  Std.parseInt(std_pms_color.firstChild().nodeValue);
+      
+    for( pms1_color in xml.elementsNamed("pms1-color") ) 
+      GLOBAL.pms1Color =  Std.parseInt(pms1_color.firstChild().nodeValue);
+      
+    for( pms2_color in xml.elementsNamed("pms2-color") ) 
+      GLOBAL.pms1Color =  Std.parseInt(pms2_color.firstChild().nodeValue);
+      
+    for( foil_color in xml.elementsNamed("foil-color") ) 
+      GLOBAL.foilColor =  foil_color.firstChild().nodeValue;
+      
+    for( lazer_color in xml.elementsNamed("laser-color") ) 
+      GLOBAL.laserColor =  Std.parseInt(lazer_color.firstChild().nodeValue);
+             
     for( line_space in xml.elementsNamed("line-space") ) 
       GLOBAL.Font.leading =  Std.parseInt(line_space.firstChild().nodeValue);
     
@@ -300,8 +312,7 @@ class PageView extends View{
     
     for( text in xml.elementsNamed("text") ) 
       TEXT_SUGGESTION.text =  text.firstChild().nodeValue.toString();
-    
-    addTextPlaceholder(posX,posY);
+      addTextPlaceholder(posX,posY);
   }
   
   private function onDeselectPlaceholders(e:IKEvent):Void {
@@ -335,8 +346,6 @@ class PageView extends View{
   }
   
   private function onAddTextPlaceholder(e:KEvent):Void {
-    //trace( GLOBAL.desktop_view.getPosX());
-    
   	addTextPlaceholder(onPosX() ,onPosY());
   }
   
@@ -349,15 +358,12 @@ class PageView extends View{
   }
   
   private function addTextPlaceholder(posX:Float, posY:Float):Void{
-
-    //setPlaceholderInFocus(null);
     var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
     placeholder.x = posX;
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
-    //setPlaceholderInFocus(placeholder);
-    
+
   }
   /*
   private function addVectorPlaceholder(posX:Float, posY:Float, url:String):Void{
@@ -456,7 +462,6 @@ class PageView extends View{
   private function onMouseDown(e:MouseEvent){	
     
     if(MouseTrap.capture()){
-      trace('page captured the mouse');
       setPlaceholderInFocus(null);
       removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
       stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -468,7 +473,7 @@ class PageView extends View{
   }
   
   private function onMouseUp(e:MouseEvent){	
-    trace('PageView is releasing the mouse');
+//    trace('PageView is releasing the mouse');
     MouseTrap.release();
     stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
@@ -497,7 +502,7 @@ class PageView extends View{
   }
   
   private function movePlaceholder(e:MouseEvent){
-//    trace('movePlaceholder');
+    // notify when textbox is moved due to show tags
     var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
     var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
     var pos:Float = ( moveX - hitPoint.x) + startPoint.x;

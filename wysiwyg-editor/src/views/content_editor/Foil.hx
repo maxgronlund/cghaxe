@@ -97,7 +97,7 @@ class Foil extends MovieClip {
 	}
 	
 	
-	public static function initFiltersOn(object:DisplayObject): Void
+	public static function initFiltersOn(object:DisplayObject, glowColor:UInt=0xFFFFFF): Void
 	{
 		
 		var dropShadowOuter:DropShadowFilter = new DropShadowFilter(); 
@@ -126,14 +126,14 @@ class Foil extends MovieClip {
 		dropShadow.hideObject = false;
 		
 		var innerGlow:DropShadowFilter = new DropShadowFilter(); 
-		innerGlow.distance = 0.8;
-		innerGlow.angle = 40;
-		innerGlow.color = 0xFFFFFF;
+		innerGlow.distance = -1;
+		innerGlow.angle = -45;
+		innerGlow.color = glowColor;
 		innerGlow.alpha = 1;
-		innerGlow.blurX = 1.0;
-		innerGlow.blurY = 1.0;
-		innerGlow.alpha = 0.25;
-		innerGlow.strength = 1.7;
+		innerGlow.blurX = 1.5;
+		innerGlow.blurY = 1.5;
+		innerGlow.alpha = 1;
+		innerGlow.strength = 1;
 		innerGlow.quality = 15;
 		innerGlow.inner = false;
 		innerGlow.knockout = false;
@@ -141,8 +141,8 @@ class Foil extends MovieClip {
 		
 		var foil_filters:Array<BitmapFilter> = new Array();
 				
-		foil_filters.push(dropShadow);
-		foil_filters.push(dropShadowOuter);
+		//foil_filters.push(dropShadow);
+		//foil_filters.push(dropShadowOuter);
 		foil_filters.push(innerGlow);
 		
 		object.filters = foil_filters;
