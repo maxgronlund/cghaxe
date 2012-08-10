@@ -18,6 +18,8 @@ class PricesModel extends Model, implements IModel
 	private function onParsePrice(e:XmlEvent):Void {
 	  parsePrice(e.getXml());
 	  trace("Getting a foil price for fun..");
+	  trace("0 foils");
+	  trace(getPrice(0, "foil"));
 	  trace("3 foils");
 	  trace(getPrice(3, "foil"));
 	  trace("49 foils");
@@ -35,6 +37,9 @@ class PricesModel extends Model, implements IModel
 	}
 	
 	private function getPrice(units:UInt, print_type:String):Float {
+	  if(units <= 0) {
+	    return 0.0;
+	  }
 	  
 	  var selected_price:PriceModel = null;
 	  

@@ -80,7 +80,9 @@ class TextPlaceholderView extends APlaceholder {
   private var laserColor:UInt;
   private var fontScreenColor:UInt;
   private var loaded_fonts:Hash<Dynamic>;
-
+  
+  //private var loading:Bitmap;
+  
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
     
@@ -107,7 +109,6 @@ class TextPlaceholderView extends APlaceholder {
     was_foiled = false;
     
     loaded_fonts = new Hash();
-
     
     silverFoilTexture   = new SilverFoilTexture();
     goldFoilTexture     = new GoldFoilTexture();
@@ -375,12 +376,14 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onFontLoaded(event:Event):Void {
+    
     fontMovie   =  cast event.target.loader.content;
     onFontCached();
   }
   
   private function onFontCached():Void {
-    addChild(fontMovie); 
+    //removeChild(loading);
+    addChild(fontMovie);    
     
 
     font        = fontMovie.font;
