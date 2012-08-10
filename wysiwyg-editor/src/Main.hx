@@ -43,8 +43,6 @@ class Main
   private var selectionController:IController;
   private var sidebarController:IController;
   private var desktopController:IController;
-
-
   
   // views
   private var applicationView:ApplicationView;
@@ -74,9 +72,7 @@ class Main
   private var Fonts:SystemFonts;
   private var userParser:UserParser;
   private var hitTest:CGHitTest;
-  
 
-  
   
   static function main(){
     new Main();
@@ -120,6 +116,7 @@ class Main
 //    DesignImages                = new DesignImagesModel();
 //    Vectors                     = new VectorsModel();             
     setGlobalModels();
+    initGlobals();
     parameterParser             = new ParameterParser(Application);
     
     // controllers
@@ -189,6 +186,14 @@ class Main
     GLOBAL.Zoom         	= new ZoomTools();
     GLOBAL.Font           = new FontModel();
     GLOBAL.userParser     = new UserParser();
+  }
+  
+  private function initGlobals(): Void{
+    GLOBAL.foilColor      = 'silver';
+    GLOBAL.pms1Color      = 0;
+    GLOBAL.pms2Color      = 0;
+    GLOBAL.stdPmsColor    = 0;
+    GLOBAL.printType      = CONST.STD_PMS_COLOR;
   }
   
   private function setGlobalViews():Void{

@@ -63,11 +63,6 @@ class TextPlaceholderView extends APlaceholder {
   private var textString:String;
   private var collition:Bool;
   private var textOnTop:Bool;
-
-  
-
-
-
   private var selectBox:TextSelectBox;
   private var foiled:Bool;
   private var was_foiled:Bool;
@@ -79,8 +74,8 @@ class TextPlaceholderView extends APlaceholder {
   private var redFoilTexture:Bitmap;
   private var greenFoilTexture:Bitmap;
   private var blueFoilTexture:Bitmap;
-
   private var loaded_fonts:Hash<Dynamic>;
+  private var loading:Bitmap;
   
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
@@ -108,7 +103,11 @@ class TextPlaceholderView extends APlaceholder {
     was_foiled = false;
     
     loaded_fonts = new Hash();
-
+    loading = new LoadingBitmap();
+    loading.x = 100;
+    loading.y = -40;
+    loading.width *= 150/72;
+    loading.height *= 150/72;
     
     silverFoilTexture                  = new SilverFoilTexture();
     goldFoilTexture                    = new GoldFoilTexture();
@@ -120,7 +119,6 @@ class TextPlaceholderView extends APlaceholder {
     printType                         = GLOBAL.printType;
   }
   
-
   private function onAddedToStage(e:Event){
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -132,7 +130,9 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   public function foilify():Void {
+    
     unfoilify();
+    
     if(foiled != true) {
       trace(foilColor);
       switch ( foilColor )
@@ -150,17 +150,27 @@ class TextPlaceholderView extends APlaceholder {
         case 'blue':
           foilTexture = blueFoilTexture; 
       }
-
-      
+      trace(fontMovie == null);
       
       setFoilBackdrop();
       
+
+      
       foil = new MovieClip();
+      addChild(foil);
+      
       foil.addChild(foilTexture);
+      
+      trace("foil", foil == null);
+      trace("foilTexture", foilTexture == null);
+      trace("fontMovie", fontMovie == null);
+      trace("stage", this == stage);
+
+      //this.removeChild(fontMovie);
+      
       foil.addChild(fontMovie);
       foil.mask = fontMovie;
       
-      addChild(foil);
       Foil.initFiltersOn(foil);
       
     }
@@ -199,33 +209,30 @@ class TextPlaceholderView extends APlaceholder {
   override public function getText(): Void {
     
     var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_TEXT);
+    trace( font==null);
     param.setString(font.getText());
     param.setInt(id);
     model.setParam(param);
   }
   
   override public function getXml() : String {
-    
     showTags();
     
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
-      str += '\t\t\t<placeholder-type>' + 'text_placeholder' + '</placeholder-type>\n';
-      str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
-      str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
-      str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
-      str += '\t\t\t<print-type>' + printType + '</print-type>\n';
-      if(foiled){
-        str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-      } else{
-        str += '\t\t\t<font-color>' + Std.string(fontColor) + '</font-color>\n';
-      }
-      str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
-      str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
-      str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
-      str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
-      str += font.getXml();
+    str += '\t\t\t<placeholder-type>' + 'text_placeholder' + '</placeholder-type>\n';
+    str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
+    str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
+    str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
+    str += '\t\t\t<print-type>' + printType + '</print-type>\n';
+    str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
+    str += '\t\t\t<font-color>' + Std.string(fontColor) + '</font-color>\n';
+    str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
+    str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
+    str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
+    str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
+    trace( font==null);
+    str += font.getXml();
     str += '\t\t</placeholder>\n';
-//    trace(str);
     restoreShowTags();
     return str;
   }
@@ -365,7 +372,6 @@ class TextPlaceholderView extends APlaceholder {
       ldrContext.applicationDomain  = new ApplicationDomain();
       ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
       ldr.load(req, ldrContext);
-      loaded_fonts.set(fontFileName, fontMovie);
     } else {
       fontMovie = loaded_fonts.get(fontFileName);
       onFontCached();
@@ -374,13 +380,16 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onFontLoaded(event:Event):Void {
+    
     fontMovie   =  cast event.target.loader.content;
+    loaded_fonts.set(fontFileName, fontMovie);
     onFontCached();
   }
   
   private function onFontCached():Void {
-    addChild(fontMovie);    
-    
+    //removeChild(loading);
+    addChild(fontMovie);
+    trace( fontMovie==null);
     font        = fontMovie.font;
     font.init(  fontSize, 
                 fontColor, 
@@ -406,12 +415,9 @@ class TextPlaceholderView extends APlaceholder {
     resizeBackdrop();
   }
   
-  
-
   private function hitTest():Void{
     pageView.hitTest();
   }
-  
   
   override public function onUpdatePlaceholder(event:Event):Void{
 
@@ -424,13 +430,11 @@ class TextPlaceholderView extends APlaceholder {
     anchorPoint       = calculateAnchorPoint();
     repossition       = true;
     storeTags();
-    //removeChild(fontMovie);
     font = null;
     unfoilify();
     loadFont();
     
   }
-  
   
   private function setFontPrintType():Void{
     switch ( GLOBAL.printType ){
@@ -470,10 +474,10 @@ class TextPlaceholderView extends APlaceholder {
     }
   }
   
-  
   private function showTags():Void{
     storeTags();
     tagsIsVisible   = true;
+    trace( font==null);
     font.setText(textWithTags);
     
   }
@@ -481,11 +485,12 @@ class TextPlaceholderView extends APlaceholder {
   private function hideTags():Void{
     storeTags();
     tagsIsVisible = false;
+    trace( font==null);
     font.setText(insertTags(textWithTags));
   }
   
   private function storeTags():Void{
-
+    trace( font==null);
     if(tagsIsVisible) 
       textWithTags  = font.getText();
   }
@@ -514,6 +519,7 @@ class TextPlaceholderView extends APlaceholder {
     //GLOBAL.MOVE_TOOL;
     // !!! colide with the hit test
     //font.setText(textWithTags);
+    trace( font==null);
     var anchor_point:Float = 0;
     switch(fontAlign){
       case 'left': anchor_point   = 0;
@@ -533,15 +539,18 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
+
     updateFocus();
     
     if(!focus){
-      
+      restoreShowTags();
       setTextOnTop(false);
       if(was_foiled == true)
         foilify();
       
     }
+    else{ showTags();}
+    updateFocus();
   }
   
   private function updateFocus():Void{
@@ -573,7 +582,7 @@ class TextPlaceholderView extends APlaceholder {
   
   private function setTextOnTop(b:Bool):Void {
     MouseTrap.capture();
-   
+   trace( font==null);
     font.selectable(b);
     textOnTop = b;
     if(b){
@@ -588,6 +597,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function resizeBackdrop():Void{
+    trace( font==null);
     selectBox.resizeBackdrop(fontMovie.width, fontMovie.height, font.getTextField().x, font.getCombindeMargins());
   }
   
@@ -604,6 +614,14 @@ class TextPlaceholderView extends APlaceholder {
     GLOBAL.Font.fontAlign       = fontAlign;
     GLOBAL.Font.leading         = fontLeading;
     GLOBAL.Font.letterSpacing   = letterSpacing;
+    
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS));
+    
+
+    
+    
+    
+    
 
     model.setParam(new Parameter(EVENT_ID.UPDATE_TEXT_TOOLS)); 
     updateSideView();    
@@ -638,12 +656,12 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getTextField():TextField{
+    trace( font==null);
      return font.getTextField();
   }
   
   override public function alert(b:Bool):Void{
       collition = b;
   }
-
 
 }
