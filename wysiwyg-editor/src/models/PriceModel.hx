@@ -1,4 +1,5 @@
 package;
+import flash.external.ExternalInterface;
 
 class PriceModel {
   private var units:UInt;
@@ -11,6 +12,11 @@ class PriceModel {
 		this.foil_price = foil_price;
 		this.one_pms_color_price = one_pms_color_price;
 		this.std_color_price = std_color_price;
+		
+		//var string:String = Std.string(units);
+		//string = "alert(\"num:" + string + "\")";
+		//trace(string);
+		//ExternalInterface.call(string);
 	}
 	
 	public function getUnits():UInt{

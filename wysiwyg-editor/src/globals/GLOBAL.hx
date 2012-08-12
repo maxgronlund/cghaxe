@@ -20,6 +20,8 @@ class GLOBAL  {
   public static var Font:FontModel;
   public static var userParser:UserParser;
   
+  public static var preset_quantity:String;
+  
   // system
   public static var wysiwyg_status:String;
   public static var authenticity_token:String;
@@ -44,12 +46,12 @@ class GLOBAL  {
 //  public static var vectors_view:AView;
   public static var greetings_view:AView;
 //  public static var design_images_view:AView;
-  public static var foil_view:IView;
+  public static var foil_view:AView;
   public static var side_view:IView;
-  public static var add_ons_view:IView;
-  public static var garamond_view:IView;
-  public static var logo_view:IView;
-  public static var price_view:IView;
+  public static var add_ons_view:AView;
+  public static var garamond_view:AView;
+  public static var logo_view:AView;
+  public static var price_view:AView;
   public static var menu_view:IView;
   public static var page_selector_view:IView;
   public static var desktop_view:IView;

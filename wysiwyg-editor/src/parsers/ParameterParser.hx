@@ -48,6 +48,11 @@ class ParameterParser
       GLOBAL.preset_file_url = params.preset_file_url;
     }
     
+    
+    if(params.preset_quantity != null){
+      GLOBAL.preset_quantity = params.preset_quantity;
+    }
+    
     // page design
     if(params.pagedesign_xml_file_url != null){
       GLOBAL.preset_file_url = params.pagedesign_xml_file_url;
@@ -77,6 +82,7 @@ class ParameterParser
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
+          GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
         } 
         
         case 'user_preset':{
@@ -85,6 +91,7 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
+          GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
         }
         
         case 'system_preview':{

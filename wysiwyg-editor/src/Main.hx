@@ -114,7 +114,7 @@ class Main
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
     Greetings                   = new GreetingsModel();
-    Prices                       = new PricesModel();
+    Prices                      = new PricesModel();
 //    DesignImages                = new DesignImagesModel();
 //    Vectors                     = new VectorsModel();             
     setGlobalModels();
@@ -126,6 +126,7 @@ class Main
     colorController             = new ColorController();
     sidebarController           = new SidebarController();
     pageSelectController        = new PageController();
+    pricesController            = new PriceController();
     menuController              = new MenuController();
     textController              = new TextController();
     textSuggestionController    = new TextSuggestionController();

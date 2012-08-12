@@ -83,6 +83,11 @@ class AModel extends EventDispatcher
     trace("getVector: must be overriden in a subclass");
     return null;
   }
+    
+  public function getPrintPrice(units:UInt, printType:String):Float {
+    trace("getPrintPrice: must be overriden in a subclass");
+    return 0.0;
+  }
   
   
 // dispatchers	!!! finish up later

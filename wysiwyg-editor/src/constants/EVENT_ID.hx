@@ -27,6 +27,7 @@ class EVENT_ID  {
 //  public static inline var ADD_LOGO_VIEW:String             = "add_logo_view";
 
   public static inline var PRESET_PRICES:String             = "preset_prices";
+  public static inline var PRESET_PRICES_XML_PARSED:String  = "preset_prices_xml_parsed";
 
   
   // Events

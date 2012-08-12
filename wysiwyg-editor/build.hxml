@@ -33,6 +33,7 @@
 -cp src/views/side_view/text_view
 -cp src/views/side_view/color_view
 -cp src/views/side_view/designs_view
+-cp src/views/side_view/price_view
 -cp src/views/side_view/design_images_view
 -cp src/views/side_view/text_suggestions_view
 #-cp src/views/side_view/vectors_view
