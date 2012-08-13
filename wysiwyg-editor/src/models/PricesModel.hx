@@ -20,7 +20,6 @@ class PricesModel extends Model, implements IModel
 	  Application.dispatchXML(EVENT_ID.PRESET_PRICES_XML_PARSED, e.getXml());
 	  
 	  
-	  
 	  //trace("Getting a foil price for fun..");
 	  //trace("0 foils");
 	  //trace(getPrintPrice(0, "foil"));

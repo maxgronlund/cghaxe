@@ -48,6 +48,36 @@ class APlaceholder extends Sprite{
     trace("getPlaceholderType: must be overriden in a subclass");
     return 'na';
   }
+    
+  public function getStdPmsColor():String{
+    trace("getStdPmsColor: must be overriden in a subclass");
+    return 'na';
+  }
+  
+  public function getPms1Color():String{
+    trace("getPms1Color: must be overriden in a subclass");
+    return 'na';
+  }
+  
+  public function getPms2Color():String{
+    trace("getPms2Color: must be overriden in a subclass");
+    return 'na';
+  }
+  
+  public function getFoilColor():String{
+    trace("getFoilColor: must be overriden in a subclass");
+    return 'na';
+  }
+  
+  public function getPrintType():String{
+    trace("getPrintType: must be overriden in a subclass");
+    return 'na';
+  }
+  
+  public function getPrintColor():String{
+    trace("getPrintColor: must be overriden in a subclass");
+    return 'na';
+  }
   
   public function getTextField():TextField{
     trace("getTextField: must be overriden in a subclass");

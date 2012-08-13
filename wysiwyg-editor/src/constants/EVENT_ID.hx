@@ -28,6 +28,7 @@ class EVENT_ID  {
 
   public static inline var PRESET_PRICES:String             = "preset_prices";
   public static inline var PRESET_PRICES_XML_PARSED:String  = "preset_prices_xml_parsed";
+  public static inline var CALCULATE_PRICE:String           = "calculate_price";
 
   
   // Events

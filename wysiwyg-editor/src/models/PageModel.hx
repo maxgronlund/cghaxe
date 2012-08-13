@@ -89,7 +89,7 @@ class PageModel extends Model, implements IModel
     }
     return false;
   }
- 
+  
   override function setString(id:String, s:String):Void{
     
     switch(id) {
@@ -97,6 +97,7 @@ class PageModel extends Model, implements IModel
       case 'hide_mask_url':           hide_mask_url   = s;
       case 'front_shoot_url':         front_shoot_url = s;
       case 'no_move':{ trace('no move'); 	}
+      case 'page_name':               page_name       = s;
       case EVENT_ID.SET_PAGE_XML:     fileStr         += s;
 
 
@@ -109,6 +110,7 @@ class PageModel extends Model, implements IModel
       case 'print_mask_url':    return print_mask_url; 
       case 'hide_mask_url':     return hide_mask_url; 
       case 'front_shoot_url':   return front_shoot_url; 
+      case 'page_name':         return page_name;
       default:                  return '';
     }
   }

@@ -83,6 +83,12 @@ class PagesModel extends Model, implements IModel {
      pageModel.setInt('pageOrder', pageOrder);
      pageModel.setInt('pageId'   , pageId);
      pageModel.setXml('', e.getXml());
+     
+     for(title in e.getXml().elementsNamed("title") ) {
+       pageModel.setString('page_name', title.firstChild().nodeValue.toString());
+     }
+     
+     ;
      pageOrder++;
      pageId++;
      pageInFocus                 = pageModel;
@@ -140,6 +146,7 @@ class PagesModel extends Model, implements IModel {
         var param:IParameter = new Parameter(EVENT_ID.ADD_PLACEHOLDER);
         pageInFocus.setParam(param);
         
+        //calculatePrice();
         trace('placeholder added check for price');
         //Application.dispatchParameter( new Parameter(EVENT_ID.SELECT_MOVE_TOOL) );
       }
@@ -166,7 +173,16 @@ class PagesModel extends Model, implements IModel {
         dispatchParameter(param);
         pageInFocus.dispatchParameter(param);
       }
+      
+      case EVENT_ID.STD_PMS_COLOR_SELECTED:{ calculatePrice(); }
+      case EVENT_ID.FOIL_COLOR_SELECTED:{ calculatePrice(); }
+      case EVENT_ID.COLOR_SELECTED:{ calculatePrice(); }
     }
+  }
+  
+  private function calculatePrice():Void{
+    GLOBAL.price_view.clearColumns();
+    dispatchEvent(new Event(EVENT_ID.CALCULATE_PRICE));
   }
   
   override function getString(id:String):String{

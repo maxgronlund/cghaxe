@@ -41,7 +41,7 @@ class OnePrice extends MovieClip {
 	  switch ( getPrintType() )
 	  {
 	   case 'foil':
-	     return "Foil";
+	     return "Foil Color";
 	     
 	   case 'one-pms-color':
 	     return "PMS color";
@@ -49,8 +49,11 @@ class OnePrice extends MovieClip {
 	   case 'std-color':
 	     return "STD color";
 	     
+	   case 'laser':
+   	   return "Laser";
+	     
 	   default:
-	     return "Item";
+	     return "Extra";
 	  }
 	}
 	

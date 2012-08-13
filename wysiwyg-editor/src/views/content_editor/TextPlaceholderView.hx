@@ -443,6 +443,26 @@ class TextPlaceholderView extends APlaceholder {
     loadFont();
     
   }
+  
+  override public function getStdPmsColor():String {
+    return Std.string(stdPmsColor);
+  }
+  
+  override public function getPms1Color():String {
+    return Std.string(pms1Color);
+  }
+  
+  override public function getPms2Color():String {
+    return Std.string(pms2Color);
+  }
+  
+  override public function getFoilColor():String {
+    return foilColor;
+  }
+  
+  override public function getPrintType():String {
+    return printType;
+  }
     
   private function setFontPrintType():Void{
     

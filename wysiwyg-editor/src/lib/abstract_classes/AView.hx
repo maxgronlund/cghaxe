@@ -115,6 +115,20 @@ class AView extends Sprite, implements IView
 		trace("enableMouse: must be overriden in a subclass");
 
 	}
+	
+	// !!! mess
+	public function clearColumns():Void{
+	  trace("clearColumns: must be overriden in a subclass");
+	}
+	
+	public function addColumn(title:String, amount_std_pms_color:UInt, amount_custom_pms1_color:UInt, amount_custom_pms2_color:UInt, amount_foil_color:UInt, amount_laser_color:UInt):Void{
+	  trace("addColumn: must be overriden in a subclass");
+	}
+	
+	public function addAllPrices(): Void{
+	  trace("addAllPrices: must be overriden in a subclass");
+	}
+	
 }
 
 
