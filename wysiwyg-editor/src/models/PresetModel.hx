@@ -39,9 +39,6 @@ class PresetModel extends Model, implements IModel
   private function onParsePreset(e:IKEvent):Void{
 //    trace('onParsePreset');
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    trace('-----------------');
-    trace(e.getXml().toString() );
-    trace('-----------------');
     for( preset in xml.elementsNamed("preset") ) {
       countPlaceholders(preset);
       // building the pages
