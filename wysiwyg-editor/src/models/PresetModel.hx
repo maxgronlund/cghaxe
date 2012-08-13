@@ -39,9 +39,6 @@ class PresetModel extends Model, implements IModel
   private function onParsePreset(e:IKEvent):Void{
 //    trace('onParsePreset');
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    //trace('-----------------');
-    //trace(e.getXml().toString() );
-    //trace('-----------------');
     for( preset in xml.elementsNamed("preset") ) {
       countPlaceholders(preset);
       // building the pages
@@ -85,7 +82,7 @@ class PresetModel extends Model, implements IModel
   
   // building pages and getting url's for masks
   private function parsePreset(xml:Xml):Void{
-
+    
     for( preset in xml.elementsNamed("title") ) {
        //trace(preset.toString() );
     }
@@ -107,6 +104,7 @@ class PresetModel extends Model, implements IModel
         }
       } 
     }
+    
     for(xml_data in xml.elementsNamed("xml-data") ) {
       parseXmlData(xml_data);
     }
@@ -115,9 +113,21 @@ class PresetModel extends Model, implements IModel
       dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
     }
     
-    for(user_tags in xml.elementsNamed("user-tags")){
-      GLOBAL.userParser.parseUser(user_tags);
+    trace("parsing xml--------------");
+    
+    trace("print_price initiated");
+    for(print_prices in xml.elementsNamed("print-prices")){
+      Application.dispatchXML(EVENT_ID.PRESET_PRICES, print_prices);
     }
+    
+    // !!! Freezes
+    //for(user_tags in xml.elementsNamed("user-tags")){
+    //  GLOBAL.userParser.parseUser(user_tags);
+    //}
+    
+    
+    
+    
     
 /*    var page_index:Int = 0;
     

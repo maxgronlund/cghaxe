@@ -71,6 +71,7 @@ class TextPlaceholderView extends APlaceholder {
   private var redFoilTexture:Bitmap;
   private var greenFoilTexture:Bitmap;
   private var blueFoilTexture:Bitmap;
+  private var foilGlowColor:UInt;
   private var printType:String;
   private var foilColor:String; 
   private var stdPmsColor:UInt;
@@ -79,7 +80,9 @@ class TextPlaceholderView extends APlaceholder {
   private var laserColor:UInt;
   private var fontScreenColor:UInt;
   private var loaded_fonts:Hash<Dynamic>;
-
+  
+  //private var loading:Bitmap;
+  
   
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
     
@@ -106,7 +109,6 @@ class TextPlaceholderView extends APlaceholder {
     was_foiled = false;
     
     loaded_fonts = new Hash();
-
     
     silverFoilTexture   = new SilverFoilTexture();
     goldFoilTexture     = new GoldFoilTexture();
@@ -142,16 +144,22 @@ class TextPlaceholderView extends APlaceholder {
       {
         case 'silver':
           foilTexture = silverFoilTexture;
+          foilGlowColor = 0xCCCCCC;
         case 'gold': 
           foilTexture = goldFoilTexture;
+          foilGlowColor = 0xFFEF88;
         case 'Yellow':
           foilTexture = yellowFoilTexture;
+          foilGlowColor = 0xFFFF11;
         case 'red': 
           foilTexture = redFoilTexture;
+          foilGlowColor = 0xFF1111;
         case 'green':
           foilTexture = greenFoilTexture;
+          foilGlowColor = 0x11FF11;
         case 'blue':
           foilTexture = blueFoilTexture; 
+          foilGlowColor = 0x7777FF;
       }
 
       setFoilBackdrop();
@@ -162,7 +170,7 @@ class TextPlaceholderView extends APlaceholder {
       foil.mask = fontMovie;
       
       addChild(foil);
-      Foil.initFiltersOn(foil);
+      Foil.initFiltersOn(foil, foilGlowColor);
       
     }
     foiled = true;
@@ -349,6 +357,7 @@ class TextPlaceholderView extends APlaceholder {
     setFontScreenColor();
     if(fontMovie != null){
       removeChild(fontMovie);
+      trace("Removed Child fontMovie");
       fontMovie = null;
     }
     
@@ -367,12 +376,14 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onFontLoaded(event:Event):Void {
+    
     fontMovie   =  cast event.target.loader.content;
     onFontCached();
   }
   
   private function onFontCached():Void {
-    addChild(fontMovie); 
+    //removeChild(loading);
+    addChild(fontMovie);    
     
 
     font        = fontMovie.font;
