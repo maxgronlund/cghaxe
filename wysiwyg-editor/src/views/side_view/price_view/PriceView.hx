@@ -6,21 +6,72 @@ class PriceView extends PropertyView, implements IView{
 	private var total_price_label:FormatedText;
 	
 	private var prices:Array<PriceModel>;
-	private var price_labels:Array<OnePrice>;
+	private var priceColumns:Array<PriceColumn>;
 	
 	public function new(priceController:IController){	
 		super(priceController);
 		backdrop				= new PriceViewBack();
-    
-  	total_price_label = new FormatedText('helvetica', 'text', 12, false);
+
+  	total_price_label = new FormatedText('helvetica', '0.0', 12, false);
   	
   	prices = new Array();
-  	price_labels = new Array();
-  	price_labels.push(new OnePrice('foil'));
-  	price_labels.push(new OnePrice('one-pms-color'));
-  	price_labels.push(new OnePrice('std-color'));
+  	priceColumns = new Array();
   	
   	Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
+	}
+	
+	private function clearColumns():Void{
+	  for(i in 0...priceColumns.length){
+	    removeChild(priceColumns[i]);
+    }
+	  priceColumns = new Array();
+	}
+	
+	private function addColumn(model:IModel):Void{
+	  var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
+	  price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
+	  price_column.set_amount_custom_pms1_color(model.getInt('amount_custom_pms1_color'));
+	  price_column.set_amount_custom_pms2_color(model.getInt('amount_custom_pms2_color'));
+	  price_column.set_amount_foil_color(model.getInt('amount_foil_color'));
+	  price_column.set_amount_laser_color(model.getInt('amount_laser_color'));
+
+	  priceColumns.push(price_column);
+	}
+	
+	override public function setParam(param:IParameter):Void{
+	  switch ( param.id )
+	  {
+	    case EVENT_ID.ADD_PRICE_COLUMN:{
+        addColumn(model);
+      }
+	  }
+	}
+	
+	override public function update(id:String, index:Int, value:String):Void{
+	  switch ( id )
+	  {
+	   case 'addAllPrices':
+	     addAllPrices();
+	   case 'clearColumns':
+	     clearColumns();
+	  }
+	}
+	
+	private function addAllPrices(){
+	  var total_price:Float = 0;
+	  var y:Float = 120;
+	  
+	  for(i in 0...priceColumns.length){
+	    var priceColumn:PriceColumn = priceColumns[i];
+	    addChild(priceColumn);
+	    priceColumn.y = y;
+  	  priceColumn.setPrices(prices);
+  	  priceColumn.addAllPrices();
+  	  y += priceColumn.height+18;
+  	  total_price += priceColumn.getColumnTotalPrice();
+	  }
+	  total_price_label.y = priceColumns[priceColumns.length-1].y + priceColumns[priceColumns.length-1].height;
+	  total_price_label.setLabel("Total: " + Std.string(total_price));
 	}
 	
 	override public function onAddedToStage(e:Event):Void{
@@ -31,34 +82,6 @@ class PriceView extends PropertyView, implements IView{
     total_price_label.x = 55;
     total_price_label.y = 360;
     
-  }
-  
-  private function addAllPrices():Void {
-    
-    var total_price:Float = 0;
-
-    for(i in 0...price_labels.length) {
-      var price:OnePrice = price_labels[i];
-      addChild(price);
-      price.x = 0;
-    	price.y = 120+18*i;
-    	price.setUnitsLabel(GLOBAL.preset_quantity);
-    	
-    	price.setItemLabel(price.getPrettyPrintType());
-    	
-    	var units:Int = Std.parseInt(GLOBAL.preset_quantity);
-    	var print_price:Float = getPrintPrice(units, price.getPrintType());
-    	total_price += print_price;
-    	price.setPriceLabel(Std.string(print_price));
-    }
-    
-    total_price_label.setLabel(Std.string(total_price));
-  }
-  
-  private function removeAllPrices():Void {
-    for(i in 0...price_labels.length) {
-      removeChild(price_labels[i]);
-    }
   }
 	
 	override public function init():Void{
@@ -78,7 +101,6 @@ class PriceView extends PropertyView, implements IView{
 	private function parsePrice(prices_xml:Xml):Void{
 	  		
 		for( print_price_xml in prices_xml.elementsNamed("print-price") ) {
-		  
 		  var units:UInt;
 		  var foil_price:Float;
 		  var one_pms_color_price:Float;
@@ -99,69 +121,6 @@ class PriceView extends PropertyView, implements IView{
 			
 			prices.push(new PriceModel(units, foil_price, one_pms_color_price, std_color_price));
 		}
-	}
-	
-	private function getPrintPrice(units:UInt, print_type:String):Float {
-	  if(units <= 0) {
-	    return 0.0;
-	  }
-	  if(prices.length == 0) {
-	    return 0.0;
-	  }
-	  
-	  var selected_price:PriceModel = null;
-	  
-	  for( i in 0...prices.length ) {
-      var price:PriceModel = prices[i];
-      
-      if(units >= price.getUnits()) {
-        
-        if(selected_price != null) {
-          if(selected_price.getUnits() < price.getUnits()){
-            selected_price = price;
-          }
-          
-        } else {
-          selected_price = price;
-        }
-      }
-    }
-    
-    
-    
-    if(selected_price == null) {
-      for( i in 0...prices.length ) {
-        
-        var price:PriceModel = prices[i];
-        if(selected_price == null) {
-          selected_price = price;
-          
-        } else {
-          
-          if(price.getUnits() < selected_price.getUnits()){
-            selected_price = price;
-          }
-          
-        }
-        
-      }
-    }
-	  
-	  switch ( print_type )
-	  {
-	   case "foil":
-	     return selected_price.getFoilPrice();
-	   case "one-pms-color":
-	     return selected_price.getOnePmsColorPrice();
-	   case "std-color":
-	     return selected_price.getStdColorPrice();
-	   default:
-	     trace("Error selecting print_type!!!");
-	     return 0.0;
-	  }
-	  
-	  // Function should never reach this point
-	  return 0.0;
 	}
 
 }

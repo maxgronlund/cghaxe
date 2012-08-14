@@ -372,6 +372,26 @@ class VectorPlaceholderView extends APlaceholder {
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }
   
+  override public function getStdPmsColor():String {
+    return Std.string(pmsColor);
+  }
+  
+  //override public function getPms1Color():String {
+  //  return pms1Color;
+  //}
+  //
+  //override public function getPms2Color():String {
+  //  return pms2Color;
+  //}
+  
+  override public function getFoilColor():String {
+    return foilColor;
+  }
+  
+  override public function getPrintType():String {
+    return printType;
+  }
+  
   override public function getPlaceholderType():String{
     return 'vector_placeholder';
   }

@@ -14,8 +14,12 @@ class PageModel extends Model, implements IModel
   private var print_types:Xml;
   private var designs:Xml;
   
-
-
+  private var amount_std_pms_color:UInt;
+  private var amount_custom_pms1_color:UInt;
+  private var amount_custom_pms2_color:UInt;
+  private var amount_foil_color:UInt;
+  private var amount_laser_color:UInt;
+    
   public function new(){	
     super();
     fileStr   = '';
@@ -60,19 +64,26 @@ class PageModel extends Model, implements IModel
 	}
 
   override public function setInt(id:String, i:Int):Void{
-    
     switch (id) {
       case 'pageOrder':   pageOrder   = i;
       case 'pageId':      pageId      = i;
-      
+      case 'amount_std_pms_color':{amount_std_pms_color = i;}
+      case 'amount_custom_pms1_color':{amount_custom_pms1_color = i;}
+      case 'amount_custom_pms2_color':{amount_custom_pms2_color = i;}
+      case 'amount_foil_color':{amount_foil_color = i;}
+      case 'amount_laser_color':{amount_laser_color = i;}
     }
   }
   
   override public function getInt(id:String):Int{
-    
     switch ( id ){
       case 'pageId': return pageId;
       case 'pageOrder':return pageOrder;
+      case 'amount_std_pms_color':{return amount_std_pms_color;}
+      case 'amount_custom_pms1_color':{return amount_custom_pms1_color;}
+      case 'amount_custom_pms2_color':{return amount_custom_pms2_color;}
+      case 'amount_foil_color':{return amount_foil_color;}
+      case 'amount_laser_color':{return amount_laser_color;}
     }
     return -1;
   }
@@ -89,7 +100,7 @@ class PageModel extends Model, implements IModel
     }
     return false;
   }
- 
+  
   override function setString(id:String, s:String):Void{
     
     switch(id) {
@@ -97,6 +108,7 @@ class PageModel extends Model, implements IModel
       case 'hide_mask_url':           hide_mask_url   = s;
       case 'front_shoot_url':         front_shoot_url = s;
       case 'no_move':{ trace('no move'); 	}
+      case 'page_name':               page_name       = s;
       case EVENT_ID.SET_PAGE_XML:     fileStr         += s;
 
 
@@ -109,6 +121,7 @@ class PageModel extends Model, implements IModel
       case 'print_mask_url':    return print_mask_url; 
       case 'hide_mask_url':     return hide_mask_url; 
       case 'front_shoot_url':   return front_shoot_url; 
+      case 'page_name':         return page_name;
       default:                  return '';
     }
   }

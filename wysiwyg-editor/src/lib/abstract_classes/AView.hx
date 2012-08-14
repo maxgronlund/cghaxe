@@ -115,6 +115,7 @@ class AView extends Sprite, implements IView
 		trace("enableMouse: must be overriden in a subclass");
 
 	}
+	
 }
 
 

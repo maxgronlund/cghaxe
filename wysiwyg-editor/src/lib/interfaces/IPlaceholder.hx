@@ -8,5 +8,10 @@ interface IPlaceholder{
   function onUpdatePlaceholder(event:Event):Void;
   function getAnchorPoint():Float;
   function setFocus(b:Bool):Void;
+  function getPrintType():String;
+  function getFoilColor():String;
+  function getStdPmsColor():String;
+  function getPms1Color():String;
+  function getPms2Color():String;
 
 }

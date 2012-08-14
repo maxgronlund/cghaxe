@@ -64,6 +64,108 @@ class PageView extends View{
     placeholderHasMouse           = false;
     hideMaskPresent               = false;
     
+    Pages.addEventListener(EVENT_ID.CALCULATE_PRICE, calculatePrice);
+  }
+  
+  private function calculatePrice(e:Event): Void {    
+    var std_pms_colors = new Array();
+    var custom_pms1_colors = new Array();
+    var custom_pms2_colors = new Array();
+    var foil_colors = new Array();
+    
+    var amount_std_pms_color:UInt = 0;
+    var amount_custom_pms1_color:UInt = 0;
+    var amount_custom_pms2_color:UInt = 0;
+    var amount_foil_color:UInt = 0;
+    var amount_laser_color:UInt = 0;
+    
+    //trace("Getting price! ####################################");
+    for(i in 0...placeholders.length) {
+      //placeholders[i].getPrintType();  
+      switch ( placeholders[i].getPrintType() )
+      {
+        case CONST.STD_PMS_COLOR:{
+          // Count diffrent colors
+          var color:String = placeholders[i].getStdPmsColor();
+          var is_used:Bool = false;
+          
+          for(i in 0...std_pms_colors.length) {
+            if(std_pms_colors[i] == color) {
+              is_used = true;
+            }
+          }
+          
+          if(!is_used) {
+            std_pms_colors.push(color);
+            amount_std_pms_color += 1;
+          }
+        }
+        case CONST.CUSTOM_PMS1_COLOR:{
+          var color:String = placeholders[i].getPms1Color();
+          var is_used:Bool = false;
+          
+          for(i in 0...custom_pms1_colors.length) {
+            if(custom_pms1_colors[i] == color) {
+              is_used = true;
+            }
+          }
+          
+          if(!is_used) {
+            custom_pms1_colors.push(color);
+            amount_custom_pms1_color += 1;
+          }
+        }
+        case CONST.CUSTOM_PMS2_COLOR:{
+          var color:String = placeholders[i].getPms2Color();
+          var is_used:Bool = false;
+          
+          for(i in 0...custom_pms2_colors.length) {
+            if(custom_pms2_colors[i] == color) {
+              is_used = true;
+            }
+          }
+          
+          if(!is_used) {
+            custom_pms2_colors.push(color);
+            amount_custom_pms2_color += 1;
+          }
+        }
+        case CONST.FOIL_COLOR:{
+          //Check if there's already a foil color
+          var color:String = placeholders[i].getFoilColor();
+          var is_used:Bool = false;
+          
+          for(i in 0...foil_colors.length) {
+            if(foil_colors[i] == color) {
+              is_used = true;
+            }
+          }
+          
+          if(!is_used) {
+            foil_colors.push(color);
+            amount_foil_color += 1;
+          }
+        }
+        case CONST.LASER_COLOR:{
+          amount_laser_color = 1;
+        }
+      }
+    }
+    
+    model.setInt('amount_std_pms_color', amount_std_pms_color);
+    model.setInt('amount_custom_pms1_color', amount_custom_pms1_color);
+    model.setInt('amount_custom_pms2_color', amount_custom_pms2_color);
+    model.setInt('amount_foil_color', amount_foil_color);
+    model.setInt('amount_laser_color', amount_laser_color);
+    
+    //this is in reality just price_view.addColumn(model)
+    GLOBAL.price_view.setModel(model);
+    
+    var param = new Parameter(EVENT_ID.ADD_PRICE_COLUMN);
+    param.setInt();
+    GLOBAL.Pages.setParam()
+    GLOBAL.price_view.update('addAllPrices', 0, '');
+    
   }
   
   override public function onAddedToStage(e:Event): Void{
