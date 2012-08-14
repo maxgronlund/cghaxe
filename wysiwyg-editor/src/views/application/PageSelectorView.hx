@@ -63,7 +63,6 @@ class PageSelectorView extends View, implements IView {
     for(title in e.getXml().elementsNamed("title") ) {
       addPageSelectorLink(title.firstChild().nodeValue.toString());
     }
-
     pages++;
   }
   
