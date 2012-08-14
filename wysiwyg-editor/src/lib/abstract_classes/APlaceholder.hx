@@ -84,6 +84,11 @@ class APlaceholder extends Sprite{
     return null;
   }
   
+  public function getTextFieldText():String{
+    trace("getTextFieldText: must be overriden in a subclass");
+    return "na";
+  }
+  
   public function getBitmapMask():Bitmap {
     trace("getBitmapMask: must be overriden in a subclass");
     return null;

@@ -94,6 +94,9 @@ class AModel extends EventDispatcher
 	public function dispatchXML( label:String, xml:Xml):Void{
 		trace("dispatchXML: must be overriden in a subclass");
 	}
+	public function calculatePrice():Void{
+	  trace("calculatePrice: must be overriden in a subclass");
+	}
 //	public function dispatchString(label:String, str:String):Void{
 //		trace("dispatchString: must be overriden in a subclass");
 //	}

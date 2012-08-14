@@ -55,7 +55,6 @@ class PagesModel extends Model, implements IModel {
       pageInFocus.releaseFocus();
     }
     pageInFocus = pageModels[id];
-
 	}
 	
   private function onDestroyPlaceholders(e:IKEvent):Void{
@@ -128,7 +127,6 @@ class PagesModel extends Model, implements IModel {
   }
 
   override public function setParam(param:IParameter):Void{
-    
     switch ( param.getLabel() ){
       case EVENT_ID.SET_TEXT_FORMAT:{
       	pageInFocus.onFontSelected(param);
@@ -148,21 +146,18 @@ class PagesModel extends Model, implements IModel {
         pageInFocus.setParam(param);
         
         calculatePrice();
-        trace('placeholder added check for price');
         //Application.dispatchParameter( new Parameter(EVENT_ID.SELECT_MOVE_TOOL) );
       }
 
       case EVENT_ID.UPDATE_PLACEHOLDER:{
         if(pageInFocus != null){
       	  pageInFocus.dispatchParameter(param);
-      	  
-//      	  trace('placeholder updated check for price');
+      	  calculatePrice();
         }
       }
       case EVENT_ID.TRASH_PLACEHOLDER:{
         pageInFocus.setParam(param);
         calculatePrice();
-        trace('placeholder removed check for price');
       }
       
       case EVENT_ID.MOVE_TOOL:{
@@ -181,7 +176,7 @@ class PagesModel extends Model, implements IModel {
     }
   }
   
-  private function calculatePrice():Void{
+  override public function calculatePrice():Void{
     GLOBAL.price_view.update('clearColumns', 0, '');
     dispatchEvent(new Event(EVENT_ID.CALCULATE_PRICE));
   }
@@ -189,6 +184,9 @@ class PagesModel extends Model, implements IModel {
   override function getString(id:String):String{
     switch ( id )
     {
+      case 'price_xml':{
+        var fileStr:String ='';
+      }
       case'file_xml':{
         var fileStr:String ='';
         fileStr += '<stage>\n';

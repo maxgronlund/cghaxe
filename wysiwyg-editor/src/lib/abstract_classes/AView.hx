@@ -116,6 +116,12 @@ class AView extends Sprite, implements IView
 
 	}
 	
+	// !!! mess
+	
+	public function addColumn(title:IModel):Void{
+	  trace("addColumn: must be overriden in a subclass");
+	}
+	
 }
 
 
