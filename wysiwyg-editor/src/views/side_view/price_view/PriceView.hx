@@ -20,33 +20,46 @@ class PriceView extends PropertyView, implements IView{
   	Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
 	}
 	
-	override public function clearColumns():Void{
+	private function clearColumns():Void{
 	  for(i in 0...priceColumns.length){
 	    removeChild(priceColumns[i]);
     }
 	  priceColumns = new Array();
 	}
 	
-	override public function addColumn(title:String, amount_std_pms_color:UInt, amount_custom_pms1_color:UInt, amount_custom_pms2_color:UInt, amount_foil_color:UInt, amount_laser_color:UInt):Void{
-	  var price_column:PriceColumn = new PriceColumn(title);
-	  price_column.set_amount_std_pms_color(amount_std_pms_color);
-	  price_column.set_amount_custom_pms1_color(amount_custom_pms1_color);
-	  price_column.set_amount_custom_pms2_color(amount_custom_pms2_color);
-	  price_column.set_amount_foil_color(amount_foil_color);
-	  price_column.set_amount_laser_color(amount_laser_color);
+	private function addColumn(model:IModel):Void{
+	  var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
+	  price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
+	  price_column.set_amount_custom_pms1_color(model.getInt('amount_custom_pms1_color'));
+	  price_column.set_amount_custom_pms2_color(model.getInt('amount_custom_pms2_color'));
+	  price_column.set_amount_foil_color(model.getInt('amount_foil_color'));
+	  price_column.set_amount_laser_color(model.getInt('amount_laser_color'));
 
 	  priceColumns.push(price_column);
 	}
 	
-	override public function addAllPrices(){
-	  //var priceColumn = new PriceColumn("Awesome");
-	  //addChild(priceColumn);
-	  //priceColumn.setPrices(prices);
-	  //priceColumn.addAllPrices();
-	  
-	  //addColumn("Awesome", 1, 0, 0, 1, 1);
+	override public function setParam(param:IParameter):Void{
+	  switch ( param.id )
+	  {
+	    case EVENT_ID.ADD_PRICE_COLUMN:{
+        addColumn(model);
+      }
+	  }
+	}
+	
+	override public function update(id:String, index:Int, value:String):Void{
+	  switch ( id )
+	  {
+	   case 'addAllPrices':
+	     addAllPrices();
+	   case 'clearColumns':
+	     clearColumns();
+	  }
+	}
+	
+	private function addAllPrices(){
 	  var total_price:Float = 0;
-	  var y:Float = 0;
+	  var y:Float = 120;
 	  
 	  for(i in 0...priceColumns.length){
 	    var priceColumn:PriceColumn = priceColumns[i];
@@ -57,8 +70,8 @@ class PriceView extends PropertyView, implements IView{
   	  y += priceColumn.height+18;
   	  total_price += priceColumn.getColumnTotalPrice();
 	  }
-	  
-	  total_price_label.setLabel(Std.string(total_price));
+	  total_price_label.y = priceColumns[priceColumns.length-1].y + priceColumns[priceColumns.length-1].height;
+	  total_price_label.setLabel("Total: " + Std.string(total_price));
 	}
 	
 	override public function onAddedToStage(e:Event):Void{

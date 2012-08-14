@@ -65,7 +65,7 @@ class PriceColumn extends MovieClip {
       var price:OnePrice = price_labels[i];
       addChild(price);
       price.x = 0;
-    	price.y = 120+18*i;
+    	price.y = 18*i;
     	
     	price.setUnitsLabel(Std.string(GLOBAL.preset_quantity));
     	price.setItemLabel(price.getPrettyPrintType());
@@ -76,20 +76,22 @@ class PriceColumn extends MovieClip {
     	price.setPriceLabel(Std.string(print_price));
     }
     
+    column_total_price = total_price;
+    
+    if(price_labels.length == 0)
+      return;
+      
     addChild(title_label);
     addChild(total_label);
     
     title_label.x = 0;
-    title_label.y = 120-18;
+    title_label.y = -18;
     title_label.setLabel(title);
     
     total_label.x = 140;
-    total_label.y = 120+18*price_labels.length;
+    total_label.y = 18*price_labels.length;
     total_label.setLabel(Std.string(total_price));
     
-    // !!!
-    column_total_price = total_price;
-    total_label.setLabel(Std.string(total_price));
   }
   
   public function getColumnTotalPrice():Float{

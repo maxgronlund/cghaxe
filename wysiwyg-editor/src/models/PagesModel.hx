@@ -140,13 +140,14 @@ class PagesModel extends Model, implements IModel {
       case EVENT_ID.SHOW_MASK:dispatchParameter(param);
       case EVENT_ID.SAVE_XML:{
       	//getXml('foo');
+      	calculatePrice();
       	dispatchParameter(param);
       }
       case EVENT_ID.ADD_PLACEHOLDER:{
         var param:IParameter = new Parameter(EVENT_ID.ADD_PLACEHOLDER);
         pageInFocus.setParam(param);
         
-        //calculatePrice();
+        calculatePrice();
         trace('placeholder added check for price');
         //Application.dispatchParameter( new Parameter(EVENT_ID.SELECT_MOVE_TOOL) );
       }
@@ -160,7 +161,7 @@ class PagesModel extends Model, implements IModel {
       }
       case EVENT_ID.TRASH_PLACEHOLDER:{
         pageInFocus.setParam(param);
-        
+        calculatePrice();
         trace('placeholder removed check for price');
       }
       
@@ -181,7 +182,7 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function calculatePrice():Void{
-    GLOBAL.price_view.clearColumns();
+    GLOBAL.price_view.update('clearColumns', 0, '');
     dispatchEvent(new Event(EVENT_ID.CALCULATE_PRICE));
   }
   

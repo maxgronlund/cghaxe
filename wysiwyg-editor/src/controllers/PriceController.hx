@@ -18,13 +18,11 @@ class PriceController extends Controller, implements IController
     trace(param.getLabel());
     switch ( param.getLabel() ){
       case EVENT_ID.SHOW_PRICES:{
-        
         GLOBAL.side_view.showView(EVENT_ID.SHOW_PRICES, true);
       }
+      case EVENT_ID.ADD_PRICE_COLUMN:{
+        price_view.setParam(param)
+      }
     }	
-  }
-  
-  private function calculatePrice():Void {
-    
   }
 }

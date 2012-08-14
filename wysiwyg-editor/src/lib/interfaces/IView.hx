@@ -31,6 +31,4 @@ interface IView
 	function getPosX():Float;
 	function getPosY():Float;
 	function enableMouse(b:Bool):Void;
-	function addColumn(title:String, amount_std_pms_color:UInt, amount_custom_pms1_color:UInt, amount_custom_pms2_color:UInt, amount_foil_color:UInt, amount_laser_color:UInt):Void;
-  function addAllPrices():Void;
 }

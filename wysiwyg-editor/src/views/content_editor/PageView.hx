@@ -73,11 +73,11 @@ class PageView extends View{
     var custom_pms2_colors = new Array();
     var foil_colors = new Array();
     
-    var amount_std_pms_color = 0;
-    var amount_custom_pms1_color = 0;
-    var amount_custom_pms2_color = 0;
-    var amount_foil_color = 0;
-    var amount_laser_color = 0;
+    var amount_std_pms_color:UInt = 0;
+    var amount_custom_pms1_color:UInt = 0;
+    var amount_custom_pms2_color:UInt = 0;
+    var amount_foil_color:UInt = 0;
+    var amount_laser_color:UInt = 0;
     
     //trace("Getting price! ####################################");
     for(i in 0...placeholders.length) {
@@ -152,8 +152,19 @@ class PageView extends View{
       }
     }
     
-    GLOBAL.price_view.addColumn(model.getString('page_name'), amount_std_pms_color, amount_custom_pms1_color, amount_custom_pms2_color, amount_foil_color, amount_laser_color);
-    GLOBAL.price_view.addAllPrices();
+    model.setInt('amount_std_pms_color', amount_std_pms_color);
+    model.setInt('amount_custom_pms1_color', amount_custom_pms1_color);
+    model.setInt('amount_custom_pms2_color', amount_custom_pms2_color);
+    model.setInt('amount_foil_color', amount_foil_color);
+    model.setInt('amount_laser_color', amount_laser_color);
+    
+    //this is in reality just price_view.addColumn(model)
+    GLOBAL.price_view.setModel(model);
+    
+    var param = new Parameter(EVENT_ID.ADD_PRICE_COLUMN);
+    param.setInt();
+    GLOBAL.Pages.setParam()
+    GLOBAL.price_view.update('addAllPrices', 0, '');
     
   }
   
