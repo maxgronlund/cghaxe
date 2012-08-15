@@ -57,6 +57,10 @@ class PageModel extends Model, implements IModel
         Pages.dispatchParameter(param);
       }
       
+      case EVENT_ID.ADD_PRICE_COLUMN:{
+        GLOBAL.price_view.setParam(param);
+      }
+      
       //case EVENT_ID.UPDATE_SIDE_VIEWS:{
       //
       //}
