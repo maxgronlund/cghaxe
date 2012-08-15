@@ -12,6 +12,7 @@ class PriceColumn extends MovieClip {
   private var amount_custom_pms1_color:UInt;
   private var amount_custom_pms2_color:UInt;
   private var amount_foil_color:UInt;
+  private var amount_greetings:UInt;
   private var amount_laser_color:UInt;
 
   private var column_total_price:Float;
@@ -53,6 +54,11 @@ class PriceColumn extends MovieClip {
 	      price_labels.push(new OnePrice('foil'));
 	    }
 	    
+	  }
+	  if(amount_greetings > 0) {
+	    for(i in 0...amount_greetings) {
+  	    price_labels.push(new OnePrice('greeting'));
+	    }
 	  }
 	  if(amount_laser_color > 0) {
 	    price_labels.push(new OnePrice('laser'));
@@ -116,9 +122,13 @@ class PriceColumn extends MovieClip {
   public function set_amount_foil_color(amount:UInt):Void {
     amount_foil_color = amount;
   }
+  public function set_amount_greetings(amount:UInt):Void {
+    amount_greetings = amount;
+  }
   public function set_amount_laser_color(amount:UInt):Void {
     amount_laser_color = amount;
   }
+  
   
   
   

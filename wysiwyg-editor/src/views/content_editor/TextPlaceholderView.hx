@@ -80,6 +80,7 @@ class TextPlaceholderView extends APlaceholder {
   private var laserColor:UInt;
   private var fontScreenColor:UInt;
   private var loaded_fonts:Hash<Dynamic>;
+  private var textFieldText:String;
   
   //private var loading:Bitmap;
   
@@ -206,9 +207,9 @@ class TextPlaceholderView extends APlaceholder {
   }
    
   override public function getText(): Void {
-    
     var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_TEXT);
     param.setString(font.getText());
+    textFieldText = font.getText();
     param.setInt(id);
     model.setParam(param);
   }
@@ -519,12 +520,14 @@ class TextPlaceholderView extends APlaceholder {
   private function showTags():Void{
     storeTags();
     tagsIsVisible   = true;
+    textFieldText = textWithTags;
     font.setText(textWithTags);  
   }
   
   private function hideTags():Void{
     storeTags();
     tagsIsVisible = false;
+    textFieldText = insertTags(textWithTags);
     font.setText(insertTags(textWithTags));
   }
   
@@ -579,6 +582,7 @@ class TextPlaceholderView extends APlaceholder {
     focus             = b;
     
     if(!focus){
+      
       hideTags();
       setTextOnTop(false);
       if(was_foiled == true)
@@ -590,12 +594,16 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function updateFocus():Void{
-        
+    updatePrice();
     resizeBackdrop();
     selectBox.setFocus(focus);
     handleKeyboard( focus );
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
-    
+  }
+  
+  private function updatePrice():Void{
+    textFieldText = textWithTags;
+    GLOBAL.Pages.calculatePrice();
   }
   
   private function textFielsCapturedFocus(b:Bool):Void{
@@ -635,6 +643,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   public function textInputCapture():Void {
+    updatePrice();
     resizeBackdrop();
     hitTest();
   }
@@ -682,6 +691,10 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function getTextField():TextField{
      return font.getTextField();
+  }
+  
+  override public function getTextFieldText():String{
+    return textFieldText;
   }
   
   override public function alert(b:Bool):Void{

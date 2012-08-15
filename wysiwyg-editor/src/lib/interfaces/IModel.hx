@@ -30,4 +30,5 @@ interface IModel implements IEventDispatcher
 	function getVector(id:String):Vector<Dynamic>;
 	function dispatchXML(label:String, xml:Xml):Void;
 	function getPrintPrice(units:UInt, printType:String):Float;
+	function calculatePrice():Void;
 }

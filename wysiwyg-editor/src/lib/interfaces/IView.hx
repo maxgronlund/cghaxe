@@ -31,4 +31,5 @@ interface IView
 	function getPosX():Float;
 	function getPosY():Float;
 	function enableMouse(b:Bool):Void;
+	function addColumn(title:IModel):Void;
 }

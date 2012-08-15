@@ -27,25 +27,26 @@ class PriceView extends PropertyView, implements IView{
 	  priceColumns = new Array();
 	}
 	
-	private function addColumn(model:IModel):Void{
+	override public function addColumn(model:IModel):Void{
 	  var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
 	  price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
 	  price_column.set_amount_custom_pms1_color(model.getInt('amount_custom_pms1_color'));
 	  price_column.set_amount_custom_pms2_color(model.getInt('amount_custom_pms2_color'));
 	  price_column.set_amount_foil_color(model.getInt('amount_foil_color'));
+	  price_column.set_amount_greetings(model.getInt('amount_greetings'));
 	  price_column.set_amount_laser_color(model.getInt('amount_laser_color'));
 
 	  priceColumns.push(price_column);
 	}
 	
-	override public function setParam(param:IParameter):Void{
-	  switch ( param.id )
-	  {
-	    case EVENT_ID.ADD_PRICE_COLUMN:{
-        addColumn(model);
-      }
-	  }
-	}
+	//override public function setParam(param:IParameter):Void{
+	//  switch ( param.id )
+	//  {
+	//    case EVENT_ID.ADD_PRICE_COLUMN:{
+  //      addColumn(model);
+  //    }
+	//  }
+	//}
 	
 	override public function update(id:String, index:Int, value:String):Void{
 	  switch ( id )

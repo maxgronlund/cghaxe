@@ -21,7 +21,7 @@ class PriceController extends Controller, implements IController
         GLOBAL.side_view.showView(EVENT_ID.SHOW_PRICES, true);
       }
       case EVENT_ID.ADD_PRICE_COLUMN:{
-        price_view.setParam(param)
+        //price_view.setParam(param);
       }
     }	
   }
