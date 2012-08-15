@@ -186,6 +186,9 @@ class PagesModel extends Model, implements IModel {
     {
       case 'price_xml':{
         var fileStr:String ='';
+        fileStr += '<prices>\n';
+        fileStr += GLOBAL.price_view.getString("price_xml");
+        fileStr += '</prices>\n';
       }
       case'file_xml':{
         var fileStr:String ='';

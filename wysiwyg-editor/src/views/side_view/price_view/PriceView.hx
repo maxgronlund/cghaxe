@@ -39,6 +39,26 @@ class PriceView extends PropertyView, implements IView{
 	  priceColumns.push(price_column);
 	}
 	
+	
+	override public function getString(id:String):String {
+	  switch ( id )
+	  {
+	   case "price_xml":
+	     var result:String = "";
+   	   for(i in 0...priceColumns.length) {
+   	     result += "<page>\n";
+   	     result += "<total-price>\n";
+   	     priceColumns[i].getColumnTotalPrice();
+   	     result += "</total-price>\n";
+   	     result += "</page>\n";
+   	   }
+   	   return result;
+   	  default:
+   	    return "";
+	  }
+	  
+	}
+	
 	//override public function setParam(param:IParameter):Void{
 	//  switch ( param.id )
 	//  {
