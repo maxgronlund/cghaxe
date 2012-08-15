@@ -187,7 +187,7 @@ class PriceColumn extends MovieClip {
 	   case "std-color":
 	     return selected_price.getStdColorPrice();
 	   default:
-	     trace("Error selecting print_type!!!");
+	     trace("Error selecting print_type!!!", print_type);
 	     return 0.0;
 	  }
 	  

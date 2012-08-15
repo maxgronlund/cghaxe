@@ -68,7 +68,7 @@ class ColorView extends PropertyView, implements IView{
     switch ( e.getString() ){
     
       case 'vector_placeholder':{
-        trace('to do: open color tool, hide test tool, dimm text selector button');
+        //trace('to do: open color tool, hide test tool, dimm text selector button');
     
         stdPmsColorPicker.alpha         = 1.0;
         customPms1ColorPicker.alpha     = 1.0;

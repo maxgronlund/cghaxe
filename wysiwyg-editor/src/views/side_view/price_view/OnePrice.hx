@@ -13,7 +13,7 @@ class OnePrice extends MovieClip {
 	  this.print_type = print_type;
 	  
 	  if(print_type != "foil" && print_type != "one-pms-color" && print_type != "std-color")
-	    trace("Error selecting print_type!!!");
+	    trace("Error selecting print_type!!!", print_type);
 	  
 		item_label = new FormatedText('helvetica', 'item', 12, false);
   	units_label = new FormatedText('helvetica', 'units', 12, false);

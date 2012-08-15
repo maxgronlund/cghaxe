@@ -109,7 +109,7 @@ class PageModel extends Model, implements IModel
   }
   
   override function setString(id:String, s:String):Void{
-    
+
     switch(id) {
       case 'print_mask_url':          print_mask_url  = s; 
       case 'hide_mask_url':           hide_mask_url   = s;
@@ -123,7 +123,7 @@ class PageModel extends Model, implements IModel
   }
   
   override function getString(id:String):String{
-    
+
     switch(id) {
       case 'print_mask_url':    return print_mask_url; 
       case 'hide_mask_url':     return hide_mask_url; 
@@ -139,6 +139,7 @@ class PageModel extends Model, implements IModel
   override public function setXml(id:String, xml:Xml):Void{
     
     //front_of_paper = false;
+//    trace(xml.toString());
     
     for(front in xml.elementsNamed('front')){  front_of_paper = front.firstChild().nodeValue == 'true';}
 
@@ -151,8 +152,8 @@ class PageModel extends Model, implements IModel
       print_mask_url = print_mask.firstChild().nodeValue;
     }
     
-    for(front_shoot in xml.elementsNamed('front-shoot')){
-      front_shoot_url = front_shoot.firstChild().nodeValue;
+    for(front_shot in xml.elementsNamed('front-shot')){
+      front_shoot_url = front_shot.firstChild().nodeValue;
     }
     
     for(printTypes in xml.elementsNamed('print-types')){
@@ -167,7 +168,6 @@ class PageModel extends Model, implements IModel
       ////for(design in designs.elementsNamed('design')){
       //  trace('-----------------------------');
       //}
-      
     }
   }
 

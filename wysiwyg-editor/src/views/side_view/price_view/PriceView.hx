@@ -100,7 +100,7 @@ class PriceView extends PropertyView, implements IView{
   }
 	
 	private function parsePrice(prices_xml:Xml):Void{
-	  		
+//	  trace(prices_xml.toString());
 		for( print_price_xml in prices_xml.elementsNamed("print-price") ) {
 		  var units:UInt;
 		  var foil_price:Float;

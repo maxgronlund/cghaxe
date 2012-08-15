@@ -37,7 +37,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function onParsePreset(e:IKEvent):Void{
-//    trace('onParsePreset');
+
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
     for( preset in xml.elementsNamed("preset") ) {
       countPlaceholders(preset);
@@ -88,20 +88,20 @@ class PresetModel extends Model, implements IModel
     }
     for(pages in xml.elementsNamed("pages") ) {
       for(page in pages.elementsNamed("page") ) {
-        var is_associated_product:Bool = false;
-        var firstAssPage = true;
-        for(associated_products in page.elementsNamed("associated-products") ) {
-          is_associated_product = true;
-          parseAssociatedProducts(associated_products);
-          if(firstAssPage){
-            firstAssPage  =false;
-            pickUpDesignsforAssProduct(page);
-          }
-            
-        }
-        if(!is_associated_product){
+        //var is_associated_product:Bool = false;
+        //var firstAssPage = true;
+        //for(associated_products in page.elementsNamed("associated-products") ) {
+        //  is_associated_product = true;
+        //  parseAssociatedProducts(associated_products);
+        //  if(firstAssPage){
+        //    firstAssPage  =false;
+        //    pickUpDesignsforAssProduct(page);
+        //  }
+        //    
+        //}
+        //if(!is_associated_product){
           buildPage(page);
-        }
+        //}
       } 
     }
     
@@ -113,17 +113,17 @@ class PresetModel extends Model, implements IModel
       dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
     }
     
-    trace("parsing xml--------------");
+
     
-    trace("print_price initiated");
+
     for(print_prices in xml.elementsNamed("print-prices")){
       Application.dispatchXML(EVENT_ID.PRESET_PRICES, print_prices);
     }
     
     // !!! Freezes
-    //for(user_tags in xml.elementsNamed("user-tags")){
-    //  GLOBAL.userParser.parseUser(user_tags);
-    //}
+    for(user_tags in xml.elementsNamed("user-tags")){
+      GLOBAL.userParser.parseUser(user_tags);
+    }
     
     
     
@@ -192,7 +192,6 @@ class PresetModel extends Model, implements IModel
   }
   
   private function buildPage(xml:Xml):Void{
-    trace('build page');
     var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
     param.setXml(xml);
     dispatchParameter(param);

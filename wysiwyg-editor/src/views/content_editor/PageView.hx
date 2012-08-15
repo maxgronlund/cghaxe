@@ -218,7 +218,6 @@ class PageView extends View{
 	
   override public function setModel(model:IModel):Void{
     
-//    trace('model set');
     this.model = model;
     
     //model.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot); 	
@@ -316,13 +315,11 @@ class PageView extends View{
   }
 
   private function onPageXmlLoaded(e:IKEvent):Void{  
-
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-
   }
   
   private function loadPagePresetXML():Void{
-
+    trace('loadPagePresetXML');
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
