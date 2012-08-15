@@ -158,14 +158,12 @@ class PageView extends View{
     model.setInt('amount_foil_color', amount_foil_color);
     model.setInt('amount_laser_color', amount_laser_color);
     
-    model.setParam(new Parameter(EVENT_ID.ADD_PRICE_COLUMN););
+    //this is in reality just price_view.addColumn(model)
+    GLOBAL.price_view.setModel(model);
     
-    ////this is in reality just price_view.addColumn(model)
-    //GLOBAL.price_view.setModel(model);
-    //
-    //var param = new Parameter(EVENT_ID.ADD_PRICE_COLUMN);
-    //param.setInt(id);
-    //GLOBAL.Pages.setParam()
+    var param = new Parameter(EVENT_ID.ADD_PRICE_COLUMN);
+    param.setInt();
+    GLOBAL.Pages.setParam()
     GLOBAL.price_view.update('addAllPrices', 0, '');
     
   }
