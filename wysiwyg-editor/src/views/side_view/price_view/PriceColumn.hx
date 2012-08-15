@@ -104,6 +104,10 @@ class PriceColumn extends MovieClip {
     return column_total_price;
   }
   
+  //public function getPriceLabels():Array{
+  //  return price_labels;
+  //}
+  
   public function removeAllPrices():Void {
     for(i in 0...price_labels.length) {
       removeChild(price_labels[i]);
