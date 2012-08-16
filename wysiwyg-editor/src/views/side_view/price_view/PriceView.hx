@@ -47,9 +47,13 @@ class PriceView extends PropertyView, implements IView{
 	     var result:String = "";
    	   for(i in 0...priceColumns.length) {
    	     result += "<page>\n";
-   	     result += "<total-price>\n";
-   	     priceColumns[i].getColumnTotalPrice();
-   	     result += "</total-price>\n";
+   	     
+   	       result += "<total-price>";
+   	         priceColumns[i].getColumnTotalPrice();
+   	       result += "</total-price>\n";
+   	       
+   	       
+   	     
    	     result += "</page>\n";
    	   }
    	   return result;
