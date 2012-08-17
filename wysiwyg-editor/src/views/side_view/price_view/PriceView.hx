@@ -41,8 +41,13 @@ class PriceView extends PropertyView, implements IView{
 	
 	
 	override public function getString(id:String):String {
+	  
+	  trace(id);
 	  switch ( id )
 	  {
+	    case "viewId":{
+	      return "show_prices";
+	    }
 	   case "price_xml":
 	     var result:String = "";
    	   for(i in 0...priceColumns.length) {

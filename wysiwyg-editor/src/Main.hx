@@ -54,6 +54,7 @@ class Main
   private var designsView:AView;
 //  private var designImagesView:AView;
   private var greetingsView:AView;
+  private var blindView:AView;
 //  private var foilView:AView;
   private var addOnsView:AView;
   private var garamondView:AView;
@@ -152,6 +153,7 @@ class Main
     designsView                 = new DesignsView(designsController);
 //    designImagesView            = new DesignImagesView(designImagesController);
     greetingsView               = new GreetingsView(greetingsController);
+    blindView                   = new BlindView(sidebarController);
 //    foilView                    = new FoilView(foilController);
     addOnsView                  = new AddOnsView(addOnsController);
     garamondView                = new GaramondView(garamondController);
@@ -219,6 +221,7 @@ class Main
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
     GLOBAL.greetings_view             = greetingsView;
+    GLOBAL.blind_view                 = blindView;
     GLOBAL.foil			              		= foil;
   }
   
@@ -260,6 +263,7 @@ class Main
     addOnsView.init();
     garamondView.init();
     greetingsView.init();
+    blindView.init();
     logoView.init();
     priceView.init();
     pageSelectorView.init();

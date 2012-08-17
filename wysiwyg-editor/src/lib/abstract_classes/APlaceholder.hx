@@ -85,7 +85,7 @@ class APlaceholder extends Sprite{
   }
   
   public function getTextFieldText():String{
-    trace("getTextFieldText: must be overriden in a subclass");
+    //trace("getTextFieldText: must be overriden in a subclass");
     return "na";
   }
   

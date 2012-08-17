@@ -116,8 +116,12 @@ class AView extends Sprite, implements IView
 
 	}
 	
-	// !!! mess
+	public 	function setXml(id:String, xml:Xml):Void{
+		trace("setXml: must be overriden in a subclass");
+	}
+
 	
+	// !!! mess
 	public function addColumn(title:IModel):Void{
 	  trace("addColumn: must be overriden in a subclass");
 	}

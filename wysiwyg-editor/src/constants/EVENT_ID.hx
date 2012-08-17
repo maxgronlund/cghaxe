@@ -241,10 +241,12 @@ class EVENT_ID  {
   public static inline var ENABLE_COLOR_PICKER                = "enable_color_picker";
   public static inline var POSITION_PICKERS                   = "positions_pickers";
   
+  public static inline var PMS1_COLOR_SELECTED                = "pms1_color_selected";
+  public static inline var PMS2_COLOR_SELECTED                = "pms2_color_selected";
   public static inline var STD_PMS_COLOR_SELECTED             = "std_pms_color_selected";
   public static inline var FOIL_COLOR_SELECTED                = "foil_color_selected";
   public static inline var COLOR_SELECTED                     = "color_selected";
-  
+
   
   
   

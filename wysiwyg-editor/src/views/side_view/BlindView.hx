@@ -16,4 +16,10 @@ class BlindView extends View
 		backdrop.height = Lib.current.stage.stageHeight;
 		addChild(backdrop);
 	}
+	
+	override public function init():Void{
+	  
+	}
+	
+	override public function update(s:String, i:Int, t:String):Void{}
 }

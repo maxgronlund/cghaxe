@@ -49,10 +49,12 @@ class DesignsModel extends Model, implements IModel {
       case EVENT_ID.DESIGN_SELECTED:{
         //trace('DESIGN_SELECTED');
         pageDesignXml = param.getXml();
+        dispatchParameter(param);
       }
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{
         //trace('ADD_DESIGN_TO_PAGE');
         if(pageDesignXml != null){
+          trace(pageDesignXml.toString());
           dispatchXML(EVENT_ID.ADD_DESIGN_TO_PAGE, pageDesignXml);
         }
       }

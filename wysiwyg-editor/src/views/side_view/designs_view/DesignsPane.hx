@@ -4,91 +4,120 @@ import flash.display.Bitmap;
 import flash.geom.Point;
 import flash.Vector;
 
+
 class DesignsPane extends View, implements IView{
   
   private var selectedButton:Int;
   private var designsButtons:Vector<OneStateTextAndImageButton>;
   private var buttonIndex:UInt;
   private var buttonPos:UInt;
+  private var page:Vector<Xml>;
+  private var pageIndex:Int;
+  private var swapIndex:Int; 
+  private var swapPageToDesigns:Array<Int>;
   
   
   
   public function new(designsController:IController){	
     super(designsController);
-    bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
-    backdrop				= new Bitmap(bmpData);
+    bmpData           = new BitmapData(172,20,false, COLOR.SCROLLPANE );
+    backdrop          = new Bitmap(bmpData);
     
-    designsButtons = new Vector<OneStateTextAndImageButton>();
-    buttonIndex	= 0;
-    selectedButton = 0;
-    buttonPos	= 0;
-    selectedButton = 0;
+    designsButtons    = new Vector<OneStateTextAndImageButton>();
+    buttonIndex	      = 0;
+    selectedButton    = 0;
+    buttonPos	        = 0;
+    page             = new Vector<Xml>();
+    swapPageToDesigns  = new Array<Int>();
+    pageIndex         = 0;
+    swapIndex         = 0;
+    
+    Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
+    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
+    Designs.addEventListener(EVENT_ID.DESIGN_SELECTED, onDesignSelected);
+
     
     
   }
   
-  override public function init():Void{
-  
-  }
-  
+
   override public function onAddedToStage(e:Event):Void{
-  
   	super.onAddedToStage(e);
   	addChild(backdrop);
-  
   }
 
 
-  override public function setParam(param:IParameter):Void{
-    
-    switch ( param.getLabel() ){
-      case EVENT_ID.ADD_DESIGN_BUTTON:{
-        param.setLabel(EVENT_ID.DESIGN_SELECTED);
-        addButton(param);
-      }
-      
-      case EVENT_ID.DESIGN_SELECTED:{
-        selectButton( param.getInt());
-      }
-    }
-  }
   
-  private function selectButton(id:Int):Void{
+  public function selectButton(id:Int):Void{
+    trace(id);
     if(id != selectedButton){
       designsButtons[selectedButton].setOn(false);
       designsButtons[id].setOn(true);
       selectedButton = id;
     }
-    
   }
   
-  private function addButton(param:IParameter	):Void{
-
-    var designTitle:String;
-    
-    for( title in param.getXml().elementsNamed("title") ) {
-      designTitle = title.firstChild().nodeValue;
-      param.setString(designTitle);
+  private function removeButtons():Void{
+    trace('remove buttons');
+    buttonPos = 0;
+    buttonIndex = 0;
+    for(i in  0...designsButtons.length){
+      trace(i);
+      removeChild(designsButtons[i]);
+      designsButtons[i] = null;
     }
-    param.setInt(buttonIndex);
-    var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
-    oneStateTextAndImageButton.init( controller, new Point(171, 27), new PlaceholderButton(), param );
-    oneStateTextAndImageButton.fireOnMouseUp(false);
-    oneStateTextAndImageButton.jumpBack(false);
-    oneStateTextAndImageButton.setText(designTitle);
+    designsButtons = null;
+    designsButtons    = new Vector<OneStateTextAndImageButton>();
+  }
+
+  private function addButton(xml:Xml	):Void{
+    trace('add buttons');
     
-    designsButtons[buttonIndex] = oneStateTextAndImageButton;
-    addChild(designsButtons[buttonIndex]);
-    designsButtons[buttonIndex].y = buttonPos;
+    for( designs in xml.elementsNamed("designs") ) {
+      for( design in designs.elementsNamed("design") ) {
+        
+        var param:IParameter = new Parameter(EVENT_ID.DESIGN_SELECTED);
+        var designTitle:String;
+        for( title in design.elementsNamed("title") ) 
+          designTitle = title.firstChild().nodeValue;
+        param.setString(designTitle);
+        param.setXml(design);
+        param.setInt(buttonIndex);
+
+        var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
+        oneStateTextAndImageButton.init( controller, new Point(171, 27), new PlaceholderButton(), param );
+        oneStateTextAndImageButton.fireOnMouseUp(false);
+        oneStateTextAndImageButton.jumpBack(false);
+        oneStateTextAndImageButton.setText(designTitle);
     
-    buttonPos += 27;
-    buttonIndex++;
+        designsButtons[buttonIndex] = oneStateTextAndImageButton;
+        addChild(designsButtons[buttonIndex]);
+        designsButtons[buttonIndex].y = buttonPos;
     
-    selectButton(0);
+        buttonPos += 27;
+        buttonIndex++;
+        
+
+      }
+      selectButton(0);
+
+    }
+    
+     //param.setLabel(EVENT_ID.DESIGN_SELECTED);
+      //
+      //param.setString(designTitle);
+
+    
+
+//    param.setInt(buttonIndex);
+
+//    
+//    selectButton(0);
     
   //  trace(param.getXml().toString());
     
 	}
+	
 
 
   override public function getFloat(id:String):Float{
@@ -99,20 +128,48 @@ class DesignsPane extends View, implements IView{
     return 0;
   }
   
-  override public function setString(id:String, s:String):Void{
+  private function onBuildPage(e:IKEvent):Void{
+    var designOnPage:Bool = false;
+
+    for(designs in e.getXml().elementsNamed("designs") ){
+      page.push(e.getXml());
+	    
+	    designOnPage = true;
+    }
     
-    //switch ( id )	{
-    //	case 'load_default_font':{
-    //		fontButtons[0].setOn(true);
-    //	}
-    //	case EVENT_ID.FONT: selectFont(s);
-    //}
+    if(designOnPage){
+      
+      swapPageToDesigns[pageIndex] = swapIndex;
+      swapIndex++;
+    }else{
+      swapPageToDesigns[pageIndex] = -1;
+    }
+    pageIndex++;
+
   }
   
-  //public function doStuff():Void{
-  //  
-  //}
+  private function onPageSelected(e:IKEvent):Void{
+    
+    removeButtons();
+    var i = swapPageToDesigns[e.getInt()];
+    if(i != -1){
+      addButton(page[i]);
+    }
+  }
   
+  private function onDesignSelected(e:IKEvent):Void{
+    selectButton( e.getInt());
+    trace('design selecter', e.getInt());
+  }
   
+  override public function setInt(id:String, i:Int):Void{
+    switch ( id )	{
+    	case EVENT_ID.PAGE_SELECTED:{
+    		trace('page_selected: ', i);
+    	}
+    
+    }
+  }
   
+
 }

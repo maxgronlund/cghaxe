@@ -73,7 +73,8 @@ class ApplicationModel extends Model, implements IModel
                       'load preset files from backend',
                       'pass preset',
                       'add pages to stage',
-                      'set defaults',
+                      'set defaults'
+                      
                       //'init zoom'
                       //'reset mouse'
                       ];
@@ -143,11 +144,18 @@ class ApplicationModel extends Model, implements IModel
         dispatchParameter(new Parameter(EVENT_ID.DESELECT_PLACEHOLDERS));
         dispatchParameter(new Parameter(EVENT_ID.SET_DEFAULT_TOOL));
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_PAGE));
+        
+        
         // update DesktopView if there is no placeholders
         
         
         loadSeq();
       }
+      //case 'calculate prices':{
+      //  trace('calculate prices');
+      //  Pages.calculatePrice();
+      //  loadSeq();
+      //}
       
       //case 'init zoom':{
       //  trace('init zoom');

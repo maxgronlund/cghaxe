@@ -200,6 +200,7 @@ class VectorPlaceholderView extends APlaceholder {
     loadVectorFile();
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+    GLOBAL.Pages.calculatePrice();
   }
    
   private function handleKeyboard(b:Bool):Void{
@@ -301,6 +302,8 @@ class VectorPlaceholderView extends APlaceholder {
         foilify(foilColor);
       }
     }
+    
+    GLOBAL.Pages.calculatePrice();
   }
   
   public function resizeBackdrop():Void {
@@ -324,6 +327,7 @@ class VectorPlaceholderView extends APlaceholder {
         foilify(GLOBAL.foilColor);
       }
     }
+    GLOBAL.Pages.calculatePrice();
   }
   
   override public function setFocus(b:Bool):Void{
@@ -368,6 +372,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onRemovedFromStage(e:Event){
+    GLOBAL.Pages.calculatePrice();
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }

@@ -55,6 +55,7 @@ class ParameterParser
     
     // page design
     if(params.pagedesign_xml_file_url != null){
+      trace(params.pagedesign_xml_file_url);
       GLOBAL.preset_file_url = params.pagedesign_xml_file_url;
     }
 
@@ -83,6 +84,7 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
+          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.BLIND_VIEW);
         } 
         
         case 'user_preset':{

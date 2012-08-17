@@ -411,6 +411,11 @@ class TextPlaceholderView extends APlaceholder {
     
     setFontPrintType();
     resizeBackdrop();
+    
+    GLOBAL.Pages.calculatePrice();
+    //Pages.dispatchEvent( new Event(EVENT_ID.CALCULATE_PRICE));
+    //GLOBAL.Pages.setString(EVENT_ID.CALCULATE_PRICE, 'foo');
+    
   }
   
   private function hitTest():Void{
@@ -442,6 +447,8 @@ class TextPlaceholderView extends APlaceholder {
     font = null;
     unfoilify();
     loadFont();
+    
+    GLOBAL.Pages.calculatePrice();
     
   }
   
@@ -680,7 +687,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onRemovedFromStage(e:Event){
-    //trace('onRemovedFromStage');
+    GLOBAL.Pages.calculatePrice();
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
   }

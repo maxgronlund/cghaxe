@@ -84,9 +84,10 @@ class PageView extends View{
     
     //trace("Getting price! ####################################");
     for(i in 0...placeholders.length) {      
-      if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
-        amount_greetings += 1;
-      } else if(placeholders[i].getPlaceholderType() == 'text_place_holder') {
+      //if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
+      //  amount_greetings += 1;
+      //} else if(placeholders[i].getPlaceholderType() == 'text_place_holder') {
+      if(true){
         if(StringTools.trim(placeholders[i].getTextFieldText()) != ''){
           switch ( placeholders[i].getPrintType() )
           {
@@ -319,7 +320,7 @@ class PageView extends View{
   }
   
   private function loadPagePresetXML():Void{
-    trace('loadPagePresetXML');
+//    trace('loadPagePresetXML');
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -477,19 +478,7 @@ class PageView extends View{
     addChild(placeholder);
 
   }
-  /*
-  private function addVectorPlaceholder(posX:Float, posY:Float, url:String):Void{
-    
-    setPlaceholderInFocus(null);
-    //var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
-    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
-    placeholder.x = posX;
-  	placeholder.y = posY;
-    placeholders.push(placeholder);
-    addChild(placeholder);
-    
-  }
-*/
+
   private function onReleasePageFocus(e:KEvent):Void {
     setPlaceholderInFocus(null);
     MouseTrap.release();
@@ -675,17 +664,17 @@ class PageView extends View{
   
   private function loadHideMask():Void{
     
-    //var hide_mask_url:String = model.getString('hide_mask_url');
-    //
-    //if(hide_mask_url == '' || hide_mask_url == null){
-    //  allImagesLoaded();
-    //}else{
-    //  hideMaskPresent = true;
-    //  var request:URLRequest  = new URLRequest(hide_mask_url);
-    //  printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
-    //  printMaskLoader.load(request);
-    //}
-    allImagesLoaded();
+    var hide_mask_url:String = model.getString('hide_mask_url');
+    
+    if(hide_mask_url == '' || hide_mask_url == null){
+      allImagesLoaded();
+    }else{
+      hideMaskPresent = true;
+      var request:URLRequest  = new URLRequest(hide_mask_url);
+      printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
+      printMaskLoader.load(request);
+    }
+    //allImagesLoaded();
   }
   
   private function onLoadHideMaskComplete(e:Event):Void{

@@ -10,7 +10,7 @@ class DesignsView extends PropertyView, implements IView{
   private var addDesignButton:OneStateButton;
   
  
-  private var pages:Vector<Xml>;
+  
   
   public function new(designsController:IController){	
     super(designsController);
@@ -20,12 +20,13 @@ class DesignsView extends PropertyView, implements IView{
     designsPane         = new DesignsPane(designsController);
     verticalScrollbar   = new VerticalScrollbar(designsController, EVENT_ID.DESIGN_SCROLL);
     addDesignButton     = new OneStateButton();
-    pages                 = new Vector<Xml>();
+    
     
     //Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
     //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
-    Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
+    //Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
+    
     //Preset.addEventListener(EVENT_ID.ADD_DESIGN_PAGE_TO_SIDEBAR, onBuildPage);
     
   }
@@ -46,18 +47,20 @@ class DesignsView extends PropertyView, implements IView{
     addDesignButton.fireOnMouseUp(false);
   }
   
+  //override public function setInt(id:String, i:Int):Void{
+  //  switch ( id )
+  //  {
+  //    case EVENT_ID.DESIGN_SELECTED:
+  //      designsPane.selectButton(i);
+  //  }
+  //}
+  //
   
-  private function onBuildPage(e:IKEvent):Void{
-
-    for(designs in e.getXml().elementsNamed("designs") ) {
-      pages.push(designs);
-
-      //addPageSelectorLink(title.firstChild().nodeValue.toString());
-    }
-    trace('--------------------------------------------------------------');
-    trace(pages[0].toString());
-
-  }
+//  private function onBuildPage(e:IKEvent):Void{
+//    
+//    //designsPane.setXml(CONST.XML_FILE, e.getXml());
+//
+//  }
   
   
   override public function onAddedToStage(e:Event):Void{
@@ -84,9 +87,11 @@ class DesignsView extends PropertyView, implements IView{
     //Pages.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onPageSelected);
   }
   
-  private function onPageSelected(e:IKEvent):Void{
-   //trace(e.getXml()); 
-  }
+//  private function onPageSelected(e:IKEvent):Void{
+//    //trace(pages[e.getInt()].toString());
+//    designsPane.setInt(EVENT_ID.PAGE_SELECTED, e.getInt());
+//   //trace(e.getInt()); 
+//  }
   
 //  private function onPageDesignsLoaded(e:KEvent):Void{
 //    

@@ -59,7 +59,7 @@ class ColorView extends PropertyView, implements IView{
     colorText        	      = new FormatedText('helvetica', 'LASER COLOR', 11, false);
     
     
-
+    
   }
   
   
@@ -165,7 +165,8 @@ class ColorView extends PropertyView, implements IView{
     foilColorPicker.visible           = true;
     colorPicker.visible               = true;
     
-    
+    customPms1ColorPicker.setString("set_pms", EVENT_ID.PMS1_COLOR_SELECTED);
+    customPms2ColorPicker.setString("set_pms", EVENT_ID.PMS2_COLOR_SELECTED);
     
   }
   

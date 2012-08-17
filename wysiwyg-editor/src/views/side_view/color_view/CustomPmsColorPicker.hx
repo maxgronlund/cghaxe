@@ -6,8 +6,11 @@ import flash.display.BitmapData;
 
 class CustomPmsColorPicker extends View{
   
+  private var pms_id:String;
+  
   public function new(controller:IController){
     super(controller);
+    pms_id = EVENT_ID.PMS1_COLOR_SELECTED;
    }
 
    override public function init():Void{
@@ -37,7 +40,7 @@ class CustomPmsColorPicker extends View{
      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
      
      var pixelValue:UInt = backdrop.bitmapData.getPixel(Std.int(e.localX), Std.int(e.localY));
-     var param:Parameter = new Parameter(EVENT_ID.STD_PMS_COLOR_SELECTED);
+     var param:Parameter = new Parameter(EVENT_ID.PMS1_COLOR_SELECTED);
      param.setUInt(pixelValue);
      controller.setParam(param);
    }
@@ -45,6 +48,14 @@ class CustomPmsColorPicker extends View{
    private function onMouseUp(e:MouseEvent){	
      stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
  		 addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+   }
+   
+   override public function setString(id:String, s:String):Void{
+     switch ( id )
+     {
+      case 'set_pms':
+        pms_id = s;
+     }
    }
 }
 

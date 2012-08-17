@@ -145,14 +145,14 @@ class PagesModel extends Model, implements IModel {
         var param:IParameter = new Parameter(EVENT_ID.ADD_PLACEHOLDER);
         pageInFocus.setParam(param);
         
-        calculatePrice();
+        //calculatePrice();
         //Application.dispatchParameter( new Parameter(EVENT_ID.SELECT_MOVE_TOOL) );
       }
 
       case EVENT_ID.UPDATE_PLACEHOLDER:{
         if(pageInFocus != null){
       	  pageInFocus.dispatchParameter(param);
-      	  calculatePrice();
+      	  //calculatePrice();
         }
       }
       case EVENT_ID.TRASH_PLACEHOLDER:{
