@@ -39,6 +39,7 @@ class PageView extends View{
   private var startPoint:Point;
   private var placeholderHasMouse:Bool;
   private var pagePresetXML:Xml;
+  private var pageDesignXML:Xml;
   private var hideMaskPresent:Bool;
   
   private var frontShotSizeX:Float;
@@ -194,29 +195,7 @@ class PageView extends View{
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
 
   }
-  /*
-  private function onDisableMouse(e:IKEvent):Void{
-    trace('onDisableMouse', e.getBool());
-    //enableMouse
-    enableMouse(e.getBool());
-  }*/
-  /*
-  override public function enableMouse(b:Bool):Void{
-		
-		if(b){
-		  addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-      addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-		}else{
-		  stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
-		  removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-      removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseUp);
-      removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-		}
 
-	}
-	*/
-	
   override public function setModel(model:IModel):Void{
     
     this.model = model;
@@ -230,6 +209,11 @@ class PageView extends View{
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
     //Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded); 
+    
+    
+    Designs.addEventListener(EVENT_ID.DESIGN_XML_LOADED, onDesignXmlLoaded);
+    
+    
     loadFrontShot();
     
   }
@@ -320,7 +304,6 @@ class PageView extends View{
   }
   
   private function loadPagePresetXML():Void{
-//    trace('loadPagePresetXML');
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -332,6 +315,11 @@ class PageView extends View{
           parsePlaceholder(placeholder);
       }
     }
+  }
+  
+  private function onDesignXmlLoaded(e:IKEvent):Void{  
+    trace('onDesignXmlLoaded');
+    pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
   }
  
   private function parsePlaceholder(xml:Xml):Void{

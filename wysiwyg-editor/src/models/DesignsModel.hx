@@ -2,6 +2,9 @@
 
 import flash.events.Event;
 import flash.Vector;
+import flash.net.URLLoader;
+import flash.net.URLRequest;
+import flash.display.Loader;
 
 class DesignsModel extends Model, implements IModel {
   
@@ -33,9 +36,13 @@ class DesignsModel extends Model, implements IModel {
   private var dinner_place_name:String;
   private var city:String;
   private var countrxy:String;
+  private var pageDesignLoader:ILoader;
 
   
   public function new(){	
+    pageDesignLoader         = new XmlLoader();
+    pageDesignLoader.addEventListener( EVENT_ID.PAGEDESIGN_FILE_LOADED, onPageDesignLoaded);
+    
     super();
   }
     
@@ -54,11 +61,24 @@ class DesignsModel extends Model, implements IModel {
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{
         //trace('ADD_DESIGN_TO_PAGE');
         if(pageDesignXml != null){
-          trace(pageDesignXml.toString());
-          dispatchXML(EVENT_ID.ADD_DESIGN_TO_PAGE, pageDesignXml);
+          
+          for( id in pageDesignXml.elementsNamed("id") ) {
+            var url = '/admin/designs/'  + id.firstChild().nodeValue.toString() + '/get_xml.xml';
+             pageDesignLoader.load(url, EVENT_ID.PAGEDESIGN_FILE_LOADED);
+          }
+          
         }
       }
     }
+  }
+  private function onPageDesignLoaded(e:XmlEvent):Void{
+    //trace(e.getXml().toString());
+    var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_TO_PAGE);
+    param.setXml(e.getXml());
+//    param.setInt(page_index);
+    dispatchParameter(param);
+    
+    //dispatchXML(EVENT_ID.ADD_DESIGN_TO_PAGE, e.getXml());
   }
   
   override public function setString(id:String, s:String):Void{

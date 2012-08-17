@@ -37,6 +37,7 @@ class EVENT_ID  {
   public static inline var ALL_FILES_LOADED:String          = "all_files_loaded";
   public static inline var PAGE_XML:String                  = "page_xml";
   public static inline var PAGE_XML_LOADED:String           = "page_xml_loaded";
+  public static inline var DESIGN_XML_LOADED:String         = "design_xml_loaded";
   
   public static inline var DISABLE_MOUSE_ON_PAGES:String    = "disable_mouse_on_pages";
 
