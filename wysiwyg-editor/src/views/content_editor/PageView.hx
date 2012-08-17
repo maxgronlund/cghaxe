@@ -511,7 +511,7 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
-//    trace('disableMove');
+    trace('disableMove');
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     hitTest();
   }
@@ -529,15 +529,17 @@ class PageView extends View{
   
   private function hitTestTextPlaceholder():Void {
     
+    trace("hitTestTextPlaceholder");
     var textField:TextField = inFocus.getTextField();
+    trace("Got text field..?");
     
-    //if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-    //  if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
-    //    inFocus.alert(true);
-    //  else
-    //    inFocus.alert(false);
-    //
-    //}
+    if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
+      if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
+        inFocus.alert(true);
+      else
+        inFocus.alert(false);
+    
+    }
   }
   
   private function hitTestVectorPlaceholder():Void {

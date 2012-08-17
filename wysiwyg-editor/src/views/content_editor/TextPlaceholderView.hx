@@ -706,6 +706,7 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function alert(b:Bool):Void{
       collition = b;
+      selectBox.alert(b);
   }
 
 
