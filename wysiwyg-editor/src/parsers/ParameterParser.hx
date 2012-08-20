@@ -96,6 +96,8 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
         }
         
+        
+        
         case 'system_preview':{
 
         }
@@ -105,6 +107,11 @@ class ParameterParser
     if(params.start_load_seq != null){
       //trace('start_load_seq: ', params.start_load_seq);
       Application.setString(EVENT_ID.START_LOAD_SEQ, 'bang');
+    }
+    
+    if(params.shop_item_id != null){
+      GLOBAL.shop_item_id = params.shop_item_id;
+      trace("SHOP_ITEM_ID", params.shop_item_id);
     }
     //trace('end of parse');
 	}
