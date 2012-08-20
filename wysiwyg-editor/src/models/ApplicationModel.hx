@@ -9,17 +9,20 @@ class ApplicationModel extends Model, implements IModel
 {
 	private var configurationLoader:ILoader;
 	private var presetLoader:ILoader;
+	private var priceLoader:ILoader;
 	private var pageDesignLoader:ILoader;
 	private var presetPageDesignLoader:ILoader;
 	private var pageDesignsLoader:ILoader;
 	private var loadIndex:UInt;
 	private var loadStage:Array<String>;	
 	private var presetXml:Xml;
+	private var priceXml:Xml;
   private var pageDesignXml:Xml;
 
   public function new(){	
     super();
     presetLoader              = new XmlLoader();
+    priceLoader               = new XmlLoader();
     pageDesignLoader          = new XmlLoader();
     presetPageDesignLoader    = new XmlLoader();
     pageDesignsLoader         = new XmlLoader();
@@ -58,7 +61,9 @@ class ApplicationModel extends Model, implements IModel
         
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
+                      'load price xml from backend',
                       'pass preset',
+                      'pass preset price',
                       'add pages to stage',
                       'set defaults',
                       //'init zoom'
@@ -71,7 +76,9 @@ class ApplicationModel extends Model, implements IModel
         
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
+                      'load price xml from backend',
                       'pass preset',
+                      'pass preset price',
                       'add pages to stage',
                       'set defaults'
                       
@@ -109,6 +116,12 @@ class ApplicationModel extends Model, implements IModel
 //        trace(GLOBAL.preset_file_url);
         presetLoader.addEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded); 
         presetLoader.load(GLOBAL.preset_file_url, EVENT_ID.PRESET_FILE_LOADED);
+        
+      }
+      
+      case 'load price xml from backend':{
+        priceLoader.addEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded); 
+        priceLoader.load(GLOBAL.price_file_url, EVENT_ID.PRICE_FILE_LOADED);
       }
       
       case 'load design files from backend':{
@@ -119,6 +132,11 @@ class ApplicationModel extends Model, implements IModel
  
       case 'pass preset':{
         dispatchXML(EVENT_ID.PASS_PRESET_FILE, presetXml);
+        loadSeq();
+      }
+      
+      case 'pass preset price':{
+        dispatchXML(EVENT_ID.PASS_PRICE_FILE, priceXml);
         loadSeq();
       }
       
@@ -195,7 +213,12 @@ class ApplicationModel extends Model, implements IModel
     presetLoader.removeEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded);
     presetXml = e.getXml();
     loadSeq();
-
+  }
+  
+  private function onPriceLoaded(e:XmlEvent):Void{
+    priceLoader.removeEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded);
+    priceXml = e.getXml();
+    loadSeq();
   }
                    
   private function onPageDesignLoaded(e:XmlEvent):Void{

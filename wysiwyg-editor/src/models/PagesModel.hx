@@ -11,6 +11,7 @@ class PagesModel extends Model, implements IModel {
   private var backDropsLoaded:UInt;
   private var pageOrder:Int;
   private var pageId:Int;
+  private var shop_item_prices:ShopItemPrices;
   //private var print_mask_url:String;
   //private var hide_mask_url:String;
   //private var front_shoot:String;
@@ -21,11 +22,12 @@ class PagesModel extends Model, implements IModel {
   public function new(){	
   	super();
     pageModels  = new Vector<PageModel>();
-
+    shop_item_prices = new ShopItemPrices();
   }
   
   override public function init():Void{	
     super.init();
+    Application.addEventListener(EVENT_ID.PASS_PRICE_FILE, onParsePrice);
     //pageInFocus = null;
     //print_mask_url = '';
     //hide_mask_url = '';
@@ -208,6 +210,18 @@ class PagesModel extends Model, implements IModel {
     }
     return 'bar';
   }
+  
+  override function getFloat(id:String):Float{
+    switch ( id )
+    {
+      case 'shop_item_unit_price':{
+        return shop_item_prices.getPrice(Std.parseInt(GLOBAL.preset_quantity));
+      }
+      default: {
+        return 0.0;
+      }
+    }
+  }
 
   override function setString(id:String, s:String):Void{
     trace("#€%& HEY YO, don't call me again dude");
@@ -218,6 +232,12 @@ class PagesModel extends Model, implements IModel {
     trace("#€%& HEY YO, don't call me again dude");
     return false;
   }
+  
+  private function onParsePrice(e:IKEvent):Void{
+    shop_item_prices.onParsePrice(e);
+  }
+  
+  
   
   
 }
