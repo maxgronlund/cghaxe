@@ -147,7 +147,7 @@ class DesignsModel extends Model, implements IModel {
 
   private function onPassDesign(e:IKEvent):Void{
     
-   // trace('onPassDesign', e.getXml().toString());
+    //trace('onPassDesign', e.getXml().toString());
     
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
 //    trace(xml.toString());

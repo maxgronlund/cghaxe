@@ -140,7 +140,7 @@ class ApplicationModel extends Model, implements IModel
       }
       
       case 'pass design':{
-//        trace(pageDesignXml.toString());
+
         dispatchXML(EVENT_ID.PASS_DESIGN_FILE, pageDesignXml);
         loadSeq();                                               
       }

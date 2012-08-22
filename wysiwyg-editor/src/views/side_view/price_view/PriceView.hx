@@ -49,7 +49,7 @@ class PriceView extends PropertyView, implements IView{
 	
 	
 	override public function getString(id:String):String {
-	  
+	  return '';
 	  trace(id);
 	  switch ( id )
 	  {

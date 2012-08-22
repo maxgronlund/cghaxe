@@ -17,8 +17,8 @@ class TextSuggestionView extends PropertyView, implements IView{
     verticalScrollbar       = new VerticalScrollbar(textController, EVENT_ID.SUGGESTION_SCROLL);
     addPlaceholderButton    = new OneStateButton();
 
-    Application.addEventListener(EVENT_ID.PASS_DESIGN_FILE, onPageLayoutLoaded);
-    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
+    //Application.addEventListener(EVENT_ID.PASS_DESIGN_FILE, onPageLayoutLoaded);
+    //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
     
   }
 

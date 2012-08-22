@@ -77,23 +77,35 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onBuildDesignPage( e:IKEvent):Void{
-    trace(e.getXml().toString);
+    trace('onBuildDesignPage');
+    //trace(e.getXml().toString());
+    var pageModel = buildPage(e);
+    for(design in e.getXml().elementsNamed("design") ) {
+      for(title in design.elementsNamed("title") ) {
+        //trace(title.firstChild().nodeValue.toString());
+        pageModel.setString('page_name', title.firstChild().nodeValue.toString());
+      }
+         
+    }
   }
 
   private function onBuildPage( e:IKEvent ):Void{
 
     
+    var pageModel = buildPage(e);
+    for(title in e.getXml().elementsNamed("title") ) {
+         pageModel.setString('page_name', title.firstChild().nodeValue.toString());
+    } 
+  }
+  
+  private function buildPage( e:IKEvent  ): PageModel
+  {
     var pageModel:PageModel     = new PageModel();
      pageModel.init();
      pageModel.setInt('pageOrder', pageOrder);
      pageModel.setInt('pageId'   , pageId);
      pageModel.setXml('', e.getXml());
      
-     for(title in e.getXml().elementsNamed("title") ) {
-       pageModel.setString('page_name', title.firstChild().nodeValue.toString());
-     }
-     
-     ;
      pageOrder++;
      pageId++;
      pageInFocus                 = pageModel;
@@ -105,6 +117,7 @@ class PagesModel extends Model, implements IModel {
      param.setXml(e.getXml());
      dispatchParameter(param);
      
+     return pageModel;
   }
   
   private function onLoadFrontShot( e:IKEvent ):Void{
