@@ -127,6 +127,7 @@ class PresetModel extends Model, implements IModel
 		  GLOBAL.cliche_price = Std.parseFloat(cliche_price_xml.firstChild().nodeValue.toString());
 		}
     
+    
     // !!! Freezes
     for(user_tags in xml.elementsNamed("user-tags")){
       GLOBAL.userParser.parseUser(user_tags);
