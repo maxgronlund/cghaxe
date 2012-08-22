@@ -14,6 +14,7 @@ class PriceColumn extends MovieClip {
   private var amount_foil_color:UInt;
   private var amount_greetings:UInt;
   private var amount_laser_color:UInt;
+  private var amount_cliche:UInt;
 
   private var column_total_price:Float;
 	
@@ -49,6 +50,11 @@ class PriceColumn extends MovieClip {
 	  if(amount_custom_pms2_color > 0) {
 	    price_labels.push(new OnePrice('one-pms-color'));
 	  }
+	  if(amount_cliche > 0) {
+	    for(i in 0...amount_cliche) {
+	      price_labels.push(new OnePrice('cliche'));
+	    }
+	  }
 	  if(amount_foil_color > 0) {
 	    for(i in 0...amount_foil_color) {
 	      price_labels.push(new OnePrice('foil'));
@@ -72,8 +78,14 @@ class PriceColumn extends MovieClip {
       addChild(price);
       price.x = 0;
     	price.y = 18*i;
+    	switch ( price.getPrintType() )
+    	{
+    	 case 'cliche':
+    	   price.setUnitsLabel("1");
+    	 default:
+         price.setUnitsLabel(Std.string(GLOBAL.preset_quantity));
+    	}
     	
-    	price.setUnitsLabel(Std.string(GLOBAL.preset_quantity));
     	price.setItemLabel(price.getPrettyPrintType());
     	
     	var units:Int = Std.parseInt(GLOBAL.preset_quantity);

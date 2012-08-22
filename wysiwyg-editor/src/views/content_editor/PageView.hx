@@ -80,6 +80,7 @@ class PageView extends View{
     var amount_foil_color:UInt = 0;
     var amount_greetings:UInt = 0;
     var amount_laser_color:UInt = 0;
+    var amount_cliche:UInt = 0;
     
     var empty_string:EReg = ~/^[\s]*$/;
     
@@ -152,6 +153,9 @@ class PageView extends View{
               if(!is_used) {
                 foil_colors.push(color);
                 amount_foil_color += 1;
+                if( placeholders[i].getPlaceholderType() == 'text_place_holder' ) {
+                  amount_cliche += 1;
+                }
               }
             }
             case CONST.LASER_COLOR:{
@@ -172,6 +176,7 @@ class PageView extends View{
     model.setInt('amount_foil_color', amount_foil_color);
     model.setInt('amount_greetings', amount_greetings);
     model.setInt('amount_laser_color', amount_laser_color);
+    model.setInt('amount_cliche', amount_cliche);
     
     //this is in reality just price_view.addColumn(model)
     GLOBAL.price_view.addColumn(model);

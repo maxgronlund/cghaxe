@@ -20,6 +20,8 @@ class PageModel extends Model, implements IModel
   private var amount_foil_color:UInt;
   private var amount_greetings:UInt;
   private var amount_laser_color:UInt;
+  private var amount_cliche:UInt;
+  
     
   public function new(){	
     super();
@@ -78,6 +80,7 @@ class PageModel extends Model, implements IModel
       case 'amount_foil_color':{amount_foil_color = i;}
       case 'amount_greetings':{amount_greetings = i;}
       case 'amount_laser_color':{amount_laser_color = i;}
+      case 'amount_cliche':{amount_cliche = i;}
     }
   }
   
@@ -91,6 +94,7 @@ class PageModel extends Model, implements IModel
       case 'amount_foil_color':{return amount_foil_color;}
       case 'amount_greetings':{return amount_greetings;}
       case 'amount_laser_color':{return amount_laser_color;}
+      case 'amount_cliche':{return amount_cliche;}
     }
     return -1;
   }

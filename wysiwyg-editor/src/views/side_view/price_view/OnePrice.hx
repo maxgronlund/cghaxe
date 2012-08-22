@@ -12,7 +12,7 @@ class OnePrice extends MovieClip {
 	  
 	  this.price_type = price_type;
 	  
-	  if(price_type != "foil" && price_type != "one-pms-color" && price_type != "std-color" && price_type != "shop-item")
+	  if(price_type != "foil" && price_type != "one-pms-color" && price_type != "std-color" && price_type != "cliche" && price_type != "shop-item")
 	    trace("Error selecting price_type!!!", price_type);
 	  
 		item_label = new FormatedText('helvetica', 'item', 12, false);
@@ -54,6 +54,9 @@ class OnePrice extends MovieClip {
 	     
 	   case 'laser':
    	   return "Laser";
+   	   
+   	 case 'cliche':
+       return "Cliché";  
 	     
 	   default:
 	     return "Extra";
