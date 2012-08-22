@@ -81,7 +81,9 @@ class EVENT_ID  {
   
   
 //  public static inline var PRESET_FILE_URL                  = "preset_file_url";
+  public static inline var PRICE_FILE_LOADED                = "price_file_loaded";
   public static inline var PRESET_FILE_LOADED               = "preset_file_loaded";
+  public static inline var PASS_PRICE_FILE                  = "pass_price_file";
   public static inline var PASS_PRESET_FILE                 = "pass_preset_file";
   public static inline var PRESET_LOADED                    = "preset_loaded";
   

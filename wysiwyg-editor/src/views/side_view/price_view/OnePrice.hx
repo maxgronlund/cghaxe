@@ -2,18 +2,18 @@ import flash.display.MovieClip;
 
 class OnePrice extends MovieClip {
 	
-	private var print_type:String;
+	private var price_type:String;
 	private var item_label:FormatedText;
 	private var units_label:FormatedText;
 	private var price_label:FormatedText;
 	
-	public function new(print_type:String){		
+	public function new(price_type:String){		
 	  super();
 	  
-	  this.print_type = print_type;
+	  this.price_type = price_type;
 	  
-	  if(print_type != "foil" && print_type != "one-pms-color" && print_type != "std-color")
-	    trace("Error selecting print_type!!!", print_type);
+	  if(price_type != "foil" && price_type != "one-pms-color" && price_type != "std-color" && price_type != "shop-item")
+	    trace("Error selecting price_type!!!", price_type);
 	  
 		item_label = new FormatedText('helvetica', 'item', 12, false);
   	units_label = new FormatedText('helvetica', 'units', 12, false);
@@ -26,7 +26,7 @@ class OnePrice extends MovieClip {
     item_label.x = 8;
     item_label.y = 0;
     
-    units_label.x = 87;
+    units_label.x = 97;
     units_label.y = 0;
     
     price_label.x = 141;
@@ -34,7 +34,7 @@ class OnePrice extends MovieClip {
 	}
 	
 	public function getPrintType():String{
-	  return print_type;
+	  return price_type;
 	}
 	
 	public function getPrettyPrintType():String{

@@ -21,6 +21,7 @@ class PresetModel extends Model, implements IModel
   private var productSelected:String;
   private var loader:URLLoader;
   
+  
   public function new(){
     super();
     productSelected = 'na';
@@ -64,6 +65,8 @@ class PresetModel extends Model, implements IModel
 */ 
     }
   }
+  
+  
   
   private function countPlaceholders(xml:Xml):Void{
 //    trace('..countPlaceholders.');

@@ -6,6 +6,7 @@
 class GLOBAL  {
   
   // models
+  public static var product_name:String;
   public static var Application:IModel;
 //  public static var Layout:IModel;
   public static var Menu:IModel;
@@ -28,6 +29,7 @@ class GLOBAL  {
   public static var wysiwyg_session:String;
   public static var preset_file_url;
   public static var design_file_url;
+  public static var price_file_url;
   public static var save_path:String;
   public static var edit_mode:String;
   public static var admin_mode:Bool;
@@ -92,7 +94,7 @@ class GLOBAL  {
   
   // user
   public static var user_id:String;
-  
+  public static var shop_item_id:String;
   
   
   

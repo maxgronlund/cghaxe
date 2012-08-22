@@ -4,6 +4,10 @@ import flash.events.Event;
 class PriceView extends PropertyView, implements IView{
 	
 	private var total_price_label:FormatedText;
+	private var shop_item_price_label:FormatedText;
+	private var shop_item_price_price_label:FormatedText;
+	private var shop_item_price_units_label:FormatedText;
+	
 	
 	private var prices:Array<PriceModel>;
 	private var priceColumns:Array<PriceColumn>;
@@ -11,7 +15,10 @@ class PriceView extends PropertyView, implements IView{
 	public function new(priceController:IController){	
 		super(priceController);
 		backdrop				= new PriceViewBack();
-
+    
+    shop_item_price_label = new FormatedText('helvetica', '0.0', 12, false);
+    shop_item_price_price_label = new FormatedText('helvetica', '0.0', 12, false);
+    shop_item_price_units_label = new FormatedText('helvetica', '0.0', 12, false);
   	total_price_label = new FormatedText('helvetica', '0.0', 12, false);
   	
   	prices = new Array();
@@ -91,6 +98,20 @@ class PriceView extends PropertyView, implements IView{
 	  var total_price:Float = 0;
 	  var y:Float = 120;
 	  
+	  shop_item_price_label.y = 40;
+	  shop_item_price_label.x = 0;
+	  shop_item_price_label.setLabel(GLOBAL.product_name);
+	  
+	  shop_item_price_units_label.y = 40+18;
+	  shop_item_price_units_label.x = 97;
+	  shop_item_price_units_label.setLabel(Std.string(GLOBAL.preset_quantity));
+	  
+	  shop_item_price_price_label.y = 40+18;
+	  shop_item_price_price_label.x = 140;
+	  shop_item_price_price_label.setLabel(Std.string(GLOBAL.Pages.getFloat('shop_item_unit_price')*Std.parseInt(GLOBAL.preset_quantity)));
+	  
+	  total_price += GLOBAL.Pages.getFloat('shop_item_unit_price')*Std.parseInt(GLOBAL.preset_quantity);
+	  
 	  for(i in 0...priceColumns.length){
 	    var priceColumn:PriceColumn = priceColumns[i];
 	    addChild(priceColumn);
@@ -108,6 +129,12 @@ class PriceView extends PropertyView, implements IView{
     super.onAddedToStage(e);
   	
   	addChild(total_price_label);
+  	addChild(shop_item_price_label);
+  	
+  	addChild(shop_item_price_label);
+  	addChild(shop_item_price_price_label);
+  	addChild(shop_item_price_units_label);
+  	
   	total_price_label.setLabel('total price');
     total_price_label.x = 55;
     total_price_label.y = 360;
