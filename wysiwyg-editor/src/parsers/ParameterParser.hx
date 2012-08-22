@@ -54,9 +54,8 @@ class ParameterParser
     }
     
     // page design
-    if(params.pagedesign_xml_file_url != null){
-      trace(params.pagedesign_xml_file_url);
-      GLOBAL.preset_file_url = params.pagedesign_xml_file_url;
+    if(params.design_xml_file_url != null){
+      GLOBAL.design_file_url = params.pagedesign_xml_file_url;
     }
 
     if(params.save_path != null){

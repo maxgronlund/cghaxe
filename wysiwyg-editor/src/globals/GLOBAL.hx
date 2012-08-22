@@ -27,6 +27,7 @@ class GLOBAL  {
   public static var authenticity_token:String;
   public static var wysiwyg_session:String;
   public static var preset_file_url;
+  public static var design_file_url;
   public static var save_path:String;
   public static var edit_mode:String;
   public static var admin_mode:Bool;
