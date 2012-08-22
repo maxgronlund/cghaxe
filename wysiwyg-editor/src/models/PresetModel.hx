@@ -123,6 +123,10 @@ class PresetModel extends Model, implements IModel
       Application.dispatchXML(EVENT_ID.PRESET_PRICES, print_prices);
     }
     
+    for( cliche_price_xml in xml.elementsNamed("cliche-price")) {
+		  GLOBAL.cliche_price = Std.parseFloat(cliche_price_xml.firstChild().nodeValue.toString());
+		}
+    
     // !!! Freezes
     for(user_tags in xml.elementsNamed("user-tags")){
       GLOBAL.userParser.parseUser(user_tags);
