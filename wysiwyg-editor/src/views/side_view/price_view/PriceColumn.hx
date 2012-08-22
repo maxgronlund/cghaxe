@@ -144,6 +144,10 @@ class PriceColumn extends MovieClip {
   public function set_amount_laser_color(amount:UInt):Void {
     amount_laser_color = amount;
   }
+  public function set_amount_cliche(amount:UInt):Void {
+    amount_cliche = amount;
+  }
+  
   
   
   

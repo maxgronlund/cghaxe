@@ -233,7 +233,7 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
     str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
     str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
-    trace( font==null);
+    trace('font==null', font==null);
     str += font.getXml();
     str += '\t\t</placeholder>\n';
     restoreShowTags();

@@ -72,7 +72,8 @@ class PageView extends View{
     var std_pms_colors = new Array();
     var custom_pms1_colors = new Array();
     var custom_pms2_colors = new Array();
-    var foil_colors = new Array();
+    var text_foil_colors = new Array();
+    var greeting_foil_colors = new Array();
     
     var amount_std_pms_color:UInt = 0;
     var amount_custom_pms1_color:UInt = 0;
@@ -96,67 +97,79 @@ class PageView extends View{
             case CONST.STD_PMS_COLOR:{
               // Count diffrent colors
               var color:String = placeholders[i].getStdPmsColor();
-              var is_used:Bool = false;
+              var text_color_is_used:Bool = false;
           
               for(i in 0...std_pms_colors.length) {
                 if(std_pms_colors[i] == color) {
-                  is_used = true;
+                  text_color_is_used = true;
                 }
               }
           
-              if(!is_used) {
+              if(!text_color_is_used) {
                 std_pms_colors.push(color);
                 amount_std_pms_color += 1;
               }
             }
             case CONST.CUSTOM_PMS1_COLOR:{
               var color:String = placeholders[i].getPms1Color();
-              var is_used:Bool = false;
+              var text_color_is_used:Bool = false;
           
               for(i in 0...custom_pms1_colors.length) {
                 if(custom_pms1_colors[i] == color) {
-                  is_used = true;
+                  text_color_is_used = true;
                 }
               }
           
-              if(!is_used) {
+              if(!text_color_is_used) {
                 custom_pms1_colors.push(color);
                 amount_custom_pms1_color += 1;
               }
             }
             case CONST.CUSTOM_PMS2_COLOR:{
               var color:String = placeholders[i].getPms2Color();
-              var is_used:Bool = false;
+              var text_color_is_used:Bool = false;
           
               for(i in 0...custom_pms2_colors.length) {
                 if(custom_pms2_colors[i] == color) {
-                  is_used = true;
+                  text_color_is_used = true;
                 }
               }
           
-              if(!is_used) {
+              if(!text_color_is_used) {
                 custom_pms2_colors.push(color);
                 amount_custom_pms2_color += 1;
               }
             }
             case CONST.FOIL_COLOR:{
               //Check if there's already a foil color
-              var color:String = placeholders[i].getFoilColor();
-              var is_used:Bool = false;
-          
-              for(i in 0...foil_colors.length) {
-                if(foil_colors[i] == color) {
-                  is_used = true;
+              var color:String = placeholders[i].getFoilColor();              
+              
+              if( placeholders[i].getPlaceholderType() == 'text_place_holder' ) {
+                var text_color_is_used:Bool = false;
+                for(i in 0...text_foil_colors.length) {
+                  if(text_foil_colors[i] == color) {
+                    text_color_is_used = true;
+                  }
                 }
-              }
-          
-              if(!is_used) {
-                foil_colors.push(color);
-                amount_foil_color += 1;
-                if( placeholders[i].getPlaceholderType() == 'text_place_holder' ) {
+                if(!text_color_is_used) {
+                  text_foil_colors.push(color);
+                  amount_foil_color += 1;
                   amount_cliche += 1;
                 }
+              } else if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
+                var greeting_color_is_used:Bool = false;
+                for(i in 0...greeting_foil_colors.length) {
+                  if(greeting_foil_colors[i] == color) {
+                    greeting_color_is_used = true;
+                  }
+                }
+                if(!greeting_color_is_used) {
+                  greeting_foil_colors.push(color);
+                  amount_foil_color += 1;
+                }
               }
+          
+              
             }
             case CONST.LASER_COLOR:{
               amount_laser_color = 1;
@@ -177,15 +190,15 @@ class PageView extends View{
     model.setInt('amount_greetings', amount_greetings);
     model.setInt('amount_laser_color', amount_laser_color);
     model.setInt('amount_cliche', amount_cliche);
-    
+    //trace("Counted objects");
     //this is in reality just price_view.addColumn(model)
     GLOBAL.price_view.addColumn(model);
-    
+    //trace("Hm!");
     //var param = new Parameter(EVENT_ID.ADD_PRICE_COLUMN);
     //param.setInt();
     //GLOBAL.Pages.setParam()
     GLOBAL.price_view.update('addAllPrices', 0, '');
-    
+    //trace("Done adding prices for one view");
   }
   
   override public function onAddedToStage(e:Event): Void{
