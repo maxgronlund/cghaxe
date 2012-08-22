@@ -154,17 +154,17 @@ class PageView extends View{
                 if(!text_color_is_used) {
                   text_foil_colors.push(color);
                   amount_foil_color += 1;
-                  amount_cliche += 1;
+                  amount_cliche = 1;
                 }
               } else if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
-                var greeting_color_is_used:Bool = false;
-                for(i in 0...greeting_foil_colors.length) {
-                  if(greeting_foil_colors[i] == color) {
-                    greeting_color_is_used = true;
+                var text_color_is_used:Bool = false;
+                for(i in 0...text_foil_colors.length) {
+                  if(text_foil_colors[i] == color) {
+                    text_color_is_used = true;
                   }
                 }
-                if(!greeting_color_is_used) {
-                  greeting_foil_colors.push(color);
+                if(!text_color_is_used) {
+                  text_foil_colors.push(color);
                   amount_foil_color += 1;
                 }
               }
