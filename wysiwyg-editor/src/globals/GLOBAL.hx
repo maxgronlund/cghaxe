@@ -13,6 +13,7 @@ class GLOBAL  {
 //  public static var Configuration:IModel;
   public static var Preset:IModel;
   public static var Prices:IModel;
+  public static var cliche_price:Float;
   public static var Pages:IModel;
   public static var Designs:IModel;
 //  public static var DesignImages:IModel;
