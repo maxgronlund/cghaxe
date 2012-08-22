@@ -51,7 +51,7 @@ class ApplicationModel extends Model, implements IModel
   }
 
   private function startLoadSeq():Void{
-    //xmlFilesLoaded = 0;
+
     
 
     switch (GLOBAL.edit_mode) {
@@ -90,7 +90,7 @@ class ApplicationModel extends Model, implements IModel
       case 'system_design':{
         loadStage = [ 'reset wysiwyg',
                       'load design files from backend',
-                      'pass page design',
+                      'pass design',
                       'add pages to stage',
                       'set defaults'
                       //'add placeholders', 
@@ -125,9 +125,8 @@ class ApplicationModel extends Model, implements IModel
       }
       
       case 'load design files from backend':{
-        
-        pageDesignLoader.addEventListener( EVENT_ID.PAGEDESIGN_FILE_LOADED, onPageDesignLoaded);
-        pageDesignLoader.load(GLOBAL.preset_file_url, EVENT_ID.PAGEDESIGN_FILE_LOADED);
+        pageDesignLoader.addEventListener( EVENT_ID.DESIGN_FILE_LOADED, onDesignLoaded);
+        pageDesignLoader.load(GLOBAL.design_file_url, EVENT_ID.DESIGN_FILE_LOADED);
       }
  
       case 'pass preset':{
@@ -140,7 +139,8 @@ class ApplicationModel extends Model, implements IModel
         loadSeq();
       }
       
-      case 'pass page design':{
+      case 'pass design':{
+//        trace(pageDesignXml.toString());
         dispatchXML(EVENT_ID.PASS_DESIGN_FILE, pageDesignXml);
         loadSeq();                                               
       }
@@ -221,8 +221,9 @@ class ApplicationModel extends Model, implements IModel
     loadSeq();
   }
                    
-  private function onPageDesignLoaded(e:XmlEvent):Void{
-    pageDesignLoader.removeEventListener( EVENT_ID.PAGEDESIGN_FILE_LOADED, onPageDesignLoaded);
+  private function onDesignLoaded(e:XmlEvent):Void{
+   
+    pageDesignLoader.removeEventListener( EVENT_ID.DESIGN_FILE_LOADED, onDesignLoaded);
     pageDesignXml = e.getXml();
     loadSeq();
   }

@@ -64,7 +64,7 @@ class EVENT_ID  {
   
 //  public static inline var PAGEDESIGN_FILE_URL              = "pagedesign_file_url";
 //  public static inline var PAGEDESIGNS_FILE_URL             = "pagedesigns_file_url";
-  public static inline var PAGEDESIGN_FILE_LOADED           = "pagedesign_file_loaded";
+  public static inline var DESIGN_FILE_LOADED           = "design_file_loaded";
 //  public static inline var PRESET_PAGEDESIGN_FILE_URL       = "preset_pagedesign_url";
 //  public static inline var PRESET_PAGEDESIGN_LOADED         = "preset_pagedesign_loaded";
   public static inline var PRESET_PAGEDESIGN_XML            = "preset_pagedesign_xml";

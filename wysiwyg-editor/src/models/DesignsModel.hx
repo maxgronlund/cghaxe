@@ -41,7 +41,7 @@ class DesignsModel extends Model, implements IModel {
   
   public function new(){	
     pageDesignLoader         = new XmlLoader();
-    pageDesignLoader.addEventListener( EVENT_ID.PAGEDESIGN_FILE_LOADED, onPageDesignLoaded);
+    pageDesignLoader.addEventListener( EVENT_ID.DESIGN_FILE_LOADED, onPageDesignLoaded);
     
     super();
   }
@@ -64,7 +64,7 @@ class DesignsModel extends Model, implements IModel {
           
           for( id in pageDesignXml.elementsNamed("id") ) {
             var url = '/admin/designs/'  + id.firstChild().nodeValue.toString() + '/get_xml.xml';
-             pageDesignLoader.load(url, EVENT_ID.PAGEDESIGN_FILE_LOADED);
+             pageDesignLoader.load(url, EVENT_ID.DESIGN_FILE_LOADED);
           }
           
         }
@@ -147,13 +147,15 @@ class DesignsModel extends Model, implements IModel {
 
   private function onPassDesign(e:IKEvent):Void{
     
+   // trace('onPassDesign', e.getXml().toString());
+    
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-
+//    trace(xml.toString());
     var param:IParameter = new Parameter(EVENT_ID.BUILD_DESIGN_PAGE);
     param.setXml(xml);
     param.setInt(0);
     dispatchParameter(param);
-      
+    /*  
     for( design in xml.elementsNamed("design") ) {
       for( img in design.elementsNamed("image-url") ) {
         var image_url:String        = Std.string(img.firstChild().nodeValue);
@@ -183,24 +185,9 @@ class DesignsModel extends Model, implements IModel {
       
       for( user in design.elementsNamed("user") ){
         GLOBAL.userParser.parseUser(user);
-      }
-      /*
-      for( design_images in design.elementsNamed("design-images") ){
-//!!!        dispatchXML(EVENT_ID.DESIGN_IMAGES_LOADED, design_images);
-        //for( design_image in design_images.elementsNamed("design-image") ){
-        //  for( image in design_image.elementsNamed("image") ){
-        //    for( url in image.elementsNamed("url") ){
-        //      trace(url.firstChild().nodeValue.toString());
-        //      var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_IMAGE_BUTTON);
-        //      param.setString(url.firstChild().nodeValue.toString());
-        //      dispatchParameter(param);
-        //    }
-        //  }
-        //}
-      }
-      */
-      
+      }      
     }
+    */
     
   }
   

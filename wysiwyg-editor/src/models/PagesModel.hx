@@ -32,7 +32,7 @@ class PagesModel extends Model, implements IModel {
     //print_mask_url = '';
     //hide_mask_url = '';
     Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);                //<<----------------- REMOVED FOR NOW
-//    Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
+    Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Preset.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
@@ -70,37 +70,49 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onPageXmlLoaded(e:IKEvent):Void{
-
+    
     var param:IParameter        = new Parameter(EVENT_ID.PAGE_XML_LOADED);
     param.setXml(e.getXml());
     pageModels[e.getInt()].dispatchParameter(param);
   }
+  
+  private function onBuildDesignPage( e:IKEvent):Void{
+    var pageModel:PageModel = buildPage(e);
+    for(design in e.getXml().elementsNamed("design") ) {
+      for(title in design.elementsNamed("title") ) {
+       trace(title.firstChild().nodeValue.toString());
+        pageModel.setString('page_name', title.firstChild().nodeValue.toString());
+      }
+    }
+  }
 
   private function onBuildPage( e:IKEvent ):Void{
+    var pageModel:PageModel = buildPage(e);
+    for(title in e.getXml().elementsNamed("title") ) {
+      pageModel.setString('page_name', title.firstChild().nodeValue.toString());
+    }
 
-    
+    pageOrder++;
+    pageId++;
+    pageInFocus                 = pageModel;
+    pageModels.push(pageModel);
+
+  }
+  
+  private function buildPage(e:IKEvent):PageModel{
     var pageModel:PageModel     = new PageModel();
-     pageModel.init();
-     pageModel.setInt('pageOrder', pageOrder);
-     pageModel.setInt('pageId'   , pageId);
-     pageModel.setXml('', e.getXml());
-     
-     for(title in e.getXml().elementsNamed("title") ) {
-       pageModel.setString('page_name', title.firstChild().nodeValue.toString());
-     }
-     
-     ;
-     pageOrder++;
-     pageId++;
-     pageInFocus                 = pageModel;
-     pageModels.push(pageModel);
+    pageModel.init();
+    pageModel.setInt('pageOrder', pageOrder);
+    pageModel.setInt('pageId'   , pageId);
+    pageModel.setXml('', e.getXml());
     
-     // picked up by PagesView
-     var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
-     param.setModel(pageModel);
-     param.setXml(e.getXml());
-     dispatchParameter(param);
-     
+    // picked up by PagesView
+    var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
+    param.setModel(pageModel);
+    param.setXml(e.getXml());
+    dispatchParameter(param);
+    
+    return pageModel;
   }
   
   private function onLoadFrontShot( e:IKEvent ):Void{

@@ -48,23 +48,14 @@ class ParameterParser
       GLOBAL.preset_file_url = params.preset_file_url;
     }
     
-    if(params.product_name != null){
-      GLOBAL.product_name = params.product_name;
-    } else {
-      GLOBAL.product_name = "Product";
-    }
-    
-    if(params.price_file_url != null){
-      GLOBAL.price_file_url = params.price_file_url;
-    }
-    
     
     if(params.preset_quantity != null){
       GLOBAL.preset_quantity = params.preset_quantity;
     }
     
     // page design
-    if(params.design_xml_file_url != null){
+    if(params.pagedesign_xml_file_url != null){
+      //trace(params.pagedesign_xml_file_url);
       GLOBAL.design_file_url = params.pagedesign_xml_file_url;
     }
 
@@ -105,8 +96,6 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
         }
         
-        
-        
         case 'system_preview':{
 
         }
@@ -116,11 +105,6 @@ class ParameterParser
     if(params.start_load_seq != null){
       //trace('start_load_seq: ', params.start_load_seq);
       Application.setString(EVENT_ID.START_LOAD_SEQ, 'bang');
-    }
-    
-    if(params.shop_item_id != null){
-      GLOBAL.shop_item_id = params.shop_item_id;
-      trace("SHOP_ITEM_ID", params.shop_item_id);
     }
     //trace('end of parse');
 	}
