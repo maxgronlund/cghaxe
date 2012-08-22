@@ -121,6 +121,7 @@ class ParameterParser
     if(params.shop_item_id != null){
       GLOBAL.shop_item_id = params.shop_item_id;
       trace("SHOP_ITEM_ID", params.shop_item_id);
+      
     }
     //trace('end of parse');
 	}
