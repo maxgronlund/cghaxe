@@ -42,6 +42,7 @@ class PriceView extends PropertyView, implements IView{
 	  price_column.set_amount_foil_color(model.getInt('amount_foil_color'));
 	  price_column.set_amount_greetings(model.getInt('amount_greetings'));
 	  price_column.set_amount_laser_color(model.getInt('amount_laser_color'));
+	  price_column.set_amount_cliche(model.getInt('amount_cliche'));
 
 	  priceColumns.push(price_column);
 	}
