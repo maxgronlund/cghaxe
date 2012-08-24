@@ -31,7 +31,7 @@ class PagesModel extends Model, implements IModel {
     //pageInFocus = null;
     //print_mask_url = '';
     //hide_mask_url = '';
-    Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);                //<<----------------- REMOVED FOR NOW
+    Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);                
     Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Preset.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
@@ -77,25 +77,34 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onBuildDesignPage( e:IKEvent):Void{
-    trace('onBuildDesignPage');
-    //trace(e.getXml().toString());
+    trace('2...onBuildDesignPage');
+
     var pageModel = buildPage(e);
+    
     for(design in e.getXml().elementsNamed("design") ) {
       for(title in design.elementsNamed("title") ) {
-        //trace(title.firstChild().nodeValue.toString());
         pageModel.setString('page_name', title.firstChild().nodeValue.toString());
-      }
-         
+      }   
     }
+    // picked up by PagesView
+    var param:Parameter = new Parameter(EVENT_ID.BUILD_DESIGN_PAGE);
+    param.setModel(pageModel);
+    param.setXml(e.getXml());
+    dispatchParameter(param);
   }
 
   private function onBuildPage( e:IKEvent ):Void{
 
-    
     var pageModel = buildPage(e);
     for(title in e.getXml().elementsNamed("title") ) {
          pageModel.setString('page_name', title.firstChild().nodeValue.toString());
     } 
+    
+    // picked up by PagesView
+    var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
+    param.setModel(pageModel);
+    param.setXml(e.getXml());
+    dispatchParameter(param);
   }
   
   private function buildPage( e:IKEvent  ): PageModel
@@ -108,15 +117,8 @@ class PagesModel extends Model, implements IModel {
      
      pageOrder++;
      pageId++;
-     pageInFocus                 = pageModel;
+     pageInFocus    = pageModel;
      pageModels.push(pageModel);
-    
-     // picked up by PagesView
-     var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
-     param.setModel(pageModel);
-     param.setXml(e.getXml());
-     dispatchParameter(param);
-     
      return pageModel;
   }
   
@@ -219,12 +221,12 @@ class PagesModel extends Model, implements IModel {
         fileStr += '\t<pos_y>'  + Std.string(GLOBAL.pos_y) + '</pos_y>\n';
         fileStr += '</stage>\n';
         for( i in 0...pageModels.length){
-        	fileStr += (pageModels[i].getXml(CONST.XML_FILE)).toString();
+        	fileStr += (pageModels[i].getXmlString(CONST.XML_FILE)).toString();
         }
         return fileStr;
       }
       case CONST.PRINT_TYPES:{
-        return pageInFocus.getXml(CONST.PRINT_TYPES);
+        return pageInFocus.getXmlString(CONST.PRINT_TYPES);
       }
     }
     return 'bar';

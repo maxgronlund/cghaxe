@@ -19,17 +19,17 @@ class PagesView extends View, implements IView{
     
     super(desktopController);
     Application.addEventListener(EVENT_ID.RESET_WYSIWYG, onResetWysiwyg);
+
+    
 //    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
     Application.addEventListener(EVENT_ID.ADD_PAGES_TO_STAGE, addPagesToStage);
-
 
 //    DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImageToPage);
     Designs.addEventListener(EVENT_ID.ADD_DESIGN_TO_PAGE, onAddPageDesignToPage);
     Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
+    Pages.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
-    
     Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
-
   }
   
   private function onAddGreetingToPage(e:IKEvent):Void{
@@ -42,13 +42,7 @@ class PagesView extends View, implements IView{
     if(pages != null) removePages();
     pages = new Vector<PageView>();
   }
-  
-  private function onGetPageSize(e:IKEvent):Void{
-    trace('onGetPageSize');
-//    Application.removeEventListener(EVENT_ID.GET_PAGE_SIZE, onGetPageSize);
-//    pageInFocus.onGetPageSize();
-  }
-  
+
   private function addPagesToStage(e:IKEvent):Void{
     addPages();
   }
@@ -67,30 +61,24 @@ class PagesView extends View, implements IView{
   private function onAddPageDesignToPage(e:IKEvent):Void{
     pageInFocus.setParam(e.getParam());
   }
-  /*
-  private function onAddDesignImageToPage(e:IKEvent):Void{
-    pageInFocus.setParam(e.getParam());
-  }
-*/
-//  private function onAddPagedesignPage(e:IKEvent):Void{
-//    trace('onAddPagedesignPage');
-//   // addPages();
-//  }
 
   private function onPageSelected(e:IKEvent):Void{
     //trace('update sitebar here');
     putPageOnTop( e.getInt());
   }
   
-  private function onBuildPage(e:IKEvent):Void{
-//    trace('start onBuildPage');
+  private function onBuildDesignPage(e:IKEvent):Void{
+    trace('3...onBuildDesignPage');
     var pageView:PageView = new PageView(controller);
-    
     pageView.setModel(e.getParam().getModel());
-//    trace('end onBuildPage');
     pages.push(pageView); 
-    
      
+  }
+  
+  private function onBuildPage(e:IKEvent):Void{
+    var pageView:PageView = new PageView(controller);
+    pageView.setModel(e.getParam().getModel());
+    pages.push(pageView); 
   }
   
   private function onLoadDefaultPage(e:IKEvent):Void{
@@ -127,7 +115,7 @@ class PagesView extends View, implements IView{
   }
   
   private function addPages():Void{
-    
+    trace('4...addPages');
     for( i in 0...pages.length){
       addChild(pages[i]);
       pages[i].visible = false;

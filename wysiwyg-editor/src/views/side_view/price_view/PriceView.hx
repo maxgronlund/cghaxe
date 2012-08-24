@@ -35,7 +35,7 @@ class PriceView extends PropertyView, implements IView{
 	}
 	
 	override public function addColumn(model:IModel):Void{
-	  trace("#0");
+//	  trace("#0");
 	  var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
 	  price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
 	  price_column.set_amount_custom_pms1_color(model.getInt('amount_custom_pms1_color'));
@@ -43,20 +43,21 @@ class PriceView extends PropertyView, implements IView{
 	  price_column.set_amount_foil_color(model.getInt('amount_foil_color'));
 	  price_column.set_amount_greetings(model.getInt('amount_greetings'));
 	  price_column.set_amount_laser_color(model.getInt('amount_laser_color'));
-	  trace("#1");
+//	  trace("#1");
 	  price_column.set_amount_cliche(model.getInt('amount_cliche'));
-    trace("#2");
+ //   trace("#2");
 	  priceColumns.push(price_column);
 	}
 	
 	
 	override public function getString(id:String):String {
-	  return '';
-	  trace(id);
+
+
 	  switch ( id )
 	  {
 	    case "viewId":{
-	      return "show_prices";
+	      trace('got you');
+	      return EVENT_ID.SHOW_PRICES;
 	    }
 	   case "price_xml":
 	     var result:String = "";

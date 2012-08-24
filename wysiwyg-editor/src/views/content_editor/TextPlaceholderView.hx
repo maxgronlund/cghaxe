@@ -117,14 +117,6 @@ class TextPlaceholderView extends APlaceholder {
     redFoilTexture      = new RedFoilTexture();
     greenFoilTexture    = new GreenFoilTexture();
     blueFoilTexture     = new BlueFoilTexture();
-    /*                    
-    printType           = GLOBAL.printType;
-    foilColor           = GLOBAL.foilColor;
-    stdPmsColor         = GLOBAL.stdPmsColor;
-    pms1Color           = GLOBAL.pms1Color;
-    pms2Color           = GLOBAL.pms2Color;
-    laserColor          = GLOBAL.laserColor;
-    */
   }
   
 
@@ -419,6 +411,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function hitTest():Void{
+    trace('hit test');
     pageView.hitTest();
   }
     
@@ -522,8 +515,7 @@ class TextPlaceholderView extends APlaceholder {
       case 'blue'       :fontScreenColor  = 0x0000FF;
     }
   }
-  
-   
+     
   private function showTags():Void{
     storeTags();
     tagsIsVisible   = true;
@@ -614,7 +606,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function textFielsCapturedFocus(b:Bool):Void{
-
+    trace('textFielsCapturedFocus');
     if(b){
       MouseTrap.capture();
       unfoilify();

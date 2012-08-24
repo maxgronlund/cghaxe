@@ -12,9 +12,10 @@ class SidebarController extends Controller, implements IController
 			case 'set_default_tool':{
 				GLOBAL.side_view.setString('set_default_tool', 'na');
 			}
-			//case EVENT_ID.SHOW_PRICES:{
-      //  GLOBAL.side_view.showView(EVENT_ID.SHOW_PRICES, true);
-      //}	
+      case EVENT_ID.SHOW_BLIND_VIEW:{
+			  trace('booooooom');
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_BLIND_VIEW, true);
+      }
 		}
 	}
 }

@@ -54,6 +54,7 @@ class SelectBox extends MouseHandler
   }
   
   override private function onMouseDown(e:MouseEvent){
+    trace('on mouse down');
     super.onMouseDown(e);
     if(MouseTrap.capture()){
       pageView.setPlaceholderInFocus(placeHolderView);
@@ -71,6 +72,7 @@ class SelectBox extends MouseHandler
   }
   
   override private function onMouseOver(e:MouseEvent){
+    trace('on mouse over');
     super.onMouseOver(e);
     mouseOver = true;
   }

@@ -179,27 +179,28 @@ class Main
 
   
   private function setGlobalModels():Void{
-    GLOBAL.Application    = Application;
-    GLOBAL.Menu           = Menu;
-//    GLOBAL.Configuration  = Configuration;
-    GLOBAL.Preset         = Preset;
-    GLOBAL.Prices         = Prices;
-    GLOBAL.Pages          = Pages;
-//    GLOBAL.DesignImages   = DesignImages;
-//    GLOBAL.Vectors        = Vectors;
-    GLOBAL.Designs        = Designs;
-    GLOBAL.Greetings      = Greetings;
-    GLOBAL.Zoom         	= new ZoomTools();
-    GLOBAL.Font           = new FontModel();
-    GLOBAL.userParser     = new UserParser();
+    GLOBAL.Application      = Application;
+    GLOBAL.Menu             = Menu;
+//    GLOBAL.Configuration    = Configuration;
+    GLOBAL.Preset           = Preset;
+    GLOBAL.Prices           = Prices;
+    GLOBAL.Pages            = Pages;
+//    GLOBAL.DesignImages     = DesignImages;
+//    GLOBAL.Vectors          = Vectors;
+    GLOBAL.Designs          = Designs;
+    GLOBAL.Greetings        = Greetings;
+    GLOBAL.Zoom         	  = new ZoomTools();
+    GLOBAL.Font             = new FontModel();
+    GLOBAL.userParser       = new UserParser();
   }
   
   private function initGlobals(): Void{
-    GLOBAL.foilColor      = 'silver';
-    GLOBAL.pms1Color      = 0;
-    GLOBAL.pms2Color      = 0;
-    GLOBAL.stdPmsColor    = 0;
-    GLOBAL.printType      = CONST.STD_PMS_COLOR;
+    GLOBAL.foilColor        = 'silver';
+    GLOBAL.pms1Color        = 0;
+    GLOBAL.pms2Color        = 0;
+    GLOBAL.stdPmsColor      = 0;
+    GLOBAL.printType        = CONST.STD_PMS_COLOR;
+    GLOBAL.price_file_url   = 'na';
   }
   
   private function setGlobalViews():Void{
@@ -289,7 +290,7 @@ class Main
     sideView.addView(garamondView, 0,120,EVENT_ID.SHOW_GARAMOND);
     sideView.addView(logoView, 0,150,EVENT_ID.SHOW_LOGO);
     sideView.addView(priceView, 0,180,EVENT_ID.SHOW_PRICES);
-    sideView.addView(blindView, 0,430,EVENT_ID.BLIND_VIEW);
+    sideView.addView(blindView, 0,430,EVENT_ID.SHOW_BLIND_VIEW);
 */    
     applicationView.addView(menuView, 0,0);
     applicationView.addView(pageSelectorView, 0, SIZE.MENU_VIEW_HEIGHT);

@@ -64,6 +64,6 @@
 -main Main
 -swf-lib ../swfmill/resource.swf
 -swf ../../Calligraphen/app/assets/flash/wysiwyg_editor.swf
--swf-header 980:980:30:FFFFFF
+-swf-header 980:980:60:FFFFFF
 -swf-version 10
 
