@@ -50,6 +50,7 @@ class PageView extends View{
   
   private var posX:Float;
   private var posY:Float;
+  private var designXml:Xml;
 
   
   public function new(controller:IController){	
@@ -202,7 +203,7 @@ class PageView extends View{
   }
   
   override public function onAddedToStage(e:Event): Void{
-
+    trace('5... added to stage');
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
 //    Application.addEventListener(EVENT_ID.DISABLE_MOUSE_ON_PAGES, onDisableMouse);
@@ -227,14 +228,24 @@ class PageView extends View{
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
     //Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded); 
+    //model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     
     
-    Designs.addEventListener(EVENT_ID.DESIGN_XML_LOADED, onDesignXmlLoaded);
-    
+    //Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onDesignXmlLoaded);
+    //Designs.addEventListener(EVENT_ID.DESIGN_XML_LOADED, onDesignXmlLoaded);
     
     loadFrontShot();
     
   }
+  
+  //override public function setXml(id:String, xml:Xml):Void{
+  //  
+  //  switch ( id ){
+  //    case 'design_xml':
+  //      designXml = xml;
+  //  }
+  //  //trace(designXml.toString());
+  //}
 
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
@@ -267,7 +278,7 @@ class PageView extends View{
     for( design  in xml.elementsNamed("design") ) {
       for( xml_file  in design.elementsNamed("xml-file") ) {
         pagePresetXML = xml_file;
-        loadPagePresetXML();
+        parsePagePresetXml();
       }
     }
   }
@@ -321,7 +332,7 @@ class PageView extends View{
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
   }
   
-  private function loadPagePresetXML():Void{
+  private function parsePagePresetXml():Void{
     for( page  in pagePresetXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
            this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -336,8 +347,25 @@ class PageView extends View{
   }
   
   private function onDesignXmlLoaded(e:IKEvent):Void{  
-    trace('onDesignXmlLoaded');
+    trace('6...onDesignXmlLoaded');
     pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+    trace(pageDesignXML.toString());
+  }
+  
+  private function parsePageDesignXML():Void{
+    trace('8...parsePageDesignXML');
+    
+    for( page  in pageDesignXML.elementsNamed("page") ) {
+      for( pos_x in page.elementsNamed("pos-x") ) {
+           this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
+      }
+      for( pos_y in page.elementsNamed("pos-y") ) {
+           this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
+      }
+      for( placeholder in page.elementsNamed("placeholder") ) {
+          parsePlaceholder(placeholder);
+      }
+    }
   }
  
   private function parsePlaceholder(xml:Xml):Void{
@@ -621,6 +649,7 @@ class PageView extends View{
   }
 
   private function loadFrontShot():Void{
+//    trace('loadFrontShot', model.getString('front_shoot_url') );
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
   }
@@ -631,6 +660,7 @@ class PageView extends View{
   }
   
   private function onLoadFrontShotComplete(e:Event):Void{
+    trace('6...onLoadFrontShotComplete');
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     backdrop = e.target.loader.content;
     addChild(backdrop);
@@ -639,11 +669,6 @@ class PageView extends View{
     
     var print_mask_url:String = model.getString('print_mask_url');
     print_mask_url == '/assets/fallback/hide_mask.png' ? allImagesLoaded(): loadPrintMask();
-    
-    //if(print_mask_url == '')
-    //  pageDesignImageLoaded();
-    //else
-    //  loadPrintMask();
 	}
 	
   private function loadPrintMask():Void{
@@ -697,13 +722,15 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
+    trace('allImagesLoaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;
       GLOBAL.size_y = backdrop.height;
       Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
     }
-    loadPagePresetXML();
+    parsePagePresetXml();
+    parsePageDesignXML();
     
   }
   

@@ -164,6 +164,9 @@ class EVENT_ID  {
   public static inline var SHOW_COLOR_PICKERS:String        = "show_color_pickers";
   public static inline var UPDATE_SIDE_VIEWS:String         = "update_side_views";
   public static inline var BUILD_PAGE_DESIGNS:String        = "buile_page_designs";
+
+  
+  
   
   
                                                             
@@ -171,7 +174,7 @@ class EVENT_ID  {
   public static inline var SHOW_GARAMOND:String              = "garamond_vies";
   public static inline var SHOW_IMAGE:String                 = "image_view";
   public static inline var SHOW_LOGO:String                  = "logo_view";
-  public static inline var BLIND_VIEW:String                 = "blind_view";
+  public static inline var SHOW_BLIND_VIEW:String            = "blind_view";
                                                              
   
   public static inline var CLOSE                             = "close";

@@ -115,9 +115,9 @@ class PageModel extends Model, implements IModel
   override function setString(id:String, s:String):Void{
 
     switch(id) {
-      case 'print_mask_url':          print_mask_url  = s; 
-      case 'hide_mask_url':           hide_mask_url   = s;
-      case 'front_shoot_url':         front_shoot_url = s;
+      //case 'print_mask_url':          print_mask_url  = s; 
+      //case 'hide_mask_url':           hide_mask_url   = s;
+      //case 'front_shoot_url':         front_shoot_url = s;
       case 'no_move':{ trace('no move'); 	}
       case 'page_name':               page_name       = s;
       case EVENT_ID.SET_PAGE_XML:     fileStr         += s;
@@ -127,7 +127,6 @@ class PageModel extends Model, implements IModel
   }
   
   override function getString(id:String):String{
-
     switch(id) {
       case 'print_mask_url':    return print_mask_url; 
       case 'hide_mask_url':     return hide_mask_url; 
@@ -144,6 +143,12 @@ class PageModel extends Model, implements IModel
     
     //front_of_paper = false;
 //    trace(xml.toString());
+
+    for( design in xml.elementsNamed("design") ){
+      for( front_shot in design.elementsNamed("front-shot") ){
+        front_shoot_url = Std.string(front_shot.firstChild().nodeValue);
+      }
+    }
     
     for(front in xml.elementsNamed('front')){  front_of_paper = front.firstChild().nodeValue == 'true';}
 
@@ -175,7 +180,7 @@ class PageModel extends Model, implements IModel
     }
   }
 
-  override public function getXml(cmd:String):String{
+  override public function getXmlString(cmd:String):String{
     
     switch ( cmd ){
       case CONST.XML_FILE:{
@@ -194,11 +199,7 @@ class PageModel extends Model, implements IModel
         return print_types.toString();
       }
     }
-
-    
     return null;
-    
-    
   }
   
   public function onFontSelected(param:IParameter):Void {

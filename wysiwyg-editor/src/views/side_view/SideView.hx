@@ -71,7 +71,7 @@ class SideView extends View, implements IView
   }
   
   override public function showView(id:String, b:Bool):Void{
-//    trace(id);
+    trace(id);
     selectedView.update('deselect', 0 , 'na');
     posY = 0;
     

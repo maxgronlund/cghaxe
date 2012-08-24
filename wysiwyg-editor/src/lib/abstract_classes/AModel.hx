@@ -66,7 +66,12 @@ class AModel extends EventDispatcher
   	trace("getFloat: must be overriden in a subclass");
   	return 0;
   }
-  public function getXml(id:String):String{
+  public function getXmlString(id:String):String{
+  	trace("getXmlString: must be overriden in a subclass");
+  	return null;
+  }
+  
+  public function getXml(id:String):Xml{
   	trace("getXml: must be overriden in a subclass");
   	return null;
   }

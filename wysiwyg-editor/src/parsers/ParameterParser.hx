@@ -55,6 +55,7 @@ class ParameterParser
     }
     
     if(params.price_file_url != null){
+      trace(params.price_file_url);
       GLOBAL.price_file_url = params.price_file_url;
     }
     
@@ -65,7 +66,8 @@ class ParameterParser
     
     // page design
     if(params.design_xml_file_url != null){
-      GLOBAL.design_file_url = params.design_xml_file_url;
+      //GLOBAL.design_file_url = params.design_xml_file_url;
+      GLOBAL.preset_file_url = params.design_xml_file_url;
     }
 
     if(params.save_path != null){
@@ -75,17 +77,26 @@ class ParameterParser
 
     if(params.edit_mode != null){
       GLOBAL.edit_mode = params.edit_mode;
-      //trace(GLOBAL.edit_mode);
       
       switch ( params.edit_mode ){
+        //case 'system_design':{
+        //  //GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
+        //  GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
+        //  GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
+        //  GLOBAL.side_view.addView(GLOBAL.text_suggestion_view, 0,0,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
+        //  GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
+        //}
+        
         case 'system_design':{
           GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
+          //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
-          GLOBAL.side_view.addView(GLOBAL.text_suggestion_view, 0,0,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
-          //GLOBAL.side_view.addView(GLOBAL.design_greetings_view, 0,0,EVENT_ID.SHOW_DESIGN_IMAGES);
+          GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
+          GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
+          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
-    
+        
         case 'system_preset':{
           GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
@@ -93,7 +104,7 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
-          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.BLIND_VIEW);
+          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         } 
         
         case 'user_preset':{
@@ -103,10 +114,9 @@ class ParameterParser
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
+           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
-        
-        
-        
+
         case 'system_preview':{
 
         }
@@ -120,7 +130,7 @@ class ParameterParser
     
     if(params.shop_item_id != null){
       GLOBAL.shop_item_id = params.shop_item_id;
-      trace("SHOP_ITEM_ID", params.shop_item_id);
+      //trace("SHOP_ITEM_ID", params.shop_item_id);
       
     }
     //trace('end of parse');

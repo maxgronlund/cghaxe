@@ -9,7 +9,7 @@ import flash.display.Loader;
 class DesignsModel extends Model, implements IModel {
   
   private var pageDesignXml:Xml;
-  
+  //private var designXml:Xml;
   private var brides_first_name:String;
   private var brides_last_name:String;
   private var grooms_first_name:String;
@@ -37,14 +37,24 @@ class DesignsModel extends Model, implements IModel {
   private var city:String;
   private var countrxy:String;
   private var pageDesignLoader:ILoader;
+  
+  
+
+  private var page_name:String;
+
+  
+  
+  
+  
 
   
   public function new(){	
+    super();
     pageDesignLoader         = new XmlLoader();
     pageDesignLoader.addEventListener( EVENT_ID.DESIGN_FILE_LOADED, onPageDesignLoaded);
-    
-    super();
+
   }
+  
     
   override public function init():Void{	
    super.init();
@@ -82,6 +92,7 @@ class DesignsModel extends Model, implements IModel {
   }
   
   override public function setString(id:String, s:String):Void{
+//    trace(id);
      switch ( id ){
        case 'brides_first_name':    { brides_first_name = s;}
        case 'brides_last_name':     { brides_last_name = s;}
@@ -140,23 +151,26 @@ class DesignsModel extends Model, implements IModel {
         case 'dinner_place_name':   {return dinner_place_name;}
         case 'city':                {return city;}
         case 'countrxy':            {return countrxy;}
+        case 'page_name':           return page_name;
+        default:                    return '';
         
       }
-      return '';
   }
 
   private function onPassDesign(e:IKEvent):Void{
-    
+    trace('1....onPassDesign');
     //trace('onPassDesign', e.getXml().toString());
     
-    var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-//    trace(xml.toString());
+    pageDesignXml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+    
     var param:IParameter = new Parameter(EVENT_ID.BUILD_DESIGN_PAGE);
-    param.setXml(xml);
+    param.setXml(pageDesignXml);
     param.setInt(0);
     dispatchParameter(param);
+    
+
     /*  
-    for( design in xml.elementsNamed("design") ) {
+    page_name:String;      for( design in xml.elementsNamed("design") ) {
       for( img in design.elementsNamed("image-url") ) {
         var image_url:String        = Std.string(img.firstChild().nodeValue);
         var param:IParameter        = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
@@ -196,5 +210,9 @@ class DesignsModel extends Model, implements IModel {
       case 'front_of_paper': true;
     }
     return false;
+  }
+  
+  override public function getXml(id:String):Xml{
+    return pageDesignXml;
   }
 }

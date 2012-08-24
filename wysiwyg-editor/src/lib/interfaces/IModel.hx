@@ -24,7 +24,8 @@ interface IModel implements IEventDispatcher
 	function getFloat(s:String):Float;
 	function getInt(s:String):Int;
 	function getBool(s:String):Bool;
-	function getXml(id:String):String;
+	function getXmlString(id:String):String;
+	function getXml(id:String):Xml;
 	function getDynamic(id:String, index:Int):Dynamic;
 	function getPoint(id:String):Point;
 	function getVector(id:String):Vector<Dynamic>;
