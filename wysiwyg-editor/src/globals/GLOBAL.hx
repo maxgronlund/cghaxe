@@ -21,7 +21,6 @@ class GLOBAL  {
   public static var Greetings:IModel;
   public static var Font:FontModel;
   public static var userParser:UserParser;
-  
   public static var preset_quantity:String;
   // system
   public static var wysiwyg_status:String;
