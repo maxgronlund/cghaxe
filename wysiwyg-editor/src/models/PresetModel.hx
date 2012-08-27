@@ -87,7 +87,7 @@ class PresetModel extends Model, implements IModel
   private function parsePreset(xml:Xml):Void{
     
     for( preset in xml.elementsNamed("title") ) {
-       //trace(preset.toString() );
+       GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
     for(pages in xml.elementsNamed("pages") ) {
       for(page in pages.elementsNamed("page") ) {

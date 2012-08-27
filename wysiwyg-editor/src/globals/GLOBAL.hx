@@ -23,7 +23,6 @@ class GLOBAL  {
   public static var userParser:UserParser;
   
   public static var preset_quantity:String;
-  
   // system
   public static var wysiwyg_status:String;
   public static var authenticity_token:String;
