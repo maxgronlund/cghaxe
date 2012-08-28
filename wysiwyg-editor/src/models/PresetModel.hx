@@ -343,7 +343,9 @@ class PresetModel extends Model, implements IModel
     variables.authenticity_token 			  = GLOBAL.authenticity_token;
     variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
     variables.xml_data 				          = Pages.getString('file_xml');
-    variables.xml_prices                = Pages.getString('price_xml');// !!!
+    variables.shop_item_id              = GLOBAL.shop_item_id;
+    variables.quantity                  = GLOBAL.preset_quantity;
+    //variables.xml_prices                = Pages.getString('price_xml');// !!!
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.preset_sibling_selected 	= productSelected;
     
