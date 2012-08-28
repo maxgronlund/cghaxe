@@ -6,7 +6,9 @@ class PriceView extends PropertyView, implements IView{
 	private var total_price_label:FormatedText;
 	private var shop_item_price_label:FormatedText;
 	private var shop_item_price_price_label:FormatedText;
-	private var shop_item_price_units_label:FormatedText;
+	//private var shop_item_price_units_label:FormatedText;
+	private var amount_field:EditableTextField;
+	public var iAlreadyHaveACliche:Hash<Bool>;
 	
 	
 	private var prices:Array<PriceModel>;
@@ -15,28 +17,47 @@ class PriceView extends PropertyView, implements IView{
 	public function new(priceController:IController){	
 		super(priceController);
 		backdrop				= new PriceViewBack();
+		
+		amount_field = new EditableTextField();
+		amount_field.x = 30;
+		amount_field.y = 180;
+		
+		GLOBAL.preset_quantity_text_field = amount_field;
     
     shop_item_price_label = new FormatedText('helvetica', '0.0', 12, false);
     shop_item_price_price_label = new FormatedText('helvetica', '0.0', 12, false);
-    shop_item_price_units_label = new FormatedText('helvetica', '0.0', 12, false);
+    //shop_item_price_units_label = new FormatedText('helvetica', '0.0', 12, false);
   	total_price_label = new FormatedText('helvetica', '0.0', 12, false);
   	
   	prices = new Array();
   	priceColumns = new Array();
+  	iAlreadyHaveACliche = new Hash();
+  	GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
   	
   	Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
 	}
 	
+	//public function getIAlreadyHaveACliche():Hash{
+	//  return iAlreadyHaveACliche;
+	//}
+	
 	private function clearColumns():Void{
 	  for(i in 0...priceColumns.length){
+	    iAlreadyHaveACliche.set(priceColumns[i].getTitle(), priceColumns[i].getIAlreadyHaveACliche());
 	    removeChild(priceColumns[i]);
     }
+    GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
 	  priceColumns = new Array();
 	}
 	
 	override public function addColumn(model:IModel):Void{
 //	  trace("#0");
 	  var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
+	  
+	  var haveACliche:Bool = iAlreadyHaveACliche.get(price_column.getTitle());
+	  price_column.setIAlreadyHaveACliche(haveACliche);
+	  
+	  
 	  price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
 	  price_column.set_amount_custom_pms1_color(model.getInt('amount_custom_pms1_color'));
 	  price_column.set_amount_custom_pms2_color(model.getInt('amount_custom_pms2_color'));
@@ -57,6 +78,7 @@ class PriceView extends PropertyView, implements IView{
 	  {
 	    case "viewId":{
 	      trace('got you');
+	      addAllPrices();
 	      return EVENT_ID.SHOW_PRICES;
 	    }
 	   case "price_xml":
@@ -106,9 +128,9 @@ class PriceView extends PropertyView, implements IView{
 	  shop_item_price_label.x = 0;
 	  shop_item_price_label.setLabel(GLOBAL.product_name);
 	  
-	  shop_item_price_units_label.y = 40+18;
-	  shop_item_price_units_label.x = 97;
-	  shop_item_price_units_label.setLabel(Std.string(GLOBAL.preset_quantity));
+	  amount_field.y = 40+18;
+	  amount_field.x = 97;
+	  //shop_item_price_units_label.setLabel(Std.string(GLOBAL.preset_quantity));
 	  
 	  shop_item_price_price_label.y = 40+18;
 	  shop_item_price_price_label.x = 140;
@@ -134,10 +156,12 @@ class PriceView extends PropertyView, implements IView{
   	
   	addChild(total_price_label);
   	addChild(shop_item_price_label);
+  	addChild(amount_field);
+  	amount_field.init();
   	
   	addChild(shop_item_price_label);
   	addChild(shop_item_price_price_label);
-  	addChild(shop_item_price_units_label);
+  	//addChild(shop_item_price_units_label);
   	
   	total_price_label.setLabel('total price');
     total_price_label.x = 55;

@@ -4,6 +4,7 @@ class PriceColumn extends MovieClip {
   
   private var prices:Array<PriceModel>;
 	private var price_labels:Array<OnePrice>;
+	private var extraChilds:Array<Dynamic>;
 	private var total_label:FormatedText;
 	private var title_label:FormatedText;
 	private var title:String;
@@ -17,13 +18,15 @@ class PriceColumn extends MovieClip {
   private var amount_cliche:UInt;
 
   private var column_total_price:Float;
+  private var iAlreadyHaveACliche:Bool;
 	
 	public function new(title:String){		
 	  super();
-	  
+	  iAlreadyHaveACliche = false;
 	  this.title = title;
 	  prices = new Array();
   	price_labels = new Array();
+  	extraChilds = new Array();
   	//price_labels.push(new OnePrice('foil'));
   	//price_labels.push(new OnePrice('one-pms-color'));
   	//price_labels.push(new OnePrice('std-color'));
@@ -31,8 +34,24 @@ class PriceColumn extends MovieClip {
   	total_label = new FormatedText('helvetica', 'total', 12, false);
 	}
 	
+	public function getTitle():String{
+	  return title;
+	}
+	public function getIAlreadyHaveACliche():Bool{
+	  return iAlreadyHaveACliche;
+	}
+	public function setIAlreadyHaveACliche(b:Bool):Void{
+	  iAlreadyHaveACliche = b;
+	}
+	
+	
 	public function setPrices(price_array:Array<PriceModel>):Void {
 	  prices = price_array;
+	}
+	
+	public function setChecked(b:Bool):Void{
+	  iAlreadyHaveACliche = b;
+	  GLOBAL.price_view.update('addAllPrices', 0, '');
 	}
 	
 	public function addAllPrices():Void {
@@ -40,6 +59,11 @@ class PriceColumn extends MovieClip {
 	    removeChild(price_labels[i]);
     }
 	  price_labels = new Array();
+	  
+	  for(i in 0...extraChilds.length) {
+	    removeChild(extraChilds[i]);
+    }
+	  extraChilds = new Array();
 	  
 	  if(amount_std_pms_color > 0) {
 	    price_labels.push(new OnePrice('std-color'));
@@ -71,29 +95,45 @@ class PriceColumn extends MovieClip {
 	  }
     
     var total_price:Float = 0;
-
+    
+    var offset_i:UInt = 0;
     for(i in 0...price_labels.length) {
       
       var price:OnePrice = price_labels[i];
       addChild(price);
       price.x = 0;
-    	price.y = 18*i;
+    	price.y = 18*(i+offset_i);
+    	
+    	var units:Int = Std.parseInt(GLOBAL.preset_quantity);
+    	var print_price:Float = getPrintPrice(units, price.getPrintType());
+    	
     	switch ( price.getPrintType() )
     	{
     	 case 'cliche':
-    	   price.setUnitsLabel("1");
+    	   price.setUnitsLabel("1");    	   
+    	   offset_i += 1;
+    	   var checkbox = new Checkbox(iAlreadyHaveACliche, this);
+    	   checkbox.x = 0;
+       	 checkbox.y = 18*(i+offset_i);
+    	   addChild(checkbox);
+    	   extraChilds.push(checkbox);
+    	   var checkbox_label = new FormatedText('helvetica', 'I already have a cliché', 12, false);
+      	 addChild(checkbox_label);
+      	 extraChilds.push(checkbox_label);
+      	 checkbox_label.x = 25;
+      	 checkbox_label.y = 18*(i+offset_i);
+      	 if(iAlreadyHaveACliche == true){
+       	   print_price = 0;
+       	 }
     	 default:
          price.setUnitsLabel(Std.string(GLOBAL.preset_quantity));
     	}
     	
     	price.setItemLabel(price.getPrettyPrintType());
-    	
-    	var units:Int = Std.parseInt(GLOBAL.preset_quantity);
-    	var print_price:Float = getPrintPrice(units, price.getPrintType());
+    	    	
     	total_price += print_price;
     	price.setPriceLabel(Std.string(print_price));
     }
-    
     column_total_price = total_price;
     
     if(price_labels.length == 0)
@@ -107,7 +147,7 @@ class PriceColumn extends MovieClip {
     title_label.setLabel(title);
     
     total_label.x = 140;
-    total_label.y = 18*price_labels.length;
+    total_label.y = 18*(price_labels.length+offset_i);
     total_label.setLabel(Std.string(total_price));
     
   }

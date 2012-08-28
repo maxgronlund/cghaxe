@@ -69,5 +69,25 @@ class ShopItemPrices
         shop_item_prices.push(new ShopItemPrice(_min_units, _max_units, _unit_price));
       }
     }
+    
+    var min_quantity:UInt;
+    if(shop_item_prices.length > 0){
+      min_quantity = shop_item_prices[0].getMinUnits();
+    } else {
+      min_quantity = 1;
+    }
+      
+    for(i in 0...shop_item_prices.length){
+      var new_min:UInt = shop_item_prices[i].getMinUnits();
+      if(new_min < min_quantity){
+        min_quantity = new_min;
+      }
+       
+      
+    }
+    if(min_quantity > 0){
+      GLOBAL.min_quantity = min_quantity;
+    }
+    
   }
 }

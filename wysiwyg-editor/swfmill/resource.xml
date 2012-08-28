@@ -39,7 +39,8 @@
       <bitmap id="ZoomOutButton" import="library/images/zoom_out_button.png" />
       <bitmap id="ZoomButton" import="library/images/zoom_button.png" />
       
-      
+      <bitmap id="CheckboxChecked" import="library/images/checkbox_checked.png" />
+      <bitmap id="CheckboxUnchecked" import="library/images/checkbox_unchecked.png" />
      
       
       
