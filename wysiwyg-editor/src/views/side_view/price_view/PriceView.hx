@@ -28,6 +28,8 @@ class PriceView extends PropertyView, implements IView{
     shop_item_price_price_label = new FormatedText('helvetica', '0.0', 12, false);
     //shop_item_price_units_label = new FormatedText('helvetica', '0.0', 12, false);
   	total_price_label = new FormatedText('helvetica', '0.0', 12, false);
+  	total_price_label.x = 55;
+  	total_price_label.y = 76;
   	
   	prices = new Array();
   	priceColumns = new Array();
@@ -147,7 +149,12 @@ class PriceView extends PropertyView, implements IView{
   	  y += priceColumn.height+18;
   	  total_price += priceColumn.getColumnTotalPrice();
 	  }
-	  total_price_label.y = priceColumns[priceColumns.length-1].y + priceColumns[priceColumns.length-1].height;
+	  if(priceColumns.length > 0){
+	    total_price_label.y = priceColumns[priceColumns.length-1].y + priceColumns[priceColumns.length-1].height;
+	  } else {
+	    total_price_label.y = 76;
+	  }
+	  
 	  total_price_label.setLabel("Total: " + Std.string(total_price));
 	}
 	
@@ -165,7 +172,7 @@ class PriceView extends PropertyView, implements IView{
   	
   	total_price_label.setLabel('total price');
     total_price_label.x = 55;
-    total_price_label.y = 360;
+    total_price_label.y = 76;
     
   }
 	
