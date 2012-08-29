@@ -185,6 +185,7 @@ class PageModel extends Model, implements IModel
     switch ( cmd ){
       case CONST.XML_FILE:{
         fileStr = '\t<page id="'+Std.string(pageId)+'">\n';
+        fileStr += '\t<title>'+ page_name +'</title>\n';
 
         var param:IParameter = new Parameter(EVENT_ID.GET_PAGE_POS_XML + Std.string(pageId));
         dispatchParameter(param);
