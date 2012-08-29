@@ -91,20 +91,7 @@ class PresetModel extends Model, implements IModel
     }
     for(pages in xml.elementsNamed("pages") ) {
       for(page in pages.elementsNamed("page") ) {
-        //var is_associated_product:Bool = false;
-        //var firstAssPage = true;
-        //for(associated_products in page.elementsNamed("associated-products") ) {
-        //  is_associated_product = true;
-        //  parseAssociatedProducts(associated_products);
-        //  if(firstAssPage){
-        //    firstAssPage  =false;
-        //    pickUpDesignsforAssProduct(page);
-        //  }
-        //    
-        //}
-        //if(!is_associated_product){
-          buildPage(page);
-        //}
+        buildPage(page);
       } 
     }
     
@@ -115,9 +102,6 @@ class PresetModel extends Model, implements IModel
     for(greetings in xml.elementsNamed("greetings")){
       dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
     }
-    
-
-    
 
     for(print_prices in xml.elementsNamed("print-prices")){
       Application.dispatchXML(EVENT_ID.PRESET_PRICES, print_prices);
@@ -126,9 +110,7 @@ class PresetModel extends Model, implements IModel
     for( cliche_price_xml in xml.elementsNamed("cliche-price")) {
 		  GLOBAL.cliche_price = Std.parseFloat(cliche_price_xml.firstChild().nodeValue.toString());
 		}
-    
-    
-    // !!! Freezes
+
     for(user_tags in xml.elementsNamed("user-tags")){
       GLOBAL.userParser.parseUser(user_tags);
     }
@@ -204,64 +186,7 @@ class PresetModel extends Model, implements IModel
     param.setXml(xml);
     dispatchParameter(param);
   }
-  
-  /*
-  private function parsePresetAssociabled(preset:Xml):Void{
-    
-    for(preset_associables in preset.elementsNamed("preset-associables") ) {
-      for(preset_associable in preset_associables.elementsNamed("preset-associable") ) {
-        for(ass_product in preset_associable.elementsNamed("ass-product") ) {
-          
-          var pageIndex:UInt;
-          for(configurable_place_id in ass_product.elementsNamed("configurable-place-id") ) {
-            pageIndex = getPageIndexFromConfPlaceId(configurable_place_id);
-            
-          }
-          for(prod_conf in ass_product.elementsNamed("prod-conf") ) {
-            for(product_places in prod_conf.elementsNamed("product-places") ) {
-              for(product_place in product_places.elementsNamed("product-place") ) {
-                for(front_shoot in product_place.elementsNamed("front-shoot") ) {
-                  for(url in front_shoot.elementsNamed("url") ) {
-                    
-                    // somehow we have to show/store a list of what associated product to select from on a product place
-                    // pageOptions[ getPageIndexFromConfPlaceId(configurable_place_id)].push(ass_product)
-                    
-                    var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
-                    param.setString(url.firstChild().nodeValue.toString());
-                    param.setInt(associatedProducts[assProdIndex]); 
-                    
-                    assProdIndex++;           //<<---------------not working hack                                             
-                    dispatchParameter(param); //<<---------------not working hack use pull instead of push
-                    t
-                    trace(associatedProducts.toString());
-                    
-                    
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  }
-  */
-  /*
-  private function parseGreetings( greetings:Xml ): Void
-  {
-    dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
-    //trace(greeting.firstChild().nodeValue.toString());
-    //GLOBAL.tmp = greetings;
-    //greeting.firstChild().nodeValue.toString();
-  }
-  */
-  //private function parseDesigns(preset:Xml):Void{
-  //  for( design in preset.elementsNamed("design") ) {
-  //    //designs for the sidebar
-  //    dispatchXML(EVENT_ID.PAGE_DESIGNS_LOADED, design);
-  //  }
-  //  
-  //}
+
   
   private function parseXmlData(xml_data:Xml):Void{
     var page_index:Int = 0;
@@ -282,55 +207,6 @@ class PresetModel extends Model, implements IModel
     }
     
   }
-/*  
-  private function parseProductPlaces(preset:Xml):Void{
-    
-//    trace(preset.toString());
-    var page_index:Int = 0;
-    
-    for(product_place in preset.elementsNamed("product-place") ) {
-      for(front_shoot in product_place.elementsNamed("front-shoot") ) {
-        for(url in front_shoot.elementsNamed("url") ) {
-          // There might be missing frontshots for associated products but that's ok
-          var param:IParameter = new Parameter(EVENT_ID.LOAD_FRONT_SHOT);
-          param.setString(url.firstChild().nodeValue.toString());
-          param.setInt(page_index);
-          dispatchParameter(param);
-        }
-      }
-      page_index++;
-    }
-  }
-*/  
-/*
-  private function parseUser(preset:Xml):Void{
-    for( user in preset.elementsNamed("user") ){
-      GLOBAL.userParser.parseUser(user);
-    }
-  }
- */ 
-  //private function parseVectorFile(preset:Xml):Void{
-  //  for( vector_file in preset.elementsNamed("vector-file") ){
-  //    for( file in vector_file.elementsNamed("file") ){
-  //      for( url in file.elementsNamed("url") ){
-  //          var urlstr:String = url.firstChild().nodeValue.toString();
-  //          GLOBAL.tmp = urlstr;
-  //      }
-  //    }      
-  //  }
-  //}
-    
-  //private function countPlaceHolders(xml:Xml):Void{
-  //  for( placeholder in xml.elementsNamed("placeholder") ) {
-  //      placeholders++;
-  //  }
-  //}
-  //
-  private function getPageIndexFromConfPlaceId( confPlaceId:Xml):UInt{
-    // TO do find the right page to send the front shoot to
-    // here use 'configurable_place_id' to find the right page index
-    return 0;
-  }
   
   public function savePreset(e:IKEvent):Void{
     trace('save preset');
@@ -343,8 +219,9 @@ class PresetModel extends Model, implements IModel
     variables.authenticity_token 			  = GLOBAL.authenticity_token;
     variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
     variables.xml_data 				          = Pages.getString('file_xml');
-    variables.xml_prices                = Pages.getString('price_xml');// !!!
+    variables.xml_prices                = Pages.getString('price_xml');
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
+    variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.preset_sibling_selected 	= productSelected;
     
     variables._method = 'put';

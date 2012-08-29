@@ -95,7 +95,7 @@ class GLOBAL  {
   
   // user
   public static var user_id:String;
-  public static var shop_item_id:String;
+  public static var shop_item_id:Int;
   
   
   

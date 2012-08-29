@@ -201,6 +201,7 @@ class Main
     GLOBAL.stdPmsColor      = 0;
     GLOBAL.printType        = CONST.STD_PMS_COLOR;
     GLOBAL.price_file_url   = 'na';
+    GLOBAL.shop_item_id     = -1;
   }
   
   private function setGlobalViews():Void{

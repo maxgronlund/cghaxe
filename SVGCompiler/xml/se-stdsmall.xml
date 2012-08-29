@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<movie version="9" width="800" height="900" framerate="30"> 
+	<frame> 
+		<library>
+			<clip id="MySVG" name="MySVG" import="svg/SE-STDsmall.svg" />
+		</library> 
+	</frame> 
+</movie>
