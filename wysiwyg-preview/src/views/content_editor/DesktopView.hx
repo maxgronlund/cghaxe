@@ -164,8 +164,8 @@ class DesktopView extends View, implements IView{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ZOOM_100:{
-        this.x = 8;
-        this.y = 48;
+        this.x = 0;
+        this.y = 0;
       }
     }
   }  
