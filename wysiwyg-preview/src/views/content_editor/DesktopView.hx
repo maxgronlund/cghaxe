@@ -42,89 +42,89 @@ class DesktopView extends View, implements IView{
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     Designs.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
     Preset.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
-    //Pages.addEventListener(EVENT_ID.PAGE_SELECTED, centerPage);
+    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, centerPage);
     bmpData    = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.DESKTOP_HEIGHT,false, COLOR.DESKTOP );
     backdrop   = new Bitmap(bmpData);
     
   }
   
-  //private function centerPage(e:KEvent):Void{
-  //  
-  //  zoomDone  = false;
-  //  alignDone = false;
-  //  //pageIndex = e.getInt();
-  //  pageView  = pagesView.getView(e.getInt());
-  //  zoom      = true;
-  //  zoomFactor  = 1.05;
-  //  updateGoTo();
-  //  
-  //  addEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
-  //}
+  private function centerPage(e:KEvent):Void{
+    
+    zoomDone  = false;
+    alignDone = false;
+    //pageIndex = e.getInt();
+    pageView  = pagesView.getView(e.getInt());
+    zoom      = true;
+    zoomFactor  = 1.05;
+    updateGoTo();
+    
+    addEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
+  }
   
-  //private function updateGoTo():Void{
-  //  
-  //  goToPosX = -(pageView.x * Zoom.getZoomFactor());
-  //  goToPosY = -(pageView.y * Zoom.getZoomFactor());
-  //  
-  //  goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
-  //  goToPosY += 50;
-  //  moveLeft =  goToPosX - this.x > 0;
-  //  
-  //  if(zoom){
-  //    var desktopSize:Float = SIZE.DESKTOP_WIDTH - 40;
-  //    var test:Float = Zoom.getZoomFactor() * pageView.width;
-  //    test = test - desktopSize;
-  //    test *= 0.3;
-  //    test = (test / desktopSize)+1;
-  //    test = 1/test;
-  //
-  //    var zoomLimit = 1.01;
-  //    if( zoomFactor < 1/zoomLimit || zoomFactor > zoomLimit){
-  //      zoomFactor = test;
-  //    }
-  //    else {
-  //      zoom = false;
-  //      zoomFactor = 1;
-  //      zoomDone = true;
-  //    } 
-  //  }                           
-  //}
+  private function updateGoTo():Void{
+    
+    goToPosX = -(pageView.x * Zoom.getZoomFactor());
+    goToPosY = -(pageView.y * Zoom.getZoomFactor());
+    
+    //goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
+    //goToPosY += 50;
+    moveLeft =  goToPosX - this.x > 0;
+    
+    if(zoom){
+      var desktopSize:Float = SIZE.DESKTOP_WIDTH*SIZE.DESKTOP_HEIGHT*0.9 - 40;
+      var test:Float = Zoom.getZoomFactor() * pageView.width*pageView.height;
+      test = test - desktopSize;
+      test *= 0.4;
+      test = (test / desktopSize)+1;
+      test = 0.95/test;
   
-  //private function OnAllignAndZoom(e:Event):Void{
-  //   
-  //  onAlignLeft();
-  //  Zoom.zoomTo(zoomFactor);
-  //
-  // }
-  // 
-  //public function onAlignLeft():Void
-	//{
-  //  var distanceX:Float = goToPosX - this.x;
-  //  var distanceY:Float = goToPosY - this.y;
-  //  
-	//  if(moveLeft && this.x > goToPosX-1 || !moveLeft && this.x < goToPosX+1){
-	//    alignDone = true;
-	//  }
-	//  else{
-	//    this.x += (distanceX * 0.3);
-  //	  this.y += (distanceY * 0.3);
-	//  }
-	//  testForDone();
-	//  
-  //}
+      var zoomLimit = 1.01;
+      if( zoomFactor < 1/zoomLimit || zoomFactor > zoomLimit){
+        zoomFactor = test;
+      }
+      else {
+        zoom = false;
+        zoomFactor = 1;
+        zoomDone = true;
+      } 
+    }                           
+  }
   
-  //private function testForDone(): Void
-  //{
-  //  if(alignDone && zoomDone)
-  //    removeEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
-  //  else
-  //    updateGoTo();
-  //}
+  private function OnAllignAndZoom(e:Event):Void{
+     
+    onAlignLeft();
+    Zoom.zoomTo(zoomFactor);
   
-  //private function canterPageDone():Void{
-  //  if(zoomDone && alignDone)
-  //    removeEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
-  //}
+   }
+   
+  public function onAlignLeft():Void
+	{
+    var distanceX:Float = goToPosX - this.x;
+    var distanceY:Float = goToPosY - this.y;
+    
+	  if(moveLeft && this.x > goToPosX-1 || !moveLeft && this.x < goToPosX+1){
+	    alignDone = true;
+	  }
+	  else{
+	    this.x += (distanceX * 0.3);
+  	  this.y += (distanceY * 0.3);
+	  }
+	  testForDone();
+	  
+  }
+  
+  private function testForDone(): Void
+  {
+    if(alignDone && zoomDone)
+      removeEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
+    else
+      updateGoTo();
+  }
+  
+  private function canterPageDone():Void{
+    if(zoomDone && alignDone)
+      removeEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
+  }
   
    
   private function onResetDesktopSize(e:KEvent):Void{
@@ -186,6 +186,7 @@ class DesktopView extends View, implements IView{
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
+//    trace('onAllImagesLoaded');
     if(placeholders == 0) {
       placeholders--;
       setSizes();       

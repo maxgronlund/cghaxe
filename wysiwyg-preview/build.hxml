@@ -28,6 +28,7 @@
 -cp ../wysiwyg-editor/src/views
 -cp ../wysiwyg-editor/src/views/application
 -cp ../wysiwyg-editor/src/views/content_editor
+-cp src/views/content_editor
 -cp ../wysiwyg-editor/src/views/content_editor/placeholder
 -cp ../wysiwyg-editor/src/views/side_view
 -cp ../wysiwyg-editor/src/views/side_view/text_view
