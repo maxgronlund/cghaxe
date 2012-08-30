@@ -65,7 +65,6 @@ class ApplicationModel extends Model, implements IModel
       case 'user_preset':{
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
-                      'load price xml from backend',
                       'pass preset',
                       'pass preset price',
                       'add pages to stage',
@@ -80,7 +79,6 @@ class ApplicationModel extends Model, implements IModel
         
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
-                      'load price xml from backend',  
                       'pass preset',
                       'pass preset price',
                       'add pages to stage',
@@ -96,7 +94,6 @@ class ApplicationModel extends Model, implements IModel
        
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
-                      //'load price xml from backend',  
                       'pass preset',
                       'pass preset price',
                       'add pages to stage',
@@ -141,12 +138,12 @@ class ApplicationModel extends Model, implements IModel
       }
       
       case 'load price xml from backend':{
-        if(GLOBAL.price_file_url == 'na'){
-          loadSeq();
-        }else{
-          priceLoader.addEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded); 
-          priceLoader.load(GLOBAL.price_file_url, EVENT_ID.PRICE_FILE_LOADED);
-        }
+        //if(GLOBAL.price_file_url == 'na'){
+        //  loadSeq();
+        //}else{
+        //  priceLoader.addEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded); 
+        //  priceLoader.load(GLOBAL.price_file_url, EVENT_ID.PRICE_FILE_LOADED);
+        //}
         
       }
       
