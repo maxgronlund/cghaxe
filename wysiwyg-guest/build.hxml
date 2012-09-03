@@ -2,6 +2,7 @@
 -cp src
 # application specific libraries
 -cp ../wysiwyg-editor/src/constants
+-cp src/constants
 -cp ../wysiwyg-editor/src/globals
 -cp ../wysiwyg-editor/src/bitmaps
 -cp ../wysiwyg-editor/src/bitmaps/buttons

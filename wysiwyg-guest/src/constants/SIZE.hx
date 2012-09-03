@@ -1,7 +1,7 @@
 class SIZE{
 	// dimentions pseudo CSS replace later?
-  public static inline var MAIN_VIEW_WIDTH:Int = 980;
-  public static inline var MAIN_VIEW_HEIGHT:Int = 980;
+  public static inline var MAIN_VIEW_WIDTH:Int = 300;
+  public static inline var MAIN_VIEW_HEIGHT:Int = 300;
   public static inline var MENU_VIEW_HEIGHT:Int = 29;
   public static inline var MENU_VIEW_WIDTH:Int = MAIN_VIEW_WIDTH - SIDEBAR_VIEW_WIDTH;
   public static inline var PAGESELESCTOR_HEIGHT:Int = 20;
@@ -17,8 +17,8 @@ class SIZE{
   
   public static inline var PROPERTY_HEIGHT:Int = 515;
   
-  public static inline var DESKTOP_WIDTH:Int = MAIN_VIEW_WIDTH - SIDEBAR_VIEW_WIDTH;
-  public static inline var DESKTOP_HEIGHT:Int = MAIN_VIEW_HEIGHT - (MENU_VIEW_HEIGHT + PAGESELESCTOR_HEIGHT);
+  public static inline var DESKTOP_WIDTH:Int = MAIN_VIEW_WIDTH;
+  public static inline var DESKTOP_HEIGHT:Int = MAIN_VIEW_HEIGHT;
   public static inline var PROPERTY_BUTTON_HEIGHT:Int = 30;
   
   

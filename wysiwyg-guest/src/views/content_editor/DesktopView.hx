@@ -66,17 +66,17 @@ class DesktopView extends View, implements IView{
     goToPosX = -(pageView.x * Zoom.getZoomFactor());
     goToPosY = -(pageView.y * Zoom.getZoomFactor());
     
-    //goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
-    //goToPosY += 50;
+    goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
+    goToPosY += 50;
     moveLeft =  goToPosX - this.x > 0;
     
     if(zoom){
-      var desktopSize:Float = SIZE.DESKTOP_WIDTH*SIZE.DESKTOP_HEIGHT*0.9 - 40;
-      var test:Float = Zoom.getZoomFactor() * pageView.width*pageView.height;
+      var desktopSize:Float = SIZE.DESKTOP_WIDTH;
+      var test:Float = Zoom.getZoomFactor() * pageView.width;
       test = test - desktopSize;
-      test *= 0.4;
+      test *= 0.3;
       test = (test / desktopSize)+1;
-      test = 0.95/test;
+      test = 1/test;
   
       var zoomLimit = 1.01;
       if( zoomFactor < 1/zoomLimit || zoomFactor > zoomLimit){
