@@ -127,6 +127,21 @@ class ParameterParser
       //trace("SHOP_ITEM_ID", params.shop_item_id);
       
     }
+    
+    if(params.brides_first_name != null){
+      GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
+    }
+    if(params.grooms_first_name != null){
+      GLOBAL.Designs.setString('grooms_first_name', params.grooms_first_name);
+    }
+    if(params.wedding_date != null){
+      GLOBAL.Designs.setString('wedding_date', params.wedding_date);
+    }
+    if(params.location_name != null){
+      GLOBAL.Designs.setString('location_name', params.location_name);
+    }
+    
+    
     //trace('end of parse');
 	}
 	

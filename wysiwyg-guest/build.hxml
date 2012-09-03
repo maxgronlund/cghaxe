@@ -48,6 +48,7 @@
 -cp ../wysiwyg-editor/src/lib/abstract_classes
 -cp ../wysiwyg-editor/src/lib/interfaces
 -cp ../wysiwyg-editor/src/parsers
+-cp src/parsers
 
 
 
@@ -65,7 +66,7 @@
 -cp ../framework/views
 
 -main Main
--swf-lib ../swfmill/resource.swf
+-swf-lib ../wysiwyg-editor/swfmill/resource.swf
 -swf ../../Calligraphen/app/assets/flash/wysiwyg_guest.swf
 -swf-header 300:300:30:F4F6F1
 -swf-version 10
