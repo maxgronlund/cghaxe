@@ -108,7 +108,7 @@ class ParameterParser
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
-           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
+          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
 
         case 'system_preview':{
@@ -126,5 +126,23 @@ class ParameterParser
       GLOBAL.shop_item_id = Std.parseInt(params.shop_item_id);
       //trace("SHOP_ITEM_ID", params.shop_item_id);
     }
-  }
+
+
+
+    
+    if(params.brides_first_name != null){
+      GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
+    }
+    if(params.grooms_first_name != null){
+      GLOBAL.Designs.setString('grooms_first_name', params.grooms_first_name);
+    }
+    if(params.wedding_date != null){
+      GLOBAL.Designs.setString('wedding_date', params.wedding_date);
+    }
+    if(params.location_name != null){
+      GLOBAL.Designs.setString('location_name', params.location_name);
+    }
+
+	}
+	
 }

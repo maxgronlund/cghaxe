@@ -48,9 +48,20 @@ class ParameterParser
       GLOBAL.preset_file_url = params.preset_file_url;
     }
     
+    if(params.price_file_url != null){
+      trace(params.price_file_url);
+      GLOBAL.price_file_url = params.price_file_url;
+    }
+    
+    
+    if(params.preset_quantity != null){
+      GLOBAL.preset_quantity = params.preset_quantity;
+    }
+    
     // page design
-    if(params.pagedesign_xml_file_url != null){
-      GLOBAL.preset_file_url = params.pagedesign_xml_file_url;
+    if(params.design_xml_file_url != null){
+      //GLOBAL.design_file_url = params.design_xml_file_url;
+      GLOBAL.preset_file_url = params.design_xml_file_url;
     }
 
     if(params.save_path != null){
@@ -60,34 +71,46 @@ class ParameterParser
 
     if(params.edit_mode != null){
       GLOBAL.edit_mode = params.edit_mode;
-      //trace(GLOBAL.edit_mode);
       
       switch ( params.edit_mode ){
+        //case 'system_design':{
+        //  //GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
+        //  GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
+        //  GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
+        //  GLOBAL.side_view.addView(GLOBAL.text_suggestion_view, 0,0,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
+        //  GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
+        //}
+        
         case 'system_design':{
-          GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
-          GLOBAL.side_view.addView(GLOBAL.text_suggestion_view, 0,0,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
-          //GLOBAL.side_view.addView(GLOBAL.design_greetings_view, 0,0,EVENT_ID.SHOW_DESIGN_IMAGES);
-        }
-    
-        case 'system_preset':{
+          GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
-          
-          //GLOBAL.color_view.setFloat('ding dong', 0.0);
-          //trace('so far so good');
-          
-          GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
-          //trace('well true');
+          GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
+          GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
+          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
+        }
+        
+        case 'system_preset':{
+          GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
+          GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
+          //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
+          GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
+          GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
+          GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
+          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         } 
         
         case 'user_preset':{
+          GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           //trace('system_preset: ', params.system_preset);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
+          GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
+           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
-        
+
         case 'system_preview':{
 
         }
@@ -98,6 +121,27 @@ class ParameterParser
       //trace('start_load_seq: ', params.start_load_seq);
       Application.setString(EVENT_ID.START_LOAD_SEQ, 'bang');
     }
+    
+    if(params.shop_item_id != null){
+      GLOBAL.shop_item_id = params.shop_item_id;
+      //trace("SHOP_ITEM_ID", params.shop_item_id);
+      
+    }
+    
+    if(params.brides_first_name != null){
+      GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
+    }
+    if(params.grooms_first_name != null){
+      GLOBAL.Designs.setString('grooms_first_name', params.grooms_first_name);
+    }
+    if(params.wedding_date != null){
+      GLOBAL.Designs.setString('wedding_date', params.wedding_date);
+    }
+    if(params.location_name != null){
+      GLOBAL.Designs.setString('location_name', params.location_name);
+    }
+    
+    
     //trace('end of parse');
 	}
 	

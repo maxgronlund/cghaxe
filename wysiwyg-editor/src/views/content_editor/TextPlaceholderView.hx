@@ -10,6 +10,7 @@ import flash.display.Loader;
 
 import flash.events.MouseEvent;
 import flash.display.MovieClip;
+import flash.display.Sprite;
 import flash.display.Loader;
 import flash.net.URLRequest;
 
@@ -71,6 +72,8 @@ class TextPlaceholderView extends APlaceholder {
   private var redFoilTexture:Bitmap;
   private var greenFoilTexture:Bitmap;
   private var blueFoilTexture:Bitmap;
+  private var foilShadow:Sprite;
+  private var foilShine:Sprite;
   private var foilGlowColor:UInt;
   private var printType:String;
   private var foilColor:String; 
@@ -105,6 +108,7 @@ class TextPlaceholderView extends APlaceholder {
     storedAlign                       = GLOBAL.Font.fontAlign;
     repossition                       = false;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+    GLOBAL.Application.addEventListener(EVENT_ID.DESKTOP_VIEW_MOVE, onDesktopViewMove);
     collition                         = false;
     foiled = false;
     was_foiled = false;
@@ -117,6 +121,7 @@ class TextPlaceholderView extends APlaceholder {
     redFoilTexture      = new RedFoilTexture();
     greenFoilTexture    = new GreenFoilTexture();
     blueFoilTexture     = new BlueFoilTexture();
+    
   }
   
 
@@ -132,6 +137,10 @@ class TextPlaceholderView extends APlaceholder {
   
   public function foilify():Void {
     unfoilify();
+    
+    var foilShineColor = 0xFFFFFF;
+    var foilShadowColor = 0x000000;
+    
     if(foiled != true) {
       switch ( foilColor )
       {
@@ -141,25 +150,50 @@ class TextPlaceholderView extends APlaceholder {
         case 'gold': 
           foilTexture = goldFoilTexture;
           foilGlowColor = 0xFFEF88;
+          foilShineColor = 0xf1e2be;
+          foilShadowColor = 0x882244;
         case 'Yellow':
           foilTexture = yellowFoilTexture;
           foilGlowColor = 0xFFFF11;
+          foilShadowColor = 0xb3a800;
         case 'red': 
           foilTexture = redFoilTexture;
           foilGlowColor = 0xFF1111;
+          foilShadowColor = 0x110000;
+          foilShineColor = 0xFF9090;
         case 'green':
           foilTexture = greenFoilTexture;
           foilGlowColor = 0x11FF11;
+          foilShadowColor = 0x006400;
+          foilShineColor = 0xEEFFEE;
         case 'blue':
           foilTexture = blueFoilTexture; 
           foilGlowColor = 0x7777FF;
+          foilShadowColor = 0x000064;
       }
 
+      foilShadow = new Sprite();    
+      foilShine = new Sprite();
+      
+      foilShine.graphics.clear();
+      foilShadow.graphics.beginFill(foilShadowColor);
+      foilShadow.alpha = 0.0;
+      foilShadow.graphics.drawRect(0,0,1024,1017);
+      foilShadow.graphics.endFill();
+      
+      foilShine.graphics.clear();
+      foilShine.graphics.beginFill(foilShineColor);
+      foilShine.alpha = 0.0;
+      foilShine.graphics.drawRect(0,0,1024,1017);
+      foilShine.graphics.endFill();
+      
       setFoilBackdrop();
       
       foil = new MovieClip();
       foil.addChild(foilTexture);
       foil.addChild(fontMovie);
+      foil.addChild(foilShadow);
+      foil.addChild(foilShine);
       foil.mask = fontMovie;
       
       addChild(foil);
@@ -169,16 +203,43 @@ class TextPlaceholderView extends APlaceholder {
     foiled = true;
   }
   
+  private function onDesktopViewMove(e:IKEvent):Void{
+    updateFoilEffect(e.getFloat());
+  }
+  
+  override public function updateFoilEffect(offset:Float):Void{
+    if(foiled){
+      
+      foilShine.alpha = Math.pow(Math.abs(offset-0.5), 0.75);
+      offset += 0.5;
+      if(offset > 1.0){
+        offset -= 1.0;
+      }
+      
+      var shadowAlpha:Float = Math.pow(Math.abs(offset-0.5), 2);
+      if(shadowAlpha < 0.0){
+        shadowAlpha = 0.0;
+      }
+      foilShadow.alpha = shadowAlpha;
+    }
+  }
+  
   public function setFoilBackdrop():Void {
     //Small workaround fix hack
     foilTexture.width = this.width;
     foilTexture.height = this.height;
+    foilShadow.width = this.width;
+    foilShadow.height = this.height;
+    foilShine.width = this.width;
+    foilShine.height = this.height;
   }
   
   public function unfoilify():Void {
     if(foiled == true){
       foil.removeChild(foilTexture);
       foil.removeChild(fontMovie);
+      foil.removeChild(foilShadow);
+      foil.removeChild(foilShine);
       foil.mask = null;
       Foil.removeFiltersFrom(foil);
       this.removeChild(foil);

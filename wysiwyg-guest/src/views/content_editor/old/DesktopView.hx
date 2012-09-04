@@ -28,13 +28,10 @@ class DesktopView extends View, implements IView{
   
   private var placeholders:Int;
   private var pageView:AView;
-  
-  private var glimmer_foils_index:UInt;
 
   
   public function new(desktopController:IController){	
   	super(desktopController);
-  	GLOBAL.foilEffect = 0.25;
   	pagesView = new PagesView(desktopController);
   	Application.addEventListener(EVENT_ID.ZOOM, onZoom);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
@@ -43,7 +40,6 @@ class DesktopView extends View, implements IView{
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    addEventListener(Event.ENTER_FRAME, onEnterFrame);
     Designs.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
     Preset.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
     //Pages.addEventListener(EVENT_ID.PAGE_SELECTED, centerPage);
@@ -130,9 +126,6 @@ class DesktopView extends View, implements IView{
   //    removeEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
   //}
   
-  private function onEnterFrame(e:Event):Void{
-    updateFoilEffects(0.002);
-  }
    
   private function onResetDesktopSize(e:KEvent):Void{
     sizeX = pagesView.width/Zoom.getZoomFactor();
@@ -152,30 +145,9 @@ class DesktopView extends View, implements IView{
   	addChild(pagesView);
   	pagesView.x = 10;
   	pagesView.y = 10;
-  	glimmerFoils();
 //  	trace('bamm');
     //addChild(new FoilTexture());
     //addChild(GLOBAL.foil);
-  }
-  
-  override public function glimmerFoils():Void{
-    trace("GlimmerFoils!-------------------------------");
-    glimmer_foils_index = 0;
-    addEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
-  }
-  
-  private function onUpdateGlimmerFoils(e:Event):Void{
-    updateGlimmerFoils();
-  }
-  
-  public function updateGlimmerFoils():Void{
-    glimmer_foils_index += 1;
-    
-    updateFoilEffects(0.015);
-    
-    if(glimmer_foils_index > 45){
-      removeEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
-    }
   }
   
   private function onLoadPos(e:KEvent):Void{
@@ -214,7 +186,6 @@ class DesktopView extends View, implements IView{
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
-//    trace('onAllImagesLoaded');
     if(placeholders == 0) {
       placeholders--;
       setSizes();       
@@ -290,21 +261,7 @@ class DesktopView extends View, implements IView{
     var endPosY:Float = ( e.stageY - hitPointY);
     this.x = endPosX;
     this.y = endPosY;
-    
-    updateFoilEffects(0.01);
-    
     GLOBAL.pos_x = x;
     GLOBAL.pos_y = y;
-  }
-  
-  override public function updateFoilEffects(offset_offset:Float=0.01):Void{
-    var param = new Parameter(EVENT_ID.DESKTOP_VIEW_MOVE);
-    GLOBAL.foilEffect += offset_offset;
-    if(GLOBAL.foilEffect > 1.0){
-      GLOBAL.foilEffect -= 1.0;
-    }
-    
-    param.setFloat(GLOBAL.foilEffect);
-    Application.dispatchParameter(param);
   }
 }

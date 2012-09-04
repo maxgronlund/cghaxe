@@ -63,6 +63,7 @@ class PageSelectorView extends View, implements IView {
     for(title in e.getXml().elementsNamed("title") ) {
       addPageSelectorLink(title.firstChild().nodeValue.toString());
     }
+
     pages++;
   }
   
@@ -72,7 +73,6 @@ class PageSelectorView extends View, implements IView {
       for( i in 0...pages){
 	      pageButtons[i].setOn( pageButtons[i].getId() == e.getInt() );
       }
-      GLOBAL.desktop_view.glimmerFoils();
     }
   }
 

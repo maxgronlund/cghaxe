@@ -4,7 +4,13 @@ import flash.display.Bitmap;
 import flash.geom.Point;
 import flash.Vector;
 
+
+
 class PageSelectorView extends View, implements IView {
+  
+  private var zoomInButton:OneStateButton;
+  private var zoomOutButton:OneStateButton;
+  private var zoomTo100Button:OneStateButton;
   
   private var pageButtons:Vector<TwoStateTextButton>;
   private var pages:Int;
@@ -22,6 +28,11 @@ class PageSelectorView extends View, implements IView {
     backdrop    = new Bitmap(bmpData);
     lineData    = new BitmapData(SIZE.DESKTOP_WIDTH,1,false,COLOR.GRAY_LINE );
     line        = new Bitmap(lineData);
+    
+    zoomInButton 	      = new OneStateButton();
+		zoomOutButton       = new OneStateButton();
+		zoomTo100Button     = new OneStateButton();
+    
     line.y      = SIZE.PAGESELESCTOR_HEIGHT;
     pages       = 0;
   }
@@ -33,6 +44,26 @@ class PageSelectorView extends View, implements IView {
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
     
+    
+    zoomOutButton.init( GLOBAL.desktop_controller,
+            new Point(40,29), 
+            new ZoomOutButtonBitmap(), 
+            new Parameter( EVENT_ID.ZOOM_OUT ) );
+    zoomOutButton.fireOnMouseUp(false);
+
+
+    zoomInButton.init( GLOBAL.desktop_controller,
+            new Point(40,29), 
+            new ZoomInButtonBitmap(), 
+            new Parameter( EVENT_ID.ZOOM_IN));
+    zoomInButton.fireOnMouseUp(false);
+    
+    zoomTo100Button.init( GLOBAL.desktop_controller,
+            new Point(40,29), 
+            new ZoomTo100Button(), 
+            new Parameter( EVENT_ID.ZOOM_100));
+    zoomTo100Button.fireOnMouseUp(false);
+    
 	}
 	private function onLoadDefaultPage(e:IKEvent):Void{
     pageButtons[0].bang();
@@ -43,6 +74,15 @@ class PageSelectorView extends View, implements IView {
     super.onAddedToStage(e);	
     addChild(backdrop);
     addChild(line);
+    
+    addChild(zoomInButton);
+    addChild(zoomOutButton);
+    addChild(zoomTo100Button);    
+    
+    zoomInButton.x = 300;
+    zoomOutButton.x = 340;
+    zoomTo100Button.x = 380;
+    
     backdrop.width = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
   }
   
@@ -63,7 +103,6 @@ class PageSelectorView extends View, implements IView {
     for(title in e.getXml().elementsNamed("title") ) {
       addPageSelectorLink(title.firstChild().nodeValue.toString());
     }
-
     pages++;
   }
   

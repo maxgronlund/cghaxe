@@ -13,5 +13,5 @@ interface IPlaceholder{
   function getStdPmsColor():String;
   function getPms1Color():String;
   function getPms2Color():String;
-
+  function updateFoilEffect(offset:Float):Void;
 }

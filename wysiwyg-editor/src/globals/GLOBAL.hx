@@ -43,6 +43,8 @@ class GLOBAL  {
   public static var MOVE_TOOL:Bool;
   public static var TEXT_TOOL:Bool;
   
+  public static var foilEffect:Float;
+  
   // views
   public static var text_view:AView;
   public static var color_view:AView;

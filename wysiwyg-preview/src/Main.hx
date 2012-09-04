@@ -11,19 +11,20 @@ import flash.text.TextFormat;
 
 class Main
 {
-  	// models
+// models
 	public static var Application:IModel;
   private var Menu:IModel;
   private var Configuration:IModel;
   private var Greetings:IModel;
   private var Preset:IModel;
+  private var Prices:IModel;
   private var Pages:IModel;
   private var Designs:IModel;
 //  private var DesignImages:IModel;
 //  private var Vectors:IModel;
   private var parameterParser:ParameterParser;
-  
-  
+
+
   // controlers
   private var applicationController:IController;
   private var colorController:IController;
@@ -37,15 +38,13 @@ class Main
   private var addOnsController:IController;
   private var garamondController:IController;
   private var logoController:IController;
-  private var priceController:IController;
+  private var pricesController:IController;
   private var menuController:IController;
   private var pageSelectController:IController;
   private var selectionController:IController;
   private var sidebarController:IController;
   private var desktopController:IController;
 
-
-  
   // views
   private var applicationView:ApplicationView;
   private var colorView:AView;
@@ -55,6 +54,7 @@ class Main
   private var designsView:AView;
 //  private var designImagesView:AView;
   private var greetingsView:AView;
+  private var blindView:AView;
 //  private var foilView:AView;
   private var addOnsView:AView;
   private var garamondView:AView;
@@ -65,10 +65,10 @@ class Main
   private var desktopView:AView;
   private var gridView:AView;
   private var selectionView:AView;
-  
+
 //  private var vectorsView:AView;
   private var foil:Foil;
-  
+
   // system
   private var version:VersionCheck;
   private var Fonts:SystemFonts;
@@ -117,9 +117,11 @@ class Main
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
     Greetings                   = new GreetingsModel();
+    Prices                      = new PricesModel();
 //    DesignImages                = new DesignImagesModel();
 //    Vectors                     = new VectorsModel();             
     setGlobalModels();
+    initGlobals();
     parameterParser             = new ParameterParser(Application);
     
     // controllers
@@ -127,6 +129,7 @@ class Main
     colorController             = new ColorController();
     sidebarController           = new SidebarController();
     pageSelectController        = new PageController();
+    pricesController            = new PriceController();
     menuController              = new MenuController();
     textController              = new TextController();
     textSuggestionController    = new TextSuggestionController();
@@ -141,7 +144,7 @@ class Main
     desktopController           = new DesktopController();
     selectionController         = new SelectionController();
     
-    setGlobalControllers();     
+    setGlobalControllers();   
                                 
     // views                    
     applicationView             = new ApplicationView(applicationController);
@@ -152,11 +155,12 @@ class Main
     designsView                 = new DesignsView(designsController);
 //    designImagesView            = new DesignImagesView(designImagesController);
     greetingsView               = new GreetingsView(greetingsController);
+    blindView                   = new BlindView(sidebarController);
 //    foilView                    = new FoilView(foilController);
     addOnsView                  = new AddOnsView(addOnsController);
     garamondView                = new GaramondView(garamondController);
     logoView                    = new LogoView(logoController);
-    priceView                   = new PriceView(priceController);
+    priceView                   = new PriceView(pricesController);
     menuView                    = new MenuView(menuController);
     pageSelectorView            = new PageSelectorView(pageSelectController);
     desktopView                 = new DesktopView(desktopController);
@@ -164,7 +168,7 @@ class Main
     selectionView               = new SelectionView(selectionController);
     
 //    vectorsView                 = new VectorsView(vectorsController);
-	  //foil						            = new Foil(new FoilTexture());
+//	  foil						            = new Foil(new FoilTexture());
     
     setGlobalViews();
     
@@ -177,18 +181,28 @@ class Main
 
   
   private function setGlobalModels():Void{
-    GLOBAL.Application    = Application;
-    GLOBAL.Menu           = Menu;
-//    GLOBAL.Configuration  = Configuration;
-    GLOBAL.Preset         = Preset;
-    GLOBAL.Pages          = Pages;
-//    GLOBAL.DesignImages   = DesignImages;
-//    GLOBAL.Vectors        = Vectors;
-    GLOBAL.Designs        = Designs;
-    GLOBAL.Greetings      = Greetings;
-    GLOBAL.Zoom         	= new ZoomTools();
-    GLOBAL.Font           = new FontModel();
-    GLOBAL.userParser     = new UserParser();
+    GLOBAL.Application      = Application;
+    GLOBAL.Menu             = Menu;
+//    GLOBAL.Configuration    = Configuration;
+    GLOBAL.Preset           = Preset;
+    GLOBAL.Prices           = Prices;
+    GLOBAL.Pages            = Pages;
+//    GLOBAL.DesignImages     = DesignImages;
+//    GLOBAL.Vectors          = Vectors;
+    GLOBAL.Designs          = Designs;
+    GLOBAL.Greetings        = Greetings;
+    GLOBAL.Zoom         	  = new ZoomTools();
+    GLOBAL.Font             = new FontModel();
+    GLOBAL.userParser       = new UserParser();
+  }
+  
+  private function initGlobals(): Void{
+    GLOBAL.foilColor        = 'silver';
+    GLOBAL.pms1Color        = 0;
+    GLOBAL.pms2Color        = 0;
+    GLOBAL.stdPmsColor      = 0;
+    GLOBAL.printType        = CONST.STD_PMS_COLOR;
+    GLOBAL.price_file_url   = 'na';
   }
   
   private function setGlobalViews():Void{
@@ -210,9 +224,10 @@ class Main
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
     GLOBAL.greetings_view             = greetingsView;
+    GLOBAL.blind_view                 = blindView;
     GLOBAL.foil			              		= foil;
   }
-  
+
   private function setGlobalControllers():Void{
     GLOBAL.color_controller           = colorController;
     GLOBAL.text_controller            = textController;
@@ -224,7 +239,7 @@ class Main
     GLOBAL.desktop_controller         = desktopController;
     GLOBAL.menu_controller            = menuController;
     GLOBAL.selection_controller       = selectionController;
-    
+
   }
 
   private function init():Void{
@@ -236,6 +251,7 @@ class Main
     Menu.init();
 //    Configuration.init();
     Preset.init();
+    Prices.init();
     Pages.init();
 
     // views
@@ -250,6 +266,7 @@ class Main
     addOnsView.init();
     garamondView.init();
     greetingsView.init();
+    blindView.init();
     logoView.init();
     priceView.init();
     pageSelectorView.init();
