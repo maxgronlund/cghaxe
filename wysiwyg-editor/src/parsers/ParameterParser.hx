@@ -129,7 +129,7 @@ class ParameterParser
     }
     
     
-    GLOBAL.params = params;
+    //GLOBAL.params = params;
     //if(params.brides_first_name != null){
     //  GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
     //}
