@@ -15,14 +15,14 @@ class UserParser {
     
 
     for( brides_first_name in xml.elementsNamed("brides-first-name") ){
-      if(Designs.getString('brides_first_name') != GLOBAL.params.brides_first_name)
+      if(GLOBAL.params.brides_first_name != null)
         Designs.setString('brides_first_name', brides_first_name.firstChild().nodeValue.toString());      
     }
     for( brides_last_name in xml.elementsNamed("brides-last-name") ){
         Designs.setString('brides_last_name', brides_last_name.firstChild().nodeValue.toString());
     }
     for( grooms_first_name in xml.elementsNamed("grooms-first-name") ){
-      if(Designs.getString('grooms_first_name') != GLOBAL.params.grooms_first_name)
+      if(GLOBAL.params.grooms_first_name != null)
         Designs.setString('grooms_first_name', grooms_first_name.firstChild().nodeValue.toString());
     }
     for( grooms_last_name in xml.elementsNamed("grooms-last-name") ){
