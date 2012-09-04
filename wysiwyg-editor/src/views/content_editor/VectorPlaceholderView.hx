@@ -66,6 +66,8 @@ class VectorPlaceholderView extends APlaceholder {
   private var greenFoilTexture:Bitmap;
   private var blueFoilTexture:Bitmap;
   private var foilTextureOverlay:Bitmap;
+  private var foilShadow:Sprite;
+  private var foilShine:Sprite;
   private var foilBitmapDataForOverlay:BitmapData;
   private var backdrop:Sprite;
   private var lines:Vector<Shape>;
@@ -86,6 +88,7 @@ class VectorPlaceholderView extends APlaceholder {
     mouseOver                         = false;
     focus                             = false;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+    GLOBAL.Application.addEventListener(EVENT_ID.DESKTOP_VIEW_MOVE, onDesktopViewMove);
     collition                         = false;    
     this.url = url;
     foil = new Sprite();
@@ -95,8 +98,20 @@ class VectorPlaceholderView extends APlaceholder {
     redFoilTexture                    = new RedFoilTexture();
     greenFoilTexture                  = new GreenFoilTexture();
     blueFoilTexture                   = new BlueFoilTexture();
-    
     foilTexture = silverFoilTexture;
+    
+    foilShadow = new Sprite();
+    foilShadow.graphics.beginFill(0x494949);
+    foilShadow.alpha = 0.0;
+    foilShadow.graphics.drawRect(0,0,1024,1017);
+    foilShadow.graphics.endFill();
+    
+    
+    foilShine = new Sprite();
+    foilShine.graphics.beginFill(0xFFFFFF);
+    foilShine.alpha = 0.0;
+    foilShine.graphics.drawRect(0,0,1024,1017);
+    foilShine.graphics.endFill();
     
     lines                             = new Vector<Shape>();
     foilColor                         = GLOBAL.foilColor;
@@ -157,25 +172,54 @@ class VectorPlaceholderView extends APlaceholder {
     
     //default
     //foilTexture = silverFoilTexture;
-    
-    switch ( color )
-    {
-      case 'silver':
-        foilTexture = silverFoilTexture;
-      case 'gold': 
-        foilTexture = goldFoilTexture;
-      case 'Yellow':
-        foilTexture = yellowFoilTexture;
-      case 'red': 
-        foilTexture = redFoilTexture;
-      case 'green':
-        foilTexture = greenFoilTexture;
-      case 'blue':
-        foilTexture = blueFoilTexture; 
-    }
+      var foilShineColor = 0xFFFFFF;
+      var foilShadowColor = 0x000000;
+      
+      switch ( foilColor )
+      {
+        case 'silver':
+          foilTexture = silverFoilTexture;
+        case 'gold': 
+          foilTexture = goldFoilTexture;
+          foilShadowColor = 0x882244;
+          foilShineColor = 0xf1e2be;
+        case 'Yellow':
+          foilTexture = yellowFoilTexture;
+          foilShadowColor = 0xb3a800;
+        case 'red': 
+          foilTexture = redFoilTexture;
+          foilShadowColor = 0x110000;
+          foilShineColor = 0xFF9090;
+        case 'green':
+          foilTexture = greenFoilTexture;
+          foilShadowColor = 0x006400;
+          foilShineColor = 0xEEFFEE;
+        case 'blue':
+          foilTexture = blueFoilTexture; 
+          foilShadowColor = 0x000064;
+      }
+
+      foilShadow = new Sprite();    
+      foilShine = new Sprite();
+      
+      foilShine.graphics.clear();
+      foilShadow.graphics.beginFill(foilShadowColor);
+      foilShadow.alpha = 0.0;
+      foilShadow.graphics.drawRect(0,0,1024,1017);
+      foilShadow.graphics.endFill();
+      
+      foilShine.graphics.clear();
+      foilShine.graphics.beginFill(foilShineColor);
+      foilShine.alpha = 0.0;
+      foilShine.graphics.drawRect(0,0,1024,1017);
+      foilShine.graphics.endFill();
+      
+      resizeBackdrop();
     
     
     foil.addChild(foilTexture);
+    foil.addChild(foilShadow);
+    foil.addChild(foilShine);
     //foil.addChild(foilTextureOverlay);
     addChild(foil);
     
@@ -188,11 +232,35 @@ class VectorPlaceholderView extends APlaceholder {
     if( this.isFoiled() ){
       removeChild(foil);
       foil.removeChild(foilTexture);
+      foil.removeChild(foilShadow);
+      foil.removeChild(foilShine);
       //foil.removeChild(foilTextureOverlay);
       //foilTextureOverlay = null;
       foil.mask = null;
       Foil.removeFiltersFrom(foil);
       foiled = false;
+    }
+  }
+  
+  private function onDesktopViewMove(e:IKEvent):Void{
+    updateFoilEffect(e.getFloat());
+  }
+  
+  
+  override public function updateFoilEffect(offset:Float):Void{
+    if(foiled){
+      
+      foilShine.alpha = Math.pow(Math.abs(offset-0.5), 0.75);
+      offset += 0.5;
+      if(offset > 1.0){
+        offset -= 1.0;
+      }
+      
+      var shadowAlpha:Float = Math.pow(Math.abs(offset-0.5), 2);
+      if(shadowAlpha < 0.0){
+        shadowAlpha = 0.0;
+      }
+      foilShadow.alpha = shadowAlpha;
     }
   }
 
@@ -308,6 +376,12 @@ class VectorPlaceholderView extends APlaceholder {
   
   public function resizeBackdrop():Void {
     selectBox.resizeBackdrop(vectorMovie.width, vectorMovie.height, 0, 0);
+    foilTexture.width = this.width;
+    foilTexture.height = this.height;
+    foilShadow.width = this.width;
+    foilShadow.height = this.height;
+    foilShine.width = this.width;
+    foilShine.height = this.height;
   }
   
   private function hitTest():Void{

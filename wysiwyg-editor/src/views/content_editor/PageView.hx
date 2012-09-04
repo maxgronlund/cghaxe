@@ -631,6 +631,8 @@ class PageView extends View{
     var endPosX:Float = moveX - hitPointX;
     var endPosY:Float = moveY - hitPointY;
     
+    GLOBAL.desktop_view.updateFoilEffects();
+    
     //var endPosX:Float = ( e.stageX - hitPointX);
     //var endPosY:Float = ( e.stageY - hitPointY);
     this.x = endPosX;

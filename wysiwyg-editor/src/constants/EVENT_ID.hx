@@ -74,7 +74,7 @@ class EVENT_ID  {
 //  public static inline var SHOW_PAGE_DESIGN:String          = "show_page_designs";
 
   
-  
+  public static inline var DESKTOP_VIEW_MOVE                = "desktop_view_move";
   
   public static inline var PAGE_BACKDROP_LOADED:String      = "page_backdrop_loaded";
   public static inline var ALL_IMAGES_LOADED:String             = "images_loaded";

@@ -98,7 +98,9 @@ class APlaceholder extends Sprite{
      trace("alert: must be overriden in a subclass");
   }
   
-
+  public function updateFoilEffect(offset:Float):Void{
+    trace("updateFoilEffect: must be overriden in a subclass");
+  }
   
   
   

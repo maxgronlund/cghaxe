@@ -126,6 +126,14 @@ class AView extends Sprite, implements IView
 	  trace("addColumn: must be overriden in a subclass");
 	}
 	
+	public function updateFoilEffects(offset_offset:Float=1):Void{
+	  trace("updateFoilEffects: must be overriden in a subclass");
+	}
+	
+	public function glimmerFoils():Void{
+	  trace("updateGlimmerFoils: must be overriden in a subclass");
+	}
+	
 }
 
 

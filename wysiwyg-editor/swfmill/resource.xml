@@ -102,11 +102,11 @@
         <bitmap id="FoilPickerBitmap" import="library/images/foil_picker.png" />
         
         <bitmap id="SilverFoilTexture" import="library/images/silver_foil_texture.jpg" />	
-        <bitmap id="GoldFoilTexture" import="library/images/gold_foil_texture.png" />	
-        <bitmap id="YellowFoilTexture" import="library/images/yellow_foil_texture.png" />	
-        <bitmap id="RedFoilTexture" import="library/images/red_foil_texture.png" />	
-        <bitmap id="GreenFoilTexture" import="library/images/green_foil_texture.png" />	
-        <bitmap id="BlueFoilTexture" import="library/images/blue_foil_texture.png" />		
+        <bitmap id="GoldFoilTexture" import="library/images/gold_foil_texture.jpg" />	
+        <bitmap id="YellowFoilTexture" import="library/images/yellow_foil_texture.jpg" />	
+        <bitmap id="RedFoilTexture" import="library/images/red_foil_texture.jpg" />	
+        <bitmap id="GreenFoilTexture" import="library/images/green_foil_texture.jpg" />	
+        <bitmap id="BlueFoilTexture" import="library/images/blue_foil_texture.jpg" />		
         
         <bitmap id="FoilViewBack" import="library/images/foil_view.png" />
         <bitmap id="LogoViewBack" import="library/images/logo_view.png" />
