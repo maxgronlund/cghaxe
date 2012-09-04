@@ -11,17 +11,19 @@ class TextView extends PropertyView, implements IView{
   private var fontSizePopup:FontSizePopup;
   private var addTextfieldButton:OneStateButton;
   private var textAlign:TextAlign;
+  private var garamondButton:TwoStateButton;
   
   public function new(textController:IController){	
     super(textController);
-    backdrop							= new TextViewBack();
-    fontScrollPane				= new ScrollPane(textController);
-    fontPane							= new FontPane(textController);
-    fontScrollbar 				= new VerticalScrollbar(textController, EVENT_ID.FONT_SCROLL);
-    lineSpacePopup 				= new LineSpacePopup(textController);
-    textAlign 	 					= new TextAlign(textController);
-    fontSizePopup 				= new FontSizePopup(textController);
-    addTextfieldButton 		= new OneStateButton();
+    backdrop              = new TextViewBack();
+    fontScrollPane        = new ScrollPane(textController);
+    fontPane    	        = new FontPane(textController);
+    fontScrollbar         = new VerticalScrollbar(textController, EVENT_ID.FONT_SCROLL);
+    lineSpacePopup        = new LineSpacePopup(textController);
+    textAlign             = new TextAlign(textController);
+    fontSizePopup         = new FontSizePopup(textController);
+    addTextfieldButton    = new OneStateButton();
+    garamondButton        = new TwoStateButton();
   }
   
 
@@ -34,26 +36,60 @@ class TextView extends PropertyView, implements IView{
         new Parameter( EVENT_ID.SHOW_TEXT)); //!!! rename
         
     textAlign.init();
-               
-    addTextfieldButton.init(controller,
-                    new Point(150,22), 
-                    new CreateTextfieldButton(), 
-                    new Parameter( EVENT_ID.ADD_PLACEHOLDER));
-                    
-    addTextfieldButton.fireOnMouseUp(false);
+                            
     
+    garamondButton.init( controller,
+            new Point(150,30), 
+            new GarmondPrintButton(), 
+            new Parameter( EVENT_ID.USE_GARAMOND));
+            
+    Application.addEventListener( EVENT_ID.USE_GARAMOND, onUseGaramond);
+    
+    addTextfieldButton.init(controller,
+                        new Point(150,22), 
+                        new CreateTextfieldButton(), 
+                        new Parameter( EVENT_ID.ADD_PLACEHOLDER));
+
+    addTextfieldButton.fireOnMouseUp(false);
+    GLOBAL.Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
+  }
+  
+  
+  private function onUpdateSideView(e:IKEvent):Void{
+    
+    trace(GLOBAL.printType);
+	  
+	}
+  
+  private function onUseGaramond(e:IKEvent){
+    
+    if(e.getBool()){
+      fontPane.setString('disable', 'foo');
+      fontSizePopup.enable(false);
+      fontSizePopup.setString('init garmond', 'foo');
+    }else{
+      fontPane.setString('enable', 'foo');
+      fontSizePopup.enable(true);
+
+    }
   }
   
   override public function onAddedToStage(e:Event):Void{
     
     super.onAddedToStage(e);
+    
+    addChild(garamondButton);
+  	garamondButton.x = 20;
+  	garamondButton.y = 40;
+  	
+  	
     // font selection pane
     addChild(fontScrollPane);
-    fontScrollPane.setSize(174,312);
+    fontScrollPane.setSize(174,272);
     fontScrollPane.x = 9;
-    fontScrollPane.y = 164;
+    fontScrollPane.y = 204;
     fontScrollPane.addView(fontPane, 0,0);	
-	//	controller.setView('font_pane',fontPane);
+
     // font scroll bar
     addChild(fontScrollbar);
     fontScrollbar.setSize(fontPane.getFloat('height'), fontScrollPane.getFloat('mask_height'));
@@ -62,22 +98,21 @@ class TextView extends PropertyView, implements IView{
     
     addChild(textAlign);
     textAlign.x = 8;
-    textAlign.y = 94;
+    textAlign.y = 134;
     
-    addChild(addTextfieldButton);
-    addTextfieldButton.x = 20;
-    addTextfieldButton.y = 488;
-		
-//		addChild(fontStylePopup);
-//		fontStylePopup.x = 8;
-//		fontStylePopup.y = 216;
     addChild(lineSpacePopup);
     lineSpacePopup.x = 8;
-    lineSpacePopup.y = 52;
+    lineSpacePopup.y = 92;
     
     addChild(fontSizePopup);
     fontSizePopup.x = 110;
-    fontSizePopup.y = 52;
+    fontSizePopup.y = 92;
+    
+    
+  	addChild(addTextfieldButton);
+    addTextfieldButton.x = 20;
+    addTextfieldButton.y = 488;
+  	addTextfieldButton.fireOnMouseUp(false);
     
   }
   

@@ -36,7 +36,7 @@ class Main
 //  private var vectorsController:IController;
   private var foilController:IController;
   private var addOnsController:IController;
-  private var garamondController:IController;
+//  private var garamondController:IController;
   private var logoController:IController;
   private var pricesController:IController;
   private var menuController:IController;
@@ -57,7 +57,7 @@ class Main
   private var blindView:AView;
 //  private var foilView:AView;
   private var addOnsView:AView;
-  private var garamondView:AView;
+//  private var garamondView:AView;
   private var logoView:AView;
   private var priceView:AView;
   private var menuView:AView;
@@ -137,7 +137,7 @@ class Main
     greetingsController         = new GreetingsController();
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
-    garamondController          = new GaramondController();
+//    garamondController          = new GaramondController();
     logoController		          = new LogoController();
     desktopController           = new DesktopController();
     selectionController         = new SelectionController();
@@ -156,7 +156,7 @@ class Main
     blindView                   = new BlindView(sidebarController);
 //    foilView                    = new FoilView(foilController);
     addOnsView                  = new AddOnsView(addOnsController);
-    garamondView                = new GaramondView(garamondController);
+//    garamondView                = new GaramondView(garamondController);
     logoView                    = new LogoView(logoController);
     priceView                   = new PriceView(pricesController);
     menuView                    = new MenuView(menuController);
@@ -214,7 +214,7 @@ class Main
 //    GLOBAL.foil_view                  = foilView;
     GLOBAL.side_view                  = sideView;
     GLOBAL.add_ons_view	              = addOnsView;
-    GLOBAL.garamond_view              = garamondView;
+//    GLOBAL.garamond_view              = garamondView;
     GLOBAL.logo_view                  = logoView;
     GLOBAL.price_view                 = priceView;
     GLOBAL.menu_view                  = menuView;
@@ -263,7 +263,7 @@ class Main
 //    designImagesView.init();
 //    foilView.init();
     addOnsView.init();
-    garamondView.init();
+//    garamondView.init();
     greetingsView.init();
     blindView.init();
     logoView.init();

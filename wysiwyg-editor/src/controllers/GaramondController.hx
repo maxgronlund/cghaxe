@@ -29,10 +29,10 @@ class GaramondController extends Controller, implements IController
 //	}
 	
 	override public function setParam(param:IParameter):Void{
-		switch ( param.getLabel() )
-		{
-			case EVENT_ID.SHOW_GARAMOND:
-				GLOBAL.side_view.showView(EVENT_ID.SHOW_GARAMOND, true);
-		}	
+		//switch ( param.getLabel() )
+		//{
+		//	case EVENT_ID.SHOW_GARAMOND:
+		//		GLOBAL.side_view.showView(EVENT_ID.SHOW_GARAMOND, true);
+		//}	
 	}
 }

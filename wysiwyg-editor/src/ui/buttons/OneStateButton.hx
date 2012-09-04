@@ -127,5 +127,10 @@ class OneStateButton extends MouseHandler
     if(functionPointer != null)
       functionPointer(true);
   }
+  
+  public function enable(b:Bool):Void{
+    enableMouse(b);
+    this.alpha = b ? 1.0 : 0.2;
+  }
 }
 

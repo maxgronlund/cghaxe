@@ -169,9 +169,9 @@ class EVENT_ID  {
   
   
   
-                                                            
+  public static inline var USE_GARAMOND:String              = "use_garamond";                                                    
   public static inline var SHOW_FOIL:String                  = "foil_view";
-  public static inline var SHOW_GARAMOND:String              = "garamond_vies";
+/*  public static inline var SHOW_GARAMOND:String              = "garamond_vies";*/
   public static inline var SHOW_IMAGE:String                 = "image_view";
   public static inline var SHOW_LOGO:String                  = "logo_view";
   public static inline var SHOW_BLIND_VIEW:String            = "blind_view";

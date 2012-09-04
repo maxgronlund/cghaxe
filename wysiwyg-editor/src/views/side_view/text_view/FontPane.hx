@@ -46,16 +46,13 @@ class FontPane extends View, implements IView{
     addButton( new BurguesScriptButton(), SystemFonts.burgues_script);
     addButton( new CezanneButton(), SystemFonts.cezanne);
     addButton( new CalligraphicButton(), SystemFonts.calligraphic);
-//    addButton( new CezaneButton(), SystemFonts.cezane);
     addButton( new CorsivaButton(), SystemFonts.corsiva );
     addButton( new CopperplateButton(), SystemFonts.copperplate );
-//    addButton( new DidotButton(), SystemFonts.didotlt_headline );
     addButton( new EccentricButton(), SystemFonts.eccentric );
     addButton( new FinehandButton(), SystemFonts.finehand );
     addButton( new GaramondButton(), SystemFonts.garamond );
     addButton( new MutluButton(), SystemFonts.mutlu__ornamental );
     addButton( new MediciScriptButton(), SystemFonts.medici_script );
-//    addButton( new PhyllisButton(), SystemFonts.phyllis );
     addButton( new PopplResidenzButton(), SystemFonts.poppl_residenz );
     addButton( new TimesRomanButton(), SystemFonts.times_roman);
     addButton( new TrajanProButton(), SystemFonts.trajan_pro );
@@ -144,6 +141,18 @@ class FontPane extends View, implements IView{
     switch ( id )	{
       case EVENT_ID.UPDATE_FONT_PANE: 
         onUpdateFontPane(s);
+      case 'disable':{
+        enable(false);
+      }
+      
+      case 'enable':{
+        enable(true);
+      }
+    }
+  }
+  private function enable(b:Bool):Void{
+    for( index in 0...fontButtons.length){
+      fontButtons[index].enable(b);
     }
   }
   

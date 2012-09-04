@@ -8,9 +8,9 @@ class GaramondView extends PropertyView, implements IView{
 	}
 
 	override public function init():Void{
-		selectButton.init( controller,
-						new Point(190,30), 
-						new GarmondViewButton(), 
-						new Parameter( EVENT_ID.SHOW_GARAMOND));
+		//selectButton.init( controller,
+		//				new Point(190,30), 
+		//				new GarmondViewButton(), 
+		//				new Parameter( EVENT_ID.SHOW_GARAMOND));
 	}
 }

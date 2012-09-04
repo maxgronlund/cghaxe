@@ -27,6 +27,8 @@ class FontSizePopup extends AView {
   
   
   private function onUpdateSideView(e:IKEvent):Void{
+    
+//    trace(GLOBAL.fontType);
 	  dropDownMenu.setItem(Std.string(GLOBAL.Font.fontSize));
 	}
   
@@ -38,7 +40,6 @@ class FontSizePopup extends AView {
   private function addSizes(e:IKEvent):Void{
     
     dropDownMenu.removeItems();
-    //var sizes:Array<Int> = new Array<Int>();
     sizes = [8,9,10,11,12,13,14,15,16,18,21,24,28,32,34,36,38,40,42,45,48,60,76,100,120,140,150];
     
     for (i in 0...sizes.length){
@@ -62,6 +63,13 @@ class FontSizePopup extends AView {
     }
   }
   */
+  
+  public function enable(b:Bool):Void{
+    dropDownMenu.alpha = b ? 1.0 : 0.2;
+//    dropDownMenu.enable(b);
+
+  }
+  
   public function deselectItem(id:Int):Void{
   	dropDownMenu.deselectItem(id);
   }
@@ -75,6 +83,16 @@ class FontSizePopup extends AView {
     switch ( id ){
       case 'display':
         dropDownMenu.setDisplay(Std.string(sizes[i]));
+    }
+  }
+  
+  override public function setString(id:String, s:String):Void{
+    //trace()
+    switch ( id ){
+      case 'init garmond':{
+        dropDownMenu.selectItem(8);
+        dropDownMenu.setDisplay(Std.string(sizes[8]));
+      }
     }
   }
 }
