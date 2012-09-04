@@ -67,6 +67,8 @@ class GLOBAL  {
   public static var greetingsView:IView;
   public static var blind_view:AView;
   public static var foil:Foil;
+  
+  public static var params:Dynamic;
  
   
   public static var printType:String;
