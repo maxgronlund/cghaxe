@@ -151,6 +151,7 @@ class FontPane extends View, implements IView{
     }
   }
   private function enable(b:Bool):Void{
+    trace(b);
     for( index in 0...fontButtons.length){
       fontButtons[index].enable(b);
     }

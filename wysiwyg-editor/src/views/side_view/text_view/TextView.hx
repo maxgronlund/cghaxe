@@ -78,6 +78,11 @@ class TextView extends PropertyView, implements IView{
     
     super.onAddedToStage(e);
     
+    addChild(addTextfieldButton);
+    addTextfieldButton.x = 20;
+    addTextfieldButton.y = 488;
+  	addTextfieldButton.fireOnMouseUp(false);
+    
     addChild(garamondButton);
   	garamondButton.x = 20;
   	garamondButton.y = 40;
@@ -109,10 +114,7 @@ class TextView extends PropertyView, implements IView{
     fontSizePopup.y = 92;
     
     
-  	addChild(addTextfieldButton);
-    addTextfieldButton.x = 20;
-    addTextfieldButton.y = 488;
-  	addTextfieldButton.fireOnMouseUp(false);
+  	
     
   }
   
@@ -156,6 +158,13 @@ class TextView extends PropertyView, implements IView{
       
       case EVENT_ID.UPDATE_FONT_PANE:{
         onUpdateFontPane(param.getString());
+      }
+      case EVENT_ID.USE_GARAMOND:{
+        param.getBool() ? fontPane.setString('disable', 'foo') : fontPane.setString('enable', 'foo');
+        fontSizePopup.setInt('display', 8);
+        
+        
+        //this.alpha = 0.2;
       }
       //case EVENT_ID.UPDATE_TEXT_TOOLS:{
       //  textAlign.setParam(param);

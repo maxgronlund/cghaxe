@@ -31,12 +31,24 @@ class TextController extends Controller, implements IController{
         TEXT_SUGGESTION.text = 'Type here';
         Pages.setParam(param);
       }
+      case EVENT_ID.USE_GARAMOND:{onUseGaramond(param);}
       case EVENT_ID.FONT_SCROLL:GLOBAL.text_view.setFloat(EVENT_ID.FONT_SCROLL, param.getFloat());
       case EVENT_ID.PLACEHOLDER_SELECTED:onPlaceholderSelected(param);
 
 
     }
 	}
+  private function onUseGaramond(param:IParameter):Void{
+    
+    trace('onUseGaramond', param.getBool());
+    if(param.getBool()){
+      GLOBAL.Font.fileName = "garamond";
+      GLOBAL.Font.fontSize = 16;
+      
+    }
+    GLOBAL.text_view.setParam(param);
+    updatePlaceholder();
+  }
   
   private function onPlaceholderSelected(param:IParameter):Void{
     

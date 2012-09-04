@@ -129,6 +129,7 @@ class OneStateButton extends MouseHandler
   }
   
   public function enable(b:Bool):Void{
+    trace(b);
     enableMouse(b);
     this.alpha = b ? 1.0 : 0.2;
   }
