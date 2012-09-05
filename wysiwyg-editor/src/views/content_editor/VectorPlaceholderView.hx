@@ -185,6 +185,7 @@ class VectorPlaceholderView extends APlaceholder {
           foilShineColor = 0xf1e2be;
         case 'Yellow':
           foilTexture = yellowFoilTexture;
+          foilShineColor = 0xFFFFEE;
           foilShadowColor = 0xb3a800;
         case 'red': 
           foilTexture = redFoilTexture;
