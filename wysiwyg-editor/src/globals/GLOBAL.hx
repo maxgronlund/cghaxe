@@ -67,6 +67,9 @@ class GLOBAL  {
   public static var greetingsView:IView;
   public static var blind_view:AView;
   public static var foil:Foil;
+  public static var preset_id:String;
+  public static var preset_shop_item_id:String;
+  
   
   public static var params:Dynamic;
  

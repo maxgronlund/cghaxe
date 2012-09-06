@@ -352,12 +352,17 @@ class PresetModel extends Model, implements IModel
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.preset_sibling_selected 	= productSelected;
     
+    
+    
     variables._method = 'put';
     request.data = variables;
     
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
+    
+    GLOBAL.save_path = "/en/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
+    
 
   }
   

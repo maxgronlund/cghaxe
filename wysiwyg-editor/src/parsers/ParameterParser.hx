@@ -128,6 +128,13 @@ class ParameterParser
       
     }
     
+    if(params.preset_id != null){
+      GLOBAL.preset_id = params.preset_id;
+    }
+    
+    if(params.preset_shop_item_id != null){
+      GLOBAL.preset_shop_item_id = params.preset_shop_item_id;
+    }
     
     //GLOBAL.params = params;
     //if(params.brides_first_name != null){

@@ -75,7 +75,7 @@ class DesktopView extends View, implements IView{
     moveLeft =  goToPosX - this.x > 0;
     
     if(zoom){
-      var desktopSize:Float = SIZE.DESKTOP_WIDTH - 40;
+      var desktopSize:Float = SIZE.DESKTOP_WIDTH;
       var test:Float = Zoom.getZoomFactor() * pageView.width;
       test = test - desktopSize;
       test *= 0.3;
