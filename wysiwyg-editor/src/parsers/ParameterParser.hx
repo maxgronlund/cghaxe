@@ -33,6 +33,10 @@ class ParameterParser
       GLOBAL.user_id = params.user_id;
     }
     
+    if(params.user_uuid != null){
+      GLOBAL.user_uuid = params.user_uuid;
+    }
+    
     if(params.ie7hack != null){
       if(params.ie7hack == 'IE7FIX'){
         GLOBAL.admin_mode = true;
@@ -58,6 +62,7 @@ class ParameterParser
       GLOBAL.preset_quantity = params.preset_quantity;
     }
     
+    
     // page design
     if(params.design_xml_file_url != null){
       //GLOBAL.design_file_url = params.design_xml_file_url;
@@ -71,7 +76,6 @@ class ParameterParser
 
     if(params.edit_mode != null){
       GLOBAL.edit_mode = params.edit_mode;
-      
       switch ( params.edit_mode ){
         //case 'system_design':{
         //  //GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);

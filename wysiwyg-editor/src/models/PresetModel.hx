@@ -34,6 +34,7 @@ class PresetModel extends Model, implements IModel
   override public function init():Void{
   	super.init();
   	Application.addEventListener(EVENT_ID.PASS_PRESET_FILE, onParsePreset);
+  	
     Pages.addEventListener(EVENT_ID.SAVE_XML, savePreset);
   }
   
@@ -90,10 +91,15 @@ class PresetModel extends Model, implements IModel
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
     
+    for( preset_quantity in xml.elementsNamed("preset-quantity") ) {
+       GLOBAL.preset_quantity = preset_quantity.firstChild().nodeValue.toString();
+       GLOBAL.preset_quantity_text_field.setText(GLOBAL.preset_quantity);
+    }
+
     for( preset_id in xml.elementsNamed("preset-id") ) {
        GLOBAL.preset_id = preset_id.firstChild().nodeValue.toString();
     }
-    
+        
     for(pages in xml.elementsNamed("pages") ) {
       for(page in pages.elementsNamed("page") ) {
         //var is_associated_product:Bool = false;
@@ -362,6 +368,7 @@ class PresetModel extends Model, implements IModel
     variables.cliches                   = GLOBAL.iAlreadyHaveACliche;
     //variables.xml_prices                = Pages.getString('price_xml');// !!!
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
+    variables.user_uuid                 = GLOBAL.user_uuid;
     variables.preset_sibling_selected 	= productSelected;
     
     

@@ -32,6 +32,10 @@ class EditableTextField extends Sprite {
 	  update();
 	}
 	
+	public function setText(string:String):Void{
+	  textField.text = string;
+	}
+	
 	public function update():Void{
 	  if(getQuantity() >= GLOBAL.min_quantity){
 	    GLOBAL.preset_quantity = Std.string(getQuantity());
