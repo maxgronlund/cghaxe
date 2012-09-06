@@ -72,7 +72,8 @@ class OnePrice extends MovieClip {
 	}
 	
 	public function setPriceLabel(s:String):Void {
-	  price_label.setLabel(s);
+	  var x:Float = Std.int(Std.parseFloat(s)*100)/100.0;
+	  price_label.setLabel(Std.string(x));
 	}
 
 }

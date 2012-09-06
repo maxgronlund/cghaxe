@@ -136,7 +136,8 @@ class PriceView extends PropertyView, implements IView{
 	  
 	  shop_item_price_price_label.y = 40+18;
 	  shop_item_price_price_label.x = 140;
-	  shop_item_price_price_label.setLabel(Std.string(GLOBAL.Pages.getFloat('shop_item_unit_price')*Std.parseInt(GLOBAL.preset_quantity)));
+	  var shop_item_price_rounded:Float = Std.int(GLOBAL.Pages.getFloat('shop_item_unit_price')*Std.parseInt(GLOBAL.preset_quantity)*100)/100.0;
+	  shop_item_price_price_label.setLabel(Std.string(shop_item_price_rounded));
 	  
 	  total_price += GLOBAL.Pages.getFloat('shop_item_unit_price')*Std.parseInt(GLOBAL.preset_quantity);
 	  
@@ -155,7 +156,9 @@ class PriceView extends PropertyView, implements IView{
 	    total_price_label.y = 76;
 	  }
 	  
-	  total_price_label.setLabel("Total: " + Std.string(total_price));
+	  var rounded_total_price:Float = Std.int(total_price*100)/100;
+	  
+	  total_price_label.setLabel("Total: " + Std.string(rounded_total_price));
 	}
 	
 	override public function onAddedToStage(e:Event):Void{
