@@ -89,6 +89,11 @@ class PresetModel extends Model, implements IModel
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
+    
+    for( preset_id in xml.elementsNamed("preset-id") ) {
+       GLOBAL.preset_id = preset_id.firstChild().nodeValue.toString();
+    }
+    
     for(pages in xml.elementsNamed("pages") ) {
       for(page in pages.elementsNamed("page") ) {
         //var is_associated_product:Bool = false;
@@ -281,6 +286,12 @@ class PresetModel extends Model, implements IModel
       dispatchParameter(param);
     }
     
+    //for( language in xml_data.elementsNamed('language')){
+    //  for( name in language.elementsNamed('name')){
+    //    GLOBAL.language_name = name.firstChild().nodeValue.toString();
+    //  }
+    //}
+    
   }
 /*  
   private function parseProductPlaces(preset:Xml):Void{
@@ -334,6 +345,7 @@ class PresetModel extends Model, implements IModel
   
   public function savePreset(e:IKEvent):Void{
     trace('save preset');
+    GLOBAL.save_path = "/"+GLOBAL.language_name+"/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
     ExternalInterface.call("openSavingBox()");
 
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
@@ -361,7 +373,7 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
     
-    GLOBAL.save_path = "/en/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
+    GLOBAL.save_path = "/"+GLOBAL.language_name+"/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
     
 
   }
