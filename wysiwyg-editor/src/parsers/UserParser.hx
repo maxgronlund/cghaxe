@@ -15,14 +15,12 @@ class UserParser {
     
 
     for( brides_first_name in xml.elementsNamed("brides-first-name") ){
-      if(Designs.getString('brides_first_name') != GLOBAL.params.brides_first_name)
         Designs.setString('brides_first_name', brides_first_name.firstChild().nodeValue.toString());      
     }
     for( brides_last_name in xml.elementsNamed("brides-last-name") ){
         Designs.setString('brides_last_name', brides_last_name.firstChild().nodeValue.toString());
     }
     for( grooms_first_name in xml.elementsNamed("grooms-first-name") ){
-      if(Designs.getString('grooms_first_name') != GLOBAL.params.grooms_first_name)
         Designs.setString('grooms_first_name', grooms_first_name.firstChild().nodeValue.toString());
     }
     for( grooms_last_name in xml.elementsNamed("grooms-last-name") ){
@@ -35,7 +33,6 @@ class UserParser {
         Designs.setString('grooms_initials', grooms_initials.firstChild().nodeValue.toString());
     } 
     for( wedding_date in xml.elementsNamed("wedding-date") ){
-      if(Designs.getString('wedding_date') != GLOBAL.params.wedding_date)
         Designs.setString('wedding_date', wedding_date.firstChild().nodeValue.toString());
     }
     for( wedding_time in xml.elementsNamed("wedding-time") ){
@@ -75,7 +72,6 @@ class UserParser {
       Designs.setString('company_name', company_name.firstChild().nodeValue.toString());
     }
     for( location_name in xml.elementsNamed("location-name") ){
-      if(Designs.getString('location_name') != GLOBAL.params.location_name)
         Designs.setString('location_name', location_name.firstChild().nodeValue.toString());
     }
     for( location in xml.elementsNamed("location") ){

@@ -34,6 +34,7 @@ class PresetModel extends Model, implements IModel
   override public function init():Void{
   	super.init();
   	Application.addEventListener(EVENT_ID.PASS_PRESET_FILE, onParsePreset);
+  	
     Pages.addEventListener(EVENT_ID.SAVE_XML, savePreset);
   }
   
@@ -89,6 +90,16 @@ class PresetModel extends Model, implements IModel
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
+    
+    for( preset_quantity in xml.elementsNamed("preset-quantity") ) {
+       GLOBAL.preset_quantity = preset_quantity.firstChild().nodeValue.toString();
+       GLOBAL.preset_quantity_text_field.setText(GLOBAL.preset_quantity);
+    }
+
+    for( preset_id in xml.elementsNamed("preset-id") ) {
+       GLOBAL.preset_id = preset_id.firstChild().nodeValue.toString();
+    }
+        
     for(pages in xml.elementsNamed("pages") ) {
       for(page in pages.elementsNamed("page") ) {
         buildPage(page);
@@ -205,10 +216,17 @@ class PresetModel extends Model, implements IModel
       dispatchParameter(param);
     }
     
+    //for( language in xml_data.elementsNamed('language')){
+    //  for( name in language.elementsNamed('name')){
+    //    GLOBAL.language_name = name.firstChild().nodeValue.toString();
+    //  }
+    //}
+    
   }
   
   public function savePreset(e:IKEvent):Void{
     trace('save preset');
+    GLOBAL.save_path = "/"+GLOBAL.language_name+"/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
     ExternalInterface.call("openSavingBox()");
 
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
@@ -225,8 +243,14 @@ class PresetModel extends Model, implements IModel
     variables.quantity                  = GLOBAL.preset_quantity;
     variables.cliches                   = GLOBAL.iAlreadyHaveACliche;
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
+
     variables.shop_item_id              = GLOBAL.shop_item_id;
+
+    variables.user_uuid                 = GLOBAL.user_uuid;
+
     variables.preset_sibling_selected 	= productSelected;
+    
+    
     
     variables._method = 'put';
     request.data = variables;
@@ -234,6 +258,9 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
+    
+    GLOBAL.save_path = "/"+GLOBAL.language_name+"/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
+    
 
   }
   

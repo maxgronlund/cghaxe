@@ -67,6 +67,9 @@ class GLOBAL  {
   public static var greetingsView:IView;
   public static var blind_view:AView;
   public static var foil:Foil;
+  public static var preset_id:String;
+  public static var preset_shop_item_id:String;
+  
   
   public static var params:Dynamic;
 
@@ -99,7 +102,12 @@ class GLOBAL  {
   
   // user
   public static var user_id:String;
+
   public static var shop_item_id:Int;
+  
+
+
+  public static var user_uuid:String;
   
 
   

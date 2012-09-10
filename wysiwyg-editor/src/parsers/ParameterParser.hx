@@ -33,6 +33,10 @@ class ParameterParser
       GLOBAL.user_id = params.user_id;
     }
     
+    if(params.user_uuid != null){
+      GLOBAL.user_uuid = params.user_uuid;
+    }
+    
     if(params.ie7hack != null){
       if(params.ie7hack == 'IE7FIX'){
         GLOBAL.admin_mode = true;
@@ -58,6 +62,7 @@ class ParameterParser
       GLOBAL.preset_quantity = params.preset_quantity;
     }
     
+    
     // page design
     if(params.design_xml_file_url != null){
       //GLOBAL.design_file_url = params.design_xml_file_url;
@@ -71,7 +76,6 @@ class ParameterParser
 
     if(params.edit_mode != null){
       GLOBAL.edit_mode = params.edit_mode;
-      
       switch ( params.edit_mode ){
         //case 'system_design':{
         //  //GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
@@ -127,6 +131,7 @@ class ParameterParser
       //trace("SHOP_ITEM_ID", params.shop_item_id);
     }
 
+
     if(params.brides_first_name != null){
       GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
     }
@@ -141,6 +146,33 @@ class ParameterParser
     }
 
     GLOBAL.params = params;
+
+
+    
+    //if(params.preset_id != null){
+    //  GLOBAL.preset_id = params.preset_id;
+    //}
+    //
+    //if(params.preset_shop_item_id != null){
+    //  GLOBAL.preset_shop_item_id = params.preset_shop_item_id;
+    //}
+    
+    //GLOBAL.params = params;
+    //if(params.brides_first_name != null){
+    //  GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
+    //}
+    //if(params.grooms_first_name != null){
+    //  GLOBAL.Designs.setString('grooms_first_name', params.grooms_first_name);
+    //}
+    //if(params.wedding_date != null){
+    //  GLOBAL.Designs.setString('wedding_date', params.wedding_date);
+    //}
+    //if(params.location_name != null){
+    //  GLOBAL.Designs.setString('location_name', params.location_name);
+    //}
+    
+    
+    //trace('end of parse');
 
 	}
 	

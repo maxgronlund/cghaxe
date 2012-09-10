@@ -148,6 +148,8 @@ class PriceColumn extends MovieClip {
     
     total_label.x = 140;
     total_label.y = 18*(price_labels.length+offset_i);
+    
+    var rounded_total_price:Float = Std.int(total_price*100)/100;
     total_label.setLabel(Std.string(total_price));
     
   }

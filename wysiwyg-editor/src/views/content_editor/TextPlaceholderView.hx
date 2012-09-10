@@ -157,6 +157,7 @@ class TextPlaceholderView extends APlaceholder {
         case 'Yellow':
           foilTexture = yellowFoilTexture;
           foilGlowColor = 0xFFFF11;
+          foilShineColor = 0xFFFFEE;
           foilShadowColor = 0xb3a800;
         case 'red': 
           foilTexture = redFoilTexture;
