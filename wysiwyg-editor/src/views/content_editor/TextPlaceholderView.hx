@@ -291,10 +291,11 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
     str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
     str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
-    trace('font==null', font==null);
+    //trace('font==null', font==null);
     str += font.getXml();
     str += '\t\t</placeholder>\n';
     restoreShowTags();
+    trace(str);
     return str;
   }
   
@@ -500,7 +501,7 @@ class TextPlaceholderView extends APlaceholder {
     pms1Color         = GLOBAL.pms1Color;
     pms2Color         = GLOBAL.pms2Color;
     laserColor        = GLOBAL.laserColor;
-
+    garamond          = GLOBAL.garamond;
     
     setFontScreenColor();
     setFontPrintType();
@@ -637,9 +638,9 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   override public function calculateAnchorPoint():Float{
-    trace('############################################');
-    trace('#      DISPATCH EVENT TO MOVE MOUSE HIT POINT');
-    trace('############################################');
+//    trace('############################################');
+//    trace('#      DISPATCH EVENT TO MOVE MOUSE HIT POINT');
+//    trace('############################################');
     
     
     //GLOBAL.MOVE_TOOL;

@@ -226,13 +226,7 @@ class PageView extends View{
     model.addEventListener(EVENT_ID.TRASH_PLACEHOLDER, onDestroyPlaceholder);
     model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
-    //Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
-    //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded); 
-    //model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
-    
-    
-    //Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onDesignXmlLoaded);
-    //Designs.addEventListener(EVENT_ID.DESIGN_XML_LOADED, onDesignXmlLoaded);
+
     
     loadFrontShot();
     
@@ -353,7 +347,6 @@ class PageView extends View{
   }
   
   private function parsePageDesignXML():Void{
-//    trace('8...parsePageDesignXML');
     
     for( page  in pageDesignXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
@@ -370,6 +363,7 @@ class PageView extends View{
  
   private function parsePlaceholder(xml:Xml):Void{
     
+    trace(xml.toString());
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
     
@@ -379,8 +373,12 @@ class PageView extends View{
 
     var placeholder_type:String = '';
     for( plc_type in xml.elementsNamed("placeholder-type") ){
-      
       placeholder_type = plc_type.firstChild().nodeValue;
+      
+    }
+    for( gara in xml.elementsNamed("garamond") ){
+      trace('fireworks and big bumbs,   GARAMOND IS LOADED ++++++++++++++++++++++++++++++');
+      //placeholder_type = gara.firstChild().nodeValue;
       
     }
 

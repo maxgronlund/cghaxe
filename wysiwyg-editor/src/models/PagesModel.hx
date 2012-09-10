@@ -109,8 +109,8 @@ class PagesModel extends Model, implements IModel {
     dispatchParameter(param);
   }
   
-  private function buildPage( e:IKEvent  ): PageModel
-  {
+  private function buildPage( e:IKEvent  ): PageModel{
+    
     var pageModel:PageModel     = new PageModel();
      pageModel.init();
      pageModel.setInt('pageOrder', pageOrder);

@@ -226,7 +226,6 @@ class PresetModel extends Model, implements IModel
   
   public function savePreset(e:IKEvent):Void{
     trace('save preset');
-    GLOBAL.save_path = "/"+GLOBAL.language_name+"/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
     ExternalInterface.call("openSavingBox()");
 
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
@@ -243,24 +242,16 @@ class PresetModel extends Model, implements IModel
     variables.quantity                  = GLOBAL.preset_quantity;
     variables.cliches                   = GLOBAL.iAlreadyHaveACliche;
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
-
     variables.shop_item_id              = GLOBAL.shop_item_id;
-
     variables.user_uuid                 = GLOBAL.user_uuid;
-
     variables.preset_sibling_selected 	= productSelected;
-    
-    
-    
+
     variables._method = 'put';
     request.data = variables;
     
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
-    
-    GLOBAL.save_path = "/"+GLOBAL.language_name+"/users/"+GLOBAL.user_id+"/wysiwyg_editors/"+GLOBAL.preset_id+".xml";
-    
 
   }
   

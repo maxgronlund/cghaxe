@@ -65,7 +65,7 @@ class ColorView extends PropertyView, implements IView{
   
   private function onUpdateSideView( e:IKEvent ): Void{
     
-    if(GLOBAL.printType == CONST.GARAMOND){
+    if(GLOBAL.garamond){
       useGaramond();
     }else{
       setPrintTypes();
@@ -184,6 +184,7 @@ class ColorView extends PropertyView, implements IView{
   
   private function setPrintTypes():Void{
     disableTools();
+    
     for(print_types in print_types.elementsNamed('print-types')){
       for(print_type in print_types.elementsNamed('print-type')){
         for(title in print_type.elementsNamed('title')){
