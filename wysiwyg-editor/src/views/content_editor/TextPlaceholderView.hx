@@ -84,6 +84,7 @@ class TextPlaceholderView extends APlaceholder {
   private var fontScreenColor:UInt;
   private var loaded_fonts:Hash<Dynamic>;
   private var textFieldText:String;
+  private var garamond:Bool;
 
   
   //private var loading:Bitmap;
@@ -279,6 +280,7 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
     str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
     str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
+    str += '\t\t\t<garamond>' + isGaramond() + '</garamond>\n';
     str += '\t\t\t<print-type>' + printType + '</print-type>\n';
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
     str += '\t\t\t<std_pms_color>' + Std.string(stdPmsColor) + '</std_pms_color>\n';
@@ -294,6 +296,10 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t</placeholder>\n';
     restoreShowTags();
     return str;
+  }
+  
+  private function isGaramond():String{
+    return garamond ? 'true' : 'false';
   }
 
   private function onKeyPressed(event:KeyboardEvent):Void{
@@ -400,17 +406,18 @@ class TextPlaceholderView extends APlaceholder {
 
   private function loadFont():Void{
 //    trace('load font');
-    fontFileName       = GLOBAL.Font.fileName;
-    fontSize           = GLOBAL.Font.fontSize;       
-    fontAlign          = GLOBAL.Font.fontAlign;
-    fontLeading        = GLOBAL.Font.leading;
-    letterSpacing      = GLOBAL.Font.letterSpacing;
-    printType          = GLOBAL.printType; 
-    foilColor          = GLOBAL.foilColor;
-    stdPmsColor        = GLOBAL.stdPmsColor;
-    pms1Color          = GLOBAL.pms1Color;
-    pms2Color          = GLOBAL.pms2Color;
-    laserColor         = GLOBAL.laserColor;
+    fontFileName      = GLOBAL.Font.fileName;
+    fontSize          = GLOBAL.Font.fontSize;       
+    fontAlign         = GLOBAL.Font.fontAlign;
+    fontLeading       = GLOBAL.Font.leading;
+    letterSpacing     = GLOBAL.Font.letterSpacing;
+    printType         = GLOBAL.printType; 
+    foilColor         = GLOBAL.foilColor;
+    stdPmsColor       = GLOBAL.stdPmsColor;
+    pms1Color         = GLOBAL.pms1Color;
+    pms2Color         = GLOBAL.pms2Color;
+    laserColor        = GLOBAL.laserColor;
+    garamond          = GLOBAL.garamond;
     setFontScreenColor();
     if(fontMovie != null){
       removeChild(fontMovie);

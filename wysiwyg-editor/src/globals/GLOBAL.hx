@@ -79,6 +79,7 @@ class GLOBAL  {
   public static var pms2Color:UInt;
   public static var foilColor:String;
   public static var laserColor:UInt;
+  public static var garamond:Bool;
   
   // controllers
   public static var text_controller:IController;
@@ -102,11 +103,7 @@ class GLOBAL  {
   
   // user
   public static var user_id:String;
-
   public static var shop_item_id:Int;
-  
-
-
   public static var user_uuid:String;
   
 

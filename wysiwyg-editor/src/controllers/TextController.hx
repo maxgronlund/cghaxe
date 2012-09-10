@@ -5,7 +5,7 @@ class TextController extends Controller, implements IController{
   
   private var textFormat:TextFormat;
   private var fontStyleIndex:Int;
-  private var printType:String;
+
   
   	
   public function new(){	
@@ -55,23 +55,19 @@ class TextController extends Controller, implements IController{
       
       //GLOBAL.foilColor            = 'silver';
       //printType                   = GLOBAL.printType;
-      
-      printType                   = GLOBAL.printType;
       GLOBAL.Font.fileName        = "garamond";
+      GLOBAL.garamond             = true;
       GLOBAL.Font.fontSize        = 16.65;
       GLOBAL.Font.leading         = 19.98;
-      GLOBAL.printType            = CONST.GARAMOND;
+      GLOBAL.printType            = CONST.FOIL_COLOR;
       GLOBAL.foilColor            = 'silver';
       GLOBAL.text_view.setParam(param);
       Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
       Pages.setParam(param);
-      
-      
-      
-
     }
     else{
-      GLOBAL.printType            = printType;
+
+      GLOBAL.garamond             = false;
       GLOBAL.Font.fontSize        = 16;
       GLOBAL.Font.leading         = 20;
     }
