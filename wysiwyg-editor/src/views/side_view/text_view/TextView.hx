@@ -26,8 +26,6 @@ class TextView extends PropertyView, implements IView{
     garamondButton        = new TwoStateButton();
   }
   
-
-  
   override public function init():Void {
     
     selectButton.init( controller,
@@ -43,7 +41,7 @@ class TextView extends PropertyView, implements IView{
             new GarmondPrintButton(), 
             new Parameter( EVENT_ID.USE_GARAMOND));
             
-    Application.addEventListener( EVENT_ID.USE_GARAMOND, onUseGaramond);
+    //Application.addEventListener( EVENT_ID.USE_GARAMOND, onUseGaramond);
     
     addTextfieldButton.init(controller,
                         new Point(150,22), 
@@ -56,23 +54,10 @@ class TextView extends PropertyView, implements IView{
   
   
   private function onUpdateSideView(e:IKEvent):Void{
-    
-    trace(GLOBAL.printType);
+    garamondButton.setOn(GLOBAL.printType == CONST.GARAMOND);
+
 	  
 	}
-  
-  private function onUseGaramond(e:IKEvent){
-    
-    if(e.getBool()){
-      fontPane.setString('disable', 'foo');
-      fontSizePopup.enable(false);
-      fontSizePopup.setString('init garmond', 'foo');
-    }else{
-      fontPane.setString('enable', 'foo');
-      fontSizePopup.enable(true);
-
-    }
-  }
   
   override public function onAddedToStage(e:Event):Void{
     
@@ -112,10 +97,7 @@ class TextView extends PropertyView, implements IView{
     addChild(fontSizePopup);
     fontSizePopup.x = 110;
     fontSizePopup.y = 92;
-    
-    
-  	
-    
+
   }
   
   override public function setFloat(id:String, f:Float):Void{
@@ -132,7 +114,7 @@ class TextView extends PropertyView, implements IView{
     
     switch ( param.getLabel() ){
       case EVENT_ID.FONT_SELECTED:{
-        //trace('font selected');
+        
         fontPane.setParam(param);   
       }
       case EVENT_ID.LINE_SPACE_SELECTED:{
@@ -156,30 +138,29 @@ class TextView extends PropertyView, implements IView{
         textAlign.setParam(param);
       }
       
-      case EVENT_ID.UPDATE_FONT_PANE:{
-        onUpdateFontPane(param.getString());
-      }
-      case EVENT_ID.USE_GARAMOND:{
-        param.getBool() ? fontPane.setString('disable', 'foo') : fontPane.setString('enable', 'foo');
-        fontSizePopup.setInt('display', 8);
-        
-        
-        //this.alpha = 0.2;
-      }
-      //case EVENT_ID.UPDATE_TEXT_TOOLS:{
-      //  textAlign.setParam(param);
-      //  fontSizePopup.setParam(param);
-      //  lineSpacePopup.setParam(param);
-      //	fontPane.setParam(param);
-      //	
+      //case EVENT_ID.UPDATE_FONT_PANE:{
+      //  onUpdateFontPane(param.getString());
       //}
+      case EVENT_ID.USE_GARAMOND:{
+        var b =!param.getBool();
+        fontSizePopup.visible     = b;
+        lineSpacePopup.visible    = b;
+        fontPane.visible          = b;
+        fontScrollbar.visible     = b;
+        
+        if(param.getBool()){
+          fontSizePopup.setString('use garamond', 'foo');
+          fontPane.setString('use garamond', 'foo');
+          lineSpacePopup.setString('use garamond', 'foo');
+        }
+      }
     }
   }
   
-  private function onUpdateFontPane(s):Void{
-    
-    fontPane.setString(EVENT_ID.UPDATE_FONT_PANE, s);
-  }
+  //private function onUpdateFontPane(s):Void{
+  //  trace('setParam');
+  //  fontPane.setString(EVENT_ID.UPDATE_FONT_PANE, s);
+  //}
   
   
 }

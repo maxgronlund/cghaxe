@@ -69,6 +69,10 @@ class LineSpacePopup extends AView {
     switch ( id ){
       case 'display':
         dropDownMenu.setDisplay(s);
+      case 'use garamond':{
+        dropDownMenu.selectItem(25);
+        dropDownMenu.setDisplay('20');
+      }
     }
   }
   
@@ -79,6 +83,10 @@ class LineSpacePopup extends AView {
         dropDownMenu.setDisplay(Std.string(sizes[i]));
     }
   }
+  
+  public function enable(b:Bool):Void{
+     dropDownMenu.enable(b);
+   }
   
   //override public function setParam(param:IParameter):Void{
   //  switch ( param.getLabel() ){

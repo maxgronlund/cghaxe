@@ -9,20 +9,18 @@ class ColorView extends PropertyView, implements IView{
   private var customPms1ColorPicker:CustomPmsColorPicker;
   private var customPms2ColorPicker:CustomPmsColorPicker;
   private var foilColorPicker:FoilColorPicker;
-  private var colorPicker:ColorPicker;
-  //private var stdPmsPickerBmp:Bitmap;
-  //private var customPms1PickerBmp:Bitmap;
-  //private var customPms2PickerBmp:Bitmap;
-  //private var foilPickerBmp:Bitmap;
-  //private var colorPickerBmp:Bitmap;
-  
+  private var colorPicker:ColorPicker;  
   private var stdColorText:FormatedText;
   private var customColor1Text:FormatedText;
   private var customColor2Text:FormatedText;
   private var foilColorText:FormatedText;
   private var colorText:FormatedText;
-
   private var pos:Float;
+  
+  //private var foil_enable:Bool;
+  //private var pms_enable:Bool;
+  //private var laser_enable:Bool;
+  var print_types:Xml;
   
   public function new(colorController:IController){	
     super(colorController);
@@ -36,6 +34,10 @@ class ColorView extends PropertyView, implements IView{
     customPms2ColorPicker   = new CustomPmsColorPicker(controller);
     foilColorPicker         = new FoilColorPicker(controller);
     colorPicker             = new ColorPicker(controller);
+    
+    //foil_enable             = false;
+    //pms_enable              = false;
+    //laser_enable            = false;
   }
   
   
@@ -57,14 +59,18 @@ class ColorView extends PropertyView, implements IView{
     customColor2Text 	      = new FormatedText('helvetica', 'CUSTOM PMS 2', 11, false);
     foilColorText 	        = new FormatedText('helvetica', 'FOIL', 11, false);
     colorText        	      = new FormatedText('helvetica', 'LASER COLOR', 11, false);
-    
-    
-    
   }
   
   
   
   private function onUpdateSideView( e:IKEvent ): Void{
+    
+    if(GLOBAL.printType == CONST.GARAMOND){
+      useGaramond();
+    }else{
+      setPrintTypes();
+    }
+    
     switch ( e.getString() ){
     
       case 'vector_placeholder':{
@@ -82,7 +88,6 @@ class ColorView extends PropertyView, implements IView{
         customPms2ColorPicker.alpha     = 1.0;
         foilColorPicker.alpha           = 1.0;
         colorPicker.alpha               = 1.0;
-        //colorPickerBmp.alpha            = 1.0;
       }
       default:{
         stdPmsColorPicker.alpha         = 0.3;
@@ -172,6 +177,24 @@ class ColorView extends PropertyView, implements IView{
   
   private function onPageSelected(e:IKEvent):Void{
     
+    print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+    setPrintTypes();
+    
+  }
+  
+  private function setPrintTypes():Void{
+    disableTools();
+    for(print_types in print_types.elementsNamed('print-types')){
+      for(print_type in print_types.elementsNamed('print-type')){
+        for(title in print_type.elementsNamed('title')){
+          onEnableTool( title.firstChild().nodeValue.toString());
+        }
+      }
+    }
+    PositionPickers();
+  }
+  
+  private function disableTools():Void{
     stdColorText.visible              = false;
     stdPmsColorPicker.visible         = false;
     customColor1Text.visible          = false;
@@ -182,17 +205,6 @@ class ColorView extends PropertyView, implements IView{
     customPms2ColorPicker.visible     = false;
     foilColorPicker.visible           = false;
     colorPicker.visible               = false;
-    //colorPickerBmp.visible            = false;
-    
-    var print_types:Xml = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
-    for(print_types in print_types.elementsNamed('print-types')){
-      for(print_type in print_types.elementsNamed('print-type')){
-        for(title in print_type.elementsNamed('title')){
-          onEnableTool( title.firstChild().nodeValue.toString());
-        }
-      }
-    }
-    PositionPickers();
   }
   
   private function onEnableTool(cmd:String):Void{
@@ -211,11 +223,36 @@ class ColorView extends PropertyView, implements IView{
         customColor2Text.visible          = true;
         stdPmsColorPicker.visible         = true;
         customPms1ColorPicker.visible     = true;
-        customPms2ColorPicker.visible     = true;
+        customPms2ColorPicker.visible     = true;                    
       }
     }
  }
-    
+ 
+
+ override public function setParam(param:IParameter):Void{
+   
+   switch ( param.getLabel() ){
+     
+     case EVENT_ID.USE_GARAMOND:{
+       if(param.getBool()){
+         useGaramond();
+         //disableTools();
+         //onEnableTool('Foil');
+         //PositionPickers();
+       }else{
+         setPrintTypes();
+       }
+       
+     }
+   }
+ }
+ 
+ private function useGaramond():Void{
+    disableTools();
+    onEnableTool('Foil');
+    PositionPickers();
+ }
+
   private function PositionPickers(): Void{
 
     pos = 40;

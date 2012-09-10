@@ -127,9 +127,6 @@ class ParameterParser
       //trace("SHOP_ITEM_ID", params.shop_item_id);
     }
 
-
-
-    
     if(params.brides_first_name != null){
       GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
     }
@@ -142,6 +139,8 @@ class ParameterParser
     if(params.location_name != null){
       GLOBAL.Designs.setString('location_name', params.location_name);
     }
+
+    GLOBAL.params = params;
 
 	}
 	

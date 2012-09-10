@@ -32,11 +32,12 @@ class DesignsPane extends View, implements IView{
     pageIndex         = 0;
     swapIndex         = 0;
     
-    Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
+    //Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
+    Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Designs.addEventListener(EVENT_ID.DESIGN_SELECTED, onDesignSelected);
 
-    
+    trace('new');
     
   }
   
@@ -44,6 +45,7 @@ class DesignsPane extends View, implements IView{
   override public function onAddedToStage(e:Event):Void{
   	super.onAddedToStage(e);
   	addChild(backdrop);
+  	trace('onAddedToStage');
   }
 
 
@@ -96,25 +98,9 @@ class DesignsPane extends View, implements IView{
     
         buttonPos += 27;
         buttonIndex++;
-        
-
       }
       selectButton(0);
-
     }
-    
-     //param.setLabel(EVENT_ID.DESIGN_SELECTED);
-      //
-      //param.setString(designTitle);
-
-    
-
-//    param.setInt(buttonIndex);
-
-//    
-//    selectButton(0);
-    
-  //  trace(param.getXml().toString());
     
 	}
 	
@@ -129,6 +115,8 @@ class DesignsPane extends View, implements IView{
   }
   
   private function onBuildPage(e:IKEvent):Void{
+    //trace('onBuildPage');
+    //trace(e.getXml().toString());
     var designOnPage:Bool = false;
 
     for(designs in e.getXml().elementsNamed("designs") ){
@@ -149,7 +137,7 @@ class DesignsPane extends View, implements IView{
   }
   
   private function onPageSelected(e:IKEvent):Void{
-    
+    //trace('onPageSelected');
     removeButtons();
     var i = swapPageToDesigns[e.getInt()];
     if(i != -1){
@@ -159,7 +147,7 @@ class DesignsPane extends View, implements IView{
   
   private function onDesignSelected(e:IKEvent):Void{
     selectButton( e.getInt());
-    trace('design selecter', e.getInt());
+    //trace('design selecter', e.getInt());
   }
   
   override public function setInt(id:String, i:Int):Void{

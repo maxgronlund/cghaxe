@@ -5,6 +5,7 @@ class TextController extends Controller, implements IController{
   
   private var textFormat:TextFormat;
   private var fontStyleIndex:Int;
+  private var printType:String;
   
   	
   public function new(){	
@@ -38,16 +39,46 @@ class TextController extends Controller, implements IController{
 
     }
 	}
+	
   private function onUseGaramond(param:IParameter):Void{
     
     trace('onUseGaramond', param.getBool());
     if(param.getBool()){
-      GLOBAL.Font.fileName = "garamond";
-      GLOBAL.Font.fontSize = 16;
+      //GLOBAL.Font.fileName        = "garamond";
+      //GLOBAL.Font.fontSize        = 16.65;
+      //GLOBAL.Font.leading         = 19.98;
+      //GLOBAL.printType            = CONST.FOIL_COLOR;
+      //GLOBAL.foilColor            = 'silver';
+      //printType                   = GLOBAL.printType;
+      //GLOBAL.printType            = 'garamond';
+      //Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
       
+      //GLOBAL.foilColor            = 'silver';
+      //printType                   = GLOBAL.printType;
+      
+      printType                   = GLOBAL.printType;
+      GLOBAL.Font.fileName        = "garamond";
+      GLOBAL.Font.fontSize        = 16.65;
+      GLOBAL.Font.leading         = 19.98;
+      GLOBAL.printType            = CONST.GARAMOND;
+      GLOBAL.foilColor            = 'silver';
+      GLOBAL.text_view.setParam(param);
+      Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
+      Pages.setParam(param);
+      
+      
+      
+
+    }
+    else{
+      GLOBAL.printType            = printType;
+      GLOBAL.Font.fontSize        = 16;
+      GLOBAL.Font.leading         = 20;
     }
     GLOBAL.text_view.setParam(param);
+    GLOBAL.color_view.setParam(param);
     updatePlaceholder();
+    
   }
   
   private function onPlaceholderSelected(param:IParameter):Void{

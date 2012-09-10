@@ -13,6 +13,7 @@ class DesignsView extends PropertyView, implements IView{
   
   
   public function new(designsController:IController){	
+    //trace('new');
     super(designsController);
     backdrop            = new PlaceholdersBackBitmap();
     
@@ -20,8 +21,7 @@ class DesignsView extends PropertyView, implements IView{
     designsPane         = new DesignsPane(designsController);
     verticalScrollbar   = new VerticalScrollbar(designsController, EVENT_ID.DESIGN_SCROLL);
     addDesignButton     = new OneStateButton();
-    
-    
+
     //Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
     //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
@@ -33,7 +33,7 @@ class DesignsView extends PropertyView, implements IView{
   
   
   override public function init():Void{
-
+    //trace('init');
     selectButton.init( controller,
               new Point(190,30), 
               new DesignsViewButton(), 
@@ -64,7 +64,7 @@ class DesignsView extends PropertyView, implements IView{
   
   
   override public function onAddedToStage(e:Event):Void{
-    
+    //trace('onAddedToStage');
     super.onAddedToStage(e);
 
     // font selection pane

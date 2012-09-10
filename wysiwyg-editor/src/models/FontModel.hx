@@ -12,8 +12,8 @@ class FontModel  {
   public var styleName(default, setStyleName): String;
   function setStyleName(s) return styleName = s
   
-  public var fontSize(default, setFontSize): Int;
-  function setFontSize(s) return fontSize = s
+  public var fontSize(default, setFontSize): Float;
+  function setFontSize(f) return fontSize = f
   
   public var fontColor(default, setFontColor): UInt;
   function setFontColor(s) return fontColor = s
@@ -21,11 +21,11 @@ class FontModel  {
   public var fontAlign(default, setFontAlign): String;
   function setFontAlign(s) return fontAlign = s
   
-  public var leading(default, setLeading): Int;
-  function setLeading(i) return leading = i
+  public var leading(default, setLeading): Float;
+  function setLeading(f) return leading = f
   
-  public var letterSpacing(default, setletterSpacing): Int;
-	function setletterSpacing(i) return letterSpacing = i
+  public var letterSpacing(default, setletterSpacing): Float;
+	function setletterSpacing(f) return letterSpacing = f
 	
 	public var anchorPoint(default, setAnchorPoint): Float;
 	function setAnchorPoint(f) return anchorPoint = f

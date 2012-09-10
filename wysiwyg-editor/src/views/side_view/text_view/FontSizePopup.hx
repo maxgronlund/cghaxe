@@ -27,10 +27,10 @@ class FontSizePopup extends AView {
   
   
   private function onUpdateSideView(e:IKEvent):Void{
-    
-//    trace(GLOBAL.fontType);
 	  dropDownMenu.setItem(Std.string(GLOBAL.Font.fontSize));
 	}
+	
+
   
   override public function onAddedToStage(e:Event){
     removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
@@ -54,20 +54,9 @@ class FontSizePopup extends AView {
     setInt('display', 3);
   }
   
-  /*
-  override public function setParam(param:IParameter):Void{
-    switch ( param.getLabel() ){
-      //case EVENT_ID.UPDATE_TEXT_TOOLS:{
-      //  
-      //}
-    }
-  }
-  */
-  
-  public function enable(b:Bool):Void{
-    dropDownMenu.alpha = b ? 1.0 : 0.2;
-//    dropDownMenu.enable(b);
 
+  public function enable(b:Bool):Void{
+    dropDownMenu.enable(b);
   }
   
   public function deselectItem(id:Int):Void{
@@ -89,7 +78,7 @@ class FontSizePopup extends AView {
   override public function setString(id:String, s:String):Void{
     //trace()
     switch ( id ){
-      case 'init garmond':{
+      case 'use garamond':{
         dropDownMenu.selectItem(8);
         dropDownMenu.setDisplay(Std.string(sizes[8]));
       }

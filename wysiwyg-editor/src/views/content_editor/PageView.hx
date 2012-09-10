@@ -203,7 +203,7 @@ class PageView extends View{
   }
   
   override public function onAddedToStage(e:Event): Void{
-    trace('5... added to stage');
+//    trace('5... added to stage');
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
 //    Application.addEventListener(EVENT_ID.DISABLE_MOUSE_ON_PAGES, onDisableMouse);
@@ -347,13 +347,13 @@ class PageView extends View{
   }
   
   private function onDesignXmlLoaded(e:IKEvent):Void{  
-    trace('6...onDesignXmlLoaded');
+//    trace('6...onDesignXmlLoaded');
     pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    trace(pageDesignXML.toString());
+//    trace(pageDesignXML.toString());
   }
   
   private function parsePageDesignXML():Void{
-    trace('8...parsePageDesignXML');
+//    trace('8...parsePageDesignXML');
     
     for( page  in pageDesignXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
@@ -545,7 +545,7 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
-    trace('disableMove');
+//    trace('disableMove');
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     hitTest();
   }
@@ -563,9 +563,9 @@ class PageView extends View{
   
   private function hitTestTextPlaceholder():Void {
     
-    trace("hitTestTextPlaceholder");
+//    trace("hitTestTextPlaceholder");
     var textField:TextField = inFocus.getTextField();
-    trace("Got text field..?");
+//    trace("Got text field..?");
     
     if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
       if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
@@ -662,7 +662,7 @@ class PageView extends View{
   }
   
   private function onLoadFrontShotComplete(e:Event):Void{
-    trace('6...onLoadFrontShotComplete');
+//    trace('6...onLoadFrontShotComplete');
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     backdrop = e.target.loader.content;
     addChild(backdrop);
@@ -724,7 +724,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    trace('allImagesLoaded');
+//    trace('allImagesLoaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;

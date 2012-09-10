@@ -115,9 +115,7 @@ class PresetModel extends Model, implements IModel
       GLOBAL.userParser.parseUser(user_tags);
     }
     
-    
-    
-    
+
     
 /*    var page_index:Int = 0;
     
@@ -189,6 +187,7 @@ class PresetModel extends Model, implements IModel
 
   
   private function parseXmlData(xml_data:Xml):Void{
+    trace('parseXmlData');
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {

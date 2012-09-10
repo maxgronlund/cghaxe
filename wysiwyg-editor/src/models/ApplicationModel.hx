@@ -51,14 +51,14 @@ class ApplicationModel extends Model, implements IModel
   }
 
   private function startLoadSeq():Void{
-    trace('\n\n\n     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< - >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-    * NOTHING GAINED BY BREAKING THE LOAD OF PRESET AND PRICES DOWN TO TWO REQUEST 
-    * TWO ISSUES INTRODUCED
-    * 1: WAIT FORTHE FIRST LOAD TO COMPLETE AND THEN DO THE NEXT LOAD 
-    * 2: LOAD SIMULTANILUS AND DEAL WITH SYNCRONATION \n
-    * BOTH SULUTIONS INTRODUCES SLOW PERFORMANCE AND UNNESSESERRY COMPLEXCITY
-    * !NOTE THE SAVED XML FILE IS NOT THE SAME AS THE INFO REQUIRED IN THE XML FILES
-    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< o >>>>>>>>>>>>>>>><<<<<<<<<<<<<>>>>>>>>\n\n');
+//    trace('\n\n\n     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< - >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
+//    * NOTHING GAINED BY BREAKING THE LOAD OF PRESET AND PRICES DOWN TO TWO REQUEST 
+//    * TWO ISSUES INTRODUCED
+//    * 1: WAIT FORTHE FIRST LOAD TO COMPLETE AND THEN DO THE NEXT LOAD 
+//    * 2: LOAD SIMULTANILUS AND DEAL WITH SYNCRONATION \n
+//    * BOTH SULUTIONS INTRODUCES SLOW PERFORMANCE AND UNNESSESERRY COMPLEXCITY
+//    * !NOTE THE SAVED XML FILE IS NOT THE SAME AS THE INFO REQUIRED IN THE XML FILES
+//    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< o >>>>>>>>>>>>>>>><<<<<<<<<<<<<>>>>>>>>\n\n');
     switch (GLOBAL.edit_mode) {
       
       

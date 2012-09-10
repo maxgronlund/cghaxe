@@ -11,6 +11,7 @@ import flash.display.Shape;
 import flash.Vector;
 import flash.geom.Point;
 import flash.geom.ColorTransform;
+import flash.text.AntiAliasType;
 
 //import flash.events.MouseEvent;
 
@@ -84,6 +85,10 @@ class FontBase extends MovieClip
     textField.embedFonts	          =	true;
     textField.multiline		          =	true;
     textField.selectable            = false;
+    //import flash.text.AntiAliasType;
+    textField.sharpness             = 10;
+    textField.thickness             = 100;
+    textField.antiAliasType         = AntiAliasType.ADVANCED;
 
     textField.text				          = text;
     Lib.current.addChild(textField);
@@ -124,7 +129,7 @@ class FontBase extends MovieClip
 
   public function selectable(b:Bool):Void{
     textField.selectable            = b;
-    trace(b);
+    //trace(b);
     if(b){
       textField.addEventListener(flash.events.FocusEvent.FOCUS_IN, onFocusIn);
     }else{

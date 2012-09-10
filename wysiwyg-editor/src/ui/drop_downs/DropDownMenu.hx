@@ -59,4 +59,9 @@ class DropDownMenu extends DropDownMenuContent {
    oneStateTextAndImageButton.setText(s);
    oneStateTextAndImageButton.updateLabel();
   }
+  
+  override public function enable(b:Bool):Void{
+    super.enable(b);
+    oneStateTextAndImageButton.enable(b);
+  }
 }

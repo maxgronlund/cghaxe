@@ -55,7 +55,7 @@ class PageModel extends Model, implements IModel
       //  GLOBAL.text_view.setParam(param);
       //}
       case EVENT_ID.BUILD_PAGE_DESIGNS:{
-        trace(designs.toString(),'------------------------------>>>>>>>>>>>>>>>>');
+       
         param.setXml(designs);
         Pages.dispatchParameter(param);
       }

@@ -249,7 +249,7 @@ class PriceColumn extends MovieClip {
 	   case "cliche":
    	   return GLOBAL.cliche_price;
 	   default:
-	     trace("Error selecting print_type!!!", print_type);
+	     //trace("Error selecting print_type!!!", print_type);
 	     return 0.0;
 	  }
 	  

@@ -115,7 +115,7 @@ class PagesView extends View, implements IView{
   }
   
   private function addPages():Void{
-    trace('4...addPages');
+//    trace('4...addPages');
     for( i in 0...pages.length){
       addChild(pages[i]);
       pages[i].visible = false;

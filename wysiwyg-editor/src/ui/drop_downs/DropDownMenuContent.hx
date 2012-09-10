@@ -187,4 +187,11 @@ class DropDownMenuContent extends Sprite{
   	this.selectedItemId = id;
     twoStateTextButtons[selectedItemId].setOn(true);
 	}
+	
+	public function enable(b:Bool):Void{
+	  
+	  for( index in 0...twoStateTextButtons.length){
+	    twoStateTextButtons[index].enable(b);
+	  }
+	}
 }

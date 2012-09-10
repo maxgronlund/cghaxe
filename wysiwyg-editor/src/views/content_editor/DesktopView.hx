@@ -159,7 +159,7 @@ class DesktopView extends View, implements IView{
   }
   
   override public function glimmerFoils():Void{
-    trace("GlimmerFoils!-------------------------------");
+//    trace("GlimmerFoils!-------------------------------");
     glimmer_foils_index = 0;
     addEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
   }

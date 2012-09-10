@@ -32,7 +32,7 @@ class PagesModel extends Model, implements IModel {
     //print_mask_url = '';
     //hide_mask_url = '';
     Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);                
-    Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
+    //Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Preset.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
@@ -43,6 +43,7 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onAddPagedesign(e:IKEvent):Void{
+    trace('onAddPagedesign');
     pageInFocus.dispatchParameter(new Parameter(EVENT_ID.TRASH_PLACEHOLDERS));
     pageInFocus.dispatchParameter(e.getParam());
   }
@@ -100,7 +101,8 @@ class PagesModel extends Model, implements IModel {
          pageModel.setString('page_name', title.firstChild().nodeValue.toString());
     } 
     
-    // picked up by PagesView
+    //trace('onBuildPage');
+    // picked up by PagesView and DesignPane
     var param:Parameter = new Parameter(EVENT_ID.BUILD_PAGE);
     param.setModel(pageModel);
     param.setXml(e.getXml());

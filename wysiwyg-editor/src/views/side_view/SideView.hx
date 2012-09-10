@@ -35,25 +35,6 @@ class SideView extends View, implements IView
   	
   }
   
-  private function onPageSelected(e:IKEvent):Void{
-
-    //GLOBAL.color_view.setString( 'na','clear');
-    //var print_types:Xml = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
-    //
-    //for(print_types in print_types.elementsNamed('print-types')){
-    //  
-    //  for(print_type in print_types.elementsNamed('print-type')){
-    //    for(title in print_type.elementsNamed('title')){
-    //      
-    //      GLOBAL.color_view.setString( 'na',title.firstChild().nodeValue.toString());
-    //
-    //      
-    //    }
-    //  }
-    //}
-    //GLOBAL.color_view.setString( 'na','build');
-  }
-  
   override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
       
       view.setString('viewId', id);

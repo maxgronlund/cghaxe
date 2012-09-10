@@ -92,6 +92,7 @@ class FontPane extends View, implements IView{
 	}
 	
 	private function onUpdateSideView(e:IKEvent):Void{
+	  
 	  setSelectedButton(GLOBAL.Font.fileName);
 	}
 	
@@ -139,8 +140,7 @@ class FontPane extends View, implements IView{
   override public function setString(id:String, s:String):Void{
 
     switch ( id )	{
-      case EVENT_ID.UPDATE_FONT_PANE: 
-        onUpdateFontPane(s);
+      
       case 'disable':{
         enable(false);
       }
@@ -148,26 +148,29 @@ class FontPane extends View, implements IView{
       case 'enable':{
         enable(true);
       }
+      case 'use garamond':{
+        setSelectedButton('garamond');
+      }
+
     }
   }
   private function enable(b:Bool):Void{
-    trace(b);
     for( index in 0...fontButtons.length){
       fontButtons[index].enable(b);
     }
   }
   
-  private function onUpdateFontPane(fontName:String):Void{
-    trace('onUpdateFontPane');
-    fontButtons[selectedButton].setOn(false);
-    
-    for(i in 0...fontButtons.length){
-      var btn:OneStateButton = fontButtons[i];
-      if(btn.getParam().getString() == fontName){
-        btn.setOn(true);
-        selectedButton = i;
-        return;
-      }
-    }
-	}
+  //private function onUpdateFontPane(fontName:String):Void{
+  //  trace('onUpdateFontPane', fontName);
+  //  fontButtons[selectedButton].setOn(false);
+  //  
+  //  for(i in 0...fontButtons.length){
+  //    var btn:OneStateButton = fontButtons[i];
+  //    if(btn.getParam().getString() == fontName){
+  //      btn.setOn(true);
+  //      selectedButton = i;
+  //      return;
+  //    }
+  //  }
+	//}
 }

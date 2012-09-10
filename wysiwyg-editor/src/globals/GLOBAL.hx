@@ -56,7 +56,7 @@ class GLOBAL  {
   public static var foil_view:AView;
   public static var side_view:IView;
   public static var add_ons_view:AView;
-  public static var garamond_view:AView;
+//  public static var garamond_view:AView;
   public static var logo_view:AView;
   public static var price_view:AView;
   public static var menu_view:IView;
@@ -67,8 +67,9 @@ class GLOBAL  {
   public static var greetingsView:IView;
   public static var blind_view:AView;
   public static var foil:Foil;
- 
   
+  public static var params:Dynamic;
+
   public static var printType:String;
   public static var stdPmsColor:UInt;
   public static var pms1Color:UInt;
@@ -99,6 +100,8 @@ class GLOBAL  {
   // user
   public static var user_id:String;
   public static var shop_item_id:Int;
+  
+
   
   
   
