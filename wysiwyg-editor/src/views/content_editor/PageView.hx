@@ -155,7 +155,9 @@ class PageView extends View{
                 if(!text_color_is_used) {
                   text_foil_colors.push(color);
                   amount_foil_color += 1;
-                  amount_cliche = 1;
+                  if(placeholders[i].isGaramond() != 'true'){
+                    amount_cliche = 1;
+                  }
                 }
               } else if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
                 var text_color_is_used:Bool = false;

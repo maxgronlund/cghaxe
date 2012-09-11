@@ -85,7 +85,6 @@ class TextPlaceholderView extends APlaceholder {
   private var loaded_fonts:Hash<Dynamic>;
   private var textFieldText:String;
   private var garamond:Bool;
-
   
   //private var loading:Bitmap;
   
@@ -299,7 +298,7 @@ class TextPlaceholderView extends APlaceholder {
     return str;
   }
   
-  private function isGaramond():String{
+  override public function isGaramond():String{
     return garamond ? 'true' : 'false';
   }
 
