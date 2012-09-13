@@ -34,7 +34,7 @@ class TextController extends Controller, implements IController{
       }
       case EVENT_ID.USE_GARAMOND:{onUseGaramond(param);}
       case EVENT_ID.FONT_SCROLL:GLOBAL.text_view.setFloat(EVENT_ID.FONT_SCROLL, param.getFloat());
-      case EVENT_ID.PLACEHOLDER_SELECTED:onPlaceholderSelected(param);
+//      case EVENT_ID.PLACEHOLDER_SELECTED:onPlaceholderSelected(param);
 
 
     }
@@ -44,17 +44,7 @@ class TextController extends Controller, implements IController{
     
     trace('onUseGaramond', param.getBool());
     if(param.getBool()){
-      //GLOBAL.Font.fileName        = "garamond";
-      //GLOBAL.Font.fontSize        = 16.65;
-      //GLOBAL.Font.leading         = 19.98;
-      //GLOBAL.printType            = CONST.FOIL_COLOR;
-      //GLOBAL.foilColor            = 'silver';
-      //printType                   = GLOBAL.printType;
-      //GLOBAL.printType            = 'garamond';
-      //Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
-      
-      //GLOBAL.foilColor            = 'silver';
-      //printType                   = GLOBAL.printType;
+
       GLOBAL.Font.fileName        = "garamond";
       GLOBAL.garamond             = true;
       GLOBAL.Font.fontSize        = 16.65;
@@ -66,22 +56,21 @@ class TextController extends Controller, implements IController{
       Pages.setParam(param);
     }
     else{
-
       GLOBAL.garamond             = false;
       GLOBAL.Font.fontSize        = 16;
       GLOBAL.Font.leading         = 20;
     }
     GLOBAL.text_view.setParam(param);
-    GLOBAL.color_view.setParam(param);
+    //GLOBAL.color_view.setParam(param);
     updatePlaceholder();
     
   }
   
-  private function onPlaceholderSelected(param:IParameter):Void{
-    
-    trace('onPlaceholderSelected', param.getLabel());
-    GLOBAL.Font.setXml(param.getString());
-  }
+  //private function onPlaceholderSelected(param:IParameter):Void{
+  //  
+  //  trace('onPlaceholderSelected', param.getLabel());
+  //  GLOBAL.Font.setXml(param.getString());
+  //}
 
   
   private function onFontSelected(param:IParameter):Void {

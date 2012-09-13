@@ -54,9 +54,19 @@ class TextView extends PropertyView, implements IView{
   
   
   private function onUpdateSideView(e:IKEvent):Void{
-    garamondButton.setOn(GLOBAL.printType == CONST.GARAMOND);
-
-	  
+    
+    var b:Bool = e.getString() == 'garamond_place_holder';
+    garamond(b);
+    garamondButton.setOn(b);
+   //   garamond(true);
+   //   garamondButton.setOn(true);
+   // }else{
+   //   garamond(false);
+   //   garamondButton.setOn(false);
+   // }
+   // //garamondButton.setOn(e.getString() == 'garamond_place_holder');
+    
+    
 	}
   
   override public function onAddedToStage(e:Event):Void{
@@ -128,32 +138,22 @@ class TextView extends PropertyView, implements IView{
         fontSizePopup.show(true); 
         fontSizePopup.setInt('display', param.getInt());
       }
-      case EVENT_ID.ALIGN_LEFT:{
-        textAlign.setParam(param);
-      }
-      case EVENT_ID.ALIGN_CENTER:{
-        textAlign.setParam(param);
-      }
-      case EVENT_ID.ALIGN_RIGHT:{
-        textAlign.setParam(param);
-      }
-      
-      //case EVENT_ID.UPDATE_FONT_PANE:{
-      //  onUpdateFontPane(param.getString());
-      //}
-      case EVENT_ID.USE_GARAMOND:{
-        var b =!param.getBool();
-        fontSizePopup.visible     = b;
-        lineSpacePopup.visible    = b;
-        fontPane.visible          = b;
-        fontScrollbar.visible     = b;
-        
-        if(param.getBool()){
-          fontSizePopup.setString('use garamond', 'foo');
-          fontPane.setString('use garamond', 'foo');
-          lineSpacePopup.setString('use garamond', 'foo');
-        }
-      }
+      case EVENT_ID.ALIGN_LEFT:{ textAlign.setParam(param); }
+      case EVENT_ID.ALIGN_CENTER:{ textAlign.setParam(param); }
+      case EVENT_ID.ALIGN_RIGHT:{ textAlign.setParam(param); }
+      case EVENT_ID.USE_GARAMOND:{  garamond(param.getBool()); }
+    }
+  }
+  
+  private function garamond(b:Bool):Void{
+    fontSizePopup.visible     = !b;
+    lineSpacePopup.visible    = !b;
+    fontPane.visible          = !b;
+    fontScrollbar.visible     = !b;
+    if(b){
+      fontSizePopup.setString('use garamond', 'foo');
+      fontPane.setString('use garamond', 'foo');
+      lineSpacePopup.setString('use garamond', 'foo');
     }
   }
   

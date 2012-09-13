@@ -64,12 +64,9 @@ class ColorView extends PropertyView, implements IView{
   
   
   private function onUpdateSideView( e:IKEvent ): Void{
-    
-    if(GLOBAL.garamond){
-      useGaramond();
-    }else{
-      setPrintTypes();
-    }
+   
+
+    setPrintTypes();
     
     switch ( e.getString() ){
     
@@ -88,6 +85,14 @@ class ColorView extends PropertyView, implements IView{
         customPms2ColorPicker.alpha     = 1.0;
         foilColorPicker.alpha           = 1.0;
         colorPicker.alpha               = 1.0;
+      }
+      
+      case 'garamond_place_holder':{
+        stdPmsColorPicker.alpha         = 0.3;
+        customPms1ColorPicker.alpha     = 0.3;
+        customPms2ColorPicker.alpha     = 0.3;
+        foilColorPicker.alpha           = 1.0;
+        colorPicker.alpha               = 0.3;
       }
       default:{
         stdPmsColorPicker.alpha         = 0.3;
@@ -230,29 +235,30 @@ class ColorView extends PropertyView, implements IView{
  }
  
 
- override public function setParam(param:IParameter):Void{
-   
-   switch ( param.getLabel() ){
-     
-     case EVENT_ID.USE_GARAMOND:{
-       if(param.getBool()){
-         useGaramond();
-         //disableTools();
-         //onEnableTool('Foil');
-         //PositionPickers();
-       }else{
-         setPrintTypes();
-       }
-       
-     }
-   }
- }
+ //override public function setParam(param:IParameter):Void{
+ //  
+ //  trace('oh no');
+ //  switch ( param.getLabel() ){
+ //    
+ //    //case EVENT_ID.USE_GARAMOND:{
+ //    //  if(param.getBool()){
+ //    //    useGaramond();
+ //    //    //disableTools();
+ //    //    //onEnableTool('Foil');
+ //    //    //PositionPickers();
+ //    //  }else{
+ //    //    //setPrintTypes();
+ //    //  }
+ //    //  
+ //    //}
+ //  }
+ //}
  
- private function useGaramond():Void{
-    disableTools();
-    onEnableTool('Foil');
-    PositionPickers();
- }
+ //private function useGaramond():Void{
+ //   disableTools();
+ //   onEnableTool('Foil');
+ //   PositionPickers();
+ //}
 
   private function PositionPickers(): Void{
 

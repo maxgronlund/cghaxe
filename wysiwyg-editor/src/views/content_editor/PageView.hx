@@ -363,7 +363,7 @@ class PageView extends View{
  
   private function parsePlaceholder(xml:Xml):Void{
     
-    trace(xml.toString());
+//    trace(xml.toString());
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
     
@@ -372,21 +372,24 @@ class PageView extends View{
     
 
     var placeholder_type:String = '';
+    
     for( plc_type in xml.elementsNamed("placeholder-type") ){
       placeholder_type = plc_type.firstChild().nodeValue;
       
     }
-    for( gara in xml.elementsNamed("garamond") ){
-      trace('fireworks and big bumbs,   GARAMOND IS LOADED ++++++++++++++++++++++++++++++');
-      //placeholder_type = gara.firstChild().nodeValue;
-      
-    }
+    //for( gara in xml.elementsNamed("garamond") ){
+    //  if(gara.firstChild().nodeValue == 'true'){
+    //    placeholder_type = 'garamond_place_holder'
+    //    trace('fireworks and big bumbs,   GARAMOND IS LOADED ++++++++++++++++++++++++++++++');
+    //  }
+    //}
 
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
       case "text_placeholder":
         parseTextPlaceholder(xml);
+      
       default:
         parseTextPlaceholder(xml);
     }
@@ -457,7 +460,13 @@ class PageView extends View{
     
     for( text in xml.elementsNamed("text") ) 
       TEXT_SUGGESTION.text =  text.firstChild().nodeValue.toString();
-      addTextPlaceholder(posX,posY);
+    
+    for( gara in xml.elementsNamed("garamond") ){
+      GLOBAL.garamond = gara.firstChild().nodeValue == 'true';
+    }
+    
+    
+    addTextPlaceholder(posX,posY);
   }
   
   private function onDeselectPlaceholders(e:IKEvent):Void {

@@ -255,11 +255,11 @@ class TextPlaceholderView extends APlaceholder {
   private function handleKeyboard(b:Bool):Void{
     if(b){
       stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-      stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+      //stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     }
     else{
       stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-      stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+      //stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     }
   }
    
@@ -295,7 +295,7 @@ class TextPlaceholderView extends APlaceholder {
     str += font.getXml();
     str += '\t\t</placeholder>\n';
     restoreShowTags();
-    trace(str);
+//    trace(str);
     return str;
   }
   
@@ -315,9 +315,9 @@ class TextPlaceholderView extends APlaceholder {
     }
   }
   
-  private function onKeyUp(event:KeyboardEvent):Void{
-    //pageView.hitTest();
-  }
+//  private function onKeyUp(event:KeyboardEvent):Void{
+//    //pageView.hitTest();
+//  }
   
   private function insertTags(str:String):String{
     
@@ -665,7 +665,6 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
-    
     if(!focus){
       
       hideTags();
@@ -746,7 +745,7 @@ class TextPlaceholderView extends APlaceholder {
     GLOBAL.pms1Color            = pms1Color;   
     GLOBAL.pms2Color            = pms2Color;   
     GLOBAL.laserColor           = laserColor;  
-    
+    GLOBAL.garamond             = garamond; 
     updateSideView();
   }
   
@@ -771,7 +770,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getPlaceholderType():String{
-    return 'text_place_holder';
+    return garamond ? 'garamond_place_holder' : 'text_place_holder';
   }
   
   override public function getTextField():TextField{

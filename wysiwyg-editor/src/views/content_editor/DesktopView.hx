@@ -131,7 +131,7 @@ class DesktopView extends View, implements IView{
   //}
   
   private function onEnterFrame(e:Event):Void{
-    updateFoilEffects(0.002);
+    //updateFoilEffects(0.002);
   }
    
   private function onResetDesktopSize(e:KEvent):Void{
