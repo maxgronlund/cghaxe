@@ -164,6 +164,10 @@ class PagesModel extends Model, implements IModel {
       	calculatePrice();
       	dispatchParameter(param);
       }
+      case EVENT_ID.BUY_NOW:{
+      	//getXml('foo');
+      	dispatchParameter(param);
+      }
       case EVENT_ID.ADD_PLACEHOLDER:{
         var param:IParameter = new Parameter(EVENT_ID.ADD_PLACEHOLDER);
         pageInFocus.setParam(param);

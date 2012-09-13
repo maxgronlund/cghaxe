@@ -185,6 +185,7 @@ class EVENT_ID  {
   
                                                              
   public static inline var SAVE_XML                          = "save_xml";
+  public static inline var BUY_NOW                           = "buy_now";
   public static inline var GET_STRING                        = "get_string";
   public static inline var PLACEHOLDER_TEXT                  = "placeholder_text";
   public static inline var SET_TEXT_FORMAT                   = "set_text_format";

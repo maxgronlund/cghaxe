@@ -36,6 +36,7 @@ class PresetModel extends Model, implements IModel
   	Application.addEventListener(EVENT_ID.PASS_PRESET_FILE, onParsePreset);
   	
     Pages.addEventListener(EVENT_ID.SAVE_XML, savePreset);
+    Pages.addEventListener(EVENT_ID.BUY_NOW, buyNow);
   }
   
   private function onParsePreset(e:IKEvent):Void{
@@ -112,6 +113,10 @@ class PresetModel extends Model, implements IModel
     
     for(save_path in xml.elementsNamed("save-path") ) {
       GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+    }
+    
+    for(buy_path in xml.elementsNamed("buy-path") ) {
+      GLOBAL.buy_path = buy_path.firstChild().nodeValue.toString();
     }
     
     for(greetings in xml.elementsNamed("greetings")){
@@ -229,6 +234,10 @@ class PresetModel extends Model, implements IModel
   }
   
   public function savePreset(e:IKEvent):Void{
+    save_preset();
+  }
+  
+  private function save_preset():Void{
     trace('save preset');
     ExternalInterface.call("openSavingBox()");
 
@@ -256,11 +265,58 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
+  }
+  
+  public function buyNow(e:IKEvent):Void{
+    
+    var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
+    request.method                      = URLRequestMethod.POST;  
+    var variables:URLVariables          = new URLVariables();
+    
+    GLOBAL.preset_quantity = GLOBAL.preset_quantity_text_field.getQuantity();
+    
+    variables.authenticity_token 			  = GLOBAL.authenticity_token;
+    variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
+    variables.xml_data 				          = Pages.getString('file_xml');
+    variables.xml_prices                = Pages.getString('price_xml');
+    variables.shop_item_id              = GLOBAL.shop_item_id;
+    variables.quantity                  = GLOBAL.preset_quantity;
+    variables.cliches                   = GLOBAL.iAlreadyHaveACliche;
+    variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
+    variables.shop_item_id              = GLOBAL.shop_item_id;
+    variables.user_uuid                 = GLOBAL.user_uuid;
+    variables.preset_sibling_selected 	= productSelected;
 
+    variables._method = 'put';
+    request.data = variables;
+    
+    loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
+    loader.addEventListener(Event.COMPLETE, onBuySavedComplete);
+    loader.load(request);
+    
+    
+  }
+  
+  private function onBuySavedComplete(e:Event):Void{
+  	loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+    loader.removeEventListener(Event.COMPLETE, onBuySavedComplete);
+    
+  	var request:URLRequest              = new URLRequest(GLOBAL.buy_path+"&preset_quantity="+GLOBAL.preset_quantity+"&shop_item_id="+GLOBAL.shop_item_id+"&preset_id="+GLOBAL.preset_id); 
+    request.method                      = URLRequestMethod.GET;  
+
+    loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
+    loader.addEventListener(Event.COMPLETE, onBuyComplete);
+    loader.load(request);
   }
   
   private function onSavedComplete(e:Event):Void{
   	onComplete();
+  }
+  
+  private function onBuyComplete(e:Event):Void{
+    ExternalInterface.call("openCart()");
+    loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
+    loader.removeEventListener(Event.COMPLETE, onBuyComplete);
   }
   
   private function onError(e:Event):Void{

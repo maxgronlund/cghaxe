@@ -6,6 +6,7 @@ import flash.geom.Point;
 class MenuView extends View, implements IView
 {
 	private var saveButton:OneStateButton;
+	private var buyNowButton:OneStateButton;
 	private var maskButton:TwoStateButton;
 	private var moveButton:TwoStateButton;
 	private var textButton:TwoStateButton;
@@ -27,6 +28,7 @@ class MenuView extends View, implements IView
 		backdrop            = new Bitmap(bmpData);
 		                	  
 		saveButton 		      = new OneStateButton();
+		buyNowButton 		    = new OneStateButton();
 		maskButton 		      = new TwoStateButton();
 /*		moveButton 		      = new TwoStateButton();
 		textButton 		      = new TwoStateButton();
@@ -82,6 +84,12 @@ class MenuView extends View, implements IView
             new Parameter( EVENT_ID.TRASH_PLACEHOLDER ) );
     trashButton.fireOnMouseUp(false);
     					
+    buyNowButton.init( controller,
+            new Point(80,29), 
+            new SaveButtonBitmap(), 
+            new Parameter( EVENT_ID.BUY_NOW ) );
+    buyNowButton.fireOnMouseUp(false);
+    					
     zoomOutButton.init( GLOBAL.desktop_controller,
             new Point(40,29), 
             new ZoomOutButtonBitmap(), 
@@ -109,6 +117,8 @@ class MenuView extends View, implements IView
     
     addChild(saveButton);
     saveButton.fireOnMouseUp(false);
+    addChild(buyNowButton);
+    buyNowButton.fireOnMouseUp(false);
     
     addChild(maskButton);
     addChild(gridButton);
@@ -118,11 +128,17 @@ class MenuView extends View, implements IView
     addChild(zoomTo100Button);
     
     
+    
+    
     maskButton.x			= saveButton.x + saveButton.getWidth();
 
     gridButton.x			= maskButton.x + maskButton.getWidth();
     
+    gridButton.x		  = gridButton.x + gridButton.getWidth();
+    
     trashButton.x		  = gridButton.x + gridButton.getWidth();
+    
+    buyNowButton.x    = trashButton.x + trashButton.getWidth();
     
     
     zoomTo100Button.x		= SIZE.MENU_VIEW_WIDTH - zoomTo100Button.getWidth();
