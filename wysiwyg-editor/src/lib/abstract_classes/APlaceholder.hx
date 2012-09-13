@@ -102,6 +102,10 @@ class APlaceholder extends Sprite{
     trace("updateFoilEffect: must be overriden in a subclass");
   }
   
+  public function isGaramond():String{
+    trace("updateFoilEffect: must be overriden in a subclass");
+    return 'false';
+  }
   
   
 
