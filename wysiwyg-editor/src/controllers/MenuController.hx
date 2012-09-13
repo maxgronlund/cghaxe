@@ -30,6 +30,7 @@ class MenuController extends Controller, implements IController
       //case EVENT_ID.SHOW_ENVELOPE: GLOBAL.menu_view.update(EVENT_ID.SHOW_ENVELOPE, 0, 'na');
       case EVENT_ID.SHOW_MASK: Pages.setParam(param);
       case EVENT_ID.SAVE_XML: Pages.setParam(param);
+      case EVENT_ID.BUY_NOW: Pages.setParam(param);
       case EVENT_ID.TRASH_PLACEHOLDER: Pages.setParam(param);
       //case EVENT_ID.MOVE_TOOL:{
       //  //GLOBAL.MOVE_TOOL = param.getBool();

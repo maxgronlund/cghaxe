@@ -70,7 +70,7 @@ class ParameterParser
     }
 
     if(params.save_path != null){
-      GLOBAL.save_path = params.save_path;
+      //GLOBAL.save_path = params.save_path;
       //trace('save path: ', params.save_path);
     }
 
