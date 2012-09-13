@@ -110,6 +110,10 @@ class PresetModel extends Model, implements IModel
       parseXmlData(xml_data);
     }
     
+    for(save_path in xml.elementsNamed("save-path") ) {
+      GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+    }
+    
     for(greetings in xml.elementsNamed("greetings")){
       dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
     }
