@@ -663,25 +663,25 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function setFocus(b:Bool):Void{
-    focus             = b;
-    if(!focus){
-      
-      hideTags();
-      setTextOnTop(false);
-      if(was_foiled == true)
-        foilify();
-    }else{
-      showTags();
-    }
-    updateFocus(); 
+    //focus             = b;
+    //if(!focus){
+    //  
+    //  hideTags();
+    //  setTextOnTop(false);
+    //  if(was_foiled == true)
+    //    foilify();
+    //}else{
+    //  showTags();
+    //}
+    //updateFocus(); 
   }
   
   private function updateFocus():Void{
-    updatePrice();
-    resizeBackdrop();
-    selectBox.setFocus(focus);
-    handleKeyboard( focus );
-    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
+    //updatePrice();
+    //resizeBackdrop();
+    //selectBox.setFocus(focus);
+    //handleKeyboard( focus );
+    //GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
   }
   
   private function updatePrice():Void{
@@ -691,44 +691,44 @@ class TextPlaceholderView extends APlaceholder {
   
   private function textFielsCapturedFocus(b:Bool):Void{
     trace('textFielsCapturedFocus');
-    if(b){
-      MouseTrap.capture();
-      unfoilify();
-      pageView.setPlaceholderInFocus(this);
-      setTextOnTop(true);
-      trace('prevent the pageView from release the inFocus and capture the mouse here');
-    }else{
-      MouseTrap.release();
-    }
+    //if(b){
+    //  MouseTrap.capture();
+    //  unfoilify();
+    //  pageView.setPlaceholderInFocus(this);
+    //  setTextOnTop(true);
+    //  trace('prevent the pageView from release the inFocus and capture the mouse here');
+    //}else{
+    //  MouseTrap.release();
+    //}
     
   }
   
   private function setTextOnTop(b:Bool):Void {
-    MouseTrap.capture();
-   
-    font.selectable(b);
-    textOnTop = b;
-    if(b){
-       unfoilify();
-      this.setChildIndex(fontMovie, this.numChildren - 1);
-      
-    }else{
-      this.setChildIndex(selectBox, this.numChildren - 1);
-    }
-    
-    selectBox.resetMouse();
+    //MouseTrap.capture();
+    //
+    //font.selectable(b);
+    //textOnTop = b;
+    //if(b){
+    //   unfoilify();
+    //  this.setChildIndex(fontMovie, this.numChildren - 1);
+    //  
+    //}else{
+    //  this.setChildIndex(selectBox, this.numChildren - 1);
+    //}
+    //
+    //selectBox.resetMouse();
   }
   
   //!!!
   private function resizeBackdrop():Void{
     // inform the page that the select box has 'moved' to avoid sudden jump on mouse move
-    selectBox.resizeBackdrop(fontMovie.width, fontMovie.height, font.getTextField().x, font.getCombindeMargins());
+    //selectBox.resizeBackdrop(fontMovie.width, fontMovie.height, font.getTextField().x, font.getCombindeMargins());
   }
   
   public function textInputCapture():Void {
-    updatePrice();
-    resizeBackdrop();
-    hitTest();
+    //updatePrice();
+    //resizeBackdrop();
+    //hitTest();
   }
 
   public function updateGlobals(){
