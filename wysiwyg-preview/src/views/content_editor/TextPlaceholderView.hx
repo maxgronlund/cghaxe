@@ -46,9 +46,9 @@ class TextPlaceholderView extends APlaceholder {
   private var fontFileName:String;
   private var fontScreenName:String;
   private var textWithTags:String;
-  private var fontSize:Int;
-  private var fontLeading:Int;
-  private var letterSpacing:Int;
+  private var fontSize:Float;
+  private var fontLeading:Float;
+  private var letterSpacing:Float;
   private var fontPosX:Float;
   private var fontAlign:String;
   private var storedAlign:String;
@@ -84,6 +84,7 @@ class TextPlaceholderView extends APlaceholder {
   private var fontScreenColor:UInt;
   private var loaded_fonts:Hash<Dynamic>;
   private var textFieldText:String;
+  private var garamond:Bool;
   
   //private var loading:Bitmap;
   
@@ -110,8 +111,9 @@ class TextPlaceholderView extends APlaceholder {
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     GLOBAL.Application.addEventListener(EVENT_ID.DESKTOP_VIEW_MOVE, onDesktopViewMove);
     collition                         = false;
-    foiled = false;
-    was_foiled = false;
+    foiled                            = false;
+    was_foiled                        = false;
+
     
     loaded_fonts = new Hash();
     
@@ -252,11 +254,11 @@ class TextPlaceholderView extends APlaceholder {
   private function handleKeyboard(b:Bool):Void{
     //if(b){
     //  stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-    //  stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+    //  //stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     //}
     //else{
     //  stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-    //  stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+    //  //stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
     //}
   }
    
@@ -277,6 +279,7 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
     str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
     str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
+    str += '\t\t\t<garamond>' + isGaramond() + '</garamond>\n';
     str += '\t\t\t<print-type>' + printType + '</print-type>\n';
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
     str += '\t\t\t<std_pms_color>' + Std.string(stdPmsColor) + '</std_pms_color>\n';
@@ -287,13 +290,18 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
     str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
     str += '\t\t\t<anchor-point>' + Std.string(calculateAnchorPoint()) + '</anchor-point>\n';
-    trace('font==null', font==null);
+    //trace('font==null', font==null);
     str += font.getXml();
     str += '\t\t</placeholder>\n';
     restoreShowTags();
+//    trace(str);
     return str;
   }
   
+  override public function isGaramond():String{
+    return garamond ? 'true' : 'false';
+  }
+
   private function onKeyPressed(event:KeyboardEvent):Void{
     //var step:Float = 150/72;
 //  //  trace("Keycode: ");
@@ -306,9 +314,9 @@ class TextPlaceholderView extends APlaceholder {
     //}
   }
   
-  private function onKeyUp(event:KeyboardEvent):Void{
-    //pageView.hitTest();
-  }
+//  private function onKeyUp(event:KeyboardEvent):Void{
+//    //pageView.hitTest();
+//  }
   
   private function insertTags(str:String):String{
     
@@ -397,22 +405,23 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function loadFont():Void{
-    trace('load font');
-    fontFileName       = GLOBAL.Font.fileName;
-    fontSize           = GLOBAL.Font.fontSize;       
-    fontAlign          = GLOBAL.Font.fontAlign;
-    fontLeading        = GLOBAL.Font.leading;
-    letterSpacing      = GLOBAL.Font.letterSpacing;
-    printType          = GLOBAL.printType; 
-    foilColor          = GLOBAL.foilColor;
-    stdPmsColor        = GLOBAL.stdPmsColor;
-    pms1Color          = GLOBAL.pms1Color;
-    pms2Color          = GLOBAL.pms2Color;
-    laserColor         = GLOBAL.laserColor;
+//    trace('load font');
+    fontFileName      = GLOBAL.Font.fileName;
+    fontSize          = GLOBAL.Font.fontSize;       
+    fontAlign         = GLOBAL.Font.fontAlign;
+    fontLeading       = GLOBAL.Font.leading;
+    letterSpacing     = GLOBAL.Font.letterSpacing;
+    printType         = GLOBAL.printType; 
+    foilColor         = GLOBAL.foilColor;
+    stdPmsColor       = GLOBAL.stdPmsColor;
+    pms1Color         = GLOBAL.pms1Color;
+    pms2Color         = GLOBAL.pms2Color;
+    laserColor        = GLOBAL.laserColor;
+    garamond          = GLOBAL.garamond;
     setFontScreenColor();
     if(fontMovie != null){
       removeChild(fontMovie);
-      trace("Removed Child fontMovie");
+      //trace("Removed Child fontMovie");
       fontMovie = null;
     }
     
@@ -480,17 +489,18 @@ class TextPlaceholderView extends APlaceholder {
   override public function onUpdatePlaceholder(event:Event):Void{
     //trace('onUpdatePlaceholder');
     
-    fontFileName       = GLOBAL.Font.fileName;
-    fontSize           = GLOBAL.Font.fontSize;       
-    fontAlign          = GLOBAL.Font.fontAlign;
-    fontLeading        = GLOBAL.Font.leading;
-    letterSpacing      = GLOBAL.Font.letterSpacing;
-    printType          = GLOBAL.printType; 
-    foilColor          = GLOBAL.foilColor;
-    stdPmsColor        = GLOBAL.stdPmsColor;
-    pms1Color          = GLOBAL.pms1Color;
-    pms2Color          = GLOBAL.pms2Color;
-    laserColor         = GLOBAL.laserColor;
+    fontFileName      = GLOBAL.Font.fileName;
+    fontSize          = GLOBAL.Font.fontSize;       
+    fontAlign         = GLOBAL.Font.fontAlign;
+    fontLeading       = GLOBAL.Font.leading;
+    letterSpacing     = GLOBAL.Font.letterSpacing;
+    printType         = GLOBAL.printType; 
+    foilColor         = GLOBAL.foilColor;
+    stdPmsColor       = GLOBAL.stdPmsColor;
+    pms1Color         = GLOBAL.pms1Color;
+    pms2Color         = GLOBAL.pms2Color;
+    laserColor        = GLOBAL.laserColor;
+    garamond          = GLOBAL.garamond;
     
     setFontScreenColor();
     setFontPrintType();
@@ -529,7 +539,7 @@ class TextPlaceholderView extends APlaceholder {
     
   private function setFontPrintType():Void{
     
-    trace('setFontPrintType :: ', printType);
+    //trace('setFontPrintType :: ', printType);
     switch ( printType ){
       case CONST.STD_PMS_COLOR:{
         was_foiled = false;
@@ -544,17 +554,24 @@ class TextPlaceholderView extends APlaceholder {
         unfoilify();
       }
       case CONST.FOIL_COLOR:{
-        setFontScreenColorForFoil();
-        was_foiled = true;
-        if(!textOnTop)
-          foilify();
+        setFoil();
+      }
+      case CONST.GARAMOND:{
+        setFoil();
+        
       }
       case CONST.LASER_COLOR:{
         was_foiled = false;
         unfoilify();
       }
     }
-    
+  }
+  
+  private function setFoil():Void{
+    setFontScreenColorForFoil();
+    was_foiled = true;
+    if(!textOnTop)
+      foilify();
   }
 
   private function setFontScreenColor():Void{
@@ -562,8 +579,9 @@ class TextPlaceholderView extends APlaceholder {
       case CONST.STD_PMS_COLOR: fontScreenColor           = stdPmsColor;
       case CONST.CUSTOM_PMS1_COLOR: fontScreenColor       = pms1Color;
       case CONST.CUSTOM_PMS2_COLOR: fontScreenColor       = pms2Color;  
-      case CONST.FOIL_COLOR: setFontScreenColorForFoil(); 
-      case CONST.LASER_COLOR:  fontScreenColor            = laserColor; 
+      case CONST.FOIL_COLOR:    setFontScreenColorForFoil();
+      case CONST.GARAMOND:    setFontScreenColorForFoil(); 
+      case CONST.LASER_COLOR:   fontScreenColor            = laserColor; 
     }
   }
   
@@ -619,6 +637,11 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   override public function calculateAnchorPoint():Float{
+//    trace('############################################');
+//    trace('#      DISPATCH EVENT TO MOVE MOUSE HIT POINT');
+//    trace('############################################');
+    
+    
     //GLOBAL.MOVE_TOOL;
     // !!! colide with the hit test
     //font.setText(textWithTags);
@@ -641,7 +664,6 @@ class TextPlaceholderView extends APlaceholder {
   
   override public function setFocus(b:Bool):Void{
     focus             = b;
-    
     if(!focus){
       
       hideTags();
@@ -722,7 +744,7 @@ class TextPlaceholderView extends APlaceholder {
     GLOBAL.pms1Color            = pms1Color;   
     GLOBAL.pms2Color            = pms2Color;   
     GLOBAL.laserColor           = laserColor;  
-    
+    GLOBAL.garamond             = garamond; 
     updateSideView();
   }
   
@@ -736,7 +758,7 @@ class TextPlaceholderView extends APlaceholder {
     model.setString(EVENT_ID.SET_PAGE_XML, getXml());
   }
   
-  private function letterSpacingToFont():Int{
+  private function letterSpacingToFont():Float{
       return fontLeading;
   }
   
@@ -747,7 +769,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getPlaceholderType():String{
-    return 'text_place_holder';
+    return garamond ? 'garamond_place_holder' : 'text_place_holder';
   }
   
   override public function getTextField():TextField{
