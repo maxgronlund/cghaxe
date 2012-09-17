@@ -234,12 +234,11 @@ class PresetModel extends Model, implements IModel
   }
   
   public function savePreset(e:IKEvent):Void{
+    ExternalInterface.call("openSavingBox()");
     save_preset();
   }
   
   private function save_preset():Void{
-    trace('save preset');
-    ExternalInterface.call("openSavingBox()");
 
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
@@ -268,7 +267,7 @@ class PresetModel extends Model, implements IModel
   }
   
   public function buyNow(e:IKEvent):Void{
-    
+    ExternalInterface.call("openSavingBox()");
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
@@ -326,6 +325,7 @@ class PresetModel extends Model, implements IModel
   
   private function onComplete():Void{
     ExternalInterface.call("closeSavingBox()");
+    ExternalInterface.call("signupDialog()");
     loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.removeEventListener(Event.COMPLETE, onSavedComplete);
   }
