@@ -11,7 +11,7 @@ import flash.text.TextFormat;
 
 class Main
 {
-// models
+  	// models
 	public static var Application:IModel;
   private var Menu:IModel;
   private var Configuration:IModel;
@@ -23,8 +23,8 @@ class Main
 //  private var DesignImages:IModel;
 //  private var Vectors:IModel;
   private var parameterParser:ParameterParser;
-
-
+  
+  
   // controlers
   private var applicationController:IController;
   private var colorController:IController;
@@ -36,7 +36,7 @@ class Main
 //  private var vectorsController:IController;
   private var foilController:IController;
   private var addOnsController:IController;
-  private var garamondController:IController;
+//  private var garamondController:IController;
   private var logoController:IController;
   private var pricesController:IController;
   private var menuController:IController;
@@ -44,7 +44,7 @@ class Main
   private var selectionController:IController;
   private var sidebarController:IController;
   private var desktopController:IController;
-
+  
   // views
   private var applicationView:ApplicationView;
   private var colorView:AView;
@@ -57,7 +57,7 @@ class Main
   private var blindView:AView;
 //  private var foilView:AView;
   private var addOnsView:AView;
-  private var garamondView:AView;
+//  private var garamondView:AView;
   private var logoView:AView;
   private var priceView:AView;
   private var menuView:AView;
@@ -65,18 +65,16 @@ class Main
   private var desktopView:AView;
   private var gridView:AView;
   private var selectionView:AView;
-
+  
 //  private var vectorsView:AView;
   private var foil:Foil;
-
+  
   // system
   private var version:VersionCheck;
   private var Fonts:SystemFonts;
   private var userParser:UserParser;
   private var hitTest:CGHitTest;
-  
 
-  
   
   static function main(){
     new Main();
@@ -108,7 +106,7 @@ class Main
     // system   
     Fonts                       = new SystemFonts();
     TEXT_SUGGESTION.text        = 'please';
-        
+    
     // models
     Application                 = new ApplicationModel();
     Menu                        = new MenuModel();
@@ -139,12 +137,12 @@ class Main
     greetingsController         = new GreetingsController();
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
-    garamondController          = new GaramondController();
+//    garamondController          = new GaramondController();
     logoController		          = new LogoController();
     desktopController           = new DesktopController();
     selectionController         = new SelectionController();
     
-    setGlobalControllers();   
+    setGlobalControllers();     
                                 
     // views                    
     applicationView             = new ApplicationView(applicationController);
@@ -158,7 +156,7 @@ class Main
     blindView                   = new BlindView(sidebarController);
 //    foilView                    = new FoilView(foilController);
     addOnsView                  = new AddOnsView(addOnsController);
-    garamondView                = new GaramondView(garamondController);
+//    garamondView                = new GaramondView(garamondController);
     logoView                    = new LogoView(logoController);
     priceView                   = new PriceView(pricesController);
     menuView                    = new MenuView(menuController);
@@ -203,6 +201,7 @@ class Main
     GLOBAL.stdPmsColor      = 0;
     GLOBAL.printType        = CONST.STD_PMS_COLOR;
     GLOBAL.price_file_url   = 'na';
+    GLOBAL.shop_item_id     = -1;
   }
   
   private function setGlobalViews():Void{
@@ -215,7 +214,7 @@ class Main
 //    GLOBAL.foil_view                  = foilView;
     GLOBAL.side_view                  = sideView;
     GLOBAL.add_ons_view	              = addOnsView;
-    GLOBAL.garamond_view              = garamondView;
+//    GLOBAL.garamond_view              = garamondView;
     GLOBAL.logo_view                  = logoView;
     GLOBAL.price_view                 = priceView;
     GLOBAL.menu_view                  = menuView;
@@ -227,7 +226,7 @@ class Main
     GLOBAL.blind_view                 = blindView;
     GLOBAL.foil			              		= foil;
   }
-
+  
   private function setGlobalControllers():Void{
     GLOBAL.color_controller           = colorController;
     GLOBAL.text_controller            = textController;
@@ -239,7 +238,7 @@ class Main
     GLOBAL.desktop_controller         = desktopController;
     GLOBAL.menu_controller            = menuController;
     GLOBAL.selection_controller       = selectionController;
-
+    
   }
 
   private function init():Void{
@@ -264,7 +263,7 @@ class Main
 //    designImagesView.init();
 //    foilView.init();
     addOnsView.init();
-    garamondView.init();
+//    garamondView.init();
     greetingsView.init();
     blindView.init();
     logoView.init();
@@ -292,7 +291,7 @@ class Main
     sideView.addView(garamondView, 0,120,EVENT_ID.SHOW_GARAMOND);
     sideView.addView(logoView, 0,150,EVENT_ID.SHOW_LOGO);
     sideView.addView(priceView, 0,180,EVENT_ID.SHOW_PRICES);
-    sideView.addView(blindView, 0,430,EVENT_ID.BLIND_VIEW);
+    sideView.addView(blindView, 0,430,EVENT_ID.SHOW_BLIND_VIEW);
 */    
     //applicationView.addView(menuView, 0,0);
     applicationView.addView(pageSelectorView, 0, 520);
