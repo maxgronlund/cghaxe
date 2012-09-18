@@ -220,6 +220,8 @@ class EVENT_ID  {
   //public static inline var ADD_DESIGN_IMAGE_BUTTON            = "add_design_image_button";
   //public static inline var DESIGN_IMAGE_SELECTED              = "design_image_selected";
   //public static inline var ADD_DESIGN_IMAGE_TO_PAGE           = "add_design_image_to_page";
+  public static inline var LOGOS_LOADED                        = "logos_loaded";
+  public static inline var LOGO_SCROLL                         = "logo_scroll";
   
   // vectors
   //public static inline var SHOW_VECTORS:String                = "show_vector_images";
