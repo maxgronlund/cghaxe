@@ -16,7 +16,7 @@ class GLOBAL  {
   public static var cliche_price:Float;
   public static var Pages:IModel;
   public static var Designs:IModel;
-//  public static var DesignImages:IModel;
+  public static var DesignImages:IModel;
 //  public static var Vectors:IModel;
   public static var Greetings:IModel;
   public static var Font:FontModel;
@@ -53,7 +53,7 @@ class GLOBAL  {
   public static var designs_view:AView;
 //  public static var vectors_view:AView;
   public static var greetings_view:AView;
-//  public static var design_images_view:AView;
+  public static var design_images_view:AView;
   public static var foil_view:AView;
   public static var side_view:IView;
   public static var add_ons_view:AView;
@@ -89,7 +89,7 @@ class GLOBAL  {
   public static var designs_controller:IController;
 //  public static var vectors_controller:IController;
   public static var greetings_controller:IController;
-//  public static var design_images_controller:IController;
+  public static var design_images_controller:IController;
   public static var sidebar_controller:IController;
   public static var desktop_controller:IController;
   public static var sibling_controller:IController;

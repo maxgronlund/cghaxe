@@ -20,7 +20,7 @@ class Main
   private var Prices:IModel;
   private var Pages:IModel;
   private var Designs:IModel;
-//  private var DesignImages:IModel;
+  private var DesignImages:IModel;
 //  private var Vectors:IModel;
   private var parameterParser:ParameterParser;
   
@@ -32,7 +32,7 @@ class Main
   private var textSuggestionController:IController;
   private var designsController:IController;
   private var greetingsController:IController;
-//  private var designImagesController:IController;
+  private var designImagesController:IController;
 //  private var vectorsController:IController;
   private var foilController:IController;
   private var addOnsController:IController;
@@ -52,7 +52,7 @@ class Main
   private var textView:AView;
   private var textSuggestionView:AView;
   private var designsView:AView;
-//  private var designImagesView:AView;
+  private var designImagesView:AView;
   private var greetingsView:AView;
   private var blindView:AView;
 //  private var foilView:AView;
@@ -116,7 +116,7 @@ class Main
     Designs                     = new DesignsModel();
     Greetings                   = new GreetingsModel();
     Prices                      = new PricesModel();
-//    DesignImages                = new DesignImagesModel();
+    DesignImages                = new DesignImagesModel();
 //    Vectors                     = new VectorsModel();             
     setGlobalModels();
     initGlobals();
@@ -132,7 +132,7 @@ class Main
     textController              = new TextController();
     textSuggestionController    = new TextSuggestionController();
     designsController           = new DesignsController();
-//    designImagesController      = new DesignImagesController();
+    designImagesController      = new DesignImagesController();
     //vectorsController           = new VectorsController();
     greetingsController         = new GreetingsController();
     foilController		          = new FoilController();
@@ -151,7 +151,7 @@ class Main
     textView                    = new TextView(textController);
     textSuggestionView          = new TextSuggestionView(textSuggestionController);
     designsView                 = new DesignsView(designsController);
-//    designImagesView            = new DesignImagesView(designImagesController);
+    designImagesView            = new DesignImagesView(designImagesController);
     greetingsView               = new GreetingsView(greetingsController);
     blindView                   = new BlindView(sidebarController);
 //    foilView                    = new FoilView(foilController);
@@ -185,7 +185,7 @@ class Main
     GLOBAL.Preset           = Preset;
     GLOBAL.Prices           = Prices;
     GLOBAL.Pages            = Pages;
-//    GLOBAL.DesignImages     = DesignImages;
+    GLOBAL.DesignImages     = DesignImages;
 //    GLOBAL.Vectors          = Vectors;
     GLOBAL.Designs          = Designs;
     GLOBAL.Greetings        = Greetings;
