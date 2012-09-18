@@ -150,10 +150,10 @@ class TextView extends PropertyView, implements IView{
     lineSpacePopup.visible    = !b;
     fontPane.visible          = !b;
     fontScrollbar.visible     = !b;
+    lineSpacePopup.setString('use garamond', b ?'on':'off');
     if(b){
       fontSizePopup.setString('use garamond', 'foo');
       fontPane.setString('use garamond', 'foo');
-      lineSpacePopup.setString('use garamond', 'foo');
     }
   }
   

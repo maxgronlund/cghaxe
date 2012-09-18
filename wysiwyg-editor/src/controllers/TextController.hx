@@ -58,7 +58,7 @@ class TextController extends Controller, implements IController{
     else{
       GLOBAL.garamond             = false;
       GLOBAL.Font.fontSize        = 16;
-      GLOBAL.Font.leading         = 20;
+      GLOBAL.Font.leading         = 9;
     }
     GLOBAL.text_view.setParam(param);
     //GLOBAL.color_view.setParam(param);

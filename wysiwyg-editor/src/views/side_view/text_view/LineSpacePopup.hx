@@ -70,8 +70,14 @@ class LineSpacePopup extends AView {
       case 'display':
         dropDownMenu.setDisplay(s);
       case 'use garamond':{
-        dropDownMenu.selectItem(25);
-        dropDownMenu.setDisplay('20');
+        if(s == 'on'){
+          dropDownMenu.selectItem(25);
+          dropDownMenu.setDisplay('20');
+        }else{
+          dropDownMenu.selectItem(9);
+          dropDownMenu.setDisplay('-13');
+        }
+        
       }
     }
   }

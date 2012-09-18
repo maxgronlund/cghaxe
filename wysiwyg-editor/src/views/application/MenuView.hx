@@ -86,7 +86,7 @@ class MenuView extends View, implements IView
     					
     buyNowButton.init( controller,
             new Point(80,29), 
-            new SaveButtonBitmap(), 
+            new BuyButtonBitmap(), 
             new Parameter( EVENT_ID.BUY_NOW ) );
     buyNowButton.fireOnMouseUp(false);
     					
