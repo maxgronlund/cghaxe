@@ -138,7 +138,7 @@ class Main
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
 //    garamondController          = new GaramondController();
-    logoController		          = new LogoController();
+    logoController		          = new LogosController();
     desktopController           = new DesktopController();
     selectionController         = new SelectionController();
     

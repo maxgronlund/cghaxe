@@ -47,6 +47,10 @@ class ShopItemPrices
 	
 	public function onParsePrice(e:IKEvent):Void{
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+    parsePrices(xml);
+  }
+  
+  public function parsePrices(xml:Xml):Void{
     for( prices in xml.elementsNamed("prices") ) {
       for( price in prices.elementsNamed("price") ) {
         
@@ -88,6 +92,5 @@ class ShopItemPrices
     if(min_quantity > 0){
       GLOBAL.min_quantity = min_quantity;
     }
-    
   }
 }

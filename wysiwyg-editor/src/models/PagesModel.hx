@@ -22,7 +22,8 @@ class PagesModel extends Model, implements IModel {
   public function new(){	
   	super();
     pageModels  = new Vector<PageModel>();
-    shop_item_prices = new ShopItemPrices();
+    GLOBAL.shop_item_prices = new ShopItemPrices();
+    shop_item_prices = GLOBAL.shop_item_prices;
   }
   
   override public function init():Void{	

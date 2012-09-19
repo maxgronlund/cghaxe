@@ -46,6 +46,7 @@ class PresetModel extends Model, implements IModel
       countPlaceholders(preset);
       // building the pages
       parsePreset(preset);
+      GLOBAL.shop_item_prices.parsePrices(preset);
       
 /*      // loading front shots
       parseProductPlaces(preset);

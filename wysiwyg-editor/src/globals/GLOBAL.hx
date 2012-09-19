@@ -26,6 +26,8 @@ class GLOBAL  {
   public static var preset_quantity_text_field:Dynamic;
   public static var min_quantity:UInt=1;
   public static var iAlreadyHaveACliche:Hash<Bool>;
+  
+  public static var shop_item_prices:ShopItemPrices;
   // system
   public static var wysiwyg_status:String;
   public static var authenticity_token:String;
