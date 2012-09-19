@@ -248,17 +248,6 @@ class EVENT_ID  {
   public static inline var FOIL_COLOR_SELECTED                = "foil_color_selected";
   public static inline var COLOR_SELECTED                     = "color_selected";
 
-  
-  
-  
-  
-  
-  
-  
-  
-  
-  
-//	public static inline var ADD_SUGGESTION_TEXTFIELD 				= "add_suggestion_textfield";
 	
 	
 }

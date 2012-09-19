@@ -87,9 +87,7 @@ class SideView extends View, implements IView
       case 'set_default_tool':{
         showView(EVENT_ID.SHOW_TEXT, true);
       }
-      //case EVENT_ID.EDIT_MODE:{
-      //  
-      //}
+
     }
   }
   

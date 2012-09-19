@@ -257,6 +257,16 @@ class Main
     Lib.current.addChild(applicationView);
     Lib.current.addChild(sideView);
     applicationView.addView(desktopView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
+/*    
+    sideView.addView(textView, 0,0,EVENT_ID.SHOW_TEXT);
+    sideView.addView(textSuggestionView, 0,30,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
+    sideView.addView(foilView, 0,60,EVENT_ID.SHOW_FOIL);
+    sideView.addView(addOnsView, 0,90,EVENT_ID.SHOW_ADD_ONS);
+    sideView.addView(garamondView, 0,120,EVENT_ID.SHOW_GARAMOND);
+    sideView.addView(logoView, 0,150,EVENT_ID.SHOW_LOGO);
+    sideView.addView(priceView, 0,180,EVENT_ID.SHOW_PRICES);
+    sideView.addView(blindView, 0,430,EVENT_ID.SHOW_BLIND_VIEW);
+*/    
     applicationView.addView(menuView, 0,0);
     applicationView.addView(pageSelectorView, 0, SIZE.MENU_VIEW_HEIGHT);
     applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
