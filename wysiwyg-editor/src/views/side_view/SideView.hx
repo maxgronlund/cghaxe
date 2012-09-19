@@ -32,7 +32,6 @@ class SideView extends View, implements IView
   	super.onAddedToStage(e);	
   	addChild(backdrop);
   	backdrop.y = 500;
-  	
   }
   
   override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
@@ -52,7 +51,7 @@ class SideView extends View, implements IView
   }
   
   override public function showView(id:String, b:Bool):Void{
-    trace(id);
+
     selectedView.update('deselect', 0 , 'na');
     posY = 0;
     

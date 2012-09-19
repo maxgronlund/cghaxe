@@ -33,7 +33,7 @@ class PageModel extends Model, implements IModel
   }
   
   override public function setParam(param:IParameter):Void{
-    //trace('setParam');
+    //trace(param.getLabel() );
     switch ( param.getLabel() ){
       case EVENT_ID.PLACEHOLDER_SELECTED:{
       	dispatchParameter(param);
@@ -51,11 +51,8 @@ class PageModel extends Model, implements IModel
       case EVENT_ID.TRASH_PLACEHOLDER:{
        dispatchParameter(param); 
       }
-      //case EVENT_ID.UPDATE_TEXT_TOOLS:{
-      //  GLOBAL.text_view.setParam(param);
-      //}
+
       case EVENT_ID.BUILD_PAGE_DESIGNS:{
-       
         param.setXml(designs);
         Pages.dispatchParameter(param);
       }
@@ -63,10 +60,6 @@ class PageModel extends Model, implements IModel
       case EVENT_ID.ADD_PRICE_COLUMN:{
         GLOBAL.price_view.setParam(param);
       }
-      
-      //case EVENT_ID.UPDATE_SIDE_VIEWS:{
-      //
-      //}
     }
 	}
 

@@ -13,35 +13,35 @@ class MouseHandler extends Sprite
   }
 
 	private function onRemoved(e:Event):Void{
-		removeEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
-		enableMouse(false);
+    removeEventListener(Event.REMOVED_FROM_STAGE, onRemoved);
+    enableMouse(false);
 	}
 
   public function resetMouse():Void{
 
-			removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-			removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-			
-			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-	    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-
+    removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+    removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+    stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    
   }
 
   public function enableMouse(b:Bool):Void{
-		if(b){
-			addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-	    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-		}
-		else{
-			removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-			removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-			removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-			removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-			stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-		}
+    if(b){
+      addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    }
+    else{
+      removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+      removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+      stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    }
   }
   
   private function onMouseOver(e:MouseEvent):Void{

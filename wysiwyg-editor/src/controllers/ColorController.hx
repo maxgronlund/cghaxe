@@ -13,16 +13,7 @@ class ColorController extends Controller, implements IController{
       case EVENT_ID.FOIL_COLOR_SELECTED:{ onFoilColorSelected(param);}
       case EVENT_ID.COLOR_SELECTED:{ onColorSelected(param);}
 
-      //case EVENT_ID.GREETING_SELECTED:{
-      //  GLOBAL.greetings_view.setParam(param);
-      //  Greetings.setParam(param);
-      //}
-      //
-      //case EVENT_ID.ADD_GREETING_TO_PAGE:{Greetings.setParam(param);}
-      //case EVENT_ID.GREETING_SCROLL:{GLOBAL.greetings_view.setFloat(EVENT_ID.GREETING_SCROLL, param.getFloat());}
-      //case EVENT_ID.OPEN_GREETING_COLOR_PICKER: GLOBAL.greetings_view.setParam(param);
-      //case EVENT_ID.GREETING_COLOR_SELECTED: onGreetinColorSelected(param);
-      //case EVENT_ID.NO_GREETING_COLOR_SELECTED:GLOBAL.text_view.setParam(param);
+     
     }	
   }
   

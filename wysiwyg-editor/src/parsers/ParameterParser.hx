@@ -15,7 +15,7 @@ class ParameterParser
 	  //trace('ParameterParser::parse');
 	  
 	  if(params.language_name != null){
-	    trace(params.language_name);
+//	    trace(params.language_name);
 	    GLOBAL.language_name = params.language_name;
 	  }
 	  
@@ -53,7 +53,7 @@ class ParameterParser
     }
     
     if(params.price_file_url != null){
-      trace(params.price_file_url);
+//      trace(params.price_file_url);
       GLOBAL.price_file_url = params.price_file_url;
     }
     
@@ -91,6 +91,7 @@ class ParameterParser
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
+          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_LOGOS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
@@ -101,6 +102,7 @@ class ParameterParser
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
+          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_LOGOS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         } 
@@ -111,6 +113,7 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
+          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_LOGOS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }

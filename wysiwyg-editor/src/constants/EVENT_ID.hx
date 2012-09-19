@@ -159,6 +159,7 @@ class EVENT_ID  {
   public static inline var SHOW_PRICES                      = "show_prices";
   public static inline var SHOW_TEXT:String                 = "text_view";
   public static inline var SHOW_GREETINGS:String            = "show_greetings";
+  public static inline var SHOW_LOGOS:String                = "show_logos";
   public static inline var SHOW_DESIGNS:String              = "show_designs";
   public static inline var SHOW_TEXT_SUGGESTIONS:String     = "show_text_suggestion_view";
   public static inline var SHOW_COLOR_PICKERS:String        = "show_color_pickers";
@@ -212,22 +213,7 @@ class EVENT_ID  {
   
   // designs 
   public static inline var DESIGN_SCROLL                      = "design_scroll";
-  
-  // design images
-  //public static inline var SHOW_DESIGN_IMAGES:String          = "show_design_images";
-  //public static inline var DESIGN_IMAGES_LOADED:String        = "design_images_loaded";
-  //public static inline var DESIGN_IMAGE_SCROLL                = "design_image_scroll";
-  //public static inline var ADD_DESIGN_IMAGE_BUTTON            = "add_design_image_button";
-  //public static inline var DESIGN_IMAGE_SELECTED              = "design_image_selected";
-  //public static inline var ADD_DESIGN_IMAGE_TO_PAGE           = "add_design_image_to_page";
-  
-  // vectors
-  //public static inline var SHOW_VECTORS:String                = "show_vector_images";
-  //public static inline var VECTORS_LOADED:String              = "vectors_loaded";
-  //public static inline var VECTOR_SCROLL                      = "vector_scroll";
-  //public static inline var ADD_VESTOR_BUTTON                  = "add_vector_button";
-  //public static inline var VECTOR_SELECTED                    = "vector_selected";
-  //public static inline var ADD_VECTOR_TO_PAGE                 = "add_vector_to_page";
+
   
   // greetings
   public static inline var GREETINGS_LOADED:String            = "greetings_loaded";
@@ -236,9 +222,17 @@ class EVENT_ID  {
   public static inline var GREETING_SELECTED                  = "greeting_selected";
   public static inline var ADD_GREETING_TO_PAGE               = "add_greeting_to_page";
   
+  // logos
+  public static inline var LOGOS_LOADED:String                = "logos_loaded";
+  public static inline var LOGO_SCROLL                        = "logo_scroll";
+  public static inline var ADD_LOGO_BUTTON                    = "add_logo_button";
+  public static inline var LOGO_SELECTED                      = "logo_selected";
+  public static inline var ADD_LOGO_TO_PAGE                   = "add_logo_to_page";
+  
+  
   public static inline var GREETING_COLOR_SELECTED            = "greeting_color_selected";
   public static inline var NO_GREETING_COLOR_SELECTED         = "no_greeting_color_selected";
-  public static inline var OPEN_GREETING_COLOR_PICKER         = "open_greetings_color_picker";
+
   
   public static inline var SHOW_PMS_PICKER                    = "show_pms_picker";
   public static inline var SHOW_FOIL_PICKER                   = "show_foil_picker";

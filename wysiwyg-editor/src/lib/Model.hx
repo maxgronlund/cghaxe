@@ -13,6 +13,7 @@ class Model extends AModel
   private var Font:FontModel;
   private var Designs:IModel;
   private var Greetings:IModel;
+  private var Logos:IModel;
   
   public function new(): Void{
   	super();
@@ -29,6 +30,7 @@ class Model extends AModel
     Font              = GLOBAL.Font;
     Designs           = GLOBAL.Designs;
     Greetings         = GLOBAL.Greetings;
+    Logos             = GLOBAL.Logos;
   }
   
   override public function dispatchXML( label:String, xml:Xml):Void{

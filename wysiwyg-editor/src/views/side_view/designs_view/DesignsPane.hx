@@ -37,7 +37,7 @@ class DesignsPane extends View, implements IView{
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Designs.addEventListener(EVENT_ID.DESIGN_SELECTED, onDesignSelected);
 
-    trace('new');
+    //trace('new');
     
   }
   
@@ -45,13 +45,13 @@ class DesignsPane extends View, implements IView{
   override public function onAddedToStage(e:Event):Void{
   	super.onAddedToStage(e);
   	addChild(backdrop);
-  	trace('onAddedToStage');
+  	//trace('onAddedToStage');
   }
 
 
   
   public function selectButton(id:Int):Void{
-    trace(id);
+    //trace(id);
     if(id != selectedButton){
       designsButtons[selectedButton].setOn(false);
       designsButtons[id].setOn(true);
@@ -60,11 +60,11 @@ class DesignsPane extends View, implements IView{
   }
   
   private function removeButtons():Void{
-    trace('remove buttons');
+    //trace('remove buttons');
     buttonPos = 0;
     buttonIndex = 0;
     for(i in  0...designsButtons.length){
-      trace(i);
+      //trace(i);
       removeChild(designsButtons[i]);
       designsButtons[i] = null;
     }
@@ -73,7 +73,7 @@ class DesignsPane extends View, implements IView{
   }
 
   private function addButton(xml:Xml	):Void{
-    trace('add buttons');
+    //trace('add buttons');
     
     for( designs in xml.elementsNamed("designs") ) {
       for( design in designs.elementsNamed("design") ) {

@@ -134,7 +134,7 @@ class ApplicationModel extends Model, implements IModel
         loadSeq();
       }
       case 'load preset files from backend':{
-        trace(GLOBAL.preset_file_url);
+//        trace(GLOBAL.preset_file_url);
         presetLoader.addEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded); 
         presetLoader.load(GLOBAL.preset_file_url, EVENT_ID.PRESET_FILE_LOADED);
         

@@ -38,6 +38,7 @@ import flash.geom.ColorTransform;
 class VectorPlaceholderView extends APlaceholder {
 	
   private var vectorMovie:MovieClip;
+  //private var vectorFile:Dynamic;
   private var pageView:PageView;
   private var model:IModel;
   private var mouseOver:Bool;
@@ -46,6 +47,7 @@ class VectorPlaceholderView extends APlaceholder {
   private var xml:String;
   private var vectorFileFileName:String;
   private var vectorFileScreenName:String;
+//  private var textWithTags:String;
   private var url:String;
 
   private var vectorFilePosX:Float;
@@ -245,6 +247,7 @@ class VectorPlaceholderView extends APlaceholder {
     updateFoilEffect(e.getFloat());
   }
   
+  
   override public function updateFoilEffect(offset:Float):Void{
     if(foiled){
       
@@ -270,6 +273,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
    
   private function handleKeyboard(b:Bool):Void{
+    
     if( b){
       stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
       stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
@@ -281,7 +285,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function getXml() : String {
-   
+    trace('getXml');
     var str:String = '\n\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
       
       str += '\t\t\t<placeholder-type>' + 'vector_placeholder' + '</placeholder-type>\n';
@@ -410,10 +414,17 @@ class VectorPlaceholderView extends APlaceholder {
     
     if(focus){
       GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
+//     GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
+//      vectorFile.selectable(!GLOBAL.MOVE_TOOL);
+//      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
+      //vectorFile.setFocus(true);
       selectBox.setFocus(true);  
       resizeBackdrop();
     }else{
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
+//      if(!collition)
+        //vectorFile.setFocus(false);
+//      super.resetMouse();
       selectBox.setFocus(false);  
     }
     handleKeyboard( focus ); 

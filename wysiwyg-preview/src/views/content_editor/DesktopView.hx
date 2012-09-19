@@ -71,7 +71,7 @@ class DesktopView extends View, implements IView{
     goToPosY = -(pageView.y * Zoom.getZoomFactor());
     
     goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
-    goToPosY += 50;
+    goToPosY += 10;
     moveLeft =  goToPosX - this.x > 0;
     
     if(zoom){

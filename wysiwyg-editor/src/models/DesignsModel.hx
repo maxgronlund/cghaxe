@@ -94,7 +94,7 @@ class DesignsModel extends Model, implements IModel {
   override public function setString(id:String, s:String):Void{
 //    trace(id);
      switch ( id ){
-       case 'brides_first_name':    { brides_first_name = s; trace(id,s);}
+       case 'brides_first_name':    { brides_first_name = s;}
        case 'brides_last_name':     { brides_last_name = s;}
        case 'grooms_first_name':    { grooms_first_name = s;}
        case 'grooms_last_name':     { grooms_last_name = s;}

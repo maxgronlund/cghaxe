@@ -19,6 +19,7 @@ class GLOBAL  {
 //  public static var DesignImages:IModel;
 //  public static var Vectors:IModel;
   public static var Greetings:IModel;
+  public static var Logos:IModel;
   public static var Font:FontModel;
   public static var userParser:UserParser;
   public static var preset_quantity:String;
@@ -51,13 +52,11 @@ class GLOBAL  {
   public static var color_view:AView;
   public static var text_suggestion_view:AView;
   public static var designs_view:AView;
-//  public static var vectors_view:AView;
   public static var greetings_view:AView;
-//  public static var design_images_view:AView;
+  public static var logos_view:AView;
   public static var foil_view:AView;
   public static var side_view:IView;
   public static var add_ons_view:AView;
-//  public static var garamond_view:AView;
   public static var logo_view:AView;
   public static var price_view:AView;
   public static var menu_view:IView;
@@ -65,7 +64,6 @@ class GLOBAL  {
   public static var desktop_view:IView;
   public static var grid_view:IView;
   public static var selection_view:IView;
-  public static var greetingsView:IView;
   public static var blind_view:AView;
   public static var foil:Foil;
   public static var preset_id:String;
@@ -89,6 +87,7 @@ class GLOBAL  {
   public static var designs_controller:IController;
 //  public static var vectors_controller:IController;
   public static var greetings_controller:IController;
+  public static var logos_controller:IController;
 //  public static var design_images_controller:IController;
   public static var sidebar_controller:IController;
   public static var desktop_controller:IController;

@@ -135,6 +135,13 @@ class PresetModel extends Model, implements IModel
       GLOBAL.userParser.parseUser(user_tags);
     }
     
+    for(logos in xml.elementsNamed("logos")){
+      dispatchXML(EVENT_ID.LOGOS_LOADED, logos);
+      //for(logo in logos.elementsNamed("logo")){
+      //  trace(logo.firstChild().nodeValue.toString());
+      //}
+    }
+    
 
     
 /*    var page_index:Int = 0;
@@ -207,7 +214,7 @@ class PresetModel extends Model, implements IModel
 
   
   private function parseXmlData(xml_data:Xml):Void{
-    trace('parseXmlData');
+//    trace(xml_data.toString());
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {
@@ -234,12 +241,11 @@ class PresetModel extends Model, implements IModel
   }
   
   public function savePreset(e:IKEvent):Void{
+    ExternalInterface.call("openSavingBox()");
     save_preset();
   }
   
   private function save_preset():Void{
-    trace('save preset');
-    ExternalInterface.call("openSavingBox()");
 
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
@@ -265,10 +271,12 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
+    
+    trace(variables.xml_data);
   }
   
   public function buyNow(e:IKEvent):Void{
-    
+    ExternalInterface.call("openSavingBox()");
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
@@ -326,6 +334,7 @@ class PresetModel extends Model, implements IModel
   
   private function onComplete():Void{
     ExternalInterface.call("closeSavingBox()");
+    ExternalInterface.call("signupDialog()");
     loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.removeEventListener(Event.COMPLETE, onSavedComplete);
   }

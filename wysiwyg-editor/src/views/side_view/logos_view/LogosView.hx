@@ -1,8 +1,10 @@
 import flash.geom.Point;
 import flash.events.Event;
 
-class LogoView extends PropertyView, implements IView{
-
+class LogosView extends PropertyView, implements IView{
+  
+  //private var openLogosColorPickerButton:TwoStateButton;
+  //private var logosColorPicker:LogosColorPicker;
   private var logosScrollPane:AView;
   private var logosPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
@@ -10,36 +12,42 @@ class LogoView extends PropertyView, implements IView{
   
   public function new(logosController:IController){	
     super(logosController);
-		backdrop				= new LogoViewBack();
     
+    //openLogosColorPickerButton  = new TwoStateButton();
+		//logosColorPicker						= new LogosColorPicker(logosController);
+		
+		
+    backdrop              = new PlaceholdersBackBitmap();
     logosScrollPane   = new ScrollPane(logosController);
-    logosPane         = new GreetingsPane(logosController);
+    logosPane         = new LogosPane(logosController);
     verticalScrollbar     = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
     addLogoButton     = new OneStateButton();
     
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
+//    logosColorPicker.visible 	= false;
   }
   
   
   override public function init():Void{
-
+       
+    selectButton.init( controller,
+              new Point(190,30), 
+              new GreetingsViewButton(), 
+              new Parameter( EVENT_ID.SHOW_LOGOS));
+    
     addLogoButton.init(controller,
             new Point(150,22), 
             new AddPageDesignButton(), 
             new Parameter( EVENT_ID.ADD_LOGO_TO_PAGE));
     
     addLogoButton.fireOnMouseUp(false);
-    
-    selectButton.init( controller,
-						new Point(190,30), 
-						new LogoViewButton(), 
-						new Parameter( EVENT_ID.SHOW_LOGO));
   }
   
   override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
 
+    
     // font selection pane
     addChild(logosScrollPane);
     logosScrollPane.setSize( 174, 430);
@@ -58,17 +66,18 @@ class LogoView extends PropertyView, implements IView{
   }
   
   private function onLogosLoaded(e:KEvent):Void{
-
-    for(greeting in e.getXml().elementsNamed('greeting')){
-      //trace(greeting.toString());
+    //var logosXml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+    
+    for(logo in e.getXml().elementsNamed('logo')){
+      //trace(logo.toString());
       var param:IParameter = new Parameter(EVENT_ID.ADD_LOGO_BUTTON);
-      param.setXml(greeting);
+      param.setXml(logo);
       logosPane.setParam(param);
     }
+
   }
   
   private function onLoadDefaultToold(e:IKEvent):Void{
-
     verticalScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
   }
   
@@ -78,8 +87,11 @@ class LogoView extends PropertyView, implements IView{
       case EVENT_ID.LOGO_SELECTED: {
         logosPane.setParam(param);
       }
+
+      
     }
 	}
+
 	
 	override public function setFloat(id:String, f:Float):Void{
     switch ( id ) {

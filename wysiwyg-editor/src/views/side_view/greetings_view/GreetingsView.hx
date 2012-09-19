@@ -2,9 +2,7 @@ import flash.geom.Point;
 import flash.events.Event;
 
 class GreetingsView extends PropertyView, implements IView{
-  
-  //private var openGreetingsColorPickerButton:TwoStateButton;
-  //private var greetingsColorPicker:GreetingsColorPicker;
+
   private var greetingsScrollPane:AView;
   private var greetingsPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
@@ -12,11 +10,7 @@ class GreetingsView extends PropertyView, implements IView{
   
   public function new(greetingsController:IController){	
     super(greetingsController);
-    
-    //openGreetingsColorPickerButton  = new TwoStateButton();
-		//greetingsColorPicker						= new GreetingsColorPicker(greetingsController);
-		
-		
+
     backdrop              = new PlaceholdersBackBitmap();
     greetingsScrollPane   = new ScrollPane(greetingsController);
     greetingsPane         = new GreetingsPane(greetingsController);
@@ -30,13 +24,7 @@ class GreetingsView extends PropertyView, implements IView{
   
   
   override public function init():Void{
-
-    //openGreetingsColorPickerButton.init(controller,
-    //                new Point(32,32), 
-    //                new ColorPickerButton(), 
-    //                new Parameter( EVENT_ID.OPEN_GREETING_COLOR_PICKER));
-    //                
-                    
+                           
     selectButton.init( controller,
               new Point(190,30), 
               new GreetingsViewButton(), 
@@ -52,14 +40,7 @@ class GreetingsView extends PropertyView, implements IView{
   
   override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
-    
-    //addChild(openGreetingsColorPickerButton);
-    //openGreetingsColorPickerButton.x = 10;
-    //openGreetingsColorPickerButton.y = 55;
-    
-    //addChild(greetingsColorPicker);
-    //greetingsColorPicker.x = 5;
-    //greetingsColorPicker.y = 84;
+
     
     // font selection pane
     addChild(greetingsScrollPane);
