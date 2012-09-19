@@ -1,6 +1,8 @@
 import flash.geom.Point;
 import flash.events.Event;
 
+
+
 class LogosView extends PropertyView, implements IView{
   
   //private var openLogosColorPickerButton:TwoStateButton;
@@ -42,6 +44,7 @@ class LogosView extends PropertyView, implements IView{
             new Parameter( EVENT_ID.ADD_LOGO_TO_PAGE));
     
     addLogoButton.fireOnMouseUp(false);
+    
   }
   
   override public function onAddedToStage(e:Event):Void{

@@ -6,18 +6,22 @@ import flash.net.URLLoader;
 import flash.net.URLRequest;
 import flash.events.MouseEvent;
 import flash.display.MovieClip;
+import flash.display.Sprite;
 import flash.display.Shape;
 import flash.display.Loader;
+import flash.display.BitmapDataChannel;
+import flash.display.BitmapData;
 import flash.display.Bitmap;
+import flash.display.BlendMode;
 import flash.net.URLRequest;
 import flash.system.ApplicationDomain; 
 import flash.system.LoaderContext;
 import flash.system.SecurityDomain;
 
 
+
 class BitmapPlaceholder extends APlaceholder{
 	
-
   private var parrent:PageView;
   private var model:IModel;
   private var mouseOver:Bool;
@@ -33,6 +37,21 @@ class BitmapPlaceholder extends APlaceholder{
   private var imageLoader:Loader;
   private var backdrop:Bitmap;
   private var printType:String;
+  
+  private var foilColor:String;
+  private var foiled:Bool;
+  private var foil:Sprite;
+  private var foilTexture:Bitmap;
+  private var silverFoilTexture:Bitmap;
+  private var goldFoilTexture:Bitmap;
+  private var yellowFoilTexture:Bitmap;
+  private var redFoilTexture:Bitmap;
+  private var greenFoilTexture:Bitmap;
+  private var blueFoilTexture:Bitmap;
+  private var foilTextureOverlay:Bitmap;
+  private var foilShadow:Sprite;
+  private var foilShine:Sprite;
+  private var foilBitmapDataForOverlay:BitmapData;
   
   
   public function new(parrent:PageView, id:Int, model:IModel, imageUrl:String){	
@@ -54,6 +73,28 @@ class BitmapPlaceholder extends APlaceholder{
     
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    
+    foil = new Sprite();
+    silverFoilTexture                 = new SilverFoilTexture();
+    goldFoilTexture                   = new GoldFoilTexture();
+    yellowFoilTexture                 = new YellowFoilTexture();
+    redFoilTexture                    = new RedFoilTexture();
+    greenFoilTexture                  = new GreenFoilTexture();
+    blueFoilTexture                   = new BlueFoilTexture();
+    foilTexture = silverFoilTexture;
+    
+    foilShadow = new Sprite();
+    foilShadow.graphics.beginFill(0x494949);
+    foilShadow.alpha = 0.0;
+    foilShadow.graphics.drawRect(0,0,1024,1017);
+    foilShadow.graphics.endFill();
+    
+    
+    foilShine = new Sprite();
+    foilShine.graphics.beginFill(0xFFFFFF);
+    foilShine.alpha = 0.0;
+    foilShine.graphics.drawRect(0,0,1024,1017);
+    foilShine.graphics.endFill();
     
   }
   
@@ -110,6 +151,7 @@ class BitmapPlaceholder extends APlaceholder{
     backdrop.scaleY *= 2.0;
     addChild(backdrop);
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+    foilify('silver');
 	}
    
   private function handleKeyboard(b:Bool):Void{
@@ -227,5 +269,78 @@ class BitmapPlaceholder extends APlaceholder{
   }
   override public function getStdPmsColor():String {
     return Std.string(0);
+  }
+  
+  public function isFoiled():Bool {
+    return foiled == true;
+  }
+  
+  public function foilify(color:String):Void {
+    unfoilify();
+    foilColor = color;
+      var foilShineColor = 0xFFFFFF;
+      var foilShadowColor = 0x000000;
+      
+      switch ( foilColor )
+      {
+        case 'silver':
+          foilTexture = silverFoilTexture;
+        case 'gold': 
+          foilTexture = goldFoilTexture;
+          foilShadowColor = 0x882244;
+          foilShineColor = 0xf1e2be;
+        case 'Yellow':
+          foilTexture = yellowFoilTexture;
+          foilShineColor = 0xFFFFEE;
+          foilShadowColor = 0xb3a800;
+        case 'red': 
+          foilTexture = redFoilTexture;
+          foilShadowColor = 0x110000;
+          foilShineColor = 0xFF9090;
+        case 'green':
+          foilTexture = greenFoilTexture;
+          foilShadowColor = 0x006400;
+          foilShineColor = 0xEEFFEE;
+        case 'blue':
+          foilTexture = blueFoilTexture; 
+          foilShadowColor = 0x000064;
+      }
+
+      foilShadow = new Sprite();    
+      foilShine = new Sprite();
+      
+      foilShine.graphics.clear();
+      foilShadow.graphics.beginFill(foilShadowColor);
+      foilShadow.alpha = 0.0;
+      foilShadow.graphics.drawRect(0,0,1024,1017);
+      foilShadow.graphics.endFill();
+      
+      foilShine.graphics.clear();
+      foilShine.graphics.beginFill(foilShineColor);
+      foilShine.alpha = 0.0;
+      foilShine.graphics.drawRect(0,0,1024,1017);
+      foilShine.graphics.endFill();
+          
+    
+    foil.addChild(foilTexture);
+    foil.addChild(foilShadow);
+    foil.addChild(foilShine);
+    addChild(foil);
+    
+    foil.mask = backdrop;
+    Foil.initFiltersOn(foil);
+    foiled = true;
+  }
+  
+  public function unfoilify():Void {
+    if( this.isFoiled() ){
+      removeChild(foil);
+      foil.removeChild(foilTexture);
+      foil.removeChild(foilShadow);
+      foil.removeChild(foilShine);
+      foil.mask = null;
+      Foil.removeFiltersFrom(foil);
+      foiled = false;
+    }
   }
 }
