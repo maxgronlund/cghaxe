@@ -65,9 +65,9 @@ class ApplicationModel extends Model, implements IModel
       case 'user_preset':{
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
-                      'load price xml from backend',
+                      //'load price xml from backend',
                       'pass preset',
-                      'pass preset price',
+                      //'pass preset price',
                       'add pages to stage',
                       'set defaults'
                       //'init zoom'
@@ -80,9 +80,9 @@ class ApplicationModel extends Model, implements IModel
         
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
-                      'load price xml from backend',  
+                      //'load price xml from backend',  
                       'pass preset',
-                      'pass preset price',
+                      //'pass preset price',
                       'add pages to stage',
                       'set defaults',
                       
@@ -98,7 +98,7 @@ class ApplicationModel extends Model, implements IModel
                       'load preset files from backend',
                       //'load price xml from backend',  
                       'pass preset',
-                      'pass preset price',
+                      //'pass preset price',
                       'add pages to stage',
                       'set defaults',
                       
