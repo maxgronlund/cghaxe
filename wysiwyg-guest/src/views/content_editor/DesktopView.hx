@@ -53,7 +53,7 @@ class DesktopView extends View, implements IView{
   }
   
   private function centerPage(e:KEvent):Void{
-    glimmerFoils();
+    
     zoomDone  = false;
     alignDone = false;
     //pageIndex = e.getInt();
@@ -71,11 +71,11 @@ class DesktopView extends View, implements IView{
     goToPosY = -(pageView.y * Zoom.getZoomFactor());
     
     goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
-    goToPosY += 130;
+    goToPosY += 50;
     moveLeft =  goToPosX - this.x > 0;
     
     if(zoom){
-      var desktopSize:Float = SIZE.DESKTOP_WIDTH;
+      var desktopSize:Float = SIZE.DESKTOP_WIDTH - 40;
       var test:Float = Zoom.getZoomFactor() * pageView.width;
       test = test - desktopSize;
       test *= 0.3;
@@ -131,7 +131,7 @@ class DesktopView extends View, implements IView{
   }
   
   private function onEnterFrame(e:Event):Void{
-    updateFoilEffects(0.002);
+    //updateFoilEffects(0.002);
   }
    
   private function onResetDesktopSize(e:KEvent):Void{
@@ -159,6 +159,7 @@ class DesktopView extends View, implements IView{
   }
   
   override public function glimmerFoils():Void{
+//    trace("GlimmerFoils!-------------------------------");
     glimmer_foils_index = 0;
     addEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
   }
@@ -170,9 +171,9 @@ class DesktopView extends View, implements IView{
   public function updateGlimmerFoils():Void{
     glimmer_foils_index += 1;
     
-    updateFoilEffects(0.017);
+    updateFoilEffects(0.015);
     
-    if(glimmer_foils_index > 50){
+    if(glimmer_foils_index > 45){
       removeEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
     }
   }
