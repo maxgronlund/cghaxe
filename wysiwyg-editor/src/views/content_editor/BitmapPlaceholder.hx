@@ -63,7 +63,7 @@ class BitmapPlaceholder extends APlaceholder{
     this.imageUrl                     = imageUrl;
     this.modelId                      = model.getInt('pageId');
     designMode                        = GLOBAL.edit_mode == 'system_design';
-    this.alpha                        = 0.85;
+    //this.alpha                        = 0.85;
     mouseOver                         = false;
     previewMode                       = true;
     focus                             = false;
@@ -147,8 +147,8 @@ class BitmapPlaceholder extends APlaceholder{
   private function onLoadImageComplete(e:Event):Void{
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
     backdrop = e.target.loader.content;
-    backdrop.scaleX *= 2.0;
-    backdrop.scaleY *= 2.0;
+    backdrop.scaleX *= 0.5;
+    backdrop.scaleY *= 0.5;
     addChild(backdrop);
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     foilify('silver');
@@ -231,10 +231,8 @@ class BitmapPlaceholder extends APlaceholder{
   private function updateFocus():Void{
     
     if(focus){
-      this.alpha = 0.8;
       GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
     }else{
-      this.alpha = 1.0;
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
     }
     handleKeyboard( focus ); 

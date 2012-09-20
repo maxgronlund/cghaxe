@@ -20,10 +20,10 @@ class LogosView extends PropertyView, implements IView{
 		
 		
     backdrop              = new PlaceholdersBackBitmap();
-    logosScrollPane   = new ScrollPane(logosController);
-    logosPane         = new LogosPane(logosController);
+    logosScrollPane       = new ScrollPane(logosController);
+    logosPane             = new LogosPane(logosController);
     verticalScrollbar     = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
-    addLogoButton     = new OneStateButton();
+    addLogoButton         = new OneStateButton();
     
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
@@ -35,12 +35,12 @@ class LogosView extends PropertyView, implements IView{
        
     selectButton.init( controller,
               new Point(190,30), 
-              new GreetingsViewButton(), 
+              new LogoViewButton(), 
               new Parameter( EVENT_ID.SHOW_LOGOS));
     
     addLogoButton.init(controller,
             new Point(150,22), 
-            new AddPageDesignButton(), 
+            new AddLogoButton(), 
             new Parameter( EVENT_ID.ADD_LOGO_TO_PAGE));
     
     addLogoButton.fireOnMouseUp(false);
