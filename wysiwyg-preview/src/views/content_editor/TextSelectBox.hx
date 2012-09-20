@@ -26,18 +26,18 @@ class TextSelectBox extends SelectBox
   
   override private function onMouseDown(e:MouseEvent){
     //super.onMouseDown(e);
-    removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-    stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-    
-    if(MouseTrap.capture()){
-      if(backdrop.alpha == transparency){
-        placeHolderView.setTextOnTop(true);
-      }else {
-        pageView.setPlaceholderInFocus(placeHolderView);
-      }
-      pageView.enableMove(e);
-      placeHolderView.updateGlobals();
-    }
+    //removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    //stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+    //stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    //
+    //if(MouseTrap.capture()){
+    //  if(backdrop.alpha == transparency){
+    //    placeHolderView.setTextOnTop(true);
+    //  }else {
+    //    pageView.setPlaceholderInFocus(placeHolderView);
+    //  }
+    //  pageView.enableMove(e);
+    //  placeHolderView.updateGlobals();
+    //}
   }
 }

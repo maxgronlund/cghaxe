@@ -274,14 +274,14 @@ class VectorPlaceholderView extends APlaceholder {
    
   private function handleKeyboard(b:Bool):Void{
     
-    if( b){
-      stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-      stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-    }
-    else{
-      stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-      stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
-    }
+    //if( b){
+    //  stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+    //  stage.addEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+    //}
+    //else{
+    //  stage.removeEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+    //  stage.removeEventListener(KeyboardEvent.KEY_UP, onKeyUp);
+    //}
   }
   
   override public function getXml() : String {
@@ -309,17 +309,17 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onKeyPressed(event:KeyboardEvent):Void{
-    var step:Float = 150/72;
-    switch(event.keyCode){
-      case 37: this.x -=step; 
-      case 39: this.x +=step; 
-      case 38: this.y -=step; 
-      case 40: this.y +=step;
-    }
+    //var step:Float = 150/72;
+    //switch(event.keyCode){
+    //  case 37: this.x -=step; 
+    //  case 39: this.x +=step; 
+    //  case 38: this.y -=step; 
+    //  case 40: this.y +=step;
+    //}
   }
   
   private function onKeyUp(event:KeyboardEvent):Void{
-    pageView.hitTest();
+    //pageView.hitTest();
   }
   
   private function loadVectorFile():Void{
@@ -406,33 +406,33 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function setFocus(b:Bool):Void{
-    focus = b;
-    updateFocus();
+    //focus = b;
+    //updateFocus();
   }
 
   private function updateFocus():Void{
     
-    if(focus){
-      GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-//     GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
-//      vectorFile.selectable(!GLOBAL.MOVE_TOOL);
-//      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
-      //vectorFile.setFocus(true);
-      selectBox.setFocus(true);  
-      resizeBackdrop();
-    }else{
-      GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-//      if(!collition)
-        //vectorFile.setFocus(false);
-//      super.resetMouse();
-      selectBox.setFocus(false);  
-    }
-    handleKeyboard( focus ); 
-    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
+  //  if(focus){
+  //    GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
+////     GLOBAL.Pages.addEventListener(EVENT_ID.TEXT_TOOL, onTextTool);
+////      vectorFile.selectable(!GLOBAL.MOVE_TOOL);
+////      !GLOBAL.MOVE_TOOL ? showTags():hideTags();
+  //    //vectorFile.setFocus(true);
+  //    selectBox.setFocus(true);  
+  //    resizeBackdrop();
+  //  }else{
+  //    GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
+////      if(!collition)
+  //      //vectorFile.setFocus(false);
+////      super.resetMouse();
+  //    selectBox.setFocus(false);  
+  //  }
+  //  handleKeyboard( focus ); 
+  //  GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
   }
   
   private function onMoveTool(e:IKEvent):Void {
-    updateFocus();
+    //updateFocus();
   }
 
   private function updateSideView(): Void{
@@ -481,6 +481,6 @@ class VectorPlaceholderView extends APlaceholder {
   }
 
   override public function alert(b:Bool):Void{
-    selectBox.alert(b);//alertBox.visible = b;
+    //selectBox.alert(b);//alertBox.visible = b;
   }
 }

@@ -30,11 +30,8 @@ class PageView extends View{
   private var hideMask:Bitmap;
   private var loaded_bitmap:Bitmap;
   private var bitmap_data:BitmapData;
-  //private var placeholder:Placeholder;
   private var inFocus:Dynamic;
-  
   private var placeholders:Vector<APlaceholder>; 
-//  private var designImagePlaceholders:Vector<APlaceholder>;
   private var hitPoint:Point;
   private var startPoint:Point;
   private var placeholderHasMouse:Bool;
@@ -54,13 +51,10 @@ class PageView extends View{
 
   
   public function new(controller:IController){	
-
     super(controller);
-    
     imageLoader	                  = new Loader();
     printMaskLoader	              = new Loader();
     placeholders                  = new Vector<APlaceholder>();
-//    designImagePlaceholders       = new Vector<APlaceholder>();
     hitPoint                      = new Point(0,0);
     startPoint                    = new Point(0,0);
     placeholderHasMouse           = false;
@@ -86,11 +80,7 @@ class PageView extends View{
     
     var empty_string:EReg = ~/^[\s]*$/;
     
-    //trace("Getting price! ####################################");
     for(i in 0...placeholders.length) {      
-      //if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
-      //  amount_greetings += 1;
-      //} else if(placeholders[i].getPlaceholderType() == 'text_place_holder') {
       if(true){
         if(StringTools.trim(placeholders[i].getTextFieldText()) != ''){
           switch ( placeholders[i].getPrintType() )
@@ -110,6 +100,7 @@ class PageView extends View{
                 std_pms_colors.push(color);
                 amount_std_pms_color += 1;
               }
+              
             }
             case CONST.CUSTOM_PMS1_COLOR:{
               var color:String = placeholders[i].getPms1Color();
@@ -125,6 +116,7 @@ class PageView extends View{
                 custom_pms1_colors.push(color);
                 amount_custom_pms1_color += 1;
               }
+              
             }
             case CONST.CUSTOM_PMS2_COLOR:{
               var color:String = placeholders[i].getPms2Color();
@@ -140,6 +132,7 @@ class PageView extends View{
                 custom_pms2_colors.push(color);
                 amount_custom_pms2_color += 1;
               }
+              
             }
             case CONST.FOIL_COLOR:{
               //Check if there's already a foil color
@@ -155,10 +148,24 @@ class PageView extends View{
                 if(!text_color_is_used) {
                   text_foil_colors.push(color);
                   amount_foil_color += 1;
-                  amount_cliche = 1;
+                  if(placeholders[i].isGaramond() != 'true'){
+                    amount_cliche = 1;
+                  }
                 }
               } else if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
                 var text_color_is_used:Bool = false;
+                for(i in 0...text_foil_colors.length) {
+                  if(text_foil_colors[i] == color) {
+                    text_color_is_used = true;
+                  }
+                }
+                if(!text_color_is_used) {
+                  text_foil_colors.push(color);
+                  amount_foil_color += 1;
+                }
+              } else if( placeholders[i].getPlaceholderType() == 'bitmap_placeholder' ) {
+                var text_color_is_used:Bool = false;
+                amount_cliche = 1;
                 for(i in 0...text_foil_colors.length) {
                   if(text_foil_colors[i] == color) {
                     text_color_is_used = true;
@@ -181,7 +188,6 @@ class PageView extends View{
           }
         }
       }
-      
     }
     
     model.setInt('amount_std_pms_color', amount_std_pms_color);
@@ -191,24 +197,16 @@ class PageView extends View{
     model.setInt('amount_greetings', amount_greetings);
     model.setInt('amount_laser_color', amount_laser_color);
     model.setInt('amount_cliche', amount_cliche);
-    //trace("Counted objects");
-    //this is in reality just price_view.addColumn(model)
+
     GLOBAL.price_view.addColumn(model);
-    //trace("Hm!");
-    //var param = new Parameter(EVENT_ID.ADD_PRICE_COLUMN);
-    //param.setInt();
-    //GLOBAL.Pages.setParam()
     GLOBAL.price_view.update('addAllPrices', 0, '');
-    //trace("Done adding prices for one view");
+
   }
   
   override public function onAddedToStage(e:Event): Void{
-    trace('5... added to stage');
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
-//    Application.addEventListener(EVENT_ID.DISABLE_MOUSE_ON_PAGES, onDisableMouse);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
-    //DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImage);
     
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
@@ -216,58 +214,22 @@ class PageView extends View{
   }
 
   override public function setModel(model:IModel):Void{
-    
     this.model = model;
-    
-    //model.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot); 	
     model.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onAddTextPlaceholder);
     model.addEventListener(EVENT_ID.GET_STRING, onGetString);           // !!! rename this nonsens
     model.addEventListener(EVENT_ID.RELEASE_FOCUS, onReleasePageFocus);
     model.addEventListener(EVENT_ID.TRASH_PLACEHOLDER, onDestroyPlaceholder);
     model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
-    //Designs.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
-    //Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded); 
-    //model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
-    
-    
-    //Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onDesignXmlLoaded);
-    //Designs.addEventListener(EVENT_ID.DESIGN_XML_LOADED, onDesignXmlLoaded);
-    
     loadFrontShot();
     
   }
-  
-  //override public function setXml(id:String, xml:Xml):Void{
-  //  
-  //  switch ( id ){
-  //    case 'design_xml':
-  //      designXml = xml;
-  //  }
-  //  //trace(designXml.toString());
-  //}
 
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
-      case EVENT_ID.ADD_DESIGN_TO_PAGE:{
-        addDesignToPage(param);
-      }
-
-      case EVENT_ID.ADD_GREETING_TO_PAGE:{
-        parseVectorPlaceholder( param.getXml(), onPosX(),onPosY());
-        /*
-        var url:String;
-        for(url_xml in param.getXml().elementsNamed("url") ) {
-          url = url_xml.firstChild().nodeValue.toString();
-        }
-        setPlaceholderInFocus(null);
-        var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
-        placeholder.x = 10;
-      	placeholder.y = 10;
-        placeholders.push(placeholder);
-        addChild(placeholder);
-        */
-      }
+      case EVENT_ID.ADD_DESIGN_TO_PAGE:{addDesignToPage(param);}
+      case EVENT_ID.ADD_GREETING_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY());}
+      case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(), onPosX(), onPosY());}
     }
   }
   
@@ -281,51 +243,6 @@ class PageView extends View{
         parsePagePresetXml();
       }
     }
-  }
-  
-  private function addDesignImageToPage(param:IParameter):Void{
-    //trace(param.getXml().toString());
-    
-    
-    //placeholder.x = posX;
-  	//placeholder.y = posY;
-    //placeholders.push(placeholder);
-    //addChild(placeholder);
-    
-    //addDesignImagePlaceholder(10,10, imageUrl);
-    
-    
-     //trace(param.getXml().toString());
-    
-     //for( design_image in param.getXml().elementsNamed("swf-file") ){
-     //  trace(design_image.toString());
-     //  addDesignImagePlaceholder(10,10,design_image.firstChild().nodeValue);
-     //}
-     for( image in param.getXml().elementsNamed("image") ){
-       //trace(image.toString());
-       //for( preview in image.elementsNamed("preview") ){
-       //  for( url in preview.elementsNamed("url") ){
-       //    addDesignImagePlaceholder(10,10,url.firstChild().nodeValue);
-       //  }
-       //}
-       for( url in image.elementsNamed("url") ){
-          addDesignImagePlaceholder(10,10,url.firstChild().nodeValue);
-        }
-     }
-
-  }
-  
-  private function addDesignImagePlaceholder(posX:Float, posY:Float, imageUrl:String):Void{
-    //trace(imageUrl);
-    setPlaceholderInFocus(null);
-    
-    var placeholder:APlaceholder		= new DesignImagePlaceholderView(this, placeholders.length, model, imageUrl);
-  
-    placeholder.x = posX;
-  	placeholder.y = posY;
-    placeholders.push(placeholder);
-    addChild(placeholder);
-  
   }
 
   private function onPageXmlLoaded(e:IKEvent):Void{  
@@ -347,13 +264,10 @@ class PageView extends View{
   }
   
   private function onDesignXmlLoaded(e:IKEvent):Void{  
-    trace('6...onDesignXmlLoaded');
     pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    trace(pageDesignXML.toString());
   }
   
   private function parsePageDesignXML():Void{
-    trace('8...parsePageDesignXML');
     
     for( page  in pageDesignXML.elementsNamed("page") ) {
       for( pos_x in page.elementsNamed("pos-x") ) {
@@ -370,6 +284,7 @@ class PageView extends View{
  
   private function parsePlaceholder(xml:Xml):Void{
     
+//    trace(xml.toString());
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
     
@@ -378,8 +293,8 @@ class PageView extends View{
     
 
     var placeholder_type:String = '';
+    
     for( plc_type in xml.elementsNamed("placeholder-type") ){
-      
       placeholder_type = plc_type.firstChild().nodeValue;
       
     }
@@ -389,6 +304,9 @@ class PageView extends View{
         parseVectorPlaceholder(xml, posX, posY);
       case "text_placeholder":
         parseTextPlaceholder(xml);
+      case "bitmap_placeholder":
+        parseBitmapPlaceholder(xml, posX, posY);
+      
       default:
         parseTextPlaceholder(xml);
     }
@@ -422,8 +340,38 @@ class PageView extends View{
 
   }
   
-  private function parseTextPlaceholder(xml:Xml):Void{
+  private function parseBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
+     
+    //trace(xml.toString());
+    
+    for( url in xml.elementsNamed("url") ) {
+      trace(url.toString());
+      addBitmapPlaceholder(url, posX, posY);
+      //for( url in placeholder.elementsNamed("url") ) {
+      //  trace(url.toString());
+      //  addBitmapPlaceholder(url, posX, posY);
+      //}
+    }
+      
 
+  }
+  
+  private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
+     
+    
+    var url:String = xml.firstChild().nodeValue.toString();
+    
+    setPlaceholderInFocus(null);
+    var placeholder:APlaceholder	= new BitmapPlaceholder(this, placeholders.length, model, url);
+    placeholder.x = posX;
+  	placeholder.y = posY;
+    placeholders.push(placeholder);
+    addChild(placeholder);
+
+  }
+  
+  private function parseTextPlaceholder(xml:Xml):Void{
+    
     for( anchor_point in xml.elementsNamed("anchor-point") ) 
       GLOBAL.Font.anchorPoint =  Std.parseFloat(anchor_point.firstChild().nodeValue);
     
@@ -459,11 +407,16 @@ class PageView extends View{
     
     for( text in xml.elementsNamed("text") ) 
       TEXT_SUGGESTION.text =  text.firstChild().nodeValue.toString();
-      addTextPlaceholder(posX,posY);
+    
+    for( gara in xml.elementsNamed("garamond") ){
+      GLOBAL.garamond = gara.firstChild().nodeValue == 'true';
+    }
+    
+    
+    addTextPlaceholder(posX,posY);
   }
   
   private function onDeselectPlaceholders(e:IKEvent):Void {
-//    trace('onDeselectPlaceholders');
     setPlaceholderInFocus(null);
   }
   
@@ -534,8 +487,7 @@ class PageView extends View{
   }
   
   public function enableMove(e:MouseEvent):Void{
-    //trace('enableMove');
-    
+
     stage.addEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     startPoint.x = inFocus.x;
     startPoint.y = inFocus.y;
@@ -545,7 +497,6 @@ class PageView extends View{
   }
    
   public function disableMove():Void{
-    trace('disableMove');
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     hitTest();
   }
@@ -562,17 +513,14 @@ class PageView extends View{
   }
   
   private function hitTestTextPlaceholder():Void {
-    
-    trace("hitTestTextPlaceholder");
+
     var textField:TextField = inFocus.getTextField();
-    trace("Got text field..?");
     
     if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
       if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
         inFocus.alert(true);
       else
         inFocus.alert(false);
-    
     }
   }
   
@@ -584,72 +532,66 @@ class PageView extends View{
   }
 
   private function onMouseOver(e:MouseEvent):Void{
-    removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
+    //removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    //addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    //addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
   }
   
   private function onMouseOut(e:MouseEvent){
 
-    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
-    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
-    removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    //removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+    //addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    //removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
   }
   
   private function onMouseDown(e:MouseEvent){	
     
-    if(MouseTrap.capture()){
-      setPlaceholderInFocus(null);
-      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-      stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-      
-      hitPointX = ((e.stageX* GLOBAL.Zoom.toMouse()) - this.x);
-      hitPointY = ((e.stageY* GLOBAL.Zoom.toMouse()) - this.y);
-    }
+    //if(MouseTrap.capture()){
+    //  setPlaceholderInFocus(null);
+    //  removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    //  stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+    //  stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    //  
+    //  hitPointX = ((e.stageX* GLOBAL.Zoom.toMouse()) - this.x);
+    //  hitPointY = ((e.stageY* GLOBAL.Zoom.toMouse()) - this.y);
+    //}
   }
   
   private function onMouseUp(e:MouseEvent){	
-//    trace('PageView is releasing the mouse');
-    MouseTrap.release();
-    stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-    stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-    Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
 
-  	//MouseTrap.release();
-  	//stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
-  	//stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
-  	//addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    //MouseTrap.release();
+    //stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+    //stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    //addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    //Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
   }
   
   private function onMouseMove(e:MouseEvent){
     
-    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
-    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
-    
-    var endPosX:Float = moveX - hitPointX;
-    var endPosY:Float = moveY - hitPointY;
-    
-    //var endPosX:Float = ( e.stageX - hitPointX);
-    //var endPosY:Float = ( e.stageY - hitPointY);
-    this.x = endPosX;
-    this.y = endPosY;
+    //var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
+    //var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
+    //
+    //var endPosX:Float = moveX - hitPointX;
+    //var endPosY:Float = moveY - hitPointY;
+    //
+    //GLOBAL.desktop_view.updateFoilEffects();
+    //
+    //this.x = endPosX;
+    //this.y = endPosY;
 
   }
   
   private function movePlaceholder(e:MouseEvent){
-    // notify when textbox is moved due to show tags
-    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
-    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
-    var pos:Float = ( moveX - hitPoint.x) + startPoint.x;
-    inFocus.x = pos;
-    pos = ( moveY - hitPoint.y) + startPoint.y;
-    inFocus.y = pos;
+
+    //var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
+    //var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
+    //var pos:Float = ( moveX - hitPoint.x) + startPoint.x;
+    //inFocus.x = pos;
+    //pos = ( moveY - hitPoint.y) + startPoint.y;
+    //inFocus.y = pos;
   }
 
   private function loadFrontShot():Void{
-//    trace('loadFrontShot', model.getString('front_shoot_url') );
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
   }
@@ -660,7 +602,6 @@ class PageView extends View{
   }
   
   private function onLoadFrontShotComplete(e:Event):Void{
-    trace('6...onLoadFrontShotComplete');
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     backdrop = e.target.loader.content;
     addChild(backdrop);
@@ -722,7 +663,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    trace('allImagesLoaded');
+
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;

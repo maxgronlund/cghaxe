@@ -100,6 +100,7 @@ class PageView extends View{
                 std_pms_colors.push(color);
                 amount_std_pms_color += 1;
               }
+              
             }
             case CONST.CUSTOM_PMS1_COLOR:{
               var color:String = placeholders[i].getPms1Color();
@@ -115,6 +116,7 @@ class PageView extends View{
                 custom_pms1_colors.push(color);
                 amount_custom_pms1_color += 1;
               }
+              
             }
             case CONST.CUSTOM_PMS2_COLOR:{
               var color:String = placeholders[i].getPms2Color();
@@ -130,6 +132,7 @@ class PageView extends View{
                 custom_pms2_colors.push(color);
                 amount_custom_pms2_color += 1;
               }
+              
             }
             case CONST.FOIL_COLOR:{
               //Check if there's already a foil color
@@ -151,6 +154,18 @@ class PageView extends View{
                 }
               } else if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
                 var text_color_is_used:Bool = false;
+                for(i in 0...text_foil_colors.length) {
+                  if(text_foil_colors[i] == color) {
+                    text_color_is_used = true;
+                  }
+                }
+                if(!text_color_is_used) {
+                  text_foil_colors.push(color);
+                  amount_foil_color += 1;
+                }
+              } else if( placeholders[i].getPlaceholderType() == 'bitmap_placeholder' ) {
+                var text_color_is_used:Bool = false;
+                amount_cliche = 1;
                 for(i in 0...text_foil_colors.length) {
                   if(text_foil_colors[i] == color) {
                     text_color_is_used = true;

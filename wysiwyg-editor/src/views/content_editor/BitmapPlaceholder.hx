@@ -327,7 +327,7 @@ class BitmapPlaceholder extends APlaceholder{
     
     
     foil.cacheAsBitmap = true;
-    backdrop.cacheAsBitmap = true;
+    backdrop.cacheAsBitmap = true;  
     foil.mask = backdrop;
     Foil.initFiltersOn(foil);
     foiled = true;
