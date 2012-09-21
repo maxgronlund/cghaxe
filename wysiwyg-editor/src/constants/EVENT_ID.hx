@@ -107,7 +107,7 @@ class EVENT_ID  {
   
   public static inline var PLACEHOLDER_DATA:String          = "placeholders_data";
   public static inline var PLACEHOLDER_COUNT:String         = "placeholder_count";
-  
+  public static inline var CENTER_PAGE:String               = "center_page";
   public static inline var PAGE_SELECTED:String             = "page_selected";
   public static inline var BUILD_PAGE:String                = "build_page";
   public static inline var BUILD_DESIGN_PAGE:String         = "build_design_page";

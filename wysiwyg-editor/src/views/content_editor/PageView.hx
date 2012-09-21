@@ -5,6 +5,7 @@
 */
 
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.display.BitmapData;
 import flash.display.Bitmap;
@@ -250,37 +251,44 @@ class PageView extends View{
   }
   
   private function parsePagePresetXml():Void{
-    for( page  in pagePresetXML.elementsNamed("page") ) {
-      for( pos_x in page.elementsNamed("pos-x") ) {
-           this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
-      }
-      for( pos_y in page.elementsNamed("pos-y") ) {
-           this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
-      }
-      for( placeholder in page.elementsNamed("placeholder") ) {
-          parsePlaceholder(placeholder);
-      }
-    }
-  }
-  
-  private function onDesignXmlLoaded(e:IKEvent):Void{  
-    pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-  }
-  
-  private function parsePageDesignXML():Void{
     
-    for( page  in pageDesignXML.elementsNamed("page") ) {
-      for( pos_x in page.elementsNamed("pos-x") ) {
-           this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
-      }
-      for( pos_y in page.elementsNamed("pos-y") ) {
-           this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
-      }
-      for( placeholder in page.elementsNamed("placeholder") ) {
-          parsePlaceholder(placeholder);
+    if(pagePresetXML != null){
+      for( page  in pagePresetXML.elementsNamed("page") ) {
+        trace('a');
+        for( pos_x in page.elementsNamed("pos-x") ) {
+             this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
+        }
+         trace('b');
+        for( pos_y in page.elementsNamed("pos-y") ) {
+             this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
+        }
+         trace('c');
+        for( placeholder in page.elementsNamed("placeholder") ) {
+            parsePlaceholder(placeholder);
+        }
+         trace('d');
       }
     }
   }
+  
+  //private function onDesignXmlLoaded(e:IKEvent):Void{  
+  //  pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+  //}
+  
+  //private function parsePageDesignXML():Void{
+  //  
+  //  for( page  in pageDesignXML.elementsNamed("page") ) {
+  //    for( pos_x in page.elementsNamed("pos-x") ) {
+  //         this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
+  //    }
+  //    for( pos_y in page.elementsNamed("pos-y") ) {
+  //         this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
+  //    }
+  //    for( placeholder in page.elementsNamed("placeholder") ) {
+  //        parsePlaceholder(placeholder);
+  //    }
+  //  }
+  //}
  
   private function parsePlaceholder(xml:Xml):Void{
     
@@ -590,19 +598,25 @@ class PageView extends View{
     pos = ( moveY - hitPoint.y) + startPoint.y;
     inFocus.y = pos;
   }
-
-  private function loadFrontShot():Void{
-    imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
-    imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
-  }
-
+  
   //!!! is this in use
   override public function getModel():IModel{
   	return model;
   }
+
+  private function loadFrontShot():Void{
+    imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
+    imageLoader.addEventListener(IOErrorEvent.IO_ERROR, frontShotErrorHandler);
+    imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
+  }
   
+  private function frontShotErrorHandler(Event:IOErrorEvent):Void {
+      trace("ioErrorHandler: " + Event);
+  }
+
   private function onLoadFrontShotComplete(e:Event):Void{
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadFrontShotComplete);
+    imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, frontShotErrorHandler);
     backdrop = e.target.loader.content;
     addChild(backdrop);
     var filter = new DropShadowFilter(2,45,5,0.2, 10.0, 10.0,1.0);
@@ -619,13 +633,19 @@ class PageView extends View{
     }else{
       var request:URLRequest  = new URLRequest(print_mask_url);
       printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onloadPrintMaskComplete);
+      printMaskLoader.addEventListener(IOErrorEvent.IO_ERROR, printMaskErrorHandler);
       printMaskLoader.load(request);
     } 
+  }
+  
+  private function printMaskErrorHandler(Event:IOErrorEvent):Void {
+      trace("ioErrorHandler: " + Event);
   }
   
   private function onloadPrintMaskComplete(e:Event):Void{
     
     printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onloadPrintMaskComplete);
+    printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, printMaskErrorHandler);
     guideMask = e.target.loader.content;
     addChild(guideMask);
     guideMask.visible = false;
@@ -646,13 +666,19 @@ class PageView extends View{
       hideMaskPresent = true;
       var request:URLRequest  = new URLRequest(hide_mask_url);
       printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
+      printMaskLoader.addEventListener(IOErrorEvent.IO_ERROR, hideMaskErrorHandler);
       printMaskLoader.load(request);
     }
     //allImagesLoaded();
   }
   
+  private function hideMaskErrorHandler(Event:IOErrorEvent):Void {
+      trace("ioErrorHandler: " + Event);
+  }
+  
   private function onLoadHideMaskComplete(e:Event):Void{
     printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadHideMaskComplete);
+    printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, hideMaskErrorHandler);
     hideMask                    = e.target.loader.content;
     addChild(hideMask);
     hideMask.visible            = false;
@@ -663,15 +689,25 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-
+    
+    
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;
       GLOBAL.size_y = backdrop.height;
+     
       Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
+      parsePagePresetXml();
+      //parsePageDesignXML();
+      var param = new Parameter(EVENT_ID.CENTER_PAGE);
+      param.setInt(0);
+      Application.dispatchParameter(param);
     }
-    parsePagePresetXml();
-    parsePageDesignXML();
+    else{
+      parsePagePresetXml();
+      //parsePageDesignXML();
+    }
+    //trace('allImagesLoaded');
     
   }
   

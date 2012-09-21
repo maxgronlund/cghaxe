@@ -41,6 +41,9 @@ class DesktopView extends View, implements IView{
     Pages.addEventListener(EVENT_ID.SWF_LOADED, onFontLoaded);
     Application.addEventListener(EVENT_ID.ALL_IMAGES_LOADED, onAllImagesLoaded);
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
+    Application.addEventListener(EVENT_ID.CENTER_PAGE, centerPage);
+    
+    
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     addEventListener(Event.ENTER_FRAME, onEnterFrame);
@@ -53,85 +56,24 @@ class DesktopView extends View, implements IView{
   }
   
   private function centerPage(e:KEvent):Void{
-    glimmerFoils();
-    zoomDone  = false;
-    alignDone = false;
-    //pageIndex = e.getInt();
+    
     pageView  = pagesView.getView(e.getInt());
-    zoom      = true;
-    zoomFactor  = 1.05;
-    updateGoTo();
     
-    addEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
-  }
-  
-  private function updateGoTo():Void{
+    var zoomW = SIZE.MAIN_VIEW_WIDTH / pageView.width;
+    var zoomH = SIZE.MAIN_VIEW_HEIGHT / pageView.height;
     
-    goToPosX = -(pageView.x * Zoom.getZoomFactor());
-    goToPosY = -(pageView.y * Zoom.getZoomFactor());
+    var zoom = zoomW < zoomH ? zoomW : zoomH;
+
+    Zoom.setZoom(zoom * 0.95);
+
+    this.x = -(pageView.x * Zoom.getZoomFactor());
+    this.y = -(pageView.y * Zoom.getZoomFactor());
     
-    goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
-    //goToPosY += 10;
-    moveLeft =  goToPosX - this.x > 0;
-    
-    if(zoom){
-      var desktopSize:Float = SIZE.DESKTOP_WIDTH - 40;
-      var test:Float = Zoom.getZoomFactor() * pageView.width;
-      test = test - desktopSize;
-      test *= 0.3;
-      test = (test / desktopSize)+1;
-      test = 1/test;
-  
-      var zoomLimit = 1.01;
-      if( zoomFactor < 1/zoomLimit || zoomFactor > zoomLimit){
-        zoomFactor = test;
-      }
-      else {
-        zoom = false;
-        zoomFactor = 1;
-        zoomDone = true;
-      } 
-    }                           
   }
-  
-  private function OnAllignAndZoom(e:Event):Void{
-     
-    onAlignLeft();
-    Zoom.zoomTo(zoomFactor);
-  
-   }
-   
-  public function onAlignLeft():Void
-	{
-    var distanceX:Float = goToPosX - this.x;
-    var distanceY:Float = goToPosY - this.y;
-    
-	  if(moveLeft && this.x > goToPosX-1 || !moveLeft && this.x < goToPosX+1){
-	    alignDone = true;
-	  }
-	  else{
-	    this.x += (distanceX * 0.3);
-  	  this.y += (distanceY * 0.3);
-	  }
-	  testForDone();
-	  
-  }
-  
-  private function testForDone(): Void
-  {
-    if(alignDone && zoomDone)
-      removeEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
-    else
-      updateGoTo();
-  }
-  
-  private function canterPageDone():Void{
-    if(zoomDone && alignDone)
-      removeEventListener(Event.ENTER_FRAME, OnAllignAndZoom);
-  }
+
   
   private function onEnterFrame(e:Event):Void{
-    updateFoilEffects(0.002);
+    //updateFoilEffects(0.002);
   }
    
   private function onResetDesktopSize(e:KEvent):Void{
@@ -152,13 +94,14 @@ class DesktopView extends View, implements IView{
   	addChild(pagesView);
   	pagesView.x = 10;
   	pagesView.y = 10;
-  	glimmerFoils();
+//  	glimmerFoils();
 //  	trace('bamm');
     //addChild(new FoilTexture());
     //addChild(GLOBAL.foil);
   }
   
   override public function glimmerFoils():Void{
+//    trace("GlimmerFoils!-------------------------------");
     glimmer_foils_index = 0;
     addEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
   }
@@ -170,9 +113,9 @@ class DesktopView extends View, implements IView{
   public function updateGlimmerFoils():Void{
     glimmer_foils_index += 1;
     
-    updateFoilEffects(0.017);
+    updateFoilEffects(0.015);
     
-    if(glimmer_foils_index > 50){
+    if(glimmer_foils_index > 45){
       removeEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
     }
   }
@@ -186,13 +129,15 @@ class DesktopView extends View, implements IView{
       
     GLOBAL.pos_x = this.x;
     GLOBAL.pos_y = this.y;
+    
+   
   }
   
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ZOOM_100:{
         this.x = 8;
-        this.y = -15;
+        this.y = 48;
       }
     }
   }  
@@ -213,17 +158,16 @@ class DesktopView extends View, implements IView{
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
-//    trace('onAllImagesLoaded');
+   
     if(placeholders == 0) {
       placeholders--;
-      setSizes();       
+      setSizes();   
     }
+    
   }
   
   private function setSizes():Void{
-    
-//    trace('setSizes');
-    
+
     sizeX = pagesView.width;
     sizeY = pagesView.height;
     

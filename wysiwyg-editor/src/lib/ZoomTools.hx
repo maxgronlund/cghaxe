@@ -25,6 +25,7 @@ class ZoomTools
   }
   
   private function onLoadPagePosAndZoom(e:IKEvent):Void{
+    trace('onLoadPagePosAndZoom');
     //zoomFactor = e.getFloat()/1000;
     for( stage_zoom in e.getXml().elementsNamed('zoom') ) 
       zoomFactor = Std.parseFloat(stage_zoom.firstChild().nodeValue.toString())/1000;
@@ -57,6 +58,12 @@ class ZoomTools
     zoomFactor *= zoom;
     updateGui();
   }	
+  
+  public function setZoom(zoom:Float):Void{
+    this.zoom = zoom;
+    zoomFactor = zoom / toScreenFactor;
+    updateGui();
+  }
   
   public function resetZoom():Void{
     //trace('resetZoom');

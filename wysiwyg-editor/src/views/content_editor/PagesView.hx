@@ -91,7 +91,6 @@ class PagesView extends View, implements IView{
   }
   
   private function putPageOnTop(id:Int):Void{
-    
     pageInFocus = pages[id];
     var side_of_top_paper:Bool = pages[id].getModel().getBool('front_of_paper');
     var i:Int = pages.length;
@@ -117,13 +116,15 @@ class PagesView extends View, implements IView{
         pageView.visible = false;
       }
     }
+    trace('putPageOnTop');
   }
   
   private function addPages():Void{
-//    trace('4...addPages');
+
     for( i in 0...pages.length){
       addChild(pages[i]);
       pages[i].visible = false;
+      trace(i);
     }
    
   }

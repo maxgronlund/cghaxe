@@ -1,5 +1,0 @@
-stage size 790 x 742
-
-image to screen factor : 72/150 = 0.48
-
-image size to default zoom factor = DESKTOP_WIDTH/image_sizeX

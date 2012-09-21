@@ -172,7 +172,7 @@ class ApplicationModel extends Model, implements IModel
       
       case 'add pages to stage':{
         dispatchParameter(new Parameter(EVENT_ID.ADD_PAGES_TO_STAGE));
-        //trace('add pages to stage done');
+        
         
       }
       case 'add placeholders':{
