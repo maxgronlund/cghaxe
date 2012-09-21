@@ -13,7 +13,7 @@ class Main
 {
   	// models
 	public static var Application:IModel;
-  private var Menu:IModel;
+/  private var Menu:IModel;
   private var Configuration:IModel;
   private var Greetings:IModel;
   private var Logos:IModel;

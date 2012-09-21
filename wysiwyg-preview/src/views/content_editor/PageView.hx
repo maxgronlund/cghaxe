@@ -208,7 +208,9 @@ class PageView extends View{
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
-
+    
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
 
   }
 
@@ -252,20 +254,41 @@ class PageView extends View{
     
     if(pagePresetXML != null){
       for( page  in pagePresetXML.elementsNamed("page") ) {
+        trace('a');
         for( pos_x in page.elementsNamed("pos-x") ) {
              this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
         }
+         trace('b');
         for( pos_y in page.elementsNamed("pos-y") ) {
              this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
         }
+         trace('c');
         for( placeholder in page.elementsNamed("placeholder") ) {
             parsePlaceholder(placeholder);
         }
+         trace('d');
       }
     }
   }
   
-
+  //private function onDesignXmlLoaded(e:IKEvent):Void{  
+  //  pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+  //}
+  
+  //private function parsePageDesignXML():Void{
+  //  
+  //  for( page  in pageDesignXML.elementsNamed("page") ) {
+  //    for( pos_x in page.elementsNamed("pos-x") ) {
+  //         this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
+  //    }
+  //    for( pos_y in page.elementsNamed("pos-y") ) {
+  //         this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
+  //    }
+  //    for( placeholder in page.elementsNamed("placeholder") ) {
+  //        parsePlaceholder(placeholder);
+  //    }
+  //  }
+  //}
  
   private function parsePlaceholder(xml:Xml):Void{
     
@@ -453,7 +476,7 @@ class PageView extends View{
 
   private function onReleasePageFocus(e:KEvent):Void {
     setPlaceholderInFocus(null);
-    //MouseTrap.release();
+    MouseTrap.release();
   }
   
   public function setPlaceholderInFocus(placeholder:APlaceholder):Void{
@@ -473,44 +496,109 @@ class PageView extends View{
   
   public function enableMove(e:MouseEvent):Void{
 
+    stage.addEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
+    startPoint.x = inFocus.x;
+    startPoint.y = inFocus.y;
+    hitPoint.x = e.stageX * GLOBAL.Zoom.toMouse();
+    hitPoint.y = e.stageY * GLOBAL.Zoom.toMouse();
 
   }
    
   public function disableMove():Void{
-
+    stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
+    hitTest();
   }
   
   public function hitTest():Void {
 
-    //switch(inFocus.getPlaceholderType()) {
-    //  case 'text_place_holder':
-    //    hitTestTextPlaceholder();
-    //    
-    //  case "vector_placeholder":
-    //    hitTestVectorPlaceholder();
-    //}
+    switch(inFocus.getPlaceholderType()) {
+      case 'text_place_holder':
+        hitTestTextPlaceholder();
+        
+      case "vector_placeholder":
+        hitTestVectorPlaceholder();
+    }
   }
   
-  //private function hitTestTextPlaceholder():Void {
-  //
-  //  var textField:TextField = inFocus.getTextField();
-  //  
-  //  if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
-  //    if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
-  //      inFocus.alert(true);
-  //    else
-  //      inFocus.alert(false);
-  //  }
-  //}
+  private function hitTestTextPlaceholder():Void {
+
+    var textField:TextField = inFocus.getTextField();
+    
+    if(model.getString('mask_url') != '/assets/fallback/hide_mask.png'){
+      if(GLOBAL.hitTest.textFieldHitBitmap(textField, -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
+        inFocus.alert(true);
+      else
+        inFocus.alert(false);
+    }
+  }
   
   private function hitTestVectorPlaceholder():Void {
     if(GLOBAL.hitTest.bitmapHitBitmapMask(inFocus.getBitmapMask(), -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
       inFocus.alert(true);
     else
       inFocus.alert(false);
-      
   }
 
+  private function onMouseOver(e:MouseEvent):Void{
+    removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
+  }
+  
+  private function onMouseOut(e:MouseEvent){
+
+    removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
+    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+  }
+  
+  private function onMouseDown(e:MouseEvent){	
+    
+    if(MouseTrap.capture()){
+      setPlaceholderInFocus(null);
+      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+      stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+      
+      hitPointX = ((e.stageX* GLOBAL.Zoom.toMouse()) - this.x);
+      hitPointY = ((e.stageY* GLOBAL.Zoom.toMouse()) - this.y);
+    }
+  }
+  
+  private function onMouseUp(e:MouseEvent){	
+
+    MouseTrap.release();
+    stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseUp);
+    stage.removeEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+  }
+  
+  private function onMouseMove(e:MouseEvent){
+    
+    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
+    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
+    
+    var endPosX:Float = moveX - hitPointX;
+    var endPosY:Float = moveY - hitPointY;
+    
+    GLOBAL.desktop_view.updateFoilEffects();
+
+    this.x = endPosX;
+    this.y = endPosY;
+
+  }
+  
+  private function movePlaceholder(e:MouseEvent){
+
+    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
+    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
+    var pos:Float = ( moveX - hitPoint.x) + startPoint.x;
+    inFocus.x = pos;
+    pos = ( moveY - hitPoint.y) + startPoint.y;
+    inFocus.y = pos;
+  }
+  
   //!!! is this in use
   override public function getModel():IModel{
   	return model;
@@ -530,62 +618,59 @@ class PageView extends View{
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, frontShotErrorHandler);
     backdrop = e.target.loader.content;
-    backdrop.width *= 3.16135558927668;
-    backdrop.height *= 3.16135558927668;
     addChild(backdrop);
-    allImagesLoaded();
-    //var filter = new DropShadowFilter(2,45,5,0.2, 10.0, 10.0,1.0);
-    //backdrop.filters = [filter];
-    //
-    //var print_mask_url:String = model.getString('print_mask_url');
-    //print_mask_url == '/assets/fallback/hide_mask.png' ? allImagesLoaded(): loadPrintMask();
+    var filter = new DropShadowFilter(2,45,5,0.2, 10.0, 10.0,1.0);
+    backdrop.filters = [filter];
+    
+    var print_mask_url:String = model.getString('print_mask_url');
+    print_mask_url == '/assets/fallback/hide_mask.png' ? allImagesLoaded(): loadPrintMask();
 	}
 	
-  //private function loadPrintMask():Void{
-  //  var print_mask_url:String = model.getString('print_mask_url');
-  //  if(print_mask_url == ''){
-  //    loadHideMask();
-  //  }else{
-  //    var request:URLRequest  = new URLRequest(print_mask_url);
-  //    printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onloadPrintMaskComplete);
-  //    printMaskLoader.addEventListener(IOErrorEvent.IO_ERROR, printMaskErrorHandler);
-  //    printMaskLoader.load(request);
-  //  } 
-  //}
-  //
-  //private function printMaskErrorHandler(Event:IOErrorEvent):Void {
-  //    trace("ioErrorHandler: " + Event);
-  //}
+  private function loadPrintMask():Void{
+    var print_mask_url:String = model.getString('print_mask_url');
+    if(print_mask_url == ''){
+      loadHideMask();
+    }else{
+      var request:URLRequest  = new URLRequest(print_mask_url);
+      printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onloadPrintMaskComplete);
+      printMaskLoader.addEventListener(IOErrorEvent.IO_ERROR, printMaskErrorHandler);
+      printMaskLoader.load(request);
+    } 
+  }
   
-  //private function onloadPrintMaskComplete(e:Event):Void{
-  //  
-  //  printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onloadPrintMaskComplete);
-  //  printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, printMaskErrorHandler);
-  //  guideMask = e.target.loader.content;
-  //  addChild(guideMask);
-  //  guideMask.visible = false;
-  //  guideMask.alpha = 0.5;
-  //  Pages.addEventListener(EVENT_ID.SHOW_MASK, onShowMask);
-  //
-  //  loadHideMask();
-  //  
-  //}
+  private function printMaskErrorHandler(Event:IOErrorEvent):Void {
+      trace("ioErrorHandler: " + Event);
+  }
   
-  //private function loadHideMask():Void{
-  //  
-  //  var hide_mask_url:String = model.getString('hide_mask_url');
-  //  
-  //  if(hide_mask_url == '' || hide_mask_url == null){
-  //    allImagesLoaded();
-  //  }else{
-  //    hideMaskPresent = true;
-  //    var request:URLRequest  = new URLRequest(hide_mask_url);
-  //    printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
-  //    printMaskLoader.addEventListener(IOErrorEvent.IO_ERROR, hideMaskErrorHandler);
-  //    printMaskLoader.load(request);
-  //  }
-  //  //allImagesLoaded();
-  //}
+  private function onloadPrintMaskComplete(e:Event):Void{
+    
+    printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onloadPrintMaskComplete);
+    printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, printMaskErrorHandler);
+    guideMask = e.target.loader.content;
+    addChild(guideMask);
+    guideMask.visible = false;
+    guideMask.alpha = 0.5;
+    Pages.addEventListener(EVENT_ID.SHOW_MASK, onShowMask);
+
+    loadHideMask();
+    
+  }
+  
+  private function loadHideMask():Void{
+    
+    var hide_mask_url:String = model.getString('hide_mask_url');
+    
+    if(hide_mask_url == '' || hide_mask_url == null){
+      allImagesLoaded();
+    }else{
+      hideMaskPresent = true;
+      var request:URLRequest  = new URLRequest(hide_mask_url);
+      printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
+      printMaskLoader.addEventListener(IOErrorEvent.IO_ERROR, hideMaskErrorHandler);
+      printMaskLoader.load(request);
+    }
+    //allImagesLoaded();
+  }
   
   private function hideMaskErrorHandler(Event:IOErrorEvent):Void {
       trace("ioErrorHandler: " + Event);

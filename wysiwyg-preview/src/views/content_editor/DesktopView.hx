@@ -58,7 +58,7 @@ class DesktopView extends View, implements IView{
   
   
   private function centerPage(e:Event):Void{
-    
+    glimmerFoils();
     this.x = 0;
     this.y = 0;
     pagesView.setString('set_pages_to_top_left', 'foo');
@@ -72,14 +72,19 @@ class DesktopView extends View, implements IView{
     var zoomH = SIZE.DESKTOP_HEIGHT / pageView.height;
     
     var z = zoomW < zoomH ? zoomW : zoomH;
-    z *= 0.982;
+    z *= 0.98;
     
-    sizeX = this.width    *= z;
-    sizeY = this.height   *= z;
+    sizeX = this.width  ;
+    sizeY = this.height ;
+    
+    this.width    *= z;
+    this.height   *= z;
+    
+    
     Zoom.setZoom(1/z);
     
     this.x += (SIZE.DESKTOP_WIDTH-(pageView.width/Zoom.getZoomFactor()))/2.0;
-    this.y += (SIZE.DESKTOP_HEIGHT-(pageView.height/Zoom.getZoomFactor()))/2.0;
+    this.y += ((SIZE.DESKTOP_HEIGHT-(pageView.height/Zoom.getZoomFactor()))/2.0)+6;
     
   }
   

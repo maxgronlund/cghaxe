@@ -20,6 +20,7 @@
 -cp ../wysiwyg-editor/src/lib
 -cp ../wysiwyg-editor/src/lib/macros
 -cp ../wysiwyg-editor/src/models
+-cp src/models
 -cp ../wysiwyg-editor/src/system
 -cp ../wysiwyg-editor/src/ui
 -cp ../wysiwyg-editor/src/ui/buttons
@@ -67,7 +68,7 @@
 -cp ../framework/views
 
 -main Main
--swf-lib ../wysiwyg-editor/swfmill/resource.swf
+-swf-lib swfmill/resource.swf
 -swf ../../Calligraphen/app/assets/flash/wysiwyg_guest.swf
 -swf-header 300:300:30:F4F6F1
 -swf-version 10
