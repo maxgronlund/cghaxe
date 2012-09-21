@@ -70,13 +70,19 @@ class DesktopView extends View, implements IView{
     goToPosX = -(pageView.x * Zoom.getZoomFactor());
     goToPosY = -(pageView.y * Zoom.getZoomFactor());
     
-    goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
-    //goToPosY += 10;
-    moveLeft =  goToPosX - this.x > 0;
+    //goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
+    //goToPosY += 50;
+    //moveLeft =  goToPosX - this.x > 0;
     
     if(zoom){
-      var desktopSize:Float = SIZE.DESKTOP_WIDTH - 40;
-      var test:Float = Zoom.getZoomFactor() * pageView.width;
+      var desktopSize:Float = SIZE.DESKTOP_WIDTH;
+      var widest_edge:Float = 0;
+      if(pageView.height > pageView.width){
+        widest_edge = pageView.height;
+      } else {
+        widest_edge = pageView.width;
+      }
+      var test:Float = Zoom.getZoomFactor() * widest_edge;
       test = test - desktopSize;
       test *= 0.3;
       test = (test / desktopSize)+1;
@@ -191,7 +197,7 @@ class DesktopView extends View, implements IView{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ZOOM_100:{
-        this.x = 8;
+        this.x = 0;
         this.y = -10;
       }
     }
