@@ -177,7 +177,7 @@ class DesktopView extends View, implements IView{
     sizeY = pagesView.height/Zoom.getZoomFactor();
     
     placeholders--;
-    if(placeholders == 0) 
+    if(placeholders == 0)
       setSizes();
   }
   
