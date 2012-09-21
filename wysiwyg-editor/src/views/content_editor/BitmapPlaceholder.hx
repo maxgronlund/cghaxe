@@ -19,7 +19,6 @@ import flash.system.LoaderContext;
 import flash.system.SecurityDomain;
 
 
-
 class BitmapPlaceholder extends APlaceholder{
 	
   private var parrent:PageView;

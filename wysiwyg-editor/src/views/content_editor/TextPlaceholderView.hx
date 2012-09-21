@@ -98,7 +98,7 @@ class TextPlaceholderView extends APlaceholder {
     this.modelId                      = model.getInt('pageId');
     designMode                        = GLOBAL.edit_mode == 'system_design';
     textWithTags                      = text;
-    this.alpha                        = 0.85;
+    //this.alpha                        = 0.85;
     fontPosX                          = 0;
     mouseOver                         = false;
     anchorPoint                       = GLOBAL.Font.anchorPoint;

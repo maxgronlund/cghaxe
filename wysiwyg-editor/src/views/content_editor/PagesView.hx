@@ -129,6 +129,26 @@ class PagesView extends View, implements IView{
    
   }
 
+  override public function setString(id:String, s:String):Void{
+    switch ( id ){
+      case 'set_pages_to_top_left':setPagesToTopLeft();
+    }
+  }
+  
+  private function setPagesToTopLeft():Void{
+    // move pages relative to front page
+    var posX = pages[0].x;
+    var posY = pages[0].y;
+    pages[0].x = 0;
+    pages[0].y = 0;
+    
+    for( i in 1...pages.length){
+      pages[i].x -= posX;
+      pages[i].y -= posY;
+    }
+  
+  }
+  
   override public function getView(i:Int):AView{
     return pages[i];
 	}

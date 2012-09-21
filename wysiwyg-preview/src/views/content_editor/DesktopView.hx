@@ -41,80 +41,68 @@ class DesktopView extends View, implements IView{
     Pages.addEventListener(EVENT_ID.SWF_LOADED, onFontLoaded);
     Application.addEventListener(EVENT_ID.ALL_IMAGES_LOADED, onAllImagesLoaded);
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
-    Application.addEventListener(EVENT_ID.CENTER_PAGE, centerPage);
-    
-    
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     addEventListener(Event.ENTER_FRAME, onEnterFrame);
     Designs.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
     Preset.addEventListener(EVENT_ID.LOAD_PAGE_POS_AND_ZOOM, onLoadPos);
-    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, centerPage);
+    //Pages.addEventListener(EVENT_ID.PAGE_SELECTED, centerPage);
     bmpData    = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.DESKTOP_HEIGHT,false, COLOR.DESKTOP );
     backdrop   = new Bitmap(bmpData);
     
-  }
-  
-  private function centerPage(e:KEvent):Void{
-    
-    pageView  = pagesView.getView(e.getInt());
-    
-<<<<<<< HEAD
-    var zoomW = SIZE.MAIN_VIEW_WIDTH / pageView.width;
-    var zoomH = SIZE.MAIN_VIEW_HEIGHT / pageView.height;
-    
-    var zoom = zoomW < zoomH ? zoomW : zoomH;
-
-    Zoom.setZoom(zoom * 0.95);
-
-    this.x = -(pageView.x * Zoom.getZoomFactor());
-    this.y = -(pageView.y * Zoom.getZoomFactor());
-=======
-    //goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
-    //goToPosY += 50;
-    //moveLeft =  goToPosX - this.x > 0;
-    
-    if(zoom){
-      var desktopSize:Float = SIZE.DESKTOP_WIDTH;
-      var widest_edge:Float = 0;
-      if(pageView.height > pageView.width){
-        widest_edge = pageView.height;
-      } else {
-        widest_edge = pageView.width;
-      }
-      var test:Float = Zoom.getZoomFactor() * widest_edge;
-      test = test - desktopSize;
-      test *= 0.3;
-      test = (test / desktopSize)+1;
-      test = 1/test;
-  
-      var zoomLimit = 1.01;
-      if( zoomFactor < 1/zoomLimit || zoomFactor > zoomLimit){
-        zoomFactor = test;
-      }
-      else {
-        zoom = false;
-        zoomFactor = 1;
-        zoomDone = true;
-      } 
-    }                           
-  }
-  
-  private function OnAllignAndZoom(e:Event):Void{
-     
-    onAlignLeft();
-    Zoom.zoomTo(zoomFactor);
-  
-   }
-   
-  public function onAlignLeft():Void
-	{
-    var distanceX:Float = goToPosX - this.x;
-    var distanceY:Float = goToPosY - this.y;
->>>>>>> ba507357aaaf983df53a1808f1525c5d65b47148
+    Application.addEventListener(EVENT_ID.CENTER_PAGE, centerPage);
     
   }
-
+  
+  
+  
+  
+  private function centerPage(e:Event):Void{
+    
+    this.x = 0;
+    this.y = 0;
+    pagesView.setString('set_pages_to_top_left', 'foo');
+    setSizes();
+    pageView  = pagesView.getView(0);
+    pageView.x = 0;
+    pageView.y = 0;
+    
+    pageView  = pagesView.getView(0);
+    var zoomW = SIZE.DESKTOP_WIDTH /  pageView.width;
+    var zoomH = SIZE.DESKTOP_HEIGHT / pageView.height;
+    
+    var z = zoomW < zoomH ? zoomW : zoomH;
+    z *= 0.982;
+    
+    sizeX = this.width    *= z;
+    sizeY = this.height   *= z;
+    Zoom.setZoom(1/z);
+    
+    this.x += (SIZE.DESKTOP_WIDTH-(pageView.width/Zoom.getZoomFactor()))/2.0;
+    this.y += (SIZE.DESKTOP_HEIGHT-(pageView.height/Zoom.getZoomFactor()))/2.0;
+    
+  }
+  
+  private function setSizes():Void{
+    
+    trace('setSizes');
+    
+    sizeX = pagesView.width;
+    sizeY = pagesView.height;
+    
+    this.visible = true;
+  }
+  
+  private function onZoom(e:Event):Void{
+    updateZoom();
+  }
+  
+  private function updateZoom():Void{
+    trace('update zoom', Zoom.getZoomFactor());
+    pagesView.width 	= sizeX * Zoom.getZoomFactor();
+    pagesView.height 	= sizeY * Zoom.getZoomFactor();
+  }
+  
   
   private function onEnterFrame(e:Event):Void{
     //updateFoilEffects(0.002);
@@ -123,7 +111,6 @@ class DesktopView extends View, implements IView{
   private function onResetDesktopSize(e:KEvent):Void{
     sizeX = pagesView.width/Zoom.getZoomFactor();
     sizeY = pagesView.height/Zoom.getZoomFactor();
-    //trace(sizeX);
   }
   
   override public function init():Void{
@@ -136,16 +123,12 @@ class DesktopView extends View, implements IView{
   	super.onAddedToStage(e);
   	addChild(backdrop);
   	addChild(pagesView);
-  	pagesView.x = 10;
-  	pagesView.y = 10;
-//  	glimmerFoils();
-//  	trace('bamm');
-    //addChild(new FoilTexture());
-    //addChild(GLOBAL.foil);
+  	pagesView.x = 0;
+  	pagesView.y = 0;
+  	glimmerFoils();
   }
   
   override public function glimmerFoils():Void{
-//    trace("GlimmerFoils!-------------------------------");
     glimmer_foils_index = 0;
     addEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
   }
@@ -173,27 +156,19 @@ class DesktopView extends View, implements IView{
       
     GLOBAL.pos_x = this.x;
     GLOBAL.pos_y = this.y;
-    
-   
   }
   
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ZOOM_100:{
-<<<<<<< HEAD
         this.x = 8;
         this.y = 48;
-=======
-        this.x = 0;
-        this.y = -10;
->>>>>>> ba507357aaaf983df53a1808f1525c5d65b47148
       }
     }
   }  
   
   private function onPlaceholderCount(e:KEvent):Void{
     placeholders = e.getInt();
-//    trace(placeholders);
   }
   
   private function onFontLoaded(e:KEvent):Void{
@@ -207,33 +182,10 @@ class DesktopView extends View, implements IView{
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
-   
     if(placeholders == 0) {
       placeholders--;
-      setSizes();   
+      setSizes();       
     }
-    
-  }
-  
-  private function setSizes():Void{
-
-    sizeX = pagesView.width;
-    sizeY = pagesView.height;
-    
-    updateZoom();
-    this.visible = true;
-  }
-  
-  private function onZoom(e:Event):Void{
-    updateZoom();
-  }
-  
-  private function updateZoom():Void{
-//    trace('updateZoom');
-    pagesView.width 	= sizeX * Zoom.getZoomFactor();
-    pagesView.height 	= sizeY * Zoom.getZoomFactor();
-    //backdrop.x = -this.x;
-    //backdrop.y = -this.y;
   }
   
   private function onMouseOver(e:MouseEvent):Void{
