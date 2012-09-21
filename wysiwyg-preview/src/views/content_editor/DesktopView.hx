@@ -192,7 +192,7 @@ class DesktopView extends View, implements IView{
     switch ( param.getLabel() ){
       case EVENT_ID.ZOOM_100:{
         this.x = 8;
-        this.y = -15;
+        this.y = -10;
       }
     }
   }  
