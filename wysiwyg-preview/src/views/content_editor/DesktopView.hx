@@ -59,6 +59,7 @@ class DesktopView extends View, implements IView{
     
     pageView  = pagesView.getView(e.getInt());
     
+<<<<<<< HEAD
     var zoomW = SIZE.MAIN_VIEW_WIDTH / pageView.width;
     var zoomH = SIZE.MAIN_VIEW_HEIGHT / pageView.height;
     
@@ -68,6 +69,49 @@ class DesktopView extends View, implements IView{
 
     this.x = -(pageView.x * Zoom.getZoomFactor());
     this.y = -(pageView.y * Zoom.getZoomFactor());
+=======
+    //goToPosY  += ( SIZE.DESKTOP_HEIGHT - (pageView.height* Zoom.getZoomFactor())) * 0.5;
+    //goToPosY += 50;
+    //moveLeft =  goToPosX - this.x > 0;
+    
+    if(zoom){
+      var desktopSize:Float = SIZE.DESKTOP_WIDTH;
+      var widest_edge:Float = 0;
+      if(pageView.height > pageView.width){
+        widest_edge = pageView.height;
+      } else {
+        widest_edge = pageView.width;
+      }
+      var test:Float = Zoom.getZoomFactor() * widest_edge;
+      test = test - desktopSize;
+      test *= 0.3;
+      test = (test / desktopSize)+1;
+      test = 1/test;
+  
+      var zoomLimit = 1.01;
+      if( zoomFactor < 1/zoomLimit || zoomFactor > zoomLimit){
+        zoomFactor = test;
+      }
+      else {
+        zoom = false;
+        zoomFactor = 1;
+        zoomDone = true;
+      } 
+    }                           
+  }
+  
+  private function OnAllignAndZoom(e:Event):Void{
+     
+    onAlignLeft();
+    Zoom.zoomTo(zoomFactor);
+  
+   }
+   
+  public function onAlignLeft():Void
+	{
+    var distanceX:Float = goToPosX - this.x;
+    var distanceY:Float = goToPosY - this.y;
+>>>>>>> ba507357aaaf983df53a1808f1525c5d65b47148
     
   }
 
@@ -136,8 +180,13 @@ class DesktopView extends View, implements IView{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ZOOM_100:{
+<<<<<<< HEAD
         this.x = 8;
         this.y = 48;
+=======
+        this.x = 0;
+        this.y = -10;
+>>>>>>> ba507357aaaf983df53a1808f1525c5d65b47148
       }
     }
   }  
