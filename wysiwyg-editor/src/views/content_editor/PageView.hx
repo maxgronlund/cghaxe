@@ -254,19 +254,15 @@ class PageView extends View{
     
     if(pagePresetXML != null){
       for( page  in pagePresetXML.elementsNamed("page") ) {
-        trace('a');
         for( pos_x in page.elementsNamed("pos-x") ) {
              this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
         }
-         trace('b');
         for( pos_y in page.elementsNamed("pos-y") ) {
              this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
         }
-         trace('c');
         for( placeholder in page.elementsNamed("placeholder") ) {
             parsePlaceholder(placeholder);
         }
-         trace('d');
       }
     }
   }
@@ -623,10 +619,12 @@ class PageView extends View{
     backdrop.filters = [filter];
     
     var print_mask_url:String = model.getString('print_mask_url');
-    print_mask_url == '/assets/fallback/hide_mask.png' ? allImagesLoaded(): loadPrintMask();
+    
+    loadPrintMask();
 	}
 	
   private function loadPrintMask():Void{
+    
     var print_mask_url:String = model.getString('print_mask_url');
     if(print_mask_url == ''){
       loadHideMask();
@@ -659,8 +657,10 @@ class PageView extends View{
   private function loadHideMask():Void{
     
     var hide_mask_url:String = model.getString('hide_mask_url');
+    //trace(hide_mask_url);
     
-    if(hide_mask_url == '' || hide_mask_url == null){
+
+    if(hide_mask_url == '' || hide_mask_url == null ||  hide_mask_url == '/assets/fallback/hide_mask.png'){
       allImagesLoaded();
     }else{
       hideMaskPresent = true;
@@ -677,6 +677,7 @@ class PageView extends View{
   }
   
   private function onLoadHideMaskComplete(e:Event):Void{
+    trace('onLoadHideMaskComplete');
     printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadHideMaskComplete);
     printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, hideMaskErrorHandler);
     hideMask                    = e.target.loader.content;

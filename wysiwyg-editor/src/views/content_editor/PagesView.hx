@@ -94,6 +94,7 @@ class PagesView extends View, implements IView{
     pageInFocus = pages[id];
     var side_of_top_paper:Bool = pages[id].getModel().getBool('front_of_paper');
     var i:Int = pages.length;
+    
     while( i > 0){
       i--;
       var pageView                = pages[i];

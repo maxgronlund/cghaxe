@@ -9,6 +9,7 @@
       <bitmap id="AddOnsButton" import="library/images/add_ons_view_button.png" />
       <bitmap id="AddPlaceholderButton" import="library/images/add_placeholder_button.png" />
       <bitmap id="AddPageDesignButton" import="library/images/add_page_design_button.png" />
+      <bitmap id="AddGreetingButton" import="library/images/add_greeting_button.png" />
       <bitmap id="AddLogoButton" import="library/images/add_logo_button.png" />
       <bitmap id="BuyButtonBitmap" import="library/images/buy_button.png" />
       <bitmap id="CardButton" import="library/images/card_button.png" />

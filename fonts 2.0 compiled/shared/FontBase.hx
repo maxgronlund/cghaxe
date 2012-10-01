@@ -87,8 +87,9 @@ class FontBase extends MovieClip
     textField.selectable            = false;
     //import flash.text.AntiAliasType;
     textField.sharpness             = 10;
-    textField.thickness             = 100;
+    textField.thickness             = 50;
     textField.antiAliasType         = AntiAliasType.ADVANCED;
+    
 
     textField.text				          = text;
     Lib.current.addChild(textField);

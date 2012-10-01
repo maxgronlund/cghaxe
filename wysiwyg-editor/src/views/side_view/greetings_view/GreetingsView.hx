@@ -32,7 +32,7 @@ class GreetingsView extends PropertyView, implements IView{
     
     addGreetingButton.init(controller,
             new Point(150,22), 
-            new AddPageDesignButton(), 
+            new AddGreetingButton(), 
             new Parameter( EVENT_ID.ADD_GREETING_TO_PAGE));
     
     addGreetingButton.fireOnMouseUp(false);

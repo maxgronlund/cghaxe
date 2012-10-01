@@ -305,7 +305,7 @@ class TextPlaceholderView extends APlaceholder {
   private function onKeyPressed(event:KeyboardEvent):Void{
     var step:Float = 150/72;
 //    trace("Keycode: ");
-//    trace(event.keyCode);
+//    trace(event.charCode);
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 
@@ -482,7 +482,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function hitTest():Void{
-    trace('hit test');
+//    trace('hit test');
     pageView.hitTest();
   }
     
