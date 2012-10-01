@@ -1,7 +1,0 @@
-all models from the db is loaded
-
-sibling product is matched with the preset so images for the right product is loaded
-
-images from siblings is matched to the pages
-
-the right size/zoom for the stage is found
