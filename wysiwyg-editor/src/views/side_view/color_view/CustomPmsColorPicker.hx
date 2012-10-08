@@ -1,5 +1,6 @@
 import flash.geom.Point;
 import flash.events.Event;
+import flash.events.FocusEvent;
 import flash.events.MouseEvent;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
@@ -7,19 +8,38 @@ import flash.display.BitmapData;
 class CustomPmsColorPicker extends View{
   
   private var pms_id:String;
+  private var colorInput:PMSColorTextField;
   
   public function new(controller:IController){
     super(controller);
     pms_id = EVENT_ID.PMS1_COLOR_SELECTED;
+    colorInput = new PMSColorTextField();
+    colorInput.setText("BLUE");
+    //var text = colorInput.getText();
+    colorInput.textField.addEventListener(Event.CHANGE, onTextChange);
+		colorInput.textField.addEventListener(FocusEvent.FOCUS_OUT, onTextFocusOut);
    }
 
    override public function init():Void{
      backdrop           = new CustomPMSPickerBitmap();
    }
+   
+   public function onTextChange(e:Event){
+   	//updateColor();
+   }
+   
+   public function onTextFocusOut(e:Event){
+    updateColor();
+   }
+   
+   private function updateColor():Void{
+     trace("UPDATE PMS COLOR");
+   }
     
    override public function onAddedToStage(e:Event){
    	super.onAddedToStage(e);	
    	addChild(backdrop);
+   	addChild(colorInput);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
    }
 
