@@ -1,7 +1,9 @@
 class ColorController extends Controller, implements IController{
-
+  private var pms_converter:PMSColorToRGBConverter;
+  
   public function new(){	
   	super();
+  	pms_converter = new PMSColorToRGBConverter();
   }
 
   override public function setParam(param:IParameter):Void{
@@ -66,7 +68,8 @@ class ColorController extends Controller, implements IController{
   private function convertPmsStrToRgb(s:String):Int{
     // dummy parser
     trace(s);
-    return Std.parseInt(s);
+    return pms_converter.convertPMSToRGB(s);
+    //return Std.parseInt(s);
   }
   
   private function onFoilColorSelected(param:IParameter):Void{
