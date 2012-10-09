@@ -39,9 +39,9 @@ class ColorController extends Controller, implements IController{
     }
     GLOBAL.printType    = CONST.CUSTOM_PMS1_COLOR;
     GLOBAL.text_view.setParam(param);
-    Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
+    //Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);
-    Application.dispatchParameter(param);
+    //Application.dispatchParameter(param);
   }
   
   private function setPms2Color(param:IParameter):Void{
@@ -56,9 +56,9 @@ class ColorController extends Controller, implements IController{
     }
     GLOBAL.printType    = CONST.CUSTOM_PMS2_COLOR;
     GLOBAL.text_view.setParam(param);
-    Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
+    //Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);
-    Application.dispatchParameter(param);
+    //Application.dispatchParameter(param);
 
   }
   

@@ -222,8 +222,20 @@ class PageView extends View{
     model.addEventListener(EVENT_ID.TRASH_PLACEHOLDER, onDestroyPlaceholder);
     model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
+    GLOBAL.Application.addEventListener(EVENT_ID.PMS1_COLOR_SELECTED, onPms1Update);
+    GLOBAL.Application.addEventListener(EVENT_ID.PMS2_COLOR_SELECTED, onPms2Update);
     loadFrontShot();
     
+  }
+  
+  private function onPms1Update(e:IKEvent):Void{
+    trace('onPms1Update');
+
+  }
+  
+  private function onPms2Update(e:IKEvent):Void{
+    trace('onPms2Update');
+
   }
 
   override public function setParam(param:IParameter):Void{

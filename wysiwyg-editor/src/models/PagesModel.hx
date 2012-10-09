@@ -151,10 +151,20 @@ class PagesModel extends Model, implements IModel {
   }
 
   override public function setParam(param:IParameter):Void{
+    
     switch ( param.getLabel() ){
       case EVENT_ID.SET_TEXT_FORMAT:{
       	pageInFocus.onFontSelected(param);
       }
+      
+      case EVENT_ID.PMS1_COLOR_SELECTED:{
+        trace(param.getLabel());
+      }
+      
+      case EVENT_ID.PMS2_COLOR_SELECTED:{
+        trace(param.getLabel());
+      }
+      
       case EVENT_ID.PAGE_SELECTED:{
         setPageFocus(param.getInt());
         dispatchParameter(param);
