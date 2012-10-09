@@ -50,7 +50,8 @@
       
       
       <!-- font buttons -->
-      
+      <bitmap id="AllegroButton" import="library/images/allegro.png" />
+      <bitmap id="AmazeButton" import="library/images/amaze.png" />
       <bitmap id="AvantGardeGothicButton" import="library/images/avant_garde_gothic.png" />
       <bitmap id="BickhamScriptButton" import="library/images/bickham_script.png" />
       <bitmap id="BurguesScriptButton" import="library/images/burgues_script.png" />
@@ -61,14 +62,20 @@
 <!--  <bitmap id="DidotButton" import="library/images/didot.png" /> -->
       <bitmap id="CorsivaButton" import="library/images/corsiva.png" />
       <bitmap id="EccentricButton" import="library/images/eccentric.png" />
+      <bitmap id="FaustusButton" import="library/images/faustus.png" />
       <bitmap id="FinehandButton" import="library/images/finehand.png" />
       <bitmap id="GaramondButton" import="library/images/garamond.png" /> 
       <bitmap id="MutluButton" import="library/images/mutlu_ornamental.png" />
       <bitmap id="MediciScriptButton" import="library/images/medici_script.png" />
       <bitmap id="PopplResidenzButton" import="library/images/poppl_residenz.png" />
       <bitmap id="PhyllisButton" import="library/images/phyllis.png" />
-      <bitmap id="TimesRomanButton" import="library/images/times_roman_button.png" />
+      <bitmap id="RenaissanceButton" import="library/images/renaissance.png" />
+      <bitmap id="SignetRoundhandButton" import="library/images/signet_roundhand.png" />
+      <bitmap id="StaropolskiButton" import="library/images/staropolski.png" />
+      <bitmap id="TimesRomanButton" import="library/images/times_roman.png" />
+      <bitmap id="TaggetsButton" import="library/images/taggets.png" />
       <bitmap id="TrajanProButton" import="library/images/trajan_pro.png" />
+      <bitmap id="VolanteButton" import="library/images/volante.png" />
       
         
         

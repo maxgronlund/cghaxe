@@ -25,7 +25,6 @@ class SideView extends View, implements IView
   	views = new Vector<AView>();
   	index = 0;
   	backdrop        = new Bitmap(new BitmapData(190,486,false,0xDEDEDE ));
-  	
   }
   
   override public function onAddedToStage(e:Event){
@@ -68,7 +67,6 @@ class SideView extends View, implements IView
         posY += SIZE.PROPERTY_BUTTON_HEIGHT;
       }
     }
-    
     setChildIndex(selectedView, this.numChildren - 1);
   }
   
@@ -87,7 +85,6 @@ class SideView extends View, implements IView
       case 'set_default_tool':{
         showView(EVENT_ID.SHOW_TEXT, true);
       }
-
     }
   }
   

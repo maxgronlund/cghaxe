@@ -1,46 +1,79 @@
 import flash.geom.Point;
 import flash.events.Event;
 import flash.events.FocusEvent;
+import flash.events.TextEvent;
 import flash.events.MouseEvent;
 import flash.display.Bitmap;
 import flash.display.BitmapData;
+import flash.display.Shape;
+import flash.geom.ColorTransform; 
+import flash.events.KeyboardEvent;
 
 class CustomPmsColorPicker extends View{
   
   private var pms_id:String;
+  private var color:String;
   private var colorInput:PMSColorTextField;
+  //private var color_field:Shape;
+  private var param:IParameter;
+  private var pickerBmpData:BitmapData;
+  private var pickerBackdrop:Bitmap;
+  
   
   public function new(controller:IController){
     super(controller);
     pms_id = EVENT_ID.PMS1_COLOR_SELECTED;
     colorInput = new PMSColorTextField();
     colorInput.setText("BLUE");
-    //var text = colorInput.getText();
-    colorInput.textField.addEventListener(Event.CHANGE, onTextChange);
+    colorInput.textField.addEventListener(TextEvent.TEXT_INPUT, onTextChange);
 		colorInput.textField.addEventListener(FocusEvent.FOCUS_OUT, onTextFocusOut);
+		colorInput.textField.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
    }
 
    override public function init():Void{
      backdrop           = new CustomPMSPickerBitmap();
+     pickerBmpData      = new BitmapData(33,30,false,0x000000 );
+     pickerBackdrop     = new Bitmap(pickerBmpData);
+     colorInput.setText('000000');
    }
    
-   public function onTextChange(e:Event){
-   	//updateColor();
+   override public function onAddedToStage(e:Event){
+     super.onAddedToStage(e);	
+     addChild(backdrop);
+     addChild(pickerBackdrop);
+//     addChild(color_field);
+     pickerBackdrop.x = 1;
+     pickerBackdrop.y = 1;
+     addChild(colorInput);
+     colorInput.x  = 40;
+     colorInput.y  = 7;
+     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
    }
    
-   public function onTextFocusOut(e:Event){
+   private function onKeyDown(event:KeyboardEvent): Void{
+     //trace(event.charCode);
+     // if the key is ENTER
+     if(event.charCode == 13){
+       updateColor();
+     }
+   }
+   
+   private function onTextChange(e:Event){
+     //trace("onTextChange");
+     //updateColor();
+   }
+   
+   private function onTextFocusOut(e:Event){
     updateColor();
    }
    
    private function updateColor():Void{
-     trace("UPDATE PMS COLOR");
+     param.setString(colorInput.getText());
+     controller.setParam(param);
    }
-    
-   override public function onAddedToStage(e:Event){
-   	super.onAddedToStage(e);	
-   	addChild(backdrop);
-   	addChild(colorInput);
-    addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+   
+   private function setPmsColor():Void{
+     
    }
 
    private function onMouseOver(e:MouseEvent):Void{
@@ -59,9 +92,10 @@ class CustomPmsColorPicker extends View{
      removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
      
-     var pixelValue:UInt = backdrop.bitmapData.getPixel(Std.int(e.localX), Std.int(e.localY));
-     var param:Parameter = new Parameter(EVENT_ID.PMS1_COLOR_SELECTED);
-     param.setUInt(pixelValue);
+     var pixelValue:UInt = pickerBackdrop.bitmapData.getPixel(Std.int(e.localX), Std.int(e.localY));
+     trace(pixelValue);
+     param.setString('RGB');
+     param.setInt(pixelValue);
      controller.setParam(param);
    }
 
@@ -71,12 +105,41 @@ class CustomPmsColorPicker extends View{
    }
    
    override public function setString(id:String, s:String):Void{
-     switch ( id )
-     {
-      case 'set_pms':
-        pms_id = s;
+     switch ( id ){
+      case 'id':{
+        param = new Parameter(s);
+        Application.addEventListener( s, onColorChanged);
+      }
      }
    }
+   
+   private function onColorChanged(e:IKEvent):Void{
+     setInt( 'color', e.getInt() );
+   }
+   
+   //private function convertPmsStringToRGB(s:String):Void{
+   //  // temp code for test
+   //  setInt( 'color', Std.parseInt(s));
+   //}
+   
+   override public function setInt(id:String, i:Int):Void{
+     switch ( id ){
+       case 'color':{
+         removeChild(pickerBackdrop);
+         pickerBackdrop = null;
+         pickerBmpData  = null;
+         
+         pickerBmpData    = new BitmapData(33,30,false,i );
+         pickerBackdrop   = new Bitmap(pickerBmpData);
+         
+         addChild(pickerBackdrop);
+         pickerBackdrop.x = 1;
+         pickerBackdrop.y = 1;
+     
+        //color_field.transform.colorTransform = myColorTransform;
+       }
+     }
+  }
 }
 
 

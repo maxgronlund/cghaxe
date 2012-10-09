@@ -126,6 +126,8 @@ class EVENT_ID  {
   // gui                                                    
   public static inline var RELEASE_FOCUS:String             = "release_focus";
   public static inline var UPDATE_PLACEHOLDER:String        = "update_placeholder";
+  public static inline var UPDATE_PMS1:String               = "update_pms1";
+  public static inline var UPDATE_PMS2:String               = "update_pms2";
   
   
   // in the menu

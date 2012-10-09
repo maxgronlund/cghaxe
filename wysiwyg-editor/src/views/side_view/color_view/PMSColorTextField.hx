@@ -22,6 +22,10 @@ class PMSColorTextField extends Sprite {
 		//textField.maxChars = 4;
 		//textField.restrict = "0-9";
 		textField.type = TextFieldType.INPUT;
+		textField.restrict = "0-9 x";
+		textField.border = false;
+		textField.width = 125;
+    textField.height = 18;
 		
 	}
 	

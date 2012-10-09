@@ -78,6 +78,8 @@ class GLOBAL  {
   public static var stdPmsColor:UInt;
   public static var pms1Color:UInt;
   public static var pms2Color:UInt;
+  public static var pms1ColorString:String;
+  public static var pms2ColorString:String;
   public static var foilColor:String;
   public static var laserColor:UInt;
   public static var garamond:Bool;

@@ -7,6 +7,7 @@ interface IKEvent
 	function getLabel():String;
 	function getFloat():Float;
 	function getInt():Int;
+	function getUInt():Int;
 	function getBool():Bool;
 	function getXml():Xml;
 	function getString():String;

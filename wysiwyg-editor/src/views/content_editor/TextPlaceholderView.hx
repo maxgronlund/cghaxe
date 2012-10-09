@@ -405,7 +405,7 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function loadFont():Void{
-//    trace('load font');
+    trace('load font');
     fontFileName      = GLOBAL.Font.fileName;
     fontSize          = GLOBAL.Font.fontSize;       
     fontAlign         = GLOBAL.Font.fontAlign;
@@ -575,14 +575,35 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function setFontScreenColor():Void{
+    //unmountPmsColors();
     switch ( printType ){
       case CONST.STD_PMS_COLOR: fontScreenColor           = stdPmsColor;
-      case CONST.CUSTOM_PMS1_COLOR: fontScreenColor       = pms1Color;
-      case CONST.CUSTOM_PMS2_COLOR: fontScreenColor       = pms2Color;  
+      case CONST.CUSTOM_PMS1_COLOR:{
+        fontScreenColor = pms1Color;
+        GLOBAL.Application.addEventListener(EVENT_ID.PMS1_COLOR_SELECTED, onPms1Update);
+      } 
+      case CONST.CUSTOM_PMS2_COLOR:{
+        fontScreenColor = pms2Color;
+        GLOBAL.Application.addEventListener(EVENT_ID.PMS2_COLOR_SELECTED, onPms2Update);
+      }   
       case CONST.FOIL_COLOR:    setFontScreenColorForFoil();
-      case CONST.GARAMOND:    setFontScreenColorForFoil(); 
+      case CONST.GARAMOND:      setFontScreenColorForFoil(); 
       case CONST.LASER_COLOR:   fontScreenColor            = laserColor; 
     }
+  }
+  
+  //private function unmountPmsColors():Void{
+  //  GLOBAL.Pages.removeEventListener(EVENT_ID.UPDATE_PMS1, onPms1Update);
+  //  GLOBAL.Pages.removeEventListener(EVENT_ID.UPDATE_PMS2, onPms2Update);
+  //}
+  
+  private function onPms1Update(e:IKEvent):Void{
+    trace('onPms1Update');
+    fontScreenColor = GLOBAL.pms1Color;
+  }
+  
+  private function onPms2Update(e:IKEvent):Void{
+    fontScreenColor = GLOBAL.pms2Color;
   }
   
   private function setFontScreenColorForFoil():Void{

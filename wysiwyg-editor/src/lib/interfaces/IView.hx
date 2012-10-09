@@ -20,7 +20,9 @@ interface IView
 	function setSize(sizeX:Int, sizeY:Int):Void;
 	function getSize():Point;
 	function setInt(id:String, i:Int):Void;
+	function setUInt(id:String, i:UInt):Void;
 	function getInt(id:String):Int;
+	function getUInt(id:String):UInt;
 	function getFloat(id:String):Float;
 	function setFloat(id:String, f:Float):Void;
 	function setString(id:String, s:String):Void;

@@ -21,6 +21,12 @@ class AEvent extends Event
   	trace("getInt: must be overriden in a subclass");
   	return -1;
   }
+  
+  public function getUInt():Int{
+  	trace("getUInt: must be overriden in a subclass");
+  	return 0;
+  }
+  
   public function getBool():Bool{
   	trace("getBool: must be overriden in a subclass");
   	return false;

@@ -12,7 +12,8 @@ class ColorController extends Controller, implements IController{
       case EVENT_ID.STD_PMS_COLOR_SELECTED:{ onStdPmsColorSelected(param);}
       case EVENT_ID.FOIL_COLOR_SELECTED:{ onFoilColorSelected(param);}
       case EVENT_ID.COLOR_SELECTED:{ onColorSelected(param);}
-
+      case EVENT_ID.PMS1_COLOR_SELECTED:{ setPms1Color(param);}
+      case EVENT_ID.PMS2_COLOR_SELECTED:{ setPms2Color(param);}
      
     }	
   }
@@ -23,6 +24,48 @@ class ColorController extends Controller, implements IController{
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);
+  }
+  
+  private function setPms1Color(param:IParameter):Void{
+
+    if(param.getString() == 'RGB'){
+      GLOBAL.pms1Color    = param.getInt();
+    }else{
+      var s = param.getString();
+      GLOBAL.pms1ColorString    = s;
+      var RGB = convertPmsStrToRgb(s);
+      param.setInt(RGB);
+      GLOBAL.pms1Color = RGB;
+    }
+    GLOBAL.printType    = CONST.CUSTOM_PMS1_COLOR;
+    GLOBAL.text_view.setParam(param);
+    Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
+    Pages.setParam(param);
+    Application.dispatchParameter(param);
+  }
+  
+  private function setPms2Color(param:IParameter):Void{
+    if(param.getString() == 'RGB'){
+      GLOBAL.pms2Color    = param.getInt();
+    }else{
+      var s = param.getString();
+      GLOBAL.pms2ColorString    = s;
+      var RGB = convertPmsStrToRgb(s);
+      param.setInt(RGB);
+      GLOBAL.pms2Color = RGB;
+    }
+    GLOBAL.printType    = CONST.CUSTOM_PMS2_COLOR;
+    GLOBAL.text_view.setParam(param);
+    Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
+    Pages.setParam(param);
+    Application.dispatchParameter(param);
+
+  }
+  
+  private function convertPmsStrToRgb(s:String):Int{
+    // dummy parser
+    trace(s);
+    return Std.parseInt(s);
   }
   
   private function onFoilColorSelected(param:IParameter):Void{

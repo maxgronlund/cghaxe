@@ -142,10 +142,15 @@ class ColorView extends PropertyView, implements IView{
     addChild(customPms1ColorPicker);
     customPms1ColorPicker.visible = false;
     customPms1ColorPicker.x = 10;
+    customPms1ColorPicker.setString('id', EVENT_ID.PMS1_COLOR_SELECTED);
+    customPms1ColorPicker.setInt('color', 0x888800);
     
     addChild(customPms2ColorPicker);
     customPms2ColorPicker.visible = false;
     customPms2ColorPicker.x = 10;
+    customPms2ColorPicker.setString('id', EVENT_ID.PMS2_COLOR_SELECTED);
+    customPms2ColorPicker.setInt('color', 0x008888);
+    
     
     addChild(foilColorPicker);
     foilColorPicker.visible = false;
@@ -175,8 +180,8 @@ class ColorView extends PropertyView, implements IView{
     foilColorPicker.visible           = true;
     colorPicker.visible               = true;
     
-    customPms1ColorPicker.setString("set_pms", EVENT_ID.PMS1_COLOR_SELECTED);
-    customPms2ColorPicker.setString("set_pms", EVENT_ID.PMS2_COLOR_SELECTED);
+    customPms1ColorPicker.setString("id", EVENT_ID.PMS1_COLOR_SELECTED);
+    customPms2ColorPicker.setString("id", EVENT_ID.PMS2_COLOR_SELECTED);
     
   }
   
@@ -235,24 +240,27 @@ class ColorView extends PropertyView, implements IView{
  }
  
 
- //override public function setParam(param:IParameter):Void{
- //  
- //  trace('oh no');
- //  switch ( param.getLabel() ){
- //    
- //    //case EVENT_ID.USE_GARAMOND:{
- //    //  if(param.getBool()){
- //    //    useGaramond();
- //    //    //disableTools();
- //    //    //onEnableTool('Foil');
- //    //    //PositionPickers();
- //    //  }else{
- //    //    //setPrintTypes();
- //    //  }
- //    //  
- //    //}
- //  }
- //}
+ 
+
+ override public function setParam(param:IParameter):Void{
+   
+   trace(param.getLabel() );
+   
+   switch ( param.getLabel() ){
+     
+     //case EVENT_ID.USE_GARAMOND:{
+     //  if(param.getBool()){
+     //    useGaramond();
+     //    //disableTools();
+     //    //onEnableTool('Foil');
+     //    //PositionPickers();
+     //  }else{
+     //    //setPrintTypes();
+     //  }
+     //  
+     //}
+   }
+ }
  
  //private function useGaramond():Void{
  //   disableTools();

@@ -21,6 +21,7 @@ class KEvent implements IKEvent, extends AEvent
 	override public function getLabel():String{return param.getLabel();}
 	override public function getFloat():Float{return param.getFloat();	}
 	override public function getInt():Int{return param.getInt();}
+	override public function getUInt():Int{return param.getUInt();}
 	override public function getString():String{return param.getString();}
 	override public function getBool():Bool{return param.getBool();}
 	override public function getXml():Xml{return param.getXml();}

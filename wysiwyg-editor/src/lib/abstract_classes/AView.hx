@@ -74,6 +74,11 @@ class AView extends Sprite, implements IView
 		return 0;
 	}
 	
+	public function getUInt(id:String):UInt{
+		trace("getUInt: must be overriden in a subclass");
+		return 0;
+	}
+	
 	public function getModel():IModel{
 		trace("getPoint: must be overriden in a subclass");
 		return null;
@@ -94,7 +99,10 @@ class AView extends Sprite, implements IView
 
 	public function setInt(id:String, i:Int):Void{
 		trace("setInt: must be overriden in a subclass");
-
+	}
+	
+	public function setUInt(id:String, i:UInt):Void{
+		trace("setUInt: must be overriden in a subclass");
 	}
 	
 	public function getView(i:Int):AView{
