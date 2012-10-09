@@ -92,9 +92,10 @@ class PagesView extends View, implements IView{
   
   private function putPageOnTop(id:Int):Void{
     pageInFocus = pages[id];
-    var side_of_top_paper:Bool = pages[id].getModel().getBool('front_of_paper');
-    var i:Int = pages.length;
     
+    var side_of_top_paper:Bool = pageInFocus.getModel().getBool('front_of_paper');
+    var i:Int = pages.length;
+    //stack pages put last page on stage first
     while( i > 0){
       i--;
       var pageView                = pages[i];
@@ -104,11 +105,9 @@ class PagesView extends View, implements IView{
         this.setChildIndex(pageView, this.numChildren - 1);
         
         if(i>id && !pageView.hasHideMask() ){
-          
           pageView.visible = false;
         }
         else{
-//          trace('page has hidemask: ', i);
           pageView.useHideMask( i>id );
           pageView.visible = true;
         }
@@ -117,8 +116,8 @@ class PagesView extends View, implements IView{
         pageView.visible = false;
       }
     }
-    trace('putPageOnTop');
   }
+  
   
   private function addPages():Void{
 

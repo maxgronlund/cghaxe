@@ -398,7 +398,6 @@ class PageView extends View{
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
-
   }
   
   private function parseTextPlaceholder(xml:Xml):Void{
@@ -685,12 +684,11 @@ class PageView extends View{
   private function loadHideMask():Void{
     
     var hide_mask_url:String = model.getString('hide_mask_url');
-    //trace(hide_mask_url);
-    
 
     if(hide_mask_url == '' || hide_mask_url == null ||  hide_mask_url == '/assets/fallback/hide_mask.png'){
       allImagesLoaded();
     }else{
+      trace('I got hide mask');
       hideMaskPresent = true;
       var request:URLRequest  = new URLRequest(hide_mask_url);
       printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
