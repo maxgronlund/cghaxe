@@ -159,10 +159,15 @@ class PagesModel extends Model, implements IModel {
       
       case EVENT_ID.PMS1_COLOR_SELECTED:{
         trace(param.getLabel());
+        for( i in 0...pageModels.length){
+        	pageModels[i].setParam(param);
+        }
       }
       
       case EVENT_ID.PMS2_COLOR_SELECTED:{
-        trace(param.getLabel());
+        for( i in 0...pageModels.length){
+        	pageModels[i].setParam(param);
+        }
       }
       
       case EVENT_ID.PAGE_SELECTED:{

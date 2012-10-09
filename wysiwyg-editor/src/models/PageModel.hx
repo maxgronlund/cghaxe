@@ -60,6 +60,12 @@ class PageModel extends Model, implements IModel
       case EVENT_ID.ADD_PRICE_COLUMN:{
         GLOBAL.price_view.setParam(param);
       }
+      case EVENT_ID.PMS1_COLOR_SELECTED:{
+        dispatchParameter(param);
+      }
+      case EVENT_ID.PMS2_COLOR_SELECTED:{
+        dispatchParameter(param);
+      }
     }
 	}
 
