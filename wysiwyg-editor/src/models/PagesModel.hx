@@ -157,14 +157,13 @@ class PagesModel extends Model, implements IModel {
       	pageInFocus.onFontSelected(param);
       }
       
-      case EVENT_ID.PMS1_COLOR_SELECTED:{
-        trace(param.getLabel());
+      case EVENT_ID.UPDATE_PMS1:{
         for( i in 0...pageModels.length){
         	pageModels[i].setParam(param);
         }
       }
       
-      case EVENT_ID.PMS2_COLOR_SELECTED:{
+      case EVENT_ID.UPDATE_PMS2:{
         for( i in 0...pageModels.length){
         	pageModels[i].setParam(param);
         }
@@ -267,8 +266,17 @@ class PagesModel extends Model, implements IModel {
   }
 
   override function setString(id:String, s:String):Void{
-    trace("#€%& HEY YO, don't call me again dude");
-
+    
+    //switch(id){
+    //  case EVENT_ID.UPDATE_PMS1:updateCustomPms(id);
+    //  case EVENT_ID.UPDATE_PMS2:updateCustomPms(id);
+    //}
+  }
+  
+  private function updateCustomPms(id:String):Void{
+    for( i in 0...pageModels.length){
+    	pageModels[i].setString(id, 'foo');
+    }
   }
   
   override function getBool(id:String):Bool{

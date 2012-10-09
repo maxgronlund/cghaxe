@@ -149,6 +149,7 @@ class ColorView extends PropertyView, implements IView{
     customPms2ColorPicker.visible = false;
     customPms2ColorPicker.x = 10;
     customPms2ColorPicker.setString('id', EVENT_ID.PMS2_COLOR_SELECTED);
+    //EVENT_ID.UPDATE_PMS1
     customPms2ColorPicker.setInt('color', 0x008888);
     
     

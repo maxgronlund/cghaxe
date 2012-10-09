@@ -173,6 +173,11 @@ class FontBase extends MovieClip
   public function getTextField():TextField{
     return textField;
   }
+  
+  public function setColor(color:Int):Void{
+    //textFormat.color = color;
+    textField.textColor     = color;
+  }
 
 }
 

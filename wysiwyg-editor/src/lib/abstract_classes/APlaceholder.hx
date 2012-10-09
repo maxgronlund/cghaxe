@@ -40,6 +40,10 @@ class APlaceholder extends Sprite{
     trace("onUpdatePlaceholder: must be overriden in a subclass");
   }
   
+  public function updateColor( color:Int):Void{
+    trace("updateColor: must be overriden in a subclass");
+  }
+  
   public function setFocus(b:Bool):Void{
     trace("setFocus: must be overriden in a subclass");
   }

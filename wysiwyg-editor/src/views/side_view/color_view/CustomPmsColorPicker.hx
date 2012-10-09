@@ -13,6 +13,7 @@ class CustomPmsColorPicker extends View{
   
   private var pms_id:String;
   private var color:String;
+  private var rgbColor:Int;
   private var colorInput:PMSColorTextField;
   //private var color_field:Shape;
   private var param:IParameter;
@@ -35,13 +36,13 @@ class CustomPmsColorPicker extends View{
      pickerBmpData      = new BitmapData(33,30,false,0x000000 );
      pickerBackdrop     = new Bitmap(pickerBmpData);
      colorInput.setText('000000');
+     rgbColor           = 0;
    }
    
    override public function onAddedToStage(e:Event){
      super.onAddedToStage(e);	
      addChild(backdrop);
      addChild(pickerBackdrop);
-//     addChild(color_field);
      pickerBackdrop.x = 1;
      pickerBackdrop.y = 1;
      addChild(colorInput);
@@ -60,7 +61,7 @@ class CustomPmsColorPicker extends View{
    
    private function onTextChange(e:Event){
      //trace("onTextChange");
-     //updateColor();
+     updateColor();
    }
    
    private function onTextFocusOut(e:Event){
@@ -68,7 +69,9 @@ class CustomPmsColorPicker extends View{
    }
    
    private function updateColor():Void{
+     // called from the text field
      param.setString(colorInput.getText());
+     param.setInt(rgbColor);
      controller.setParam(param);
    }
    
@@ -93,7 +96,7 @@ class CustomPmsColorPicker extends View{
      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
      
      var pixelValue:UInt = pickerBackdrop.bitmapData.getPixel(Std.int(e.localX), Std.int(e.localY));
-     trace(pixelValue);
+     
      param.setString('RGB');
      param.setInt(pixelValue);
      controller.setParam(param);
@@ -125,10 +128,11 @@ class CustomPmsColorPicker extends View{
    override public function setInt(id:String, i:Int):Void{
      switch ( id ){
        case 'color':{
+         rgbColor = i;
          removeChild(pickerBackdrop);
          pickerBackdrop = null;
          pickerBmpData  = null;
-         
+
          pickerBmpData    = new BitmapData(33,30,false,i );
          pickerBackdrop   = new Bitmap(pickerBmpData);
          

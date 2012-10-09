@@ -60,12 +60,10 @@ class PageModel extends Model, implements IModel
       case EVENT_ID.ADD_PRICE_COLUMN:{
         GLOBAL.price_view.setParam(param);
       }
-      case EVENT_ID.PMS1_COLOR_SELECTED:{
-        dispatchParameter(param);
-      }
-      case EVENT_ID.PMS2_COLOR_SELECTED:{
-        dispatchParameter(param);
-      }
+      //case EVENT_ID.PMS1_COLOR_SELECTED:dispatchParameter(param);
+      //case EVENT_ID.PMS2_COLOR_SELECTED:dispatchParameter(param);
+      case EVENT_ID.UPDATE_PMS1:dispatchParameter(param);
+      case EVENT_ID.UPDATE_PMS2:dispatchParameter(param);
     }
 	}
 
@@ -114,12 +112,15 @@ class PageModel extends Model, implements IModel
   override function setString(id:String, s:String):Void{
 
     switch(id) {
-      //case 'print_mask_url':          print_mask_url  = s; 
-      //case 'hide_mask_url':           hide_mask_url   = s;
-      //case 'front_shoot_url':         front_shoot_url = s;
       case 'no_move':{ trace('no move'); 	}
-      case 'page_name':               page_name       = s;
-      case EVENT_ID.SET_PAGE_XML:     fileStr         += s;
+      case 'page_name':               page_name     = s;
+      case EVENT_ID.SET_PAGE_XML:     fileStr       += s;
+      //case EVENT_ID.UPDATE_PMS1:{
+      //  dispatchParameter(new Parameter(EVENT_ID.UPDATE_PMS1));
+      //}
+      //case EVENT_ID.UPDATE_PMS2:{
+      //  dispatchParameter(new Parameter(EVENT_ID.UPDATE_PMS2));
+      //}
 
 
     }

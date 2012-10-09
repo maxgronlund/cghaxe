@@ -517,6 +517,10 @@ class TextPlaceholderView extends APlaceholder {
     
   }
   
+  override public function updateColor( color:Int):Void{
+    font.setColor(color);    
+  }
+  
   override public function getStdPmsColor():String {
     return Std.string(stdPmsColor);
   }
@@ -534,12 +538,13 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getPrintType():String {
+    trace(printType);
     return printType;
   }
     
   private function setFontPrintType():Void{
     
-    //trace('setFontPrintType :: ', printType);
+    
     switch ( printType ){
       case CONST.STD_PMS_COLOR:{
         was_foiled = false;
@@ -591,16 +596,7 @@ class TextPlaceholderView extends APlaceholder {
       case CONST.LASER_COLOR:   fontScreenColor            = laserColor; 
     }
   }
-  
-  //private function unmountPmsColors():Void{
-  //  GLOBAL.Pages.removeEventListener(EVENT_ID.UPDATE_PMS1, onPms1Update);
-  //  GLOBAL.Pages.removeEventListener(EVENT_ID.UPDATE_PMS2, onPms2Update);
-  //}
-  
-  
-  
- 
-  
+
   private function setFontScreenColorForFoil():Void{
     switch ( foilColor ){
       case 'silver'     :fontScreenColor  = 0xE0E0E0;
