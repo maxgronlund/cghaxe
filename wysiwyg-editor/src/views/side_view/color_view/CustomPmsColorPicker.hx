@@ -17,6 +17,7 @@ class CustomPmsColorPicker extends View{
   private var colorInput:PMSColorTextField;
   //private var color_field:Shape;
   private var param:IParameter;
+  private var pmsParam:IParameter;
   private var pickerBmpData:BitmapData;
   private var pickerBackdrop:Bitmap;
   
@@ -70,9 +71,8 @@ class CustomPmsColorPicker extends View{
    
    private function updateColor():Void{
      // called from the text field
-     param.setString(colorInput.getText());
-     param.setInt(rgbColor);
-     controller.setParam(param);
+     pmsParam.setString(colorInput.getText());
+     controller.setParam(pmsParam);
    }
    
    private function setPmsColor():Void{
@@ -96,8 +96,6 @@ class CustomPmsColorPicker extends View{
      stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
      
      var pixelValue:UInt = pickerBackdrop.bitmapData.getPixel(Std.int(e.localX), Std.int(e.localY));
-     
-     param.setString('RGB');
      param.setInt(pixelValue);
      controller.setParam(param);
    }
@@ -109,10 +107,14 @@ class CustomPmsColorPicker extends View{
    
    override public function setString(id:String, s:String):Void{
      switch ( id ){
-      case 'id':{
-        param = new Parameter(s);
-        Application.addEventListener( s, onColorChanged);
-      }
+       case 'id':{
+         param = new Parameter(s);
+         //Application.addEventListener( s, onColorChanged);
+       }
+       case 'pms_value':{
+         pmsParam = new Parameter(s);
+         Application.addEventListener( s, onColorChanged);
+       }
      }
    }
    

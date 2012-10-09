@@ -538,7 +538,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getPrintType():String {
-    trace(printType);
+
     return printType;
   }
     
