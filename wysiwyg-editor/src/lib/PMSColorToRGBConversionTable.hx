@@ -1,13 +1,13 @@
 class PMSColorToRGBConversionTable{
   private var conversion_table:Array<PMSColorToRGBConversionRow>;
-  
+
   public function new(){
     conversion_table = new Array();
     construct_conversion_table();
   }
-  
+
   public function rgb_from_pms(pms:String):UInt{
-    var rgb:UInt = null;
+    var rgb:UInt = 0x000000;
     for(i in 0...conversion_table.length){
       if(conversion_table[i].pms_value == StringTools.trim(pms)){
         rgb = conversion_table[i].hex_value;
@@ -15,7 +15,7 @@ class PMSColorToRGBConversionTable{
     }
     return rgb;
   }
-  
+
   public function construct_conversion_table(){
     conversion_table.push(new PMSColorToRGBConversionRow("100", 244, 237, 124, 0xF4ED7C));
     conversion_table.push(new PMSColorToRGBConversionRow("101", 244, 237, 71, 0xF4ED47));
