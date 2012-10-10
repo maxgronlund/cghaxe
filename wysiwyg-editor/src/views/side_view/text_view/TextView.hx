@@ -27,7 +27,6 @@ class TextView extends PropertyView, implements IView{
   }
   
   override public function init():Void {
-    
     selectButton.init( controller,
         new Point(190,30), 
         new TextViewButton(), 
@@ -41,14 +40,13 @@ class TextView extends PropertyView, implements IView{
             new GarmondPrintButton(), 
             new Parameter( EVENT_ID.USE_GARAMOND));
             
-    //Application.addEventListener( EVENT_ID.USE_GARAMOND, onUseGaramond);
-    
     addTextfieldButton.init(controller,
                         new Point(150,22), 
                         new CreateTextfieldButton(), 
                         new Parameter( EVENT_ID.ADD_PLACEHOLDER));
 
     addTextfieldButton.fireOnMouseUp(false);
+    GLOBAL.Application.addEventListener(EVENT_ID.ADD_FONT_SCROLL_BAR, onAddFontScrollBar);
     GLOBAL.Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
   }
   
@@ -91,10 +89,10 @@ class TextView extends PropertyView, implements IView{
     fontScrollPane.addView(fontPane, 0,0);	
 
     // font scroll bar
-    addChild(fontScrollbar);
-    fontScrollbar.setSize(fontPane.getFloat('height'), fontScrollPane.getFloat('mask_height'));
-    fontScrollbar.x = fontScrollPane.getSize().x-2;
-    fontScrollbar.y = fontScrollPane.y;
+ //   addChild(fontScrollbar);
+ //   fontScrollbar.setSize(fontPane.getFloat('height'), fontScrollPane.getFloat('mask_height'));
+ //   fontScrollbar.x = fontScrollPane.getSize().x-2;
+ //   fontScrollbar.y = fontScrollPane.y;
     
     addChild(textAlign);
     textAlign.x = 8;
@@ -108,6 +106,18 @@ class TextView extends PropertyView, implements IView{
     fontSizePopup.x = 110;
     fontSizePopup.y = 92;
 
+  }
+  
+  private function onAddFontScrollBar(e:IKEvent):Void{
+    // font scroll bar
+    
+    if(fontPane.getFloat('height') > fontScrollPane.getFloat('mask_height')){
+      addChild(fontScrollbar);
+      fontScrollbar.setSize(fontPane.getFloat('height'), fontScrollPane.getFloat('mask_height'));
+      fontScrollbar.x = fontScrollPane.getSize().x-2;
+      fontScrollbar.y = fontScrollPane.y;
+    }
+    
   }
   
   override public function setFloat(id:String, f:Float):Void{

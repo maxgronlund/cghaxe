@@ -46,6 +46,8 @@ class EVENT_ID  {
   public static inline var LOAD_DEFAULT_PAGE:String         = "load_default_page";
   public static inline var LOAD_DEFAULT_SIDEVIEW:String     = "load_default_sideview";
   public static inline var LOAD_DEFAULT_FONT:String         = "load_default_font";
+  public static inline var SHOW_FONT_SET:String             = "show_font_set";
+  public static inline var ADD_FONT_SCROLL_BAR:String       = "add_font_scroll_bar";
   public static inline var PLACEHOLDER_SELECTED:String      = 'placeholder_selected';
   public static inline var SWF_LOADED:String               = 'font_loaded';
   public static inline var UPDATE_FONT_PANE:String          = 'update_font_pane';

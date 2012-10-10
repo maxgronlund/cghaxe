@@ -47,25 +47,7 @@ class PresetModel extends Model, implements IModel
       // building the pages
       parsePreset(preset);
       GLOBAL.shop_item_prices.parsePrices(preset);
-      
-/*      // loading front shots
-      parseProductPlaces(preset);
-      
-      // swap this to top of function and let parseProductPlaces pull right associated product to show
-      parsePresetAssociabled(preset);
-      
-      // parse designs for the sidebar
-      parseDesigns(preset);
-     
-      // user tags
-      parseUser(preset);
-      
-      // loading user content
-      parseXmlData(preset);
-      
-      // vector files
-      parseVectorFile(preset);
-*/ 
+ 
     }
   }
   
@@ -88,9 +70,17 @@ class PresetModel extends Model, implements IModel
   
   // building pages and getting url's for masks
   private function parsePreset(xml:Xml):Void{
+
+    trace(xml.toString());
     
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
+    }
+    
+    for( font_set in xml.elementsNamed("font-set") ) {
+      trace('font-set loaded');
+      GLOBAL.font_set = font_set.firstChild().nodeValue.toString();
+      trace(GLOBAL.font_set);
     }
     
     for( preset_quantity in xml.elementsNamed("preset-quantity") ) {
@@ -144,39 +134,6 @@ class PresetModel extends Model, implements IModel
     }
     
 
-    
-/*    var page_index:Int = 0;
-    
-    for(configurable_place in preset.elementsNamed("configurable-place") ) {
-      var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
-      //trace(configurable_place.toString());
-      param.setXml(configurable_place);
-      param.setInt(page_index);
-      dispatchParameter(param);
-      
-      for(is_associated_product in configurable_place.elementsNamed("is-associated-product") ) {
-        // store this somewhere
-        if(is_associated_product.firstChild().nodeValue.toString() == 'true'){
-          trace('page is ass prod', page_index);
-          associatedProducts.push(page_index); //<<---------------- temp hack not working
-        }
-      }
-      // store id so the default 'preset-associable' can find right page to send it's frontshot to
-      for(id in configurable_place.elementsNamed("id") ) {
-        // 
-      }
-      
-      for(default_associated_id in configurable_place.elementsNamed("default-associated-id") ) {
-        if(default_associated_id.firstChild() != null){
-          // store on a product place/ page_index
-          // remember to put it in the fileformat
-          // handle error when stored assProduct is missing
-          trace('default ass prod', default_associated_id.firstChild().nodeValue.toString(), 'on page:', page_index);
-        }
-      }
-      page_index++;
-    }
-    */
   }
   
   private function pickUpDesignsforAssProduct(xml:Xml):Void{

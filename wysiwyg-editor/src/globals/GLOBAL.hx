@@ -7,6 +7,7 @@ class GLOBAL  {
   
   // models
   public static var product_name:String;
+  public static var font_set;
   public static var Application:IModel;
 //  public static var Layout:IModel;
   public static var Menu:IModel;

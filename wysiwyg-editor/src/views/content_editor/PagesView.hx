@@ -124,7 +124,6 @@ class PagesView extends View, implements IView{
     for( i in 0...pages.length){
       addChild(pages[i]);
       pages[i].visible = false;
-      trace(i);
     }
    
   }

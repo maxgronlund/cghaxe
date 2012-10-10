@@ -232,7 +232,7 @@ class PageView extends View{
   }
   
   private function onPms1Update(e:IKEvent):Void{
-    trace('onPms1Update');
+    
     for(i in 0...placeholders.length) {
      
       if(placeholders[i].getPrintType() == CONST.CUSTOM_PMS1_COLOR){
@@ -243,7 +243,7 @@ class PageView extends View{
   }
   
   private function onPms2Update(e:IKEvent):Void{
-    trace('onPms1Update');
+    
     for(i in 0...placeholders.length) {
       
       if(placeholders[i].getPrintType() == CONST.CUSTOM_PMS2_COLOR){
@@ -376,7 +376,7 @@ class PageView extends View{
     //trace(xml.toString());
     
     for( url in xml.elementsNamed("url") ) {
-      trace(url.toString());
+      
       addBitmapPlaceholder(url, posX, posY);
       //for( url in placeholder.elementsNamed("url") ) {
       //  trace(url.toString());
@@ -688,7 +688,7 @@ class PageView extends View{
     if(hide_mask_url == '' || hide_mask_url == null ||  hide_mask_url == '/assets/fallback/hide_mask.png'){
       allImagesLoaded();
     }else{
-      trace('I got hide mask');
+      
       hideMaskPresent = true;
       var request:URLRequest  = new URLRequest(hide_mask_url);
       printMaskLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadHideMaskComplete);
@@ -703,7 +703,7 @@ class PageView extends View{
   }
   
   private function onLoadHideMaskComplete(e:Event):Void{
-    trace('onLoadHideMaskComplete');
+    
     printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadHideMaskComplete);
     printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, hideMaskErrorHandler);
     hideMask                    = e.target.loader.content;

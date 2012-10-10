@@ -65,13 +65,11 @@ class ApplicationModel extends Model, implements IModel
       case 'user_preset':{
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
-                      //'load price xml from backend',
                       'pass preset',
-                      //'pass preset price',
                       'add pages to stage',
-                      'set defaults'
-                      //'init zoom'
-                      //'reset mouse'
+                      'set defaults',
+                      'show fonts'
+
                       ];
         loadSeq();
       }
@@ -79,15 +77,11 @@ class ApplicationModel extends Model, implements IModel
       case 'system_preset':{
         
         loadStage = [ 'reset wysiwyg',
-                      'load preset files from backend',
-                      //'load price xml from backend',  
+                      'load preset files from backend', 
                       'pass preset',
-                      //'pass preset price',
                       'add pages to stage',
                       'set defaults',
-                      
-                      //'init zoom'
-                      //'reset mouse'
+                      'show fonts'
                       ];
         loadSeq();
       }
@@ -183,38 +177,24 @@ class ApplicationModel extends Model, implements IModel
       case 'configure preset side view': configurePresetSideView();
       case 'set defaults':{
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_SIDEVIEW));
-        dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_FONT));
         dispatchParameter(new Parameter(EVENT_ID.DESELECT_PLACEHOLDERS));
         dispatchParameter(new Parameter(EVENT_ID.SET_DEFAULT_TOOL));
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_PAGE));
         loadSeq();
       }
       case 'show design page':{
-
-        
         var param:IParameter = new Parameter( EVENT_ID.PAGE_SELECTED);
         param.setInt(0);
         Pages.dispatchParameter(param);
         
         loadSeq();
       }
-      //case 'calculate prices':{
-      //  trace('calculate prices');
-      //  Pages.calculatePrice();
-      //  loadSeq();
-      //}
-      
-      //case 'init zoom':{
-      //  trace('init zoom');
-      //  //dispatchXML(EVENT_ID.INIT_ZOOM, pageDesignXml);
-      //  loadSeq();                                               
-      //}
-      
-//      case 'set zoom and pos':{
-//        dispatchParameter(new Parameter(EVENT_ID.GET_PAGE_SIZE));
-//        dispatchParameter(new Parameter(EVENT_ID.SET_PAGE_POS_AND_ZOOM));
-//        loadSeq();
-//      }
+      case 'show fonts':{
+        dispatchParameter(new Parameter(EVENT_ID.SHOW_FONT_SET));
+        dispatchParameter(new Parameter(EVENT_ID.ADD_FONT_SCROLL_BAR));
+        dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_FONT));
+        loadSeq();
+      }
       case 'clead selected page':{
         dispatchParameter(new Parameter(EVENT_ID.TRASH_PLACEHOLDERS));
         loadSeq();

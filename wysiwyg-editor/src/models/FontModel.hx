@@ -38,7 +38,15 @@ class FontModel  {
   }
   
   private function onLoadDefaultFont(e:IKEvent):Void{
-    fontPackage = SystemFonts.calligraphic;
+    
+    switch(GLOBAL.font_set){
+      case 'se', 'dk', 'en', 'de', 'fi', 'no', 'ru': {
+        fontPackage = SystemFonts.avant_garde_gothic;
+      }
+      case 'pl':{
+        fontPackage = SystemFonts.allegro;
+      }
+    }
     fileName    = fontPackage.fileName(0);
     fontSize    = fontPackage.defaultSize(0);
     styleName   = fontPackage.styleName(0);

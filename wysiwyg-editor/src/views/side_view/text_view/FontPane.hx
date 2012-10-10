@@ -16,7 +16,7 @@ class FontPane extends View, implements IView{
 	
   public function new(textController:IController){	
     super(textController);
-    //backdrop				= new TestBack();
+    backdrop				= new TestBack();
     bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
     backdrop				= new Bitmap(bmpData);
     
@@ -24,6 +24,8 @@ class FontPane extends View, implements IView{
     buttonIndex	= 0;
     selectedButton = 0;
     buttonPos	= 0;
+
+    Application.addEventListener(EVENT_ID.SHOW_FONT_SET, onShowFontSet);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_FONT, onLoadDefaultFont);
     Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
   }
@@ -35,38 +37,44 @@ class FontPane extends View, implements IView{
   override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
     addChild(backdrop);
-    addButtons();
+    //addButtons();
     
   }
   
+  private function onShowFontSet(e:IKEvent):Void{
+    addButtons();
+  }
+  
   private function addButtons():Void{
-    // algerian
-    addButton( new AllegroButton(), SystemFonts.allegro);
-    addButton( new AmazeButton(), SystemFonts.amaze);
-    addButton( new AvantGardeGothicButton(), SystemFonts.avant_garde_gothic);
-    addButton( new BickhamScriptButton(), SystemFonts.bickham_script);
-    addButton( new BurguesScriptButton(), SystemFonts.burgues_script);
-    addButton( new CezanneButton(), SystemFonts.cezanne);
-    addButton( new CalligraphicButton(), SystemFonts.calligraphic);
-    addButton( new CorsivaButton(), SystemFonts.corsiva );
-    addButton( new CopperplateButton(), SystemFonts.copperplate );
-    addButton( new EccentricButton(), SystemFonts.eccentric );
-    addButton( new FaustusButton(), SystemFonts.faustus );
-    addButton( new FinehandButton(), SystemFonts.finehand );
-    addButton( new GaramondButton(), SystemFonts.garamond );
-    addButton( new MutluButton(), SystemFonts.mutlu__ornamental );
-    addButton( new MediciScriptButton(), SystemFonts.medici_script );
-    addButton( new PopplResidenzButton(), SystemFonts.poppl_residenz );
-    addButton( new RenaissanceButton(), SystemFonts.renaissance );
-    addButton( new SignetRoundhandButton(), SystemFonts.signet_roundhand );
-    addButton( new StaropolskiButton(), SystemFonts.staropolski );
-    //addButton( new TaggetsButton(), SystemFonts.taggets);
-    addButton( new TimesRomanButton(), SystemFonts.times_roman);
-    addButton( new TrajanProButton(), SystemFonts.trajan_pro );
-    addButton( new VolanteButton(), SystemFonts.volante );
-    
-    
-    
+    trace('font set', GLOBAL.font_set);
+   switch(GLOBAL.font_set){
+     case 'se', 'dk', 'en', 'de', 'fi', 'no', 'ru': {
+     addButton( new AvantGardeGothicButton(), SystemFonts.avant_garde_gothic);
+     addButton( new BickhamScriptButton(), SystemFonts.bickham_script);
+     addButton( new BurguesScriptButton(), SystemFonts.burgues_script);
+     addButton( new CezanneButton(), SystemFonts.cezanne);
+     addButton( new CalligraphicButton(), SystemFonts.calligraphic);
+     addButton( new CorsivaButton(), SystemFonts.corsiva );
+     addButton( new CopperplateButton(), SystemFonts.copperplate );
+     addButton( new EccentricButton(), SystemFonts.eccentric );
+     addButton( new FinehandButton(), SystemFonts.finehand );
+     addButton( new GaramondButton(), SystemFonts.garamond );
+     addButton( new MutluButton(), SystemFonts.mutlu__ornamental );
+     addButton( new MediciScriptButton(), SystemFonts.medici_script );
+     addButton( new PopplResidenzButton(), SystemFonts.poppl_residenz);
+     addButton( new TimesRomanButton(), SystemFonts.times_roman);
+     addButton( new TrajanProButton(), SystemFonts.trajan_pro );
+     }
+     case 'pl':{
+     addButton( new AllegroButton(), SystemFonts.allegro);
+     addButton( new AmazeButton(), SystemFonts.amaze);
+     addButton( new FaustusButton(), SystemFonts.faustus );
+     addButton( new RenaissanceButton(), SystemFonts.renaissance );
+     addButton( new SignetRoundhandButton(), SystemFonts.signet_roundhand );
+     addButton( new StaropolskiButton(), SystemFonts.staropolski );
+     addButton( new VolanteButton(), SystemFonts.volante );
+     }
+   }
     backdrop.height = this.height;	
   }
   
