@@ -2,7 +2,6 @@ import flash.text.TextFormat;
 
 class FontModel  {
 
-  
   public var fontPackage(default, setFontPackage): FontPackage;
   function setFontPackage(s) return fontPackage = s
   
@@ -29,7 +28,6 @@ class FontModel  {
 	
 	public var anchorPoint(default, setAnchorPoint): Float;
 	function setAnchorPoint(f) return anchorPoint = f
-  
   
   private var xml:Xml;
   
