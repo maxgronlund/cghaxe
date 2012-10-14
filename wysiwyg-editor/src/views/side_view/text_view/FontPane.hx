@@ -46,7 +46,7 @@ class FontPane extends View, implements IView{
   }
   
   private function addButtons():Void{
-    trace('font set', GLOBAL.font_set);
+//    trace('font set', GLOBAL.font_set);
    switch(GLOBAL.font_set){
      case 'se', 'dk', 'en', 'de', 'fi', 'no', 'ru': {
      addButton( new AvantGardeGothicButton(), SystemFonts.avant_garde_gothic);

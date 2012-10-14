@@ -79,7 +79,7 @@ class Main
     trace('------------------------------------------------------');
     trace('wysiwyg dev vertion Zebra',CompileDate.getDate());
     trace('------------------------------------------------------');
-    trace(StringTools.urlDecode("%26"));
+//    trace(StringTools.urlDecode("%26"));
     
     version = new VersionCheck();
     

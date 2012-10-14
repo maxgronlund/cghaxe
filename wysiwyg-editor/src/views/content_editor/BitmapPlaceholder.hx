@@ -51,7 +51,13 @@ class BitmapPlaceholder extends APlaceholder{
   private var foilShadow:Sprite;
   private var foilShine:Sprite;
   private var foilBitmapDataForOverlay:BitmapData;
+  //private var enableScaling:Bool;
   
+  private var sizeX:Float;
+  private var sizeY:Float;
+  private var bmpSizeX:Float;
+  private var bmpSizeY:Float;
+
   
   public function new(parrent:PageView, id:Int, model:IModel, imageUrl:String){	
     
@@ -95,20 +101,25 @@ class BitmapPlaceholder extends APlaceholder{
     foilShine.graphics.drawRect(0,0,1024,1017);
     foilShine.graphics.endFill();
     
+    
+    
   }
   
   private function onMouseOver(e:MouseEvent):Void{
     removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
+    
+
   }
   
   private function onMouseOut(e:MouseEvent){
     removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
-  }
-
+    
+  } 
+    
   private function onMouseDown(e:MouseEvent){	
     removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     stage.addEventListener(MouseEvent.MOUSE_UP, onMouseUp);
@@ -140,7 +151,7 @@ class BitmapPlaceholder extends APlaceholder{
     imageLoader.load(new URLRequest(imageUrl));
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
-    
+
   }
   
   private function onLoadImageComplete(e:Event):Void{
@@ -148,10 +159,35 @@ class BitmapPlaceholder extends APlaceholder{
     backdrop = e.target.loader.content;
     backdrop.scaleX *= 0.5;
     backdrop.scaleY *= 0.5;
-    addChild(backdrop);
+    
+    bmpSizeX  = backdrop.width;
+    bmpSizeY  = backdrop.height;
+    
+    
+    //trace('before folify',this.width, this.height);
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     foilify('silver');
+    sizeX = this.width;
+    sizeY = this.height;
+    addChild(backdrop);
+
+    
+    
 	}
+	
+	
+	
+
+	
+	public function setSize(size:Float):Void{
+
+    this.width  = sizeX * size;
+    this.height = sizeY * size;
+    //updateHandles(size);
+    
+  }
+  
+ 
    
   private function handleKeyboard(b:Bool):Void{
     if( b){
@@ -261,6 +297,14 @@ class BitmapPlaceholder extends APlaceholder{
     return 'bitmap_placeholder';
   }
   
+  override public function getPms1Color():String{
+    return 'foo';
+  }
+  
+  override public function getPms2Color():String{
+    return 'foo';
+  }
+  
   override public function getPrintType():String {
     return printType;
   }
@@ -343,4 +387,6 @@ class BitmapPlaceholder extends APlaceholder{
       foiled = false;
     }
   }
+  
+
 }

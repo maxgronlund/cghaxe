@@ -71,16 +71,12 @@ class PresetModel extends Model, implements IModel
   // building pages and getting url's for masks
   private function parsePreset(xml:Xml):Void{
 
-    trace(xml.toString());
-    
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
     
     for( font_set in xml.elementsNamed("font-set") ) {
-      trace('font-set loaded');
       GLOBAL.font_set = font_set.firstChild().nodeValue.toString();
-      trace(GLOBAL.font_set);
     }
     
     for( preset_quantity in xml.elementsNamed("preset-quantity") ) {
@@ -230,7 +226,7 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);
     
-    trace(variables.xml_data);
+    
   }
   
   public function buyNow(e:IKEvent):Void{
