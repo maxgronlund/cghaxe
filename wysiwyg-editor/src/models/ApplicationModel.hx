@@ -68,7 +68,8 @@ class ApplicationModel extends Model, implements IModel
                       'pass preset',
                       'add pages to stage',
                       'set defaults',
-                      'show fonts'
+                      'show fonts',
+                      'load custom pms'
 
                       ];
         loadSeq();
@@ -81,7 +82,8 @@ class ApplicationModel extends Model, implements IModel
                       'pass preset',
                       'add pages to stage',
                       'set defaults',
-                      'show fonts'
+                      'show fonts',
+                      'load custom pms'
                       ];
         loadSeq();
       }
@@ -95,7 +97,7 @@ class ApplicationModel extends Model, implements IModel
                       //'pass preset price',
                       'add pages to stage',
                       'set defaults',
-                      
+                      'load custom pms'
                       //'init zoom'
                       //'reset mouse'
                       ];
@@ -204,6 +206,11 @@ class ApplicationModel extends Model, implements IModel
         var param:IParameter = new Parameter(EVENT_ID.PRESET_PAGEDESIGN_XML);
         param.setXml(pageDesignXml);
         dispatchParameter(param);
+      }
+      
+      case 'load custom pms':{
+        dispatchParameter(new Parameter(EVENT_ID.LOAD_CUSTOM_PMS_COLORS));
+        loadSeq();
       }
     }
   }

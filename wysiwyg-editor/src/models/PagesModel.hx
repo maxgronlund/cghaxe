@@ -72,7 +72,7 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onPageXmlLoaded(e:IKEvent):Void{
-
+    //!!! why this only thing happens is that the event is getting casted to a parameter???
     var param:IParameter        = new Parameter(EVENT_ID.PAGE_XML_LOADED);
     param.setXml(e.getXml());
     pageModels[e.getInt()].dispatchParameter(param);
@@ -241,9 +241,12 @@ class PagesModel extends Model, implements IModel {
         fileStr += '\t<pos_x>'  + Std.string(GLOBAL.pos_x) + '</pos_x>\n';
         fileStr += '\t<pos_y>'  + Std.string(GLOBAL.pos_y) + '</pos_y>\n';
         fileStr += '</stage>\n';
+        fileStr += '\t<pms_1>'   + GLOBAL.pms1ColorString + '</pms_1>\n';
+        fileStr += '\t<pms_2>'   + GLOBAL.pms2ColorString + '</pms_2>\n';
         for( i in 0...pageModels.length){
         	fileStr += (pageModels[i].getXmlString(CONST.XML_FILE)).toString();
         }
+        //trace(fileStr);
         return fileStr;
       }
       case CONST.PRINT_TYPES:{

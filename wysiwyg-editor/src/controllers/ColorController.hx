@@ -22,7 +22,7 @@ class ColorController extends Controller, implements IController{
      
     }	
   }
-  
+
   private function onStdPmsColorSelected(param:IParameter):Void{
     GLOBAL.printType    = CONST.STD_PMS_COLOR;
     GLOBAL.stdPmsColor  = param.getUInt();
@@ -32,8 +32,8 @@ class ColorController extends Controller, implements IController{
   }
   
   private function onPms1ColorSelected(param:IParameter):Void{
-    GLOBAL.printType    = CONST.CONST.CUSTOM_PMS1_COLOR;
-    GLOBAL.pms1Color    = param.getInt();
+    GLOBAL.printType        = CONST.CONST.CUSTOM_PMS1_COLOR;
+    GLOBAL.pms1Color        = param.getInt();
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);
@@ -48,11 +48,9 @@ class ColorController extends Controller, implements IController{
   }
   
   private function updatePms1Color(param:IParameter):Void{
-    trace('updatePms1Color');
     // trickered by the text field
     GLOBAL.pms1ColorString    = param.getString();
     GLOBAL.pms1Color          = convertPmsStrToRgb(GLOBAL.pms1ColorString);
-    trace('updateColor', GLOBAL.pms1ColorString);
     param.setInt(GLOBAL.pms1Color);
     // update the color picker
     Application.dispatchParameter(param);
@@ -62,7 +60,6 @@ class ColorController extends Controller, implements IController{
   }
   
   private function updatePms2Color(param:IParameter):Void{
-    trace('updatePms2Color');
     // trickered by the text field
     GLOBAL.pms2ColorString    = param.getString();
     GLOBAL.pms2Color          = convertPmsStrToRgb(GLOBAL.pms2ColorString);
@@ -94,6 +91,8 @@ class ColorController extends Controller, implements IController{
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);
   }
+  
+  
 
 	//private function onGreetinColorSelected(param:IParameter):Void{
   //  

@@ -27,7 +27,7 @@ class ColorView extends PropertyView, implements IView{
     backdrop            = new BlankBack();
     
     Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
-    
+    Application.addEventListener(EVENT_ID.LOAD_CUSTOM_PMS_COLORS, onLoadCustomPmsColors);
     
     stdPmsColorPicker       = new StdPmsColorPicker(controller);
     customPms1ColorPicker   = new CustomPmsColorPicker(controller);
@@ -59,6 +59,11 @@ class ColorView extends PropertyView, implements IView{
     customColor2Text 	      = new FormatedText('helvetica', 'CUSTOM PMS 2', 11, false);
     foilColorText 	        = new FormatedText('helvetica', 'FOIL', 11, false);
     colorText        	      = new FormatedText('helvetica', 'LASER COLOR', 11, false);
+  }
+  
+  private function onLoadCustomPmsColors(e:IKEvent):Void{
+    customPms1ColorPicker.setString('pms code', GLOBAL.pms1ColorString);
+    customPms2ColorPicker.setString('pms code', GLOBAL.pms2ColorString);
   }
   
   
@@ -185,6 +190,8 @@ class ColorView extends PropertyView, implements IView{
     
     customPms1ColorPicker.setString("id", EVENT_ID.PMS1_COLOR_SELECTED);
     customPms2ColorPicker.setString("id", EVENT_ID.PMS2_COLOR_SELECTED);
+    
+    
     
   }
   

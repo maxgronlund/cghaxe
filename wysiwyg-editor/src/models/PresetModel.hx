@@ -10,7 +10,6 @@ import flash.events.Event;
 import flash.events.IOErrorEvent;
 import flash.geom.Point;
 import flash.Vector;
-
 import flash.external.ExternalInterface;
 
 
@@ -20,15 +19,16 @@ class PresetModel extends Model, implements IModel
   private var assProdIndex:UInt;                //<<------------- hack for test
   private var productSelected:String;
   private var loader:URLLoader;
+  private var pms_converter:PMSColorToRGBConverter;
   
   
   public function new(){
     super();
-    productSelected = 'na';
-   
-    loader = new URLLoader();
-    associatedProducts = new Vector<Int>();
-    assProdIndex = 0;
+    productSelected       = 'na';
+    loader              = new URLLoader();
+    associatedProducts  = new Vector<Int>();
+    pms_converter       = new PMSColorToRGBConverter();
+    assProdIndex        = 0;
   }
   
   override public function init():Void{
@@ -168,7 +168,7 @@ class PresetModel extends Model, implements IModel
 
   
   private function parseXmlData(xml_data:Xml):Void{
-//    trace(xml_data.toString());
+    //trace(xml_data.toString());
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {
@@ -186,12 +186,18 @@ class PresetModel extends Model, implements IModel
       dispatchParameter(param);
     }
     
-    //for( language in xml_data.elementsNamed('language')){
-    //  for( name in language.elementsNamed('name')){
-    //    GLOBAL.language_name = name.firstChild().nodeValue.toString();
-    //  }
-    //}
+    for( pms_1 in xml_data.elementsNamed('pms_1') ) {
+      GLOBAL.pms1ColorString  = pms_1.firstChild().nodeValue.toString();
+      
+    }
     
+    for( pms_2 in xml_data.elementsNamed('pms_2') ) {
+      GLOBAL.pms2ColorString  = pms_2.firstChild().nodeValue.toString();
+      
+    }
+    
+    GLOBAL.pms1Color        = pms_converter.convertPMSToRGB(GLOBAL.pms1ColorString);  
+    GLOBAL.pms2Color        = pms_converter.convertPMSToRGB(GLOBAL.pms2ColorString);
   }
   
   public function savePreset(e:IKEvent):Void{

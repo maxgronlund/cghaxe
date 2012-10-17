@@ -27,7 +27,7 @@ class CustomPmsColorPicker extends View{
     pms_id = EVENT_ID.PMS1_COLOR_SELECTED;
     colorInput = new PMSColorTextField();
     colorInput.setText("BLUE");
-    colorInput.textField.addEventListener(TextEvent.TEXT_INPUT, onTextChange);
+    colorInput.textField.addEventListener(KeyboardEvent.KEY_UP, onTextChange);
 		colorInput.textField.addEventListener(FocusEvent.FOCUS_OUT, onTextFocusOut);
 		colorInput.textField.addEventListener(KeyboardEvent.KEY_DOWN, onKeyDown);
    }
@@ -36,6 +36,9 @@ class CustomPmsColorPicker extends View{
      backdrop           = new CustomPMSPickerBitmap();
      pickerBmpData      = new BitmapData(33,30,false,0x000000 );
      pickerBackdrop     = new Bitmap(pickerBmpData);
+     
+     //colorInput.setText(GLOBAL.pms1ColorString);
+      //setInt('color', rgbColor);
      colorInput.setText('000000');
      rgbColor           = 0;
    }
@@ -71,6 +74,7 @@ class CustomPmsColorPicker extends View{
    
    private function updateColor():Void{
      // called from the text field
+     
      pmsParam.setString(colorInput.getText());
      controller.setParam(pmsParam);
    }
@@ -115,6 +119,10 @@ class CustomPmsColorPicker extends View{
          pmsParam = new Parameter(s);
          Application.addEventListener( s, onColorChanged);
        }
+       case 'pms code':{
+         colorInput.setText(s);
+         updateColor();
+       }
      }
    }
    
@@ -122,14 +130,12 @@ class CustomPmsColorPicker extends View{
      setInt( 'color', e.getInt() );
    }
    
-   //private function convertPmsStringToRGB(s:String):Void{
-   //  // temp code for test
-   //  setInt( 'color', Std.parseInt(s));
-   //}
+
    
    override public function setInt(id:String, i:Int):Void{
      switch ( id ){
        case 'color':{
+         trace(i);
          rgbColor = i;
          removeChild(pickerBackdrop);
          pickerBackdrop = null;

@@ -130,7 +130,7 @@ class EVENT_ID  {
   public static inline var UPDATE_PLACEHOLDER:String        = "update_placeholder";
   public static inline var UPDATE_PMS1:String               = "update_pms1";
   public static inline var UPDATE_PMS2:String               = "update_pms2";
-  
+  public static inline var LOAD_CUSTOM_PMS_COLORS:String    = "load_custim_pms_colors";
   
   // in the menu
   public static inline var SHOW_CARD:String                 = "show_card";
@@ -145,6 +145,7 @@ class EVENT_ID  {
   public static inline var TEXT_TOOL:String                 = "text_tool";
   public static inline var GRID_ON:String                   = "grid_on";
   public static inline var SET_DEFAULT_TOOL:String          = "set_default_tool";
+  
   //public static inline var SELECT_MOVE_TOOL:String          = "select_move_tool";
   
 

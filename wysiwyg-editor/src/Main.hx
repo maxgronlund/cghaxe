@@ -185,6 +185,10 @@ class Main
     GLOBAL.printType        = CONST.STD_PMS_COLOR;
     GLOBAL.price_file_url   = 'na';
     GLOBAL.shop_item_id     = -1;
+    
+    GLOBAL.pms1ColorString  = '541';
+    GLOBAL.pms2ColorString  = '229';
+    
   }
   
   private function setGlobalViews():Void{

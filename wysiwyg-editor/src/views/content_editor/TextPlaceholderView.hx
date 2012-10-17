@@ -92,37 +92,37 @@ class TextPlaceholderView extends APlaceholder {
   public function new(pageView:PageView, id:Int, model:IModel, text:String){	
     
     super(pageView, id, model, text);
+    addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+    GLOBAL.Application.addEventListener(EVENT_ID.DESKTOP_VIEW_MOVE, onDesktopViewMove);
+    GLOBAL.Font.anchorPoint           = 0;
+    
     this.pageView                      = pageView;
     this.id                           = id;
     this.model                        = model;
     this.modelId                      = model.getInt('pageId');
-    designMode                        = GLOBAL.edit_mode == 'system_design';
-    textWithTags                      = text;
-    //this.alpha                        = 0.85;
-    fontPosX                          = 0;
-    mouseOver                         = false;
-    anchorPoint                       = GLOBAL.Font.anchorPoint;
-    GLOBAL.Font.anchorPoint           = 0;
-    previewMode                       = true;
-    focus                             = false;
-    tagsIsVisible                     = false;
-    storedAlign                       = GLOBAL.Font.fontAlign;
-    repossition                       = false;
-    addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-    GLOBAL.Application.addEventListener(EVENT_ID.DESKTOP_VIEW_MOVE, onDesktopViewMove);
-    collition                         = false;
-    foiled                            = false;
-    was_foiled                        = false;
+    this.designMode                   = GLOBAL.edit_mode == 'system_design';
+    this.textWithTags                 = text;
+    this.fontPosX                     = 0;
+    this.mouseOver                    = false;
+    this.anchorPoint                  = GLOBAL.Font.anchorPoint;
+                                      
+    this.previewMode                  = true;
+    this.focus                        = false;
+    this.tagsIsVisible                = false;
+    this.storedAlign                  = GLOBAL.Font.fontAlign;
+    this.repossition                  = false;
+    this.collition                    = false;
+    this.foiled                       = false;
+    this.was_foiled                   = false;
 
     
-    loaded_fonts = new Hash();
-    
-    silverFoilTexture   = new SilverFoilTexture();
-    goldFoilTexture     = new GoldFoilTexture();
-    yellowFoilTexture   = new YellowFoilTexture();
-    redFoilTexture      = new RedFoilTexture();
-    greenFoilTexture    = new GreenFoilTexture();
-    blueFoilTexture     = new BlueFoilTexture();
+    loaded_fonts                      = new Hash();
+    silverFoilTexture                 = new SilverFoilTexture();
+    goldFoilTexture                   = new GoldFoilTexture();
+    yellowFoilTexture                 = new YellowFoilTexture();
+    redFoilTexture                    = new RedFoilTexture();
+    greenFoilTexture                  = new GreenFoilTexture();
+    blueFoilTexture                   = new BlueFoilTexture();
     
   }
   
@@ -284,8 +284,8 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
     str += '\t\t\t<std_pms_color>' + Std.string(stdPmsColor) + '</std_pms_color>\n';
     str += '\t\t\t<laser-color>' + Std.string(laserColor) + '</laser-color>\n';
-    str += '\t\t\t<pms1-color>' + Std.string(pms1Color) + '</pms1-color>\n';
-    str += '\t\t\t<pms2-color>' + Std.string(pms2Color) + '</pms2-color>\n';
+    //str += '\t\t\t<pms1-color>' + Std.string(pms1Color) + '</pms1-color>\n';
+    //str += '\t\t\t<pms2-color>' + Std.string(pms2Color) + '</pms2-color>\n';
     str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
     str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
     str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
@@ -405,7 +405,7 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function loadFont():Void{
-//    trace('load font');
+
     fontFileName      = GLOBAL.Font.fileName;
     fontSize          = GLOBAL.Font.fontSize;       
     fontAlign         = GLOBAL.Font.fontAlign;
@@ -584,12 +584,12 @@ class TextPlaceholderView extends APlaceholder {
     switch ( printType ){
       case CONST.STD_PMS_COLOR: fontScreenColor           = stdPmsColor;
       case CONST.CUSTOM_PMS1_COLOR:{
-        fontScreenColor = pms1Color;
-        //GLOBAL.Application.addEventListener(EVENT_ID.PMS1_COLOR_SELECTED, onPms1Update);
+        fontScreenColor     = pms1Color;
+
       } 
       case CONST.CUSTOM_PMS2_COLOR:{
-        fontScreenColor = pms2Color;
-        //GLOBAL.Application.addEventListener(EVENT_ID.PMS2_COLOR_SELECTED, onPms2Update);
+        fontScreenColor     = pms2Color;
+
       }   
       case CONST.FOIL_COLOR:    setFontScreenColorForFoil();
       case CONST.GARAMOND:      setFontScreenColorForFoil(); 

@@ -55,7 +55,7 @@ class AController extends EventDispatcher
 	
 	
 // getters
-	public function getController(c:String):IController{
+	public function getController(id:String):IController{
 		trace("getController: must be overriden in a subclass");
 		return null;
 	}
@@ -63,19 +63,19 @@ class AController extends EventDispatcher
 		trace("getPoint: must be overriden in a subclass");
 		return null;
 	}
-	public function getString(s:String):String{
+	public function getString(id:String):String{
 		trace("getString: must be overriden in a subclass");
 		return null;
 	}
-	public function getInt(s:String):Int{
+	public function getInt(id:String):Int{
 		trace("getInt: must be overriden in a subclass");
 		return 0;
 	}
-	public function getBool(s:String, index:UInt):Bool{
+	public function getBool(id:String, index:UInt):Bool{
 		trace("getBool: must be overriden in a subclass");
 		return false;
 	}
-	public function getFloat(s:String):Float{
+	public function getFloat(id:String):Float{
 		trace("getFloat: must be overriden in a subclass");
 		return 0;
 	}
