@@ -526,6 +526,21 @@ class PageView extends View{
     hitPoint.y = e.stageY * GLOBAL.Zoom.toMouse();
 
   }
+  
+  public function enableResize(e:MouseEvent):Void{
+
+    stage.addEventListener(MouseEvent.MOUSE_MOVE, resizePlaceholder);
+    startPoint.x = inFocus.x;
+    startPoint.y = inFocus.y;
+    hitPoint.x = e.stageX * GLOBAL.Zoom.toMouse();
+    hitPoint.y = e.stageY * GLOBAL.Zoom.toMouse();
+
+  }
+  
+  public function disableResize(e:MouseEvent):Void{
+    stage.removeEventListener(MouseEvent.MOUSE_MOVE, resizePlaceholder);
+    hitTest();
+  }
    
   public function disableMove():Void{
     stage.removeEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
@@ -620,6 +635,27 @@ class PageView extends View{
     inFocus.x = pos;
     pos = ( moveY - hitPoint.y) + startPoint.y;
     inFocus.y = pos;
+  }
+  
+  private function resizePlaceholder(e:MouseEvent){
+    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
+    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
+    
+    var posX:Float = ( moveX - hitPoint.x) + startPoint.x;
+    var posY:Float = ( moveY - hitPoint.y) + startPoint.y;
+    
+    var inFocusWidth:Float = Math.abs(inFocus.x-moveX);
+    var inFocusHeight:Float = Math.abs(inFocus.y-moveY+100);
+    
+    if((inFocusWidth/inFocus.width) < (inFocusHeight/inFocus.height)){
+      
+      inFocus.setSize(inFocusWidth, inFocusWidth/inFocus.widthHeightRatio);
+    } else {
+      inFocus.setSize(inFocus.widthHeightRatio*inFocusHeight, inFocusHeight);
+    }
+    
+    
+    
   }
   
   //!!! is this in use

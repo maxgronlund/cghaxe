@@ -11,15 +11,13 @@ class Rectangle extends Sprite
 {
   private var lines:Vector<Shape>;
   
-  public function new(){
+  public function new(width:Int=0, height:Int=0){
     super();
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
+    //setSize(width, height);
   }
   
-  
-  
-  
-  
+    
   private function onAddedToStage(e:Event):Void{	
   	removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   	addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -58,10 +56,7 @@ class Rectangle extends Sprite
     line.graphics.lineTo(end.x, end.y);
     addChild(line);
     lines.push(line);
-  }
-  
-  
-  
+  }  
   
   //override private function onMouseOut(e:MouseEvent){	
   //  super.onMouseOut(e);
