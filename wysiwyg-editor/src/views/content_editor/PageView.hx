@@ -638,22 +638,15 @@ class PageView extends View{
   }
   
   private function resizePlaceholder(e:MouseEvent){
-    var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
-    var moveY:Float = e.stageY * GLOBAL.Zoom.toMouse();
     
-    var posX:Float = ( moveX - hitPoint.x) + startPoint.x;
-    var posY:Float = ( moveY - hitPoint.y) + startPoint.y;
-    
-    var inFocusWidth:Float = Math.abs(inFocus.x-moveX);
-    var inFocusHeight:Float = Math.abs(inFocus.y-moveY+100);
+    var inFocusWidth:Float = Math.abs(inFocus.x-this.mouseX);
+    var inFocusHeight:Float = Math.abs(inFocus.y-this.mouseY);
     
     if((inFocusWidth/inFocus.width) < (inFocusHeight/inFocus.height)){
-      
       inFocus.setSize(inFocusWidth, inFocusWidth/inFocus.widthHeightRatio);
     } else {
       inFocus.setSize(inFocus.widthHeightRatio*inFocusHeight, inFocusHeight);
     }
-    
     
     
   }
