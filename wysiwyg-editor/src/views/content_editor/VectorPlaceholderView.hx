@@ -147,7 +147,6 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   public function color(_color:UInt):Void {
-    
     pmsColor = _color;
     colorTransform = vectorMovie.transform.colorTransform;
     colorTransform.color = _color;

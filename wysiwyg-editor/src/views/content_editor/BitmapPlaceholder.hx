@@ -17,7 +17,7 @@ import flash.net.URLRequest;
 import flash.system.ApplicationDomain; 
 import flash.system.LoaderContext;
 import flash.system.SecurityDomain;
-
+import flash.geom.ColorTransform;
 
 class BitmapPlaceholder extends APlaceholder{
 	
@@ -51,6 +51,9 @@ class BitmapPlaceholder extends APlaceholder{
   private var foilShadow:Sprite;
   private var foilShine:Sprite;
   private var foilBitmapDataForOverlay:BitmapData;
+  
+  private var colorTransform:ColorTransform;
+  private var default_colorTransform:ColorTransform;
   //private var enableScaling:Bool;
   
   private var sizeX:Float;
@@ -131,8 +134,8 @@ class BitmapPlaceholder extends APlaceholder{
     stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 
     if(MouseTrap.capture()){
-      if(this.mouseX > this.width-41){
-        if(this.mouseY > this.height-41){
+      if(this.mouseX > bmpSizeX-41){
+        if(this.mouseY > bmpSizeY-41){
           startResize(e);
         } else {
           startDragging(e);
@@ -190,8 +193,17 @@ class BitmapPlaceholder extends APlaceholder{
   private function onLoadImageComplete(e:Event):Void{
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
     backdrop = e.target.loader.content;
+    
     backdrop.scaleX *= 0.5;
     backdrop.scaleY *= 0.5;
+    
+    default_colorTransform = backdrop.transform.colorTransform;
+    
+    //color(0xFF0000);
+    //foilify('silver');
+    //foilify('gold');
+    //unfoilify();
+    //uncolor();
     
     bmpSizeX  = backdrop.width;
     bmpSizeY  = backdrop.height;
@@ -199,7 +211,6 @@ class BitmapPlaceholder extends APlaceholder{
     
     //trace('before folify',this.width, this.height);
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    //foilify('silver');
     sizeX = this.width;
     sizeY = this.height;
     selectionBox.setSize(bmpSizeX, bmpSizeY);
@@ -358,6 +369,16 @@ class BitmapPlaceholder extends APlaceholder{
     return Std.string(0);
   }
   
+  public function color(_color:UInt):Void {
+    colorTransform = backdrop.transform.colorTransform;
+    colorTransform.color = _color;
+    backdrop.transform.colorTransform = colorTransform;
+  }
+  
+  public function uncolor():Void{
+    backdrop.transform.colorTransform = default_colorTransform;
+  }
+  
   public function isFoiled():Bool {
     return foiled == true;
   }
@@ -407,7 +428,9 @@ class BitmapPlaceholder extends APlaceholder{
       foilShine.alpha = 0.0;
       foilShine.graphics.drawRect(0,0,1024,1017);
       foilShine.graphics.endFill();
-          
+    
+    foilTexture.width *= 2;
+    foilTexture.height *= 2;
     
     foil.addChild(foilTexture);
     foil.addChild(foilShadow);
