@@ -10,7 +10,7 @@ import flash.display.LineScaleMode;
 class ResizeHandle extends Sprite
 {
   
-  private var rectangle:Rectangle;
+  //private var rectangle:Rectangle;
   private var lines:Vector<Shape>;
   private var color:Int;
   
@@ -19,8 +19,8 @@ class ResizeHandle extends Sprite
   public function new(width:Int=0, height:Int=0, color:Int = 0x000000){
     super();
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-    this.color  = 0xff0000;
-    rectangle = new Rectangle(0,0,0x888888);
+    this.color  = 0x888888;
+//    rectangle = new Rectangle(0,0,0x888888);
     
     
     //ResizeArrows
@@ -30,9 +30,9 @@ class ResizeHandle extends Sprite
     
   	removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   	addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-  	addChild(rectangle);
+//  	addChild(rectangle);
     lines = new Vector<Shape>();
-  	rectangle.setSize(32,32);
+//  	rectangle.setSize(32,32);
   	drawArrows();
 
 
@@ -45,8 +45,13 @@ class ResizeHandle extends Sprite
     
     var sizeX = 30;
     var sizeY = 30;
-    createLine(new Point(4,4),          new Point(14, 4));
-    createLine(new Point(4,4),          new Point(4, 14));
+    createLine(new Point(6,6),          new Point(16, 6));
+    createLine(new Point(6,6),          new Point(6, 16));
+    
+    createLine(new Point(24,24),          new Point(24, 14));
+    createLine(new Point(24,24),            new Point(14, 24));
+    
+    createLine(new Point(6,6),            new Point(24,24));
     //createLine(new Point(sizeX,0),      new Point(sizeX,sizeY));
     //createLine(new Point(sizeX,sizeY),  new Point(0,sizeY));
     //createLine(new Point(0,sizeY),      new Point(0,0));
@@ -89,6 +94,6 @@ class ResizeHandle extends Sprite
   }
   
   public function setSize(sizeX:Float, sizeY:Float):Void{
-    rectangle.setSize(sizeX, sizeY);
+//    rectangle.setSize(sizeX, sizeY);
   }
 }
