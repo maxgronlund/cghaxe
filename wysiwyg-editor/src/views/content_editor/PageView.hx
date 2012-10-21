@@ -642,11 +642,13 @@ class PageView extends View{
     var inFocusWidth:Float    = Math.abs(inFocus.x-this.mouseX);
     var inFocusHeight:Float   = Math.abs(inFocus.y-this.mouseY);
     
-    if((inFocusWidth/inFocus.width) < (inFocusHeight/inFocus.height)){
-      inFocus.setSize(inFocusWidth, inFocusWidth/inFocus.widthHeightRatio);
-    } else {
-      inFocus.setSize(inFocus.widthHeightRatio*inFocusHeight, inFocusHeight);
-    }
+    //if((inFocusWidth/inFocus.width) < (inFocusHeight/inFocus.height)){
+    //  inFocus.setSize(inFocusWidth, inFocusWidth/inFocus.widthHeightRatio);
+    //} else {
+    //  inFocus.setSize(inFocus.widthHeightRatio*inFocusHeight, inFocusHeight);
+    //}
+    
+    inFocus.setSize((inFocusWidth+(inFocus.widthHeightRatio*inFocusHeight))/2, ((inFocusWidth/inFocus.widthHeightRatio)+inFocusHeight)/2);
     
     
   }
