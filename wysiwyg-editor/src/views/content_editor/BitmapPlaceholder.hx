@@ -58,8 +58,9 @@ class BitmapPlaceholder extends APlaceholder{
   private var bmpSizeX:Float;
   private var bmpSizeY:Float;
   
-  private var selection_box:Rectangle;
+  private var selectionBox:Rectangle;
   private var widthHeightRatio:Float;
+  private var resizeHandle:ResizeHandle;
 
   
   public function new(parrent:PageView, id:Int, model:IModel, imageUrl:String){	
@@ -103,7 +104,8 @@ class BitmapPlaceholder extends APlaceholder{
     foilShine.graphics.drawRect(0,0,1024,1017);
     foilShine.graphics.endFill();
     
-    selection_box = new Rectangle();
+    selectionBox   = new Rectangle(0,0,0x888888);
+    resizeHandle    = new ResizeHandle();
     
     
   }
@@ -200,9 +202,12 @@ class BitmapPlaceholder extends APlaceholder{
     //foilify('silver');
     sizeX = this.width;
     sizeY = this.height;
-    selection_box.setSize(bmpSizeX, bmpSizeY);
+    selectionBox.setSize(bmpSizeX, bmpSizeY);
     addChild(backdrop);
-    addChild(selection_box);
+    addChild(selectionBox);
+    addChild(resizeHandle);
+    resizeHandle.x = bmpSizeX - 32;
+    resizeHandle.y = bmpSizeY - 32;
     
 	}
 	
@@ -222,7 +227,9 @@ class BitmapPlaceholder extends APlaceholder{
     bmpSizeX  = backdrop.width;
     bmpSizeY  = backdrop.height;
     
-    selection_box.setSize(bmpSizeX, bmpSizeY);
+    selectionBox.setSize(bmpSizeX, bmpSizeY);
+    resizeHandle.x = bmpSizeX - 32;
+    resizeHandle.y = bmpSizeY - 32;
   }
   
  
@@ -298,7 +305,7 @@ class BitmapPlaceholder extends APlaceholder{
   
   override public function setFocus(b:Bool):Void{
     focus = b;
-    selection_box.visible = b;
+    selectionBox.visible = b;
     updateFocus();
   }
 

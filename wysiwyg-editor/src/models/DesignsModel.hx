@@ -37,15 +37,7 @@ class DesignsModel extends Model, implements IModel {
   private var city:String;
   private var countrxy:String;
   private var pageDesignLoader:ILoader;
-  
-  
-
   private var page_name:String;
-
-  
-  
-  
-  
 
   
   public function new(){	

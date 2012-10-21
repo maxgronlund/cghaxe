@@ -75,6 +75,8 @@ class PresetModel extends Model, implements IModel
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
     
+    
+    
     for( font_set in xml.elementsNamed("font-set") ) {
       GLOBAL.font_set = font_set.firstChild().nodeValue.toString();
     }
@@ -100,6 +102,7 @@ class PresetModel extends Model, implements IModel
     
     for(save_path in xml.elementsNamed("save-path") ) {
       GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+//      trace(GLOBAL.save_path);
     }
     
     for(buy_path in xml.elementsNamed("buy-path") ) {
@@ -206,7 +209,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function save_preset():Void{
-
+    trace('save_preset');
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
@@ -217,12 +220,13 @@ class PresetModel extends Model, implements IModel
     variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
     variables.xml_data 				          = Pages.getString('file_xml');
     variables.xml_prices                = Pages.getString('price_xml');
-    variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.quantity                  = GLOBAL.preset_quantity;
     variables.cliches                   = GLOBAL.iAlreadyHaveACliche;
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.user_uuid                 = GLOBAL.user_uuid;
+    variables.language_name             = GLOBAL.language_name;
+    
     variables.preset_sibling_selected 	= productSelected;
 
     variables._method = 'put';
@@ -278,6 +282,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function onSavedComplete(e:Event):Void{
+    trace('onSavedComplete');
   	onComplete();
   }
   

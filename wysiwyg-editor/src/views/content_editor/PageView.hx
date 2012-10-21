@@ -639,8 +639,8 @@ class PageView extends View{
   
   private function resizePlaceholder(e:MouseEvent){
     
-    var inFocusWidth:Float = Math.abs(inFocus.x-this.mouseX);
-    var inFocusHeight:Float = Math.abs(inFocus.y-this.mouseY);
+    var inFocusWidth:Float    = Math.abs(inFocus.x-this.mouseX);
+    var inFocusHeight:Float   = Math.abs(inFocus.y-this.mouseY);
     
     if((inFocusWidth/inFocus.width) < (inFocusHeight/inFocus.height)){
       inFocus.setSize(inFocusWidth, inFocusWidth/inFocus.widthHeightRatio);

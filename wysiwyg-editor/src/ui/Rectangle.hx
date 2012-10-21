@@ -10,9 +10,11 @@ import flash.display.Sprite;
 class Rectangle extends Sprite
 {
   private var lines:Vector<Shape>;
+  private var color:Int;
   
-  public function new(width:Int=0, height:Int=0){
+  public function new(width:Int=0, height:Int=0, color:Int = 0x000000){
     super();
+    this.color  = color;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     //setSize(width, height);
   }
@@ -37,21 +39,19 @@ class Rectangle extends Sprite
     }
     lines = new Vector<Shape>();
     createLines(Std.int(sizeX),Std.int(sizeY));
-    
-    
   }
   
   private function createLines(sizeX:Int, sizeY:Int):Void{                               
-    createLine(new Point(0,0),    new Point(sizeX, 0));
-    createLine(new Point(sizeX,0),   new Point(sizeX,sizeY));
+    createLine(new Point(0,0),          new Point(sizeX, 0));
+    createLine(new Point(sizeX,0),      new Point(sizeX,sizeY));
     createLine(new Point(sizeX,sizeY),  new Point(0,sizeY));
-    createLine(new Point(0,sizeY),   new Point(0,0));
+    createLine(new Point(0,sizeY),      new Point(0,0));
 
   }
   
   private function createLine(start:Point, end:Point):Void{
     var line:Shape = new Shape();
-    line.graphics.lineStyle(1, 0x000000, 1);
+    line.graphics.lineStyle(1, color, 1);
     line.graphics.moveTo(start.x , start.y); 
     line.graphics.lineTo(end.x, end.y);
     addChild(line);
