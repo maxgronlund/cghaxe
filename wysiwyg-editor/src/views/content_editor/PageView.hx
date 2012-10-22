@@ -815,4 +815,3 @@ class PageView extends View{
     model.setString(EVENT_ID.SET_PAGE_XML,str);
   }
 }
-
