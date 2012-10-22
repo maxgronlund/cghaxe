@@ -375,21 +375,31 @@ class PageView extends View{
      
     //trace(xml.toString());
     
-    for( url in xml.elementsNamed("url") ) {
-      
-      addBitmapPlaceholder(url, posX, posY);
-      //for( url in placeholder.elementsNamed("url") ) {
-      //  trace(url.toString());
-      //  addBitmapPlaceholder(url, posX, posY);
-      //}
+    var sizeX, sizeY;
+    var url;
+    
+    for( size_x in xml.elementsNamed("size-x") ) {
+        sizeX = Std.parseInt(size_x.firstChild().nodeValue);
     }
+    
+    for( size_y in xml.elementsNamed("size-y") ) {
+        sizeY = Std.parseInt(size_y.firstChild().nodeValue);
+    }
+    
+    trace(sizeX,sizeY);
+    
+    for( url in xml.elementsNamed("url") ) {
+      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY);
+      //placeholder.width = sizeX;
+      //placeholder.height = sizeY;
+      placeholder.setSize(sizeX, sizeY);
       
-
+      
+    }
   }
   
-  private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
+  private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):APlaceholder{
      
-    
     var url:String = xml.firstChild().nodeValue.toString();
     
     setPlaceholderInFocus(null);
@@ -398,6 +408,8 @@ class PageView extends View{
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
+    
+    return placeholder;
   }
   
   private function parseTextPlaceholder(xml:Xml):Void{

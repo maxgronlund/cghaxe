@@ -107,7 +107,8 @@ class BitmapPlaceholder extends APlaceholder{
     selectionBox   = new Rectangle(0,0,0x888888);
     resizeHandle    = new ResizeHandle();
     
-    
+    bmpSizeX = 0;
+    bmpSizeY = 0;
   }
   
   private function onMouseOver(e:MouseEvent):Void{
@@ -140,7 +141,6 @@ class BitmapPlaceholder extends APlaceholder{
       } else {
         startDragging(e);
       }
-      
     } 
   }
   
@@ -193,39 +193,40 @@ class BitmapPlaceholder extends APlaceholder{
     backdrop.scaleX *= 0.5;
     backdrop.scaleY *= 0.5;
     
-    bmpSizeX  = backdrop.width;
-    bmpSizeY  = backdrop.height;
-    widthHeightRatio = bmpSizeX/bmpSizeY;
-    
     //trace('before folify',this.width, this.height);
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     //foilify('silver');
-    sizeX = this.width;
-    sizeY = this.height;
-    selectionBox.setSize(bmpSizeX, bmpSizeY);
+    if(bmpSizeX != 0 && bmpSizeY != 0){
+      setSize(bmpSizeX, bmpSizeY);
+      sizeX = this.width;
+      sizeY = this.height;
+    } else {
+      bmpSizeX  = backdrop.width;
+      bmpSizeY  = backdrop.height;
+      sizeX = this.width;
+      sizeY = this.height;
+      selectionBox.setSize(bmpSizeX, bmpSizeY);
+    }
+    
+    widthHeightRatio = bmpSizeX/bmpSizeY;
+    
     addChild(backdrop);
     addChild(selectionBox);
     addChild(resizeHandle);
     resizeHandle.x = bmpSizeX - 32;
     resizeHandle.y = bmpSizeY - 32;
+    selectionBox.visible = false;
+    resizeHandle.visible = false;
     
 	}
 	
-	
-	
-
-	
-	public function setSize(width:Float, height:Float):Void{
-
-    //this.width  = sizeX * size;
-    //this.height = sizeY * size;
-    //updateHandles(size);
+	override public function setSize(sizeX:Float, sizeY:Float):Void{
     
-    backdrop.width = width;
-    backdrop.height = height;
+    bmpSizeX = sizeX;
+    bmpSizeY = sizeY;
     
-    bmpSizeX  = backdrop.width;
-    bmpSizeY  = backdrop.height;
+    backdrop.width = sizeX;
+    backdrop.height = sizeY;
     
     selectionBox.setSize(bmpSizeX, bmpSizeY);
     resizeHandle.x = bmpSizeX - 32;
@@ -256,6 +257,8 @@ class BitmapPlaceholder extends APlaceholder{
       str += '\t\t\t<print-type>' + printType + '</print-type>\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
+      str += '\t\t\t<size-x>' + Std.string(bmpSizeX) + '</size-x>\n';
+      str += '\t\t\t<size-y>' + Std.string(bmpSizeY) + '</size-y>\n';
       str += '\t\t\t<url>' + imageUrl + '</url>\n';
     str += '\t\t</placeholder>\n';
     
@@ -306,6 +309,7 @@ class BitmapPlaceholder extends APlaceholder{
   override public function setFocus(b:Bool):Void{
     focus = b;
     selectionBox.visible = b;
+    resizeHandle.visible = b;
     updateFocus();
   }
 

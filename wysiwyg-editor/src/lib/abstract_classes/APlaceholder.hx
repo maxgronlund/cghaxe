@@ -111,6 +111,13 @@ class APlaceholder extends Sprite{
     return 'false';
   }
   
+  public function setSize(width:Float, height:Float):Void{
+    trace("setSize: must be overriden in a subclass");
+
+  }
+  
+  
+  
   
 
 }

@@ -16,4 +16,5 @@ interface IPlaceholder{
   function getPms2Color():String;
   function updateFoilEffect(offset:Float):Void;
   function isGaramond():String;
+  function setSize(width:Float, height:Float):Void;
 }
