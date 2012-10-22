@@ -57,6 +57,7 @@ class ResizeHandle extends Sprite
     //createLine(new Point(0,sizeY),      new Point(0,0));
     
   }
+<<<<<<< HEAD
   
   private function createLine(start:Point, end:Point):Void{
     var line:Shape = new Shape();
@@ -88,6 +89,18 @@ class ResizeHandle extends Sprite
   //  super.onMouseUp(e); 
   //  
   //}
+=======
+  
+  private function createLine(start:Point, end:Point):Void{
+    var line:Shape = new Shape();
+    line.graphics.lineStyle(1, color, 1);
+    line.graphics.moveTo(start.x , start.y); 
+    line.graphics.lineTo(end.x, end.y);
+    addChild(line);
+    lines.push(line);
+  }
+>>>>>>> logo
+
 
   private function setState(state:Int):Void {
   
