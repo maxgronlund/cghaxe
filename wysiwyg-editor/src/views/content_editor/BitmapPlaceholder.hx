@@ -17,7 +17,7 @@ import flash.net.URLRequest;
 import flash.system.ApplicationDomain; 
 import flash.system.LoaderContext;
 import flash.system.SecurityDomain;
-
+import flash.geom.ColorTransform;
 
 class BitmapPlaceholder extends APlaceholder{
 	
@@ -51,12 +51,15 @@ class BitmapPlaceholder extends APlaceholder{
   private var foilShadow:Sprite;
   private var foilShine:Sprite;
   private var foilBitmapDataForOverlay:BitmapData;
+  
+  private var colorTransform:ColorTransform;
+  private var default_colorTransform:ColorTransform;
   //private var enableScaling:Bool;
   
   private var sizeX:Float;
   private var sizeY:Float;
-  private var bmpSizeX:Float;
-  private var bmpSizeY:Float;
+//  private var bmpSizeX:Float;
+//  private var bmpSizeY:Float;
   
   private var selectBox:Rectangle;
   private var widthHeightRatio:Float;
@@ -106,8 +109,8 @@ class BitmapPlaceholder extends APlaceholder{
     
     selectBox    = new Rectangle(0,0,0x888888);
     resizeHandle    = new ResizeHandle();
-    bmpSizeX = 0;
-    bmpSizeY = 0;
+    sizeX = 0;
+    sizeY = 0;
   }
   
   private function onMouseOver(e:MouseEvent):Void{
@@ -129,8 +132,8 @@ class BitmapPlaceholder extends APlaceholder{
     stage.addEventListener(MouseEvent.MOUSE_MOVE, onMouseMove);
 
     if(MouseTrap.capture()){
-      if(this.mouseX > this.width-41){
-        if(this.mouseY > this.height-41){
+      if(this.mouseX > sizeX-41){
+        if(this.mouseY > sizeY-41){
           startResize(e);
         } else {
           startDragging(e);
@@ -188,36 +191,31 @@ class BitmapPlaceholder extends APlaceholder{
 
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
     backdrop = e.target.loader.content;
+    
     backdrop.scaleX *= 0.5;
     backdrop.scaleY *= 0.5;
+
     addChild(backdrop);
     addChild(selectBox);
     addChild(resizeHandle);
-    
-    //trace('before folify',this.width, this.height);
-    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    //foilify('silver');
-    if(bmpSizeX != 0 && bmpSizeY != 0){
-      setSize(bmpSizeX, bmpSizeY);
-      sizeX = this.width;
-      sizeY = this.height;
-    } else {
-      //bmpSizeX  = backdrop.width;
-      //bmpSizeY  = backdrop.height;
-      sizeX     = this.width;
-      sizeY     = this.height;
-      setSize(sizeX, sizeY);
-      //selectBox.setSize(bmpSizeX, bmpSizeY);
-    }
-    
-    widthHeightRatio = bmpSizeX/bmpSizeY;
-    
-    
-    //resizeHandle.x = bmpSizeX - 32;
-    //resizeHandle.y = bmpSizeY - 32;
     selectBox.visible     = false;
     resizeHandle.visible  = false;
-    
+
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+    //foilify('silver');
+    //if(bmpSizeX != 0 && bmpSizeY != 0){
+    //  setSize(bmpSizeX, bmpSizeY);
+    //  sizeX = this.width;
+    //  sizeY = this.height;
+    //} else {
+    //  sizeX     = this.width;
+    //  sizeY     = this.height;
+    //  
+    //}
+    //sizeX             = this.width;
+    //sizeY             = this.height;
+    widthHeightRatio  = this.width/this.height;
+    setSize(sizeX, sizeY);
 	}
 	
 	override public function setSize(sizeX:Float, sizeY:Float):Void{
@@ -225,16 +223,14 @@ class BitmapPlaceholder extends APlaceholder{
 	  if(backdrop != null){
       backdrop.width     = sizeX;
       backdrop.height    = sizeY;
-      selectBox.setSize(bmpSizeX, bmpSizeY);
-      resizeHandle.x = bmpSizeX - 32;
-      resizeHandle.y = bmpSizeY - 32;
+      selectBox.setSize(sizeX, sizeY);
+      resizeHandle.x    = sizeX - 32;
+      resizeHandle.y    = sizeY - 32;
     }
-    bmpSizeX = sizeX;
-    bmpSizeY = sizeY;
+    this.sizeX = sizeX;
+    this.sizeY = sizeY;
   }
-  
- 
-   
+
   private function handleKeyboard(b:Bool):Void{
     if( b){
       stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
@@ -257,13 +253,11 @@ class BitmapPlaceholder extends APlaceholder{
       str += '\t\t\t<print-type>' + printType + '</print-type>\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
-      str += '\t\t\t<size-x>' + Std.string(bmpSizeX) + '</size-x>\n';
-      str += '\t\t\t<size-y>' + Std.string(bmpSizeY) + '</size-y>\n';
+      str += '\t\t\t<size-x>' + Std.string(sizeX) + '</size-x>\n';
+      str += '\t\t\t<size-y>' + Std.string(sizeY) + '</size-y>\n';
       str += '\t\t\t<url>' + imageUrl + '</url>\n';
     str += '\t\t</placeholder>\n';
-    
     return str;
-
   }
   
   private function onKeyPressed(event:KeyboardEvent):Void{
@@ -362,6 +356,16 @@ class BitmapPlaceholder extends APlaceholder{
     return Std.string(0);
   }
   
+  public function color(_color:UInt):Void {
+    colorTransform = backdrop.transform.colorTransform;
+    colorTransform.color = _color;
+    backdrop.transform.colorTransform = colorTransform;
+  }
+  
+  public function uncolor():Void{
+    backdrop.transform.colorTransform = default_colorTransform;
+  }
+  
   public function isFoiled():Bool {
     return foiled == true;
   }
@@ -411,7 +415,9 @@ class BitmapPlaceholder extends APlaceholder{
       foilShine.alpha = 0.0;
       foilShine.graphics.drawRect(0,0,1024,1017);
       foilShine.graphics.endFill();
-          
+    
+    foilTexture.width *= 2;
+    foilTexture.height *= 2;
     
     foil.addChild(foilTexture);
     foil.addChild(foilShadow);
