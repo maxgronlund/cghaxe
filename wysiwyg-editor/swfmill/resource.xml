@@ -7,9 +7,10 @@
       <!-- buttons -->
       <!-- V 2.0 -->
       <bitmap id="AddOnsButton" import="library/images/add_ons_view_button.png" />
+      <bitmap id="AddGreetingButton" import="library/images/add_greeting_button.png" />
       <bitmap id="AddPlaceholderButton" import="library/images/add_placeholder_button.png" />
       <bitmap id="AddPageDesignButton" import="library/images/add_page_design_button.png" />
-      <bitmap id="AddGreetingButton" import="library/images/add_greeting_button.png" />
+      <bitmap id="AddSymbolButton" import="library/images/add_symbol_button.png" />
       <bitmap id="AddLogoButton" import="library/images/add_logo_button.png" />
       <bitmap id="BuyButtonBitmap" import="library/images/buy_button.png" />
       <bitmap id="CardButton" import="library/images/card_button.png" />
@@ -22,6 +23,7 @@
       <bitmap id="FoilViewButton" import="library/images/foil_view_button.png" />
       <bitmap id="GarmondPrintButton" import="library/images/garamond_button.png" />
       <bitmap id="GreetingsViewButton" import="library/images/greetings_view_button.png" />
+      <bitmap id="GridButton" import="library/images/grid_button.png" />
       <bitmap id="InsertButton" import="library/images/insert_button.png" />
       <bitmap id="LogoViewButton" import="library/images/logo_view_button.png" />
       <bitmap id="MaskButton" import="library/images/mask_button.png" />
@@ -29,8 +31,8 @@
       <bitmap id="PlaceholdersButton" import="library/images/placeholders_view_button.png" />
       <bitmap id="PlaceholderButton" import="library/images/placeholder_button.png" />
       <bitmap id="PriceViewButton" import="library/images/price_view_button.png" />
-      <bitmap id="GridButton" import="library/images/grid_button.png" />
       <bitmap id="SaveButtonBitmap" import="library/images/save_button.png" />
+      <bitmap id="SymbolsViewButton" import="library/images/symbols_view_button.png" />
       <bitmap id="TextAlignLeftButton" import="library/images/text_align_left.png" />
       <bitmap id="TextAlignCenterButton" import="library/images/text_align_center.png" />
       <bitmap id="TextAlignRightButton" import="library/images/text_align_right.png" />

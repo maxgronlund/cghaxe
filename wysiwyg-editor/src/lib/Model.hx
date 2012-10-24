@@ -13,6 +13,7 @@ class Model extends AModel
   private var Font:FontModel;
   private var Designs:IModel;
   private var Greetings:IModel;
+  private var Symbols:IModel;
   private var Logos:IModel;
   
   public function new(): Void{
@@ -30,6 +31,7 @@ class Model extends AModel
     Font              = GLOBAL.Font;
     Designs           = GLOBAL.Designs;
     Greetings         = GLOBAL.Greetings;
+    Symbols           = GLOBAL.Symbols;
     Logos             = GLOBAL.Logos;
   }
   

@@ -1,0 +1,7 @@
+-cmd echo "compiling pl_3.swf"
+-cp src
+-main Main
+-swf-header 600:400:30:FF0000
+--flash-use-stage
+-swf-lib assets/pl_3_library.swf
+-swf swf/pl_3.swf

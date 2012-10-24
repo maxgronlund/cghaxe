@@ -10,7 +10,7 @@ import flash.display.Bitmap;
 class APlaceholder extends Sprite{
 
   
-  public function new(parrent:PageView, id:Int, model:IModel, text:String){	
+  public function new(parrent:PageView, id:Int, model:IModel, text:String, resizable:Bool = false){	
     super();
 
   }
@@ -116,8 +116,7 @@ class APlaceholder extends Sprite{
 
   }
   
-  
-  
-  
-
+  //public function canResize(b:Bool):Void{
+  //  trace("canResize: must be overriden in a subclass");
+  //}
 }

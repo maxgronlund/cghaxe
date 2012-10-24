@@ -30,10 +30,16 @@ class PagesView extends View, implements IView{
     Pages.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
+    Symbols.addEventListener(EVENT_ID.ADD_SYMBOL_TO_PAGE, onAddSymbolToPage);
     Logos.addEventListener(EVENT_ID.ADD_LOGO_TO_PAGE, onAddLogoToPage);
   }
   
   private function onAddGreetingToPage(e:IKEvent):Void{
+    pageInFocus.setParam(e.getParam());
+  }
+  
+  private function onAddSymbolToPage(e:IKEvent):Void{
+    trace('onAddSymbolToPage');
     pageInFocus.setParam(e.getParam());
   }
   

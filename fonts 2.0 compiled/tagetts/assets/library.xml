@@ -1,6 +1,6 @@
 <lib fps="30" width="1600" height="600" frameCount="2" compressed="false">
 	<!--><font file="garamond.otf" class="MyFont" glyphs="32-2550" name="MyFont"/>-->
-	<font file="tagettes3.ttf" class="MyFont" glyphs="4-315" name="MyFont"/>
+	<font file="tagetts.ttf" class="MyFont" glyphs="32-126,128-165,167-4000" name="MyFont"/>
 </lib>
 
 

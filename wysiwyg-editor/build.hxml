@@ -38,6 +38,7 @@
 -cp src/views/side_view/text_suggestions_view
 #-cp src/views/side_view/vectors_view
 -cp src/views/side_view/greetings_view
+-cp src/views/side_view/symbols_view
 -cp src/views/side_view/logos_view
 -cp src/views/selection_view
 -cp src/views/selection_view/greetings_view

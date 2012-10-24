@@ -26,7 +26,7 @@ class SystemFonts
   public static var renaissance:FontPackage;
   public static var signet_roundhand:FontPackage;
   public static var staropolski:FontPackage;
-  //public static var taggets:FontPackage;
+  public static var taggets:FontPackage;
   public static var times_roman:FontPackage;
   public static var trajan_pro:FontPackage;
   public static var volante:FontPackage;
@@ -103,8 +103,8 @@ class SystemFonts
     staropolski = new FontPackage('Staropolski');
     staropolski.addFont('Regular', defaultSize, "staropolski");
     
-    //taggets = new FontPackage('Taggets');
-    //taggets.addFont('Regular', defaultSize, "taggets");
+    taggets = new FontPackage('Taggets');
+    taggets.addFont('Regular', defaultSize, "taggets");
     
     times_roman = new FontPackage('Times Roman');
     times_roman.addFont('Regular', defaultSize, "times_roman");

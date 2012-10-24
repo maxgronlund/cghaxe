@@ -22,7 +22,7 @@ class DesignImagesView extends PropertyView, implements IView{
     
     
     
-    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
   }
   
@@ -84,8 +84,8 @@ class DesignImagesView extends PropertyView, implements IView{
     //designImagesPane.setParam(param);
   }
   
-  private function onLoadDefaultToold(e:IKEvent):Void{
-    //trace('onLoadDefaultToold');
+  private function onLoadDefaultTool(e:IKEvent):Void{
+    //trace('onLoadDefaultTool');
     //trace(designImagesPane.getFloat('height'));
     //trace(designImagesScrollPane.getFloat('mask_height'));
     //

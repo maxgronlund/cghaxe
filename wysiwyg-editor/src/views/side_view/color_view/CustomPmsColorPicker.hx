@@ -135,7 +135,7 @@ class CustomPmsColorPicker extends View{
    override public function setInt(id:String, i:Int):Void{
      switch ( id ){
        case 'color':{
-         trace(i);
+         //trace(i);
          rgbColor = i;
          removeChild(pickerBackdrop);
          pickerBackdrop = null;

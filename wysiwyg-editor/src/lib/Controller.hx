@@ -8,6 +8,7 @@ class Controller extends AController
   private var Pages:IModel;
   private var Designs:IModel;
   private var Greetings:IModel;
+  private var Symbols:IModel;
   private var Logos:IModel;
   
   override public function new():Void{
@@ -19,6 +20,7 @@ class Controller extends AController
     Pages             = GLOBAL.Pages;
     Designs           = GLOBAL.Designs;
     Greetings         = GLOBAL.Greetings;
+    Symbols           = GLOBAL.Symbols;
     Logos             = GLOBAL.Logos;
   }
 }

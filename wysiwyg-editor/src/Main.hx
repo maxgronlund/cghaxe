@@ -16,6 +16,7 @@ class Main
   private var Menu:IModel;
   private var Configuration:IModel;
   private var Greetings:IModel;
+  private var Symbols:IModel;
   private var Logos:IModel;
   private var Preset:IModel;
   private var Prices:IModel;
@@ -31,6 +32,7 @@ class Main
   private var textSuggestionController:IController;
   private var designsController:IController;
   private var greetingsController:IController;
+  private var symbolsController:IController;
   private var logosController:IController;
   private var foilController:IController;
   private var addOnsController:IController;
@@ -49,6 +51,7 @@ class Main
   private var textSuggestionView:AView;
   private var designsView:AView;
   private var greetingsView:AView;
+  private var symbolsView:AView;
   private var logosView:AView;
   private var blindView:AView;
   private var addOnsView:AView;
@@ -108,6 +111,7 @@ class Main
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
     Greetings                   = new GreetingsModel();
+    Symbols                     = new SymbolsModel();
     Logos                       = new LogosModel();
     Prices                      = new PricesModel();
            
@@ -126,6 +130,7 @@ class Main
     textSuggestionController    = new TextSuggestionController();
     designsController           = new DesignsController();
     greetingsController         = new GreetingsController();
+    symbolsController           = new SymbolsController();
     logosController             = new LogosController();
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
@@ -142,6 +147,7 @@ class Main
     textSuggestionView          = new TextSuggestionView(textSuggestionController);
     designsView                 = new DesignsView(designsController);
     greetingsView               = new GreetingsView(greetingsController);
+    symbolsView                 = new SymbolsView(symbolsController);
     logosView                   = new LogosView(logosController);
     blindView                   = new BlindView(sidebarController);
     addOnsView                  = new AddOnsView(addOnsController);
@@ -171,6 +177,7 @@ class Main
     GLOBAL.Pages            = Pages;
     GLOBAL.Designs          = Designs;
     GLOBAL.Greetings        = Greetings;
+    GLOBAL.Symbols          = Symbols;
     GLOBAL.Logos            = Logos;
     GLOBAL.Zoom         	  = new ZoomTools();
     GLOBAL.Font             = new FontModel();
@@ -178,6 +185,7 @@ class Main
   }
   
   private function initGlobals(): Void{
+    GLOBAL.shop_item_name   = 'na';
     GLOBAL.foilColor        = 'silver';
     GLOBAL.pms1Color        = 0;
     GLOBAL.pms2Color        = 0;
@@ -205,6 +213,7 @@ class Main
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
     GLOBAL.greetings_view             = greetingsView;
+    GLOBAL.symbols_view               = symbolsView;
     GLOBAL.logos_view                 = logosView;
     GLOBAL.blind_view                 = blindView;
     GLOBAL.foil			              		= foil;
@@ -216,6 +225,7 @@ class Main
     GLOBAL.text_suggestion_controller = textSuggestionController;
     GLOBAL.designs_controller         = designsController;
     GLOBAL.greetings_controller       = greetingsController;
+    GLOBAL.symbols_controller         = symbolsController;
     GLOBAL.logos_controller           = logosController;
     GLOBAL.sidebar_controller         = sidebarController;
     GLOBAL.desktop_controller         = desktopController;
@@ -229,6 +239,7 @@ class Main
     Application.init();
     Designs.init();
     Greetings.init();
+    Symbols.init();
     Logos.init();
     Menu.init();
     Preset.init();
@@ -244,6 +255,7 @@ class Main
 
     addOnsView.init();
     greetingsView.init();
+    symbolsView.init();
     logosView.init();
     blindView.init();
     priceView.init();

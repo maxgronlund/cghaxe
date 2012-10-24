@@ -13,6 +13,7 @@ class View extends AView{
   private var Designs:IModel;
   private var Vectors:IModel;
   private var Greetings:IModel;
+  private var Symbols:IModel;
   private var Logos:IModel;
   private var controller:IController;
   private var bmpData:BitmapData;
@@ -30,6 +31,7 @@ class View extends AView{
     Pages             = GLOBAL.Pages;
     Designs           = GLOBAL.Designs;
     Greetings         = GLOBAL.Greetings;
+    Symbols           = GLOBAL.Symbols;
     Logos             = GLOBAL.Logos;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   }

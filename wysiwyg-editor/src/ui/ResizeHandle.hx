@@ -13,30 +13,38 @@ class ResizeHandle extends Sprite
   //private var rectangle:Rectangle;
   private var lines:Vector<Shape>;
   private var color:Int;
+  private var backdrop:Sprite;
+  private var scale:Float;
   
   //private var arrows:Bitmap;
   
   public function new(width:Int=0, height:Int=0, color:Int = 0x000000){
     super();
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-    this.color  = 0x888888;
-//    rectangle = new Rectangle(0,0,0x888888);
-    
-    
-    //ResizeArrows
+    this.color    = 0x000000;
+    scale         = 150/72;
+
   }
 
   private function onAddedToStage(e:Event):Void{	
     
   	removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   	addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
-//  	addChild(rectangle);
     lines = new Vector<Shape>();
-//  	rectangle.setSize(32,32);
+    createBackdrop();
   	drawArrows();
-
-
   }
+  
+  private function createBackdrop():Void{
+    backdrop = new Sprite();
+    addChild(backdrop);
+    backdrop.graphics.lineStyle(1/scale,0x000000);
+    backdrop.graphics.beginFill(0x888888);
+    backdrop.graphics.drawRect(0,0,32,32);
+    backdrop.graphics.endFill();
+    backdrop.alpha = 0.9;
+  }
+  
   private function onRemovedFromStage(e:Event):Void{
   	removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   }

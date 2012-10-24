@@ -1,6 +1,3 @@
-
-
-
 import flash.events.Event;
 import flash.text.Font;
 import flash.text.TextField;
@@ -15,9 +12,7 @@ import flash.geom.Point;
 import flash.geom.ColorTransform;
 import flash.events.Event;
 import flash.events.MouseEvent;
-
 import flash.display.Sprite;
-
 import flash.Lib;
 import flash.display.MovieClip;
 
@@ -32,59 +27,39 @@ class SelectBox extends MouseHandler
   private var placeHolderView:Dynamic;
   private var transparency:Float;
   private var mouseOver:Bool;
+  private var resizable:Bool;
+  private var resizeHandle:ResizeHandle;
+  private var rect:Rectangle;
 
-  public function new(pageView:Dynamic, placeHolderView:Dynamic){
+  public function new(pageView:Dynamic, placeHolderView:Dynamic, resizable:Bool = false){
     super();
     this.pageView = pageView;
-    this.placeHolderView = placeHolderView;
-    scale = 150/72;
-    outline = new Vector<Shape>();
+    this.placeHolderView  = placeHolderView;
+    scale                 = 150/72;
+    outline               = new Vector<Shape>();
+    this.resizable        = resizable;
+    resizeHandle          = new ResizeHandle();
+    rect                  = new Rectangle(0,0,0x888888);
+    addChild(rect);
+    if(resizable) addChild(resizeHandle);
+
     
     createAlertBox();
     createBackdrop();
-    createOutline();
-    
-    alertBox.visible = false;
-    //selected = false;
-    //backdrop.visible = false;
-    transparency                    = 0.5;
+    createLines();
+    alertBox.visible    = false;
+    rect.visible        = false;
+    transparency                    = 0.08;
     backdrop.alpha                  = transparency;
 
     setFocus(false);
   }
   
-  override private function onMouseDown(e:MouseEvent){
-    //trace('on mouse down');
-    super.onMouseDown(e);
-    if(MouseTrap.capture()){
-      pageView.setPlaceholderInFocus(placeHolderView);
-      pageView.enableMove(e);
-      placeHolderView.updateGlobals();
-    }
-  }
   
-  override private function onMouseUp(e:MouseEvent){
-    super.onMouseUp(e);
-    MouseTrap.release();
-    pageView.disableMove();
-    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    
-  }
   
-  override private function onMouseOver(e:MouseEvent){
-    //trace('on mouse over');
-    super.onMouseOver(e);
-    mouseOver = true;
-  }
-  
-  override private function onMouseOut(e:MouseEvent){
-    super.onMouseOut(e);
-    mouseOver = false;
-  }
-  
-  private function createOutline():Void{
-    
-    // left
+  private function createLines():Void{
+    // lines for thecutting marks
+    // left side
     createLine(new Point(-10,0), new Point(0,0));
     createLine(new Point(-10,0), new Point(0,0));
     createLine(new Point(-10,0), new Point(0,0));
@@ -137,26 +112,36 @@ class SelectBox extends MouseHandler
   
   public function alert(b:Bool):Void{
     alertBox.visible = b;
-    backdrop.alpha = b?0.0:0.5;
+    backdrop.alpha = b?0.0:transparency;
   }
 
   public function setFocus( b:Bool ): Void{
-    backdrop.alpha = b?0.5:0.0;
+    backdrop.alpha = b?0.2:0.0;
+    resizeHandle.visible = b;
+    rect.visible          = b;
     for( i in 0...outline.length){
       outline[i].visible = b;
     }
   }
 
-  public function resizeBackdrop(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
-    resizeAlertBox(textfield_width, textfield_height, x, combindeMargins);
-    resizeBack(textfield_width, textfield_height, x, combindeMargins);
-    drawCuttingMarks(textfield_width, textfield_height);
+  public function resizeBackdrop(width:Float, height:Float, x:Float, combindeMargins:Float):Void{
+    
+    resizeAlertBox(width, height, x, combindeMargins);
+    resizeBack(width, height, x, combindeMargins);
+    positionCuttingMarks(width, height);
+    
   }
   
-  private function resizeBack(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
-    backdrop.width        = 16+textfield_width-(scale*combindeMargins);
-    backdrop.height       = textfield_height;
+  private function resizeBack(width:Float, height:Float, x:Float, combindeMargins:Float):Void{
+    backdrop.width        = 16+width-(scale*combindeMargins);
+    backdrop.height       = height;
+    
     backdrop.x            = x + combindeMargins;
+    resizeHandle.x        = backdrop.width - 32;
+    resizeHandle.y        = backdrop.height - 32;
+    
+    rect.setSize(backdrop.width,height);
+    rect.x = backdrop.x;
   }
   
   private function resizeAlertBox(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
@@ -165,18 +150,19 @@ class SelectBox extends MouseHandler
     alertBox.x            = x + combindeMargins;
   }
   
-  private function drawCuttingMarks(textfield_width:Float, textfield_height:Float):Void{
+  private function positionCuttingMarks(textfield_width:Float, textfield_height:Float):Void{
+
     // left 
-    drawVertical( 0, backdrop.x, outline);
+    possitionVerticalCuttingMarks( 0, backdrop.x, outline);
     // bottom
-    drawHorizontal( 3, textfield_height,outline);
+    possitionHorizontalCuttingMarks( 3, textfield_height,outline);
     // right
-    drawVertical( 6, backdrop.x+backdrop.width,outline );
+    possitionVerticalCuttingMarks( 6, backdrop.x+backdrop.width,outline );
     // top
-    drawHorizontal( 9, 0,outline);
+    possitionHorizontalCuttingMarks( 9, 0,outline);
   }
   
-  private function drawHorizontal(offset:UInt, posY:Float, lines:Vector<Shape>):Void{
+  private function possitionHorizontalCuttingMarks(offset:UInt, posY:Float, lines:Vector<Shape>):Void{
     
     lines[offset].x    = backdrop.x;
     lines[offset+1].x  = backdrop.x + (backdrop.width/2);
@@ -187,7 +173,7 @@ class SelectBox extends MouseHandler
     lines[offset+2].y  = posY;
   }
   
-  private function drawVertical(offset:UInt, posX:Float,lines:Vector<Shape>):Void{
+  private function possitionVerticalCuttingMarks(offset:UInt, posX:Float,lines:Vector<Shape>):Void{
      
      lines[offset].x    = posX;
      lines[offset+1].x  = posX;
@@ -198,7 +184,93 @@ class SelectBox extends MouseHandler
      lines[offset+2].y  = backdrop.height;
   }
   
-  public function getPlaceholderType():String{
-    return 'text_place_holder_select_box';
+  override private function onMouseDown(e:MouseEvent){
+
+    super.onMouseDown(e);
+    if(MouseTrap.capture()){
+      
+      if(resizable){
+        if(this.mouseX > this.width-56){
+          if(this.mouseY > this.height-56){
+            startResize(e);
+          }
+          else{
+            startDragging(e);
+          }
+        }else{
+          startDragging(e);
+        }
+      }else{
+        pageView.setPlaceholderInFocus(placeHolderView);
+        pageView.enableMove(e);
+        placeHolderView.updateGlobals();
+      }
+    }
   }
+  
+  override private function onMouseUp(e:MouseEvent){
+    
+    super.onMouseUp(e);
+    MouseTrap.release();
+    if(resizable){
+      stopDragging(e);
+      stopResize(e);
+    }else{
+      pageView.disableMove();
+    }
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+    
+    
+  }
+
+  override private function onMouseOver(e:MouseEvent){
+    super.onMouseOver(e);
+    mouseOver = true;
+  }
+  
+  override private function onMouseOut(e:MouseEvent){
+    super.onMouseOut(e);
+    mouseOver = false;
+  }
+
+  private function startResize(e:MouseEvent){
+    pageView.setPlaceholderInFocus(placeHolderView);
+    pageView.enableResize(e);
+    updateSideView();
+  }
+  private function stopResize(e:MouseEvent){
+    
+    pageView.setPlaceholderInFocus(placeHolderView);
+    pageView.disableResize(e);
+    updateSideView();
+    GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+  }
+  private function startDragging(e:MouseEvent){
+    pageView.setPlaceholderInFocus(placeHolderView);
+    pageView.enableMove(e);
+    updateSideView();
+  }
+  
+  private function stopDragging(e:MouseEvent){
+     MouseTrap.release();
+     pageView.disableMove();
+     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
+  }
+  
+  private function updateSideView(): Void{
+    //var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
+    //param.setString(getPlaceholderType());
+    //GLOBAL.Application.dispatchParameter(param);
+  }
+  
+  public function setSize(sizeX:Float, sizeY:Float):Void{
+
+  }
+  
+  //public function canResize(resizable:Bool):Void{
+  //  this.resizable = resizable;
+  //  resizable ? addChild(resizeHandle): removeChild(resizeHandle);
+  //}
+
+  
 }

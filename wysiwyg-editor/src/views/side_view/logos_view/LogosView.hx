@@ -26,7 +26,7 @@ class LogosView extends PropertyView, implements IView{
     addLogoButton         = new OneStateButton();
     
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
-    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
 //    logosColorPicker.visible 	= false;
   }
   
@@ -80,7 +80,7 @@ class LogosView extends PropertyView, implements IView{
 
   }
   
-  private function onLoadDefaultToold(e:IKEvent):Void{
+  private function onLoadDefaultTool(e:IKEvent):Void{
     verticalScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
   }
   

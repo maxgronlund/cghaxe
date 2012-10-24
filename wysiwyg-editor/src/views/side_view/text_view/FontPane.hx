@@ -62,6 +62,11 @@ class FontPane extends View, implements IView{
      addButton( new MutluButton(), SystemFonts.mutlu__ornamental );
      addButton( new MediciScriptButton(), SystemFonts.medici_script );
      addButton( new PopplResidenzButton(), SystemFonts.poppl_residenz);
+     
+     addButton( new SignetRoundhandButton(), SystemFonts.signet_roundhand );
+     addButton( new StaropolskiButton(), SystemFonts.staropolski );
+     addButton( new TaggetsButton(), SystemFonts.taggets );
+     
      addButton( new TimesRomanButton(), SystemFonts.times_roman);
      addButton( new TrajanProButton(), SystemFonts.trajan_pro );
      }
@@ -72,6 +77,7 @@ class FontPane extends View, implements IView{
      addButton( new RenaissanceButton(), SystemFonts.renaissance );
      addButton( new SignetRoundhandButton(), SystemFonts.signet_roundhand );
      addButton( new StaropolskiButton(), SystemFonts.staropolski );
+     addButton( new TrajanProButton(), SystemFonts.trajan_pro );
      addButton( new VolanteButton(), SystemFonts.volante );
      }
    }

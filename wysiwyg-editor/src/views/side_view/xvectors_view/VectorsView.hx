@@ -17,7 +17,7 @@ class VectorsView extends PropertyView, implements IView{
     addVectorButton     = new OneStateButton();
     
     Preset.addEventListener(EVENT_ID.VECTORS_LOADED, onVectorsLoaded);
-    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
   }
   
@@ -69,8 +69,8 @@ class VectorsView extends PropertyView, implements IView{
 
   }
   
-  private function onLoadDefaultToold(e:IKEvent):Void{
-    //trace('onLoadDefaultToold');
+  private function onLoadDefaultTool(e:IKEvent):Void{
+    //trace('onLoadDefaultTool');
     //trace(vectorsPane.getFloat('height'));
     //trace(vectorsScrollPane.getFloat('mask_height'));
     

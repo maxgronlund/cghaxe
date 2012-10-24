@@ -2,41 +2,79 @@ import flash.geom.Point;
 import flash.events.Event;
 
 class PriceView extends PropertyView, implements IView{
-	
-	private var total_price_label:FormatedText;
-	private var shop_item_price_label:FormatedText;
-	private var shop_item_price_price_label:FormatedText;
-	//private var shop_item_price_units_label:FormatedText;
-	private var amount_field:EditableTextField;
-	public var iAlreadyHaveACliche:Hash<Bool>;
-	
-	
-	private var prices:Array<PriceModel>;
-	private var priceColumns:Array<PriceColumn>;
-	
-	public function new(priceController:IController){	
-		super(priceController);
-		backdrop				= new PriceViewBack();
-		
-		amount_field = new EditableTextField();
-		amount_field.x = 30;
-		amount_field.y = 180;
-		
-		GLOBAL.preset_quantity_text_field = amount_field;
+  
+  private var total_price_label:FormatedText;
+  private var shop_item_title:FormatedText;
+  private var shop_item_price_price_label:FormatedText;
+  //private var shop_item_price_units_label:FormatedText;
+  private var amount_field:EditableTextField;
+  public var iAlreadyHaveACliche:Hash<Bool>;
+  
+  
+  private var prices:Array<PriceModel>;
+  private var priceColumns:Array<PriceColumn>;
+  
+  public function new(priceController:IController){	
+    super(priceController);
+    backdrop				= new PriceViewBack();
     
-    shop_item_price_label = new FormatedText('helvetica', '0.0', 12, false);
-    shop_item_price_price_label = new FormatedText('helvetica', '0.0', 12, false);
+    shop_item_title               = new FormatedText('helvetica', '0.0', 22, false);
+    
+    amount_field = new EditableTextField();
+    amount_field.x = 30;
+    amount_field.y = 180;
+    
+    GLOBAL.preset_quantity_text_field = amount_field;
+    
+    
+    
+    
+    
+    
+    shop_item_price_price_label   = new FormatedText('helvetica', '0.0', 12, false);
     //shop_item_price_units_label = new FormatedText('helvetica', '0.0', 12, false);
-  	total_price_label = new FormatedText('helvetica', '0.0', 12, false);
-  	total_price_label.x = 55;
-  	total_price_label.y = 76;
-  	
-  	prices = new Array();
-  	priceColumns = new Array();
-  	iAlreadyHaveACliche = new Hash();
-  	GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
-  	
-  	Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
+    
+    total_price_label = new FormatedText('helvetica', '0.0', 12, false);
+    total_price_label.x = 55;
+    total_price_label.y = 76;
+    
+    prices = new Array();
+    priceColumns = new Array();
+    iAlreadyHaveACliche = new Hash();
+    GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
+    
+    Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
+	}
+	
+	override public function onAddedToStage(e:Event):Void{
+    super.onAddedToStage(e);
+    
+    addChild(shop_item_title);
+    shop_item_title.x   = 10;
+    shop_item_title.y   = 40;
+    
+    
+    addChild(amount_field);
+    amount_field.init();
+    
+//    addChild(shop_item_title);
+    addChild(shop_item_price_price_label);
+    //addChild(shop_item_price_units_label);
+    
+    addChild(total_price_label);
+    total_price_label.setLabel('total price');
+    total_price_label.x = 55;
+    total_price_label.y = 76;
+    
+  }
+	
+	override public function init():Void{
+		selectButton.init( controller,
+						new Point(190,30), 
+						new PriceViewButton(), 
+						new Parameter( EVENT_ID.SHOW_PRICES));
+		
+		
 	}
 	
 	//public function getIAlreadyHaveACliche():Hash{
@@ -52,55 +90,52 @@ class PriceView extends PropertyView, implements IView{
 	  priceColumns = new Array();
 	}
 	
-	override public function addColumn(model:IModel):Void{
+  override public function addColumn(model:IModel):Void{
 //	  trace("#0");
-	  var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
-	  
-	  var haveACliche:Bool = iAlreadyHaveACliche.get(price_column.getTitle());
-	  price_column.setIAlreadyHaveACliche(haveACliche);
-	  
-	  
-	  price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
-	  price_column.set_amount_custom_pms1_color(model.getInt('amount_custom_pms1_color'));
-	  price_column.set_amount_custom_pms2_color(model.getInt('amount_custom_pms2_color'));
-	  price_column.set_amount_foil_color(model.getInt('amount_foil_color'));
-	  price_column.set_amount_greetings(model.getInt('amount_greetings'));
-	  price_column.set_amount_laser_color(model.getInt('amount_laser_color'));
+    var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
+    
+    var haveACliche:Bool = iAlreadyHaveACliche.get(price_column.getTitle());
+    price_column.setIAlreadyHaveACliche(haveACliche);
+    
+    
+    price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
+    price_column.set_amount_custom_pms1_color(model.getInt('amount_custom_pms1_color'));
+    price_column.set_amount_custom_pms2_color(model.getInt('amount_custom_pms2_color'));
+    price_column.set_amount_foil_color(model.getInt('amount_foil_color'));
+    price_column.set_amount_greetings(model.getInt('amount_greetings'));
+    price_column.set_amount_laser_color(model.getInt('amount_laser_color'));
 //	  trace("#1");
 	  price_column.set_amount_cliche(model.getInt('amount_cliche'));
  //   trace("#2");
-	  priceColumns.push(price_column);
-	}
-	
-	
-	override public function getString(id:String):String {
+    priceColumns.push(price_column);
+  }
+  
+  
+  override public function getString(id:String):String {
 
-
-	  switch ( id )
-	  {
-	    case "viewId":{
-	      trace('got you');
-	      addAllPrices();
-	      return EVENT_ID.SHOW_PRICES;
-	    }
-	   case "price_xml":
-	     var result:String = "";
-   	   for(i in 0...priceColumns.length) {
-   	     result += "<page>\n";
-   	     
-   	       result += "<total-price>";
-   	         priceColumns[i].getColumnTotalPrice();
-   	       result += "</total-price>\n";
-   	       
-   	       
-   	     
-   	     result += "</page>\n";
-   	   }
-   	   return result;
-   	  default:
-   	    return "";
-	  }
-	  
+    switch ( id )
+    {
+      case "viewId":{
+        trace('got you');
+        addAllPrices();
+        return EVENT_ID.SHOW_PRICES;
+      }
+     case "price_xml":
+       var result:String = "";
+       for(i in 0...priceColumns.length) {
+         result += "<page>\n";
+         
+           result += "<total-price>";
+             priceColumns[i].getColumnTotalPrice();
+           result += "</total-price>\n";
+    
+         result += "</page>\n";
+       }
+       return result;
+      default:
+        return "";
+    }
+    
 	}
 	
 	//override public function setParam(param:IParameter):Void{
@@ -126,9 +161,9 @@ class PriceView extends PropertyView, implements IView{
 	  var total_price:Float = 0;
 	  var y:Float = 120;
 	  
-	  shop_item_price_label.y = 40;
-	  shop_item_price_label.x = 0;
-	  shop_item_price_label.setLabel(GLOBAL.product_name);
+	  
+	 
+	  shop_item_title.setLabel(GLOBAL.product_name);
 	  
 	  amount_field.y = 40+18;
 	  amount_field.x = 97;
@@ -161,32 +196,7 @@ class PriceView extends PropertyView, implements IView{
 	  total_price_label.setLabel("Total: " + Std.string(rounded_total_price));
 	}
 	
-	override public function onAddedToStage(e:Event):Void{
-    super.onAddedToStage(e);
-  	
-  	addChild(total_price_label);
-  	addChild(shop_item_price_label);
-  	addChild(amount_field);
-  	amount_field.init();
-  	
-  	addChild(shop_item_price_label);
-  	addChild(shop_item_price_price_label);
-  	//addChild(shop_item_price_units_label);
-  	
-  	total_price_label.setLabel('total price');
-    total_price_label.x = 55;
-    total_price_label.y = 76;
-    
-  }
-	
-	override public function init():Void{
-		selectButton.init( controller,
-						new Point(190,30), 
-						new PriceViewButton(), 
-						new Parameter( EVENT_ID.SHOW_PRICES));
-		
-		
-	}
+
 	
 	private function onParsePrice(e:XmlEvent):Void{
 	  parsePrice(e.getXml());

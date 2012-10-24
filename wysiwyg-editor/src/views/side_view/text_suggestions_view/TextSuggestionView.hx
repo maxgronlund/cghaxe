@@ -18,7 +18,7 @@ class TextSuggestionView extends PropertyView, implements IView{
     addPlaceholderButton    = new OneStateButton();
 
     //Application.addEventListener(EVENT_ID.PASS_DESIGN_FILE, onPageLayoutLoaded);
-    //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultToold);
+    //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
   }
 
@@ -88,7 +88,7 @@ class TextSuggestionView extends PropertyView, implements IView{
     }
   }
   
-  private function onLoadDefaultToold(e:IKEvent):Void{
+  private function onLoadDefaultTool(e:IKEvent):Void{
     verticalScrollbar.setSize(textSuggestionPane.getFloat('height'), placeholderScrollPane.getFloat('mask_height'));
   }
   

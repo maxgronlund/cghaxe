@@ -102,7 +102,6 @@ class PresetModel extends Model, implements IModel
     
     for(save_path in xml.elementsNamed("save-path") ) {
       GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
-//      trace(GLOBAL.save_path);
     }
     
     for(buy_path in xml.elementsNamed("buy-path") ) {
@@ -111,6 +110,11 @@ class PresetModel extends Model, implements IModel
     
     for(greetings in xml.elementsNamed("greetings")){
       dispatchXML(EVENT_ID.GREETINGS_LOADED, greetings);
+    }
+    
+    for(symbols in xml.elementsNamed("symbols")){
+      
+      dispatchXML(EVENT_ID.SYMBOLS_LOADED, symbols);
     }
 
     for(print_prices in xml.elementsNamed("print-prices")){
@@ -175,7 +179,6 @@ class PresetModel extends Model, implements IModel
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {
-      //countPlaceHolders(page);
       var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
       param.setXml(page);
       param.setInt(page_index);

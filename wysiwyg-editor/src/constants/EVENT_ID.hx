@@ -164,6 +164,7 @@ class EVENT_ID  {
   public static inline var SHOW_PRICES                      = "show_prices";
   public static inline var SHOW_TEXT:String                 = "text_view";
   public static inline var SHOW_GREETINGS:String            = "show_greetings";
+  public static inline var SHOW_SYMBOLS:String              = "show_symbols";
   public static inline var SHOW_LOGOS:String                = "show_logos";
   public static inline var SHOW_DESIGNS:String              = "show_designs";
   public static inline var SHOW_TEXT_SUGGESTIONS:String     = "show_text_suggestion_view";
@@ -220,12 +221,17 @@ class EVENT_ID  {
   public static inline var DESIGN_SCROLL                      = "design_scroll";
 
   
-  // greetings
+  // vectors
   public static inline var GREETINGS_LOADED:String            = "greetings_loaded";
+  public static inline var SYMBOLS_LOADED:String              = "symbols_loaded";
   public static inline var GREETING_SCROLL                    = "greeting_scroll";
+  public static inline var SYMBOL_SCROLL                      = "greeting_scroll";
   public static inline var ADD_GREETING_BUTTON                = "add_greeting_button";
+  public static inline var ADD_SYMBOL_BUTTON                  = "add_symbol_button";
   public static inline var GREETING_SELECTED                  = "greeting_selected";
+  public static inline var SYMBOL_SELECTED                    = "symbol_selected";
   public static inline var ADD_GREETING_TO_PAGE               = "add_greeting_to_page";
+  public static inline var ADD_SYMBOL_TO_PAGE                 = "add_symbol_to_page";
   
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";

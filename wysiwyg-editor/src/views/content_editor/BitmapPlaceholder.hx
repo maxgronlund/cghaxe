@@ -21,12 +21,12 @@ import flash.system.SecurityDomain;
 
 class BitmapPlaceholder extends APlaceholder{
 	
-  private var parrent:PageView;
+  private var pageView:PageView;
   private var model:IModel;
   private var mouseOver:Bool;
   private var id:Int;
   private var modelId:Int;
-  private var xml:String;
+  //private var xml:String;
   private var anchorPoint:Float;
   private var previewMode:Bool;
   private var designMode:Bool;
@@ -58,15 +58,15 @@ class BitmapPlaceholder extends APlaceholder{
   private var bmpSizeX:Float;
   private var bmpSizeY:Float;
   
-  private var selectionBox:Rectangle;
+  private var selectBox:Rectangle;
   private var widthHeightRatio:Float;
   private var resizeHandle:ResizeHandle;
 
   
-  public function new(parrent:PageView, id:Int, model:IModel, imageUrl:String){	
+  public function new(pageView:PageView, id:Int, model:IModel, imageUrl:String){	
     
-    super(parrent, id, model, imageUrl);
-    this.parrent                      = parrent;
+    super(pageView, id, model, imageUrl);
+    this.pageView                     = pageView;
     this.id                           = id;
     this.model                        = model;
     this.imageUrl                     = imageUrl;
@@ -104,9 +104,8 @@ class BitmapPlaceholder extends APlaceholder{
     foilShine.graphics.drawRect(0,0,1024,1017);
     foilShine.graphics.endFill();
     
-    selectionBox   = new Rectangle(0,0,0x888888);
+    selectBox    = new Rectangle(0,0,0x888888);
     resizeHandle    = new ResizeHandle();
-    
     bmpSizeX = 0;
     bmpSizeY = 0;
   }
@@ -115,8 +114,6 @@ class BitmapPlaceholder extends APlaceholder{
     removeEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OUT, onMouseOut);	
-    
-
   }
   
   private function onMouseOut(e:MouseEvent){
@@ -145,25 +142,25 @@ class BitmapPlaceholder extends APlaceholder{
   }
   
   private function startResize(e:MouseEvent){
-    parrent.setPlaceholderInFocus(this);
-    parrent.enableResize(e);
+    pageView.setPlaceholderInFocus(this);
+    pageView.enableResize(e);
     updateGlobals();
   }
   private function stopResize(e:MouseEvent){
-    parrent.setPlaceholderInFocus(this);
-    parrent.disableResize(e);
+    pageView.setPlaceholderInFocus(this);
+    pageView.disableResize(e);
     updateGlobals();
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
   }
   private function startDragging(e:MouseEvent){
-    parrent.setPlaceholderInFocus(this);
-    parrent.enableMove(e);
+    pageView.setPlaceholderInFocus(this);
+    pageView.enableMove(e);
     updateGlobals();
   }
   
   private function stopDragging(e:MouseEvent){
-    MouseTrap.release();
-     parrent.disableMove();
+     MouseTrap.release();
+     pageView.disableMove();
      GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
   }
   
@@ -179,7 +176,7 @@ class BitmapPlaceholder extends APlaceholder{
   private function onMouseMove(e:MouseEvent){}
   
   private function onAddedToStage(e:Event){
-    
+
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadImageComplete);
     imageLoader.load(new URLRequest(imageUrl));
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -188,10 +185,14 @@ class BitmapPlaceholder extends APlaceholder{
   }
   
   private function onLoadImageComplete(e:Event):Void{
+
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
     backdrop = e.target.loader.content;
     backdrop.scaleX *= 0.5;
     backdrop.scaleY *= 0.5;
+    addChild(backdrop);
+    addChild(selectBox);
+    addChild(resizeHandle);
     
     //trace('before folify',this.width, this.height);
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
@@ -201,36 +202,35 @@ class BitmapPlaceholder extends APlaceholder{
       sizeX = this.width;
       sizeY = this.height;
     } else {
-      bmpSizeX  = backdrop.width;
-      bmpSizeY  = backdrop.height;
-      sizeX = this.width;
-      sizeY = this.height;
-      selectionBox.setSize(bmpSizeX, bmpSizeY);
+      //bmpSizeX  = backdrop.width;
+      //bmpSizeY  = backdrop.height;
+      sizeX     = this.width;
+      sizeY     = this.height;
+      setSize(sizeX, sizeY);
+      //selectBox.setSize(bmpSizeX, bmpSizeY);
     }
     
     widthHeightRatio = bmpSizeX/bmpSizeY;
     
-    addChild(backdrop);
-    addChild(selectionBox);
-    addChild(resizeHandle);
-    resizeHandle.x = bmpSizeX - 32;
-    resizeHandle.y = bmpSizeY - 32;
-    selectionBox.visible = false;
-    resizeHandle.visible = false;
+    
+    //resizeHandle.x = bmpSizeX - 32;
+    //resizeHandle.y = bmpSizeY - 32;
+    selectBox.visible     = false;
+    resizeHandle.visible  = false;
     
 	}
 	
 	override public function setSize(sizeX:Float, sizeY:Float):Void{
-    
+	  
+	  if(backdrop != null){
+      backdrop.width     = sizeX;
+      backdrop.height    = sizeY;
+      selectBox.setSize(bmpSizeX, bmpSizeY);
+      resizeHandle.x = bmpSizeX - 32;
+      resizeHandle.y = bmpSizeY - 32;
+    }
     bmpSizeX = sizeX;
     bmpSizeY = sizeY;
-    
-    backdrop.width = sizeX;
-    backdrop.height = sizeY;
-    
-    selectionBox.setSize(bmpSizeX, bmpSizeY);
-    resizeHandle.x = bmpSizeX - 32;
-    resizeHandle.y = bmpSizeY - 32;
   }
   
  
@@ -308,7 +308,7 @@ class BitmapPlaceholder extends APlaceholder{
   
   override public function setFocus(b:Bool):Void{
     focus = b;
-    selectionBox.visible = b;
+    selectBox.visible = b;
     resizeHandle.visible = b;
     updateFocus();
   }
@@ -436,6 +436,14 @@ class BitmapPlaceholder extends APlaceholder{
       Foil.removeFiltersFrom(foil);
       foiled = false;
     }
+  }
+  
+  public function getWidthHeightRatio():Float{
+    return widthHeightRatio;
+  }
+  
+  override public function getFoilColor():String {
+    return foilColor;
   }
   
 

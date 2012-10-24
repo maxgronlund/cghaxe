@@ -65,19 +65,19 @@ class PageView extends View{
   }
   
   private function calculatePrice(e:Event): Void {    
-    var std_pms_colors = new Array();
-    var custom_pms1_colors = new Array();
-    var custom_pms2_colors = new Array();
-    var text_foil_colors = new Array();
-    var greeting_foil_colors = new Array();
-    
-    var amount_std_pms_color:UInt = 0;
+    var std_pms_colors                = new Array();
+    var custom_pms1_colors            = new Array();
+    var custom_pms2_colors            = new Array();
+    var text_foil_colors              = new Array();
+    var greeting_foil_colors          = new Array();
+                                      
+    var amount_std_pms_color:UInt     = 0;
     var amount_custom_pms1_color:UInt = 0;
     var amount_custom_pms2_color:UInt = 0;
-    var amount_foil_color:UInt = 0;
-    var amount_greetings:UInt = 0;
-    var amount_laser_color:UInt = 0;
-    var amount_cliche:UInt = 0;
+    var amount_foil_color:UInt        = 0;
+    var amount_greetings:UInt         = 0;
+    var amount_laser_color:UInt       = 0;
+    var amount_cliche:UInt             = 0;
     
     var empty_string:EReg = ~/^[\s]*$/;
     
@@ -256,7 +256,8 @@ class PageView extends View{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{addDesignToPage(param);}
-      case EVENT_ID.ADD_GREETING_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY());}
+      case EVENT_ID.ADD_GREETING_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), false);}
+      case EVENT_ID.ADD_SYMBOL_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), true);}
       case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(), onPosX(), onPosY());}
     }
   }
@@ -280,6 +281,7 @@ class PageView extends View{
   private function parsePagePresetXml():Void{
     
     if(pagePresetXML != null){
+//      trace(pagePresetXML.toString());
       for( page  in pagePresetXML.elementsNamed("page") ) {
         for( pos_x in page.elementsNamed("pos-x") ) {
              this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -294,40 +296,19 @@ class PageView extends View{
     }
   }
   
-  //private function onDesignXmlLoaded(e:IKEvent):Void{  
-  //  pageDesignXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-  //}
-  
-  //private function parsePageDesignXML():Void{
-  //  
-  //  for( page  in pageDesignXML.elementsNamed("page") ) {
-  //    for( pos_x in page.elementsNamed("pos-x") ) {
-  //         this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
-  //    }
-  //    for( pos_y in page.elementsNamed("pos-y") ) {
-  //         this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
-  //    }
-  //    for( placeholder in page.elementsNamed("placeholder") ) {
-  //        parsePlaceholder(placeholder);
-  //    }
-  //  }
-  //}
  
   private function parsePlaceholder(xml:Xml):Void{
     
-//    trace(xml.toString());
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
     
     for( pos_y in xml.elementsNamed("pos-y") ) 
       posY =  Std.parseFloat(pos_y.firstChild().nodeValue);
     
-
     var placeholder_type:String = '';
     
     for( plc_type in xml.elementsNamed("placeholder-type") ){
       placeholder_type = plc_type.firstChild().nodeValue;
-      
     }
 
     switch( placeholder_type){
@@ -344,71 +325,81 @@ class PageView extends View{
 
   }
   
-  private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
-
-    var url:String;
-
-    for(url_xml in xml.elementsNamed("url") ) {
-      url = url_xml.firstChild().nodeValue.toString();
-    }
-    for(foil_color in xml.elementsNamed("foil-color") ) {
+  private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool = false):Void{
+    
+    //trace(xml.toString());
+    var sizeX = -1;
+    var sizeY = -1;
+    var canResize = resizable;
+    
+    for(foil_color in xml.elementsNamed("foil-color") ) 
       GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
-      
-    }
-    for(pms_color in xml.elementsNamed("pms-color") ) {
+    
+    for(pms_color in xml.elementsNamed("pms-color") ) 
       GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
-    }
-    for(print_type in xml.elementsNamed("print-type") ) {
+    
+    for(print_type in xml.elementsNamed("print-type") ) 
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
+      
+    for( size_x in xml.elementsNamed("size-x") )
+        sizeX = Std.parseInt(size_x.firstChild().nodeValue);
+    
+    for( size_y in xml.elementsNamed("size-y") ) 
+        sizeY = Std.parseInt(size_y.firstChild().nodeValue);
+        
+    for( can_resize in xml.elementsNamed("resizable") ) 
+        canResize = can_resize.firstChild().nodeValue == 'true';
+        
+    for(url_xml in xml.elementsNamed("url") ){
+      var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize);
+      placeholder.setSize(sizeX, sizeY);
     }
+  }
+  
+  private function addVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool):APlaceholder{
 
+    var url:String = xml.firstChild().nodeValue.toString();
     setPlaceholderInFocus(null);
-    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url);
+    
+    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url, resizable);
     placeholder.x = posX;
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
-
+    return placeholder;
   }
   
+  
   private function parseBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):Void{
-     
-    //trace(xml.toString());
     
     var sizeX, sizeY;
-    var url;
+    //var url;
     
-    for( size_x in xml.elementsNamed("size-x") ) {
+    for( size_x in xml.elementsNamed("size-x") )
         sizeX = Std.parseInt(size_x.firstChild().nodeValue);
-    }
     
-    for( size_y in xml.elementsNamed("size-y") ) {
+    for( size_y in xml.elementsNamed("size-y") ) 
         sizeY = Std.parseInt(size_y.firstChild().nodeValue);
-    }
+    
     
     trace(sizeX,sizeY);
     
     for( url in xml.elementsNamed("url") ) {
       var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY);
-      //placeholder.width = sizeX;
-      //placeholder.height = sizeY;
       placeholder.setSize(sizeX, sizeY);
-      
-      
     }
   }
   
   private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):APlaceholder{
      
     var url:String = xml.firstChild().nodeValue.toString();
-    
+    trace(url);
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new BitmapPlaceholder(this, placeholders.length, model, url);
     placeholder.x = posX;
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
-    
     return placeholder;
   }
   
@@ -530,7 +521,6 @@ class PageView extends View{
   }
   
   public function enableMove(e:MouseEvent):Void{
-
     stage.addEventListener(MouseEvent.MOUSE_MOVE, movePlaceholder);
     startPoint.x = inFocus.x;
     startPoint.y = inFocus.y;
@@ -540,7 +530,6 @@ class PageView extends View{
   }
   
   public function enableResize(e:MouseEvent):Void{
-
     stage.addEventListener(MouseEvent.MOUSE_MOVE, resizePlaceholder);
     startPoint.x = inFocus.x;
     startPoint.y = inFocus.y;
@@ -653,16 +642,8 @@ class PageView extends View{
     
     var inFocusWidth:Float    = Math.abs(inFocus.x-this.mouseX);
     var inFocusHeight:Float   = Math.abs(inFocus.y-this.mouseY);
-    
-    //if((inFocusWidth/inFocus.width) < (inFocusHeight/inFocus.height)){
-    //  inFocus.setSize(inFocusWidth, inFocusWidth/inFocus.widthHeightRatio);
-    //} else {
-    //  inFocus.setSize(inFocus.widthHeightRatio*inFocusHeight, inFocusHeight);
-    //}
-    
-    inFocus.setSize((inFocusWidth+(inFocus.widthHeightRatio*inFocusHeight))/2, ((inFocusWidth/inFocus.widthHeightRatio)+inFocusHeight)/2);
-    
-    
+    inFocus.setSize((inFocusWidth+(inFocus.getWidthHeightRatio()*inFocusHeight))/2, ((inFocusWidth/inFocus.getWidthHeightRatio())+inFocusHeight)/2);
+
   }
   
   //!!! is this in use

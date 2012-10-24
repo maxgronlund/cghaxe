@@ -11,17 +11,14 @@ class GLOBAL  {
 
   public static var font_set;
   public static var Application:IModel;
-//  public static var Layout:IModel;
   public static var Menu:IModel;
-//  public static var Configuration:IModel;
   public static var Preset:IModel;
   public static var Prices:IModel;
   public static var cliche_price:Float;
   public static var Pages:IModel;
   public static var Designs:IModel;
-//  public static var DesignImages:IModel;
-//  public static var Vectors:IModel;
   public static var Greetings:IModel;
+  public static var Symbols:IModel;
   public static var Logos:IModel;
   public static var Font:FontModel;
   public static var userParser:UserParser;
@@ -58,6 +55,7 @@ class GLOBAL  {
   public static var text_suggestion_view:AView;
   public static var designs_view:AView;
   public static var greetings_view:AView;
+  public static var symbols_view:AView;
   public static var logos_view:AView;
   public static var foil_view:AView;
   public static var side_view:IView;
@@ -94,6 +92,7 @@ class GLOBAL  {
   public static var designs_controller:IController;
 //  public static var vectors_controller:IController;
   public static var greetings_controller:IController;
+  public static var symbols_controller:IController;
   public static var logos_controller:IController;
 //  public static var design_images_controller:IController;
   public static var sidebar_controller:IController;

@@ -1,5 +1,3 @@
-
-
 import flash.events.Event;
 import flash.Vector;
 
@@ -29,35 +27,9 @@ class GreetingsModel extends Model, implements IModel {
       }
     }
   }
-  
-  override public function setString(id:String, s:String):Void{
-    
-     //switch ( id ){
-     //  case 'countrxy':             { countrxy = s;}
-     //}
-  }
-  
-  override public function getString(id:String):String{
-     //switch ( id ){
-     //  case 'countrxy':            {return countrxy;}
-     //  
-     //}
-     return '';
-  }
-  
-  // to do 
-  private function onPassGreeting(e:IKEvent):Void{
-    
-    //trace('onPassDesign');
-    var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
 
-    
+  private function onPassGreeting(e:IKEvent):Void{
+    var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
   }
-  
-  override public function getBool(id:String):Bool{
-    //switch ( id ){
-    //  case 'front_of_paper': true;
-    //}
-    return false;
-  }
+
 }

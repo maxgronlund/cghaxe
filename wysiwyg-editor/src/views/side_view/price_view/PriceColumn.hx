@@ -142,7 +142,7 @@ class PriceColumn extends MovieClip {
     addChild(title_label);
     addChild(total_label);
     
-    title_label.x = 0;
+    title_label.x = 10;
     title_label.y = -18;
     title_label.setLabel(title);
     
