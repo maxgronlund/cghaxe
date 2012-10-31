@@ -19,7 +19,7 @@ class XmlLoader implements ILoader, extends ALoader
   
   override public function load(url:String, eventId:String):Void{	
     
-    trace(GLOBAL.shop_item_id);
+    //trace(GLOBAL.shop_item_id);
     
     this.eventId = eventId;
     var loader:URLLoader = new URLLoader();

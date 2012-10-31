@@ -196,6 +196,7 @@ class Main
     
     GLOBAL.pms1ColorString  = '541';
     GLOBAL.pms2ColorString  = '229';
+
     
   }
   

@@ -20,6 +20,7 @@ class PresetModel extends Model, implements IModel
   private var productSelected:String;
   private var loader:URLLoader;
   private var pms_converter:PMSColorToRGBConverter;
+  private var languageParser:LanguageParser;
   
   
   public function new(){
@@ -29,6 +30,7 @@ class PresetModel extends Model, implements IModel
     associatedProducts  = new Vector<Int>();
     pms_converter       = new PMSColorToRGBConverter();
     assProdIndex        = 0;
+    languageParser      = new LanguageParser();
   }
   
   override public function init():Void{
@@ -47,7 +49,6 @@ class PresetModel extends Model, implements IModel
       // building the pages
       parsePreset(preset);
       GLOBAL.shop_item_prices.parsePrices(preset);
- 
     }
   }
   
@@ -66,9 +67,17 @@ class PresetModel extends Model, implements IModel
     dispatchParameter(param);
   }
   
+  
+  
+  
   // building pages and getting url's for masks
   private function parsePreset(xml:Xml):Void{
-
+    
+    
+    for( language in xml.elementsNamed("language") ) {
+       parseLanguage(language);
+    }
+    
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
@@ -131,12 +140,9 @@ class PresetModel extends Model, implements IModel
       //  trace(logo.firstChild().nodeValue.toString());
       //}
     }
-    
-
   }
   
   private function pickUpDesignsforAssProduct(xml:Xml):Void{
-    
     var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_PAGE_TO_SIDEBAR);
     param.setXml(xml);
     dispatchParameter(param);
@@ -168,7 +174,10 @@ class PresetModel extends Model, implements IModel
     param.setXml(xml);
     dispatchParameter(param);
   }
-
+  private function parseLanguage(xml_data:Xml):Void{
+    languageParser.parse(xml_data);
+    trace(TRANSLATION.upload_logo);
+  }
   
   private function parseXmlData(xml_data:Xml):Void{
     //trace(xml_data.toString());

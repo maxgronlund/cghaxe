@@ -50,7 +50,6 @@ class ParameterParser
         GLOBAL.wysiwyg_status = 'show_system_preset';
       }
     }
-    
     // preset
     if(params.preset_file_url != null){
       GLOBAL.preset_file_url = params.preset_file_url;
@@ -69,12 +68,12 @@ class ParameterParser
     
     if(params.shop_item_name != null){
       GLOBAL.shop_item_name = params.shop_item_name;
-      trace('Shop item name', GLOBAL.shop_item_name);
+//      trace('Shop item name', GLOBAL.shop_item_name);
     }
     
     
     if(params.save_path != null){
-      trace(params.save_path);
+  //    trace(params.save_path);
       GLOBAL.save_path = params.save_path;
     }
 

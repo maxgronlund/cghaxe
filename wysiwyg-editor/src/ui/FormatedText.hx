@@ -56,16 +56,19 @@ class FormatedText extends Sprite
     return textField.text;
   }
   
+  public function getWidth():Float{
+    return textField.width;
+  }
+  
   public function setFocus(b:Bool):Void{
     textField.border 	= b;
     textField.mouseEnabled = b;
   }
   
   public function setColor(color:Int):Void{
-    //format.color        = color;
     if(textField != null)
       textField.textColor = color;
-    //trace(format.color);
+
   }
   
 }

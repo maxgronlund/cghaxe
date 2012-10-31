@@ -36,6 +36,7 @@ class MultiStateImage extends Sprite
   
   public function state(state:Point){	
     bmp.x = -state.x* size.x;
-	bmp.y = -state.y* size.y;
+	  bmp.y = -state.y* size.y;
   }
+
 }

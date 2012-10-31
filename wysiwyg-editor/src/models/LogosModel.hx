@@ -26,7 +26,6 @@ class LogosModel extends Model, implements IModel {
       case EVENT_ID.ADD_LOGO_TO_PAGE:{
         if(logosXml != null){
           dispatchXML(EVENT_ID.ADD_LOGO_TO_PAGE, logosXml);
-          uploadLogo();
         }
       }
       case EVENT_ID.EVENT_ID.UPLOAD_IMAGE:{

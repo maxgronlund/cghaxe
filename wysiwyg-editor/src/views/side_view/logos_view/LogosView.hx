@@ -10,11 +10,15 @@ class LogosView extends PropertyView, implements IView{
   private var logosScrollPane:AView;
   private var logosPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
-  private var uploadLogoButton:OneStateButton;
-  private var addLogoButton:OneStateButton;
+  private var uploadLogoButton:OneStateTextAndImageButton;
+  private var addLogoButton:OneStateTextAndImageButton;
   
-  private var uploadImageButton:OneStateButton;
-  private var addImageButton:OneStateButton;
+  
+  
+  
+  
+  private var uploadImageButton:OneStateTextAndImageButton;
+  private var addImageButton:OneStateTextAndImageButton;
   
   public function new(logosController:IController){	
     super(logosController);
@@ -27,11 +31,15 @@ class LogosView extends PropertyView, implements IView{
     logosScrollPane       = new ScrollPane(logosController);
     logosPane             = new LogosPane(logosController);
     verticalScrollbar     = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
-    uploadLogoButton      = new OneStateButton();
-    addLogoButton         = new OneStateButton();
+    uploadLogoButton      = new OneStateTextAndImageButton();
+    addLogoButton         = new OneStateTextAndImageButton();
+    uploadImageButton     = new OneStateTextAndImageButton();
+    addImageButton        = new OneStateTextAndImageButton();
     
-    uploadImageButton     = new OneStateButton();
-    addImageButton        = new OneStateButton();
+    uploadLogoButton.setFormat(0, 3, 0xffffff, 'center');
+    addLogoButton.setFormat(0, 3, 0xffffff, 'center');
+    uploadImageButton.setFormat(0, 3, 0xffffff, 'center');
+    addImageButton.setFormat(0, 3, 0xffffff, 'center');
     
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
@@ -40,7 +48,7 @@ class LogosView extends PropertyView, implements IView{
   
   
   override public function init():Void{
-       
+      trace('init');
     selectButton.init( controller,
               new Point(190,30), 
               new LogoViewButton(), 
@@ -54,11 +62,12 @@ class LogosView extends PropertyView, implements IView{
     addLogoButton.fireOnMouseUp(false);
     
     
-    
-    uploadLogoButton.init(controller,
-            new Point(150,22), 
+    uploadLogoButton.init( controller, 
+            new Point(150,22),  
             new OneStateButtonBack(), 
-            new Parameter( EVENT_ID.UPLOAD_LOGO));
+            new Parameter( EVENT_ID.UPLOAD_LOGO) );
+            
+
     
     uploadLogoButton.fireOnMouseUp(false);
     
@@ -81,6 +90,8 @@ class LogosView extends PropertyView, implements IView{
   
   override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
+    
+    
 
     
     // font selection pane
@@ -99,6 +110,7 @@ class LogosView extends PropertyView, implements IView{
     addLogoButton.x = 20;
     addLogoButton.y = 212;
     
+    
     addChild(uploadLogoButton);
     uploadLogoButton.x = 20;
     uploadLogoButton.y = 238;
@@ -111,6 +123,10 @@ class LogosView extends PropertyView, implements IView{
     addChild(uploadImageButton);
     uploadImageButton.x = 20;
     uploadImageButton.y = 488;
+    
+    /*
+    trace(TRANSLATION.add_ons_button);
+    trace(TRANSLATION.name);*/
   }
   
   private function onLogosLoaded(e:KEvent):Void{
@@ -127,6 +143,26 @@ class LogosView extends PropertyView, implements IView{
   
   private function onLoadDefaultTool(e:IKEvent):Void{
     verticalScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
+
+
+    
+    
+    uploadLogoButton.setText(TRANSLATION.upload_logo); 
+    uploadLogoButton.updateLabel();      
+    addLogoButton.setText(TRANSLATION.add_logo);    
+    addLogoButton.updateLabel();         
+    uploadImageButton.setText(TRANSLATION.upload_image); 
+    uploadImageButton.updateLabel();     
+    addImageButton.setText(TRANSLATION.add_image); 
+    addImageButton.updateLabel();        
+    
+    
+    
+    
+    
+    
+    
+    
   }
   
   override public function setParam(param:IParameter):Void{

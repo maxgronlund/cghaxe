@@ -70,7 +70,6 @@ class ApplicationModel extends Model, implements IModel
                       'set defaults',
                       'show fonts',
                       'load custom pms'
-
                       ];
         loadSeq();
       }
@@ -236,6 +235,8 @@ class ApplicationModel extends Model, implements IModel
     priceXml = e.getXml();
     loadSeq();
   }
+  
+
                    
   //private function onDesignLoaded(e:XmlEvent):Void{
   // 
