@@ -46,6 +46,7 @@ class LogosView extends PropertyView, implements IView{
     addImageButton.setFormat(0, 3, 0xffffff, 'center');
     
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
+    Preset.addEventListener(EVENT_ID.IMAGES_LOADED, onImagesLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
 
   }
@@ -136,13 +137,18 @@ class LogosView extends PropertyView, implements IView{
   private function onLogosLoaded(e:KEvent):Void{
 
     for(logo in e.getXml().elementsNamed('logo')){
-      //trace(logo.toString());
       var logoParam:IParameter = new Parameter(EVENT_ID.ADD_LOGO_BUTTON);
       logoParam.setXml(logo);
       logosPane.setParam(logoParam);
-      
+    }
+  }
+  
+  private function onImagesLoaded(e:KEvent):Void{
+
+    for(photo in e.getXml().elementsNamed('photo')){
+
       var imageParam:IParameter = new Parameter(EVENT_ID.ADD_IMAGE_BUTTON);
-      imageParam.setXml(logo);
+      imageParam.setXml(photo);
       imagesPane.setParam(imageParam);
     }
 

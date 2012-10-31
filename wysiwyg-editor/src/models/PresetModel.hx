@@ -136,9 +136,10 @@ class PresetModel extends Model, implements IModel
     
     for(logos in xml.elementsNamed("logos")){
       dispatchXML(EVENT_ID.LOGOS_LOADED, logos);
-      //for(logo in logos.elementsNamed("logo")){
-      //  trace(logo.firstChild().nodeValue.toString());
-      //}
+    }
+    
+    for(photos in xml.elementsNamed("photos")){
+      dispatchXML(EVENT_ID.IMAGES_LOADED, photos);
     }
   }
   

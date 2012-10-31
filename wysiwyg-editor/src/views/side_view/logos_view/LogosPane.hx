@@ -80,9 +80,7 @@ class LogosPane extends View, implements IView{
     buttonIndex++;
     
     selectButton(0);
-    
 
-    
 	}
 
 

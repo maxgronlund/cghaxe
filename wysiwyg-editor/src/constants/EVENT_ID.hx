@@ -235,6 +235,7 @@ class EVENT_ID  {
   
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";
+  public static inline var IMAGES_LOADED:String               = "images_loaded";
   public static inline var LOGO_SCROLL                        = "logo_scroll";
   public static inline var IMAGE_SCROLL                       = "image_scroll";
   public static inline var ADD_LOGO_BUTTON                    = "add_logo_button";
