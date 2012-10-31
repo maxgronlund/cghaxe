@@ -55,7 +55,7 @@ class CGHitTest
     var count = 0;
     //var non_transparent_pixels = 0;
     
-    var hitColor:UInt = 0xFF000000;
+    var min_hitColor:UInt = 0xFF888888;
     
     for(x in 0...bitmapData.width)
     {
@@ -68,7 +68,7 @@ class CGHitTest
     		  var pixelX:Int = Std.int((x-bitmapX+maskX)*(150/71));
     			var pixelY:Int = Std.int((y-bitmapY+maskY)*(150/72));
     		  
-    			if(bitmapDataMask.getPixel32(pixelX, pixelY) == hitColor)
+    			if(bitmapDataMask.getPixel32(pixelX, pixelY) >= hitColor)
     			{
     				count = count + 1;
     			}
