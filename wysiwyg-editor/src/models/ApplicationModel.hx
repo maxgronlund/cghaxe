@@ -247,4 +247,3 @@ class ApplicationModel extends Model, implements IModel
   
 }
 
-

@@ -8,9 +8,12 @@ import flash.Vector;
 
 class PageSelectorView extends View, implements IView {
   
-  private var zoomInButton:OneStateButton;
-  private var zoomOutButton:OneStateButton;
+  //private var zoomInButton:OneStateButton;
+  //private var zoomOutButton:OneStateButton;
   //private var zoomTo100Button:OneStateButton;
+  
+  private var zoomInButton:TwoStateTextButton;
+  private var zoomOutButton:TwoStateTextButton;
   
   private var pageButtons:Vector<TwoStateTextButton>;
   private var pages:Int;
@@ -29,11 +32,15 @@ class PageSelectorView extends View, implements IView {
     lineData    = new BitmapData(SIZE.DESKTOP_WIDTH,1,false,COLOR.GRAY_LINE );
     line        = new Bitmap(lineData);
     
-    zoomInButton 	      = new OneStateButton();
-		zoomOutButton       = new OneStateButton();
+    //zoomInButton 	      = new OneStateButton();
+		//zoomOutButton       = new OneStateButton();
+		
+		
+		zoomOutButton       = new TwoStateTextButton();
+		zoomInButton 	      = new TwoStateTextButton();
 		//zoomTo100Button     = new OneStateButton();
     
-    line.y      = SIZE.PAGESELESCTOR_HEIGHT;
+    line.y      = 0;
     pages       = 0;
   }
   
@@ -44,26 +51,8 @@ class PageSelectorView extends View, implements IView {
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
     
-    
-    zoomOutButton.init( GLOBAL.desktop_controller,
-            new Point(40,29), 
-            new ZoomOutButtonBitmap(), 
-            new Parameter( EVENT_ID.ZOOM_OUT ) );
-    zoomOutButton.fireOnMouseUp(false);
-
-
-    zoomInButton.init( GLOBAL.desktop_controller,
-            new Point(40,29), 
-            new ZoomInButtonBitmap(), 
-            new Parameter( EVENT_ID.ZOOM_IN));
-    zoomInButton.fireOnMouseUp(false);
-    
-    //zoomTo100Button.init( GLOBAL.desktop_controller,
-    //        new Point(40,29), 
-    //        new ZoomTo100Button(), 
-    //        new Parameter( EVENT_ID.ZOOM_100));
-    //zoomTo100Button.fireOnMouseUp(false);
-    
+    zoomOutButton.init(GLOBAL.desktop_controller, new Parameter( EVENT_ID.ZOOM_OUT ), '-', 0, 'helvetica', 22);
+    zoomInButton.init(GLOBAL.desktop_controller, new Parameter( EVENT_ID.ZOOM_IN ), '+', 0, 'helvetica', 22);
 	}
 	private function onLoadDefaultPage(e:IKEvent):Void{
     pageButtons[0].bang();
@@ -77,13 +66,16 @@ class PageSelectorView extends View, implements IView {
     
     addChild(zoomInButton);
     addChild(zoomOutButton);
-    //addChild(zoomTo100Button);    
     
-    zoomInButton.x = 300;
-    zoomOutButton.x = 340;
-    //zoomTo100Button.x = 380;
+    zoomOutButton.y = 4;
+    zoomInButton.y  = 4;
+   
+    zoomOutButton.x = 479;
+    zoomInButton.x  = zoomOutButton.x +28;
+
     
-    backdrop.width = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
+    backdrop.width = SIZE.MAIN_VIEW_WIDTH ;
+    backdrop.height = 30 ;
   }
   
   private function onClearConfiguration(e:IKEvent):Void{
@@ -118,6 +110,7 @@ class PageSelectorView extends View, implements IView {
   private function addPageSelectorLink(pageName:String):Void{
   	createPageButton(Std.string(pages+1) + '.' + pageName, pages);
   }
+  
   private function createPageButton(label:String, pageId:Int):Void{ 
     
     var param:IParameter = new Parameter( EVENT_ID.PAGE_SELECTED);
@@ -127,6 +120,7 @@ class PageSelectorView extends View, implements IView {
     pageButtons[pages].init(controller, param, label, pageId, 'helvetica', 22);
     addChild(pageButtons[pages]);
     pageButtons[pages].x = pageButtonPosX;
+    pageButtons[pages].y = 4;
     pageButtonPosX += pageButtons[pages].getWidth()+1;
   }
   

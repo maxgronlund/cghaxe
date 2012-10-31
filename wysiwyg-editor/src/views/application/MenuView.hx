@@ -2,6 +2,7 @@ import flash.events.Event;
 import flash.display.BitmapData;
 import flash.display.Bitmap;
 import flash.geom.Point;
+import flash.events.KeyboardEvent;
 
 class MenuView extends View, implements IView
 {
@@ -17,62 +18,57 @@ class MenuView extends View, implements IView
 	private var zoomTo100Button:OneStateButton;
 //	
 //	private var placeholdersButton:TwoStateButton;
-	
-	private var buttonPos:Float;
-	private var adminPos:Float;
-
-	public function new(controller:IController){	
-		super(controller);
-		
-		bmpData             = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.MENU_VIEW_HEIGHT,false,COLOR.MENU );
-		backdrop            = new Bitmap(bmpData);
-		                	  
-		saveButton 		      = new OneStateButton();
-		buyNowButton 		    = new OneStateButton();
-		maskButton 		      = new TwoStateButton();
+  
+  private var buttonPos:Float;
+  private var adminPos:Float;
+  
+  public function new(controller:IController){	
+    super(controller);
+    
+    bmpData             = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.MENU_VIEW_HEIGHT,false,COLOR.MENU );
+    backdrop            = new Bitmap(bmpData);
+                    	  
+    saveButton 		      = new OneStateButton();
+    buyNowButton 		    = new OneStateButton();
+    maskButton 		      = new TwoStateButton();
 /*		moveButton 		      = new TwoStateButton();
 		textButton 		      = new TwoStateButton();
 */
-		gridButton 		      = new TwoStateButton();
-		trashButton 		    = new OneStateButton();
-		zoomInButton 	      = new OneStateButton();
-		zoomOutButton       = new OneStateButton();
-		zoomTo100Button     = new OneStateButton();
-		Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onSetDefaultTool);
-		
-		
-  	
-	}
-
-	private function onSetDefaultTool(e:IKEvent):Void{
-	 //trace('onSetDefaultTool');
-	 textButton.setOn(true);
+    gridButton 		      = new TwoStateButton();
+    trashButton 		    = new OneStateButton();
+    zoomInButton 	      = new OneStateButton();
+    zoomOutButton       = new OneStateButton();
+    zoomTo100Button     = new OneStateButton();
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onSetDefaultTool);
+    
+ 
+  
   }
-	
-	override public function init():Void { 
+
+  
+ 
+  
+  private function onKeyUp(event:KeyboardEvent):Void{}
+  
+  private function onSetDefaultTool(e:IKEvent):Void{
+    addButtons();
+    textButton.setOn(true);
+  }
+  
+  override public function init():Void { 
     
     //SaveButtonBitmap
     saveButton.init( controller,
             new Point(80,29), 
             new SaveButtonBitmap(), 
             new Parameter( EVENT_ID.SAVE_XML));
-          
+    
+    
     maskButton.init( controller,
             new Point(40,29), 
             new MaskButton(), 
             new Parameter( EVENT_ID.SHOW_MASK));
-    
-    /*
-    moveButton.init( controller,
-            new Point(40,29), 
-            new MoveButton(), 
-            new Parameter( EVENT_ID.MOVE_TOOL));
-            
-    textButton.init( controller,
-            new Point(40,29), 
-            new TextButton(), 
-            new Parameter( EVENT_ID.TEXT_TOOL));
-    */        
+
     gridButton.init( controller,
             new Point(40,29), 
             new GridButton(), 
@@ -108,6 +104,7 @@ class MenuView extends View, implements IView
             new ZoomTo100Button(), 
             new Parameter( EVENT_ID.ZOOM_100));
     zoomTo100Button.fireOnMouseUp(false);
+    
 	}
 	
   override public function onAddedToStage(e:Event){
@@ -115,37 +112,49 @@ class MenuView extends View, implements IView
     addChild(backdrop);
     backdrop.width = SIZE.MENU_VIEW_WIDTH;
     
+    
+    
+    stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+
+  }
+  
+  private function addButtons():Void{
     addChild(saveButton);
     saveButton.fireOnMouseUp(false);
     addChild(buyNowButton);
     buyNowButton.fireOnMouseUp(false);
     
-    addChild(maskButton);
+    if(GLOBAL.admin_mode){
+      addChild(maskButton);
+    }
     addChild(gridButton);
     addChild(trashButton);
     addChild(zoomOutButton);
     addChild(zoomInButton);
     addChild(zoomTo100Button);
     
-    
-    
-    
-    maskButton.x			= saveButton.x + saveButton.getWidth();
-
-    gridButton.x			= maskButton.x + maskButton.getWidth();
-    
-    gridButton.x		  = gridButton.x + gridButton.getWidth();
-    
-    trashButton.x		  = gridButton.x + gridButton.getWidth();
-    
+    var posX      = saveButton.x + saveButton.getWidth();
+    if(GLOBAL.admin_mode){
+      maskButton.x  = posX;
+      posX          = maskButton.x + maskButton.getWidth();
+    }
+    gridButton.x	= posX;
+    trashButton.x     = gridButton.x + gridButton.getWidth();
     buyNowButton.x    = trashButton.x + trashButton.getWidth();
     
     
-    zoomTo100Button.x		= SIZE.MENU_VIEW_WIDTH - zoomTo100Button.getWidth();
-    zoomInButton.x		= zoomTo100Button.x - zoomInButton.getWidth();
-    zoomOutButton.x 	= zoomInButton.x - zoomOutButton.getWidth();
-
+    zoomTo100Button.x   = SIZE.MENU_VIEW_WIDTH - zoomTo100Button.getWidth();
+    zoomInButton.x      = zoomTo100Button.x - zoomInButton.getWidth();
+    zoomOutButton.x     = zoomInButton.x - zoomOutButton.getWidth();
   }
+  private function onKeyPressed(event:KeyboardEvent):Void{
+
+     switch(event.keyCode){
+       case 8:{
+         controller.setParam(new Parameter(EVENT_ID.TRASH_PLACEHOLDER));
+       }; 
+     }
+   }
   
   override public function update(id:String, index:Int, value:String):Void{
   }

@@ -2,6 +2,7 @@
 
 import flash.events.Event;
 import flash.Vector;
+import flash.external.ExternalInterface;
 
 class LogosModel extends Model, implements IModel {
   
@@ -25,8 +26,16 @@ class LogosModel extends Model, implements IModel {
       case EVENT_ID.ADD_LOGO_TO_PAGE:{
         if(logosXml != null){
           dispatchXML(EVENT_ID.ADD_LOGO_TO_PAGE, logosXml);
+          uploadLogo();
         }
       }
+      case EVENT_ID.EVENT_ID.UPLOAD_IMAGE:{
+        uploadImage();
+      }
+      case EVENT_ID.EVENT_ID.UPLOAD_LOGO:{
+        uploadLogo();
+      }
+      
     }
   }
   
@@ -45,5 +54,12 @@ class LogosModel extends Model, implements IModel {
   override public function getBool(id:String):Bool{
 
     return false;
+  }
+  
+  private function uploadLogo():Void{
+    ExternalInterface.call("uploadLogo()");
+  }
+  private function uploadImage():Void{
+    ExternalInterface.call("uploadImage()");
   }
 }

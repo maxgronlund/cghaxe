@@ -4,39 +4,38 @@ import flash.events.Event;
 class PriceView extends PropertyView, implements IView{
   
   private var total_price_label:FormatedText;
-  private var shop_item_title:FormatedText;
+  private var shopItemTitle:FormatedText;
   private var shop_item_price_price_label:FormatedText;
   //private var shop_item_price_units_label:FormatedText;
   private var amount_field:EditableTextField;
   public var iAlreadyHaveACliche:Hash<Bool>;
-  
-  
   private var prices:Array<PriceModel>;
   private var priceColumns:Array<PriceColumn>;
+  private var shopItemTitleBack:Rectangle;
   
   public function new(priceController:IController){	
     super(priceController);
-    backdrop				= new PriceViewBack();
+    backdrop				            = new PriceViewBack();
     
-    shop_item_title               = new FormatedText('helvetica', '0.0', 22, false);
+    shopItemTitleBack           = new Rectangle(190, 18, 0x000000, 0x999999, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+    shopItemTitle               = new FormatedText('helvetica', '0.0', 12, false, 0xffffff);
+    shopItemTitle.setColor(0xdedede);
     
-    amount_field = new EditableTextField();
-    amount_field.x = 30;
-    amount_field.y = 180;
+    amount_field                = new EditableTextField();
+    amount_field.x              = 30;
+    amount_field.y              = 180;
     
     GLOBAL.preset_quantity_text_field = amount_field;
     
     
-    
-    
-    
-    
+
     shop_item_price_price_label   = new FormatedText('helvetica', '0.0', 12, false);
     //shop_item_price_units_label = new FormatedText('helvetica', '0.0', 12, false);
     
     total_price_label = new FormatedText('helvetica', '0.0', 12, false);
     total_price_label.x = 55;
     total_price_label.y = 76;
+    
     
     prices = new Array();
     priceColumns = new Array();
@@ -49,15 +48,19 @@ class PriceView extends PropertyView, implements IView{
 	override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
     
-    addChild(shop_item_title);
-    shop_item_title.x   = 10;
-    shop_item_title.y   = 40;
+    addChild(shopItemTitleBack);
+    //shopItemTitleBack.setSize(190, 30);
+    shopItemTitleBack.x   = 0;
+    shopItemTitleBack.y   = 30;
+    addChild(shopItemTitle);
+    shopItemTitle.x   = 10;
+    shopItemTitle.y   = 30;
     
     
     addChild(amount_field);
     amount_field.init();
     
-//    addChild(shop_item_title);
+//    addChild(shopItemTitle);
     addChild(shop_item_price_price_label);
     //addChild(shop_item_price_units_label);
     
@@ -163,7 +166,7 @@ class PriceView extends PropertyView, implements IView{
 	  
 	  
 	 
-	  shop_item_title.setLabel(GLOBAL.product_name);
+	  shopItemTitle.setLabel(GLOBAL.product_name);
 	  
 	  amount_field.y = 40+18;
 	  amount_field.x = 97;

@@ -683,6 +683,7 @@ class TextPlaceholderView extends APlaceholder {
       if(was_foiled == true)
         foilify();
     }else{
+      setTextOnTop(true);
       showTags();
     }
     updateFocus(); 
@@ -716,6 +717,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function setTextOnTop(b:Bool):Void {
+    trace('setTextOnTop', b);
     MouseTrap.capture();
    
     font.selectable(b);

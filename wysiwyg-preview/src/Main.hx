@@ -16,6 +16,7 @@ class Main
   private var Menu:IModel;
   private var Configuration:IModel;
   private var Greetings:IModel;
+  private var Symbols:IModel;
   private var Logos:IModel;
   private var Preset:IModel;
   private var Prices:IModel;
@@ -31,13 +32,14 @@ class Main
   private var textSuggestionController:IController;
   private var designsController:IController;
   private var greetingsController:IController;
+  private var symbolsController:IController;
   private var logosController:IController;
   private var foilController:IController;
   private var addOnsController:IController;
   private var pricesController:IController;
   private var menuController:IController;
   private var pageSelectController:IController;
-  private var selectionController:IController;
+//  private var selectionController:IController;
   private var sidebarController:IController;
   private var desktopController:IController;
   
@@ -49,6 +51,7 @@ class Main
   private var textSuggestionView:AView;
   private var designsView:AView;
   private var greetingsView:AView;
+  private var symbolsView:AView;
   private var logosView:AView;
   private var blindView:AView;
   private var addOnsView:AView;
@@ -79,6 +82,7 @@ class Main
     trace('------------------------------------------------------');
     trace('wysiwyg dev vertion Zebra',CompileDate.getDate());
     trace('------------------------------------------------------');
+//    trace(StringTools.urlDecode("%26"));
     
     version = new VersionCheck();
     
@@ -107,6 +111,7 @@ class Main
     Pages                       = new PagesModel();
     Designs                     = new DesignsModel();
     Greetings                   = new GreetingsModel();
+    Symbols                     = new SymbolsModel();
     Logos                       = new LogosModel();
     Prices                      = new PricesModel();
            
@@ -125,11 +130,12 @@ class Main
     textSuggestionController    = new TextSuggestionController();
     designsController           = new DesignsController();
     greetingsController         = new GreetingsController();
+    symbolsController           = new SymbolsController();
     logosController             = new LogosController();
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
     desktopController           = new DesktopController();
-    selectionController         = new SelectionController();
+//    selectionController         = new SelectionController();
     
     setGlobalControllers();     
                                 
@@ -141,6 +147,7 @@ class Main
     textSuggestionView          = new TextSuggestionView(textSuggestionController);
     designsView                 = new DesignsView(designsController);
     greetingsView               = new GreetingsView(greetingsController);
+    symbolsView                 = new SymbolsView(symbolsController);
     logosView                   = new LogosView(logosController);
     blindView                   = new BlindView(sidebarController);
     addOnsView                  = new AddOnsView(addOnsController);
@@ -149,9 +156,6 @@ class Main
     pageSelectorView            = new PageSelectorView(pageSelectController);
     desktopView                 = new DesktopView(desktopController);
     gridView                    = new GridView(applicationController);
-    selectionView               = new SelectionView(selectionController);
-    
-    // setup views
     setGlobalViews();
     
     // system
@@ -170,6 +174,7 @@ class Main
     GLOBAL.Pages            = Pages;
     GLOBAL.Designs          = Designs;
     GLOBAL.Greetings        = Greetings;
+    GLOBAL.Symbols          = Symbols;
     GLOBAL.Logos            = Logos;
     GLOBAL.Zoom         	  = new ZoomTools();
     GLOBAL.Font             = new FontModel();
@@ -177,6 +182,7 @@ class Main
   }
   
   private function initGlobals(): Void{
+    GLOBAL.shop_item_name   = 'na';
     GLOBAL.foilColor        = 'silver';
     GLOBAL.pms1Color        = 0;
     GLOBAL.pms2Color        = 0;
@@ -184,6 +190,10 @@ class Main
     GLOBAL.printType        = CONST.STD_PMS_COLOR;
     GLOBAL.price_file_url   = 'na';
     GLOBAL.shop_item_id     = -1;
+    
+    GLOBAL.pms1ColorString  = '541';
+    GLOBAL.pms2ColorString  = '229';
+    
   }
   
   private function setGlobalViews():Void{
@@ -200,6 +210,7 @@ class Main
     GLOBAL.grid_view                  = gridView;
     GLOBAL.selection_view             = selectionView;
     GLOBAL.greetings_view             = greetingsView;
+    GLOBAL.symbols_view               = symbolsView;
     GLOBAL.logos_view                 = logosView;
     GLOBAL.blind_view                 = blindView;
     GLOBAL.foil			              		= foil;
@@ -211,11 +222,12 @@ class Main
     GLOBAL.text_suggestion_controller = textSuggestionController;
     GLOBAL.designs_controller         = designsController;
     GLOBAL.greetings_controller       = greetingsController;
+    GLOBAL.symbols_controller         = symbolsController;
     GLOBAL.logos_controller           = logosController;
     GLOBAL.sidebar_controller         = sidebarController;
     GLOBAL.desktop_controller         = desktopController;
     GLOBAL.menu_controller            = menuController;
-    GLOBAL.selection_controller       = selectionController;
+//    GLOBAL.selection_controller       = selectionController;
     
   }
 
@@ -224,6 +236,7 @@ class Main
     Application.init();
     Designs.init();
     Greetings.init();
+    Symbols.init();
     Logos.init();
     Menu.init();
     Preset.init();
@@ -239,6 +252,7 @@ class Main
 
     addOnsView.init();
     greetingsView.init();
+    symbolsView.init();
     logosView.init();
     blindView.init();
     priceView.init();
@@ -256,25 +270,16 @@ class Main
     // add views
     Lib.current.addChild(applicationView);
     //Lib.current.addChild(sideView);
-    applicationView.addView(desktopView, 0, 0); 
-/*    
-    sideView.addView(textView, 0,0,EVENT_ID.SHOW_TEXT);
-    sideView.addView(textSuggestionView, 0,30,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
-    sideView.addView(foilView, 0,60,EVENT_ID.SHOW_FOIL);
-    sideView.addView(addOnsView, 0,90,EVENT_ID.SHOW_ADD_ONS);
-    sideView.addView(garamondView, 0,120,EVENT_ID.SHOW_GARAMOND);
-    sideView.addView(logoView, 0,150,EVENT_ID.SHOW_LOGO);
-    sideView.addView(priceView, 0,180,EVENT_ID.SHOW_PRICES);
-    sideView.addView(blindView, 0,430,EVENT_ID.SHOW_BLIND_VIEW);
-*/    
+    applicationView.addView(desktopView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
+   
     //applicationView.addView(menuView, 0,0);
-    applicationView.addView(pageSelectorView, 0, 520);
-    applicationView.addView(gridView, 0, 0); 
+    applicationView.addView(pageSelectorView, 0, 512);
+    applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
     gridView.mouseChildren = false;
     gridView.mouseEnabled = false;
 
     // position views
-    //sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
+    sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
   }
   
   private function loadParams():Void{

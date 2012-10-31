@@ -5,24 +5,48 @@ import flash.geom.Point;
 import flash.display.Shape;
 import flash.Vector;
 import flash.display.Sprite;
+import flash.display.BitmapData;
+import flash.display.Bitmap;
+
 
 
 class Rectangle extends Sprite
 {
+  public static inline var USE_FILL   = true;
+  public static inline var DRAW_LINES   = true;
+  public static inline var DONT_USE_FILL   = false;
+  public static inline var DONT_DRAW_LINES   = false;
+  
   private var lines:Vector<Shape>;
   private var color:Int;
+  private var useFill:Bool;
+  private var drawLines:Bool;
+  private var bmpData:BitmapData;
+	private var backdrop:Bitmap;
   
-  public function new(width:Int=0, height:Int=0, color:Int = 0x000000){
+  private var sizeX:Float;
+  private var sizeY:Float;
+  
+  public function new(sizeX:Float=0, sizeY:Float=0, color:Int = 0x000000, fillColor:Int = 0x888888, drawLines = true, useFill:Bool = false){
     super();
-    this.color  = color;
+    this.sizeX = sizeX; 
+    this.sizeY = sizeY;
+    this.color      = color;
+    this.useFill    = useFill;
+    if(useFill){
+      bmpData 		= new BitmapData(10,10,false, fillColor );
+  		backdrop		= new Bitmap(bmpData);
+    }
+    this.drawLines  = drawLines;
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
-    //setSize(width, height);
   }
   
-    
   private function onAddedToStage(e:Event):Void{	
   	removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   	addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
+  	
+  	addChild(backdrop);
+  	setSize(sizeX, sizeY);
 
   }
   private function onRemovedFromStage(e:Event):Void{
@@ -30,15 +54,25 @@ class Rectangle extends Sprite
   }
   
   public function setSize(sizeX:Float, sizeY:Float):Void{
-    if(lines != null){
-      for( i in 0...lines.length){
-        removeChild(lines[i]);
-        lines[i] = null;
+    if(drawLines){
+      if(lines != null){
+        for( i in 0...lines.length){
+          removeChild(lines[i]);
+          lines[i] = null;
+        }
+        lines = null;
       }
-      lines = null;
+      lines = new Vector<Shape>();
+      createLines(Std.int(sizeX),Std.int(sizeY));
     }
-    lines = new Vector<Shape>();
-    createLines(Std.int(sizeX),Std.int(sizeY));
+    if(useFill){
+      this.sizeX = sizeX;
+      this.sizeY = sizeY;
+      backdrop.width = sizeX;
+      backdrop.height = sizeY;
+    }
+    
+    
   }
   
   private function createLines(sizeX:Int, sizeY:Int):Void{                               
@@ -57,30 +91,6 @@ class Rectangle extends Sprite
     addChild(line);
     lines.push(line);
   }  
-  
-  //override private function onMouseOut(e:MouseEvent){	
-  //  super.onMouseOut(e);
-  //}
-  //
-  //
-  //override private function onMouseOver(e:MouseEvent){	
-  //  trace('onMouseOver');
-  //  super.onMouseOver(e); 
-  //}
-  //
-  //override private function onMouseDown(e:MouseEvent){	
-  //  super.onMouseDown(e); 
-  //  
-  //}
-  //
-  //override private function onMouseUp(e:MouseEvent){	
-  //  super.onMouseUp(e); 
-  //  
-  //}
-  //
-  //private function setState(state:Int):Void {
-  //
-  //}
-  
+
   
 }

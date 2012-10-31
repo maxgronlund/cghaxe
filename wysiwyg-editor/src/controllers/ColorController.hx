@@ -7,7 +7,6 @@ class ColorController extends Controller, implements IController{
   }
 
   override public function setParam(param:IParameter):Void{
-    trace(param.getLabel() );
     switch ( param.getLabel() ){
       case EVENT_ID.SHOW_COLOR_PICKERS:{
         GLOBAL.side_view.showView(EVENT_ID.SHOW_COLOR_PICKERS, true);

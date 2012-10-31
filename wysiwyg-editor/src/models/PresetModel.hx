@@ -51,8 +51,6 @@ class PresetModel extends Model, implements IModel
     }
   }
   
-  
-  
   private function countPlaceholders(xml:Xml):Void{
 //    trace('..countPlaceholders.');
     var placeholders:UInt = 0;
@@ -74,9 +72,7 @@ class PresetModel extends Model, implements IModel
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
-    
-    
-    
+
     for( font_set in xml.elementsNamed("font-set") ) {
       GLOBAL.font_set = font_set.firstChild().nodeValue.toString();
     }
@@ -229,12 +225,9 @@ class PresetModel extends Model, implements IModel
     variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.user_uuid                 = GLOBAL.user_uuid;
     variables.language_name             = GLOBAL.language_name;
-    
     variables.preset_sibling_selected 	= productSelected;
-
     variables._method = 'put';
     request.data = variables;
-    
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);

@@ -40,7 +40,7 @@ class TwoStateTextButton extends MouseHandler
 		this.param	 		= param;
 		this.text       = text;
 		this.id					= id;
-		bmpData 				= new BitmapData( 100, backdropHeight,false,0x888888 );
+		bmpData 				= new BitmapData( 10, backdropHeight,false,0x888888 );
 		backdrop				= new Bitmap(bmpData);
 		mouseDown 			= false;
 		mouseOver 			= false;
@@ -62,7 +62,7 @@ class TwoStateTextButton extends MouseHandler
 		formattedText.setColor(COLOR.DESELECTED);
 		backdrop.alpha = 0;
 		backdrop.width = formattedText.width + 20;
-		if(backdrop.width < 48) backdrop.width = 48;
+		if(backdrop.width < 28) backdrop.width = 28;
 	}
 	
 	override private function onMouseOver(e:MouseEvent){	

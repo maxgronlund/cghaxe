@@ -10,7 +10,11 @@ class LogosView extends PropertyView, implements IView{
   private var logosScrollPane:AView;
   private var logosPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
+  private var uploadLogoButton:OneStateButton;
   private var addLogoButton:OneStateButton;
+  
+  private var uploadImageButton:OneStateButton;
+  private var addImageButton:OneStateButton;
   
   public function new(logosController:IController){	
     super(logosController);
@@ -19,11 +23,15 @@ class LogosView extends PropertyView, implements IView{
 		//logosColorPicker						= new LogosColorPicker(logosController);
 		
 		
-    backdrop              = new PlaceholdersBackBitmap();
+    backdrop              = new LogoViewBack();
     logosScrollPane       = new ScrollPane(logosController);
     logosPane             = new LogosPane(logosController);
     verticalScrollbar     = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
+    uploadLogoButton      = new OneStateButton();
     addLogoButton         = new OneStateButton();
+    
+    uploadImageButton     = new OneStateButton();
+    addImageButton        = new OneStateButton();
     
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
@@ -40,10 +48,34 @@ class LogosView extends PropertyView, implements IView{
     
     addLogoButton.init(controller,
             new Point(150,22), 
-            new AddLogoButton(), 
+            new OneStateButtonBack(), 
             new Parameter( EVENT_ID.ADD_LOGO_TO_PAGE));
     
     addLogoButton.fireOnMouseUp(false);
+    
+    
+    
+    uploadLogoButton.init(controller,
+            new Point(150,22), 
+            new OneStateButtonBack(), 
+            new Parameter( EVENT_ID.UPLOAD_LOGO));
+    
+    uploadLogoButton.fireOnMouseUp(false);
+    
+    
+    addImageButton.init(controller,
+            new Point(150,22), 
+            new OneStateButtonBack(), 
+            new Parameter( EVENT_ID.UPLOAD_IMAGE));
+
+    addImageButton.fireOnMouseUp(false);
+    
+    uploadImageButton.init(controller,
+            new Point(150,22), 
+            new OneStateButtonBack(), 
+            new Parameter( EVENT_ID.UPLOAD_IMAGE));
+
+    uploadImageButton.fireOnMouseUp(false);
     
   }
   
@@ -53,9 +85,9 @@ class LogosView extends PropertyView, implements IView{
     
     // font selection pane
     addChild(logosScrollPane);
-    logosScrollPane.setSize( 174, 430);
+    logosScrollPane.setSize( 174, 200);
     logosScrollPane.x = 9;
-    logosScrollPane.y = 44;
+    logosScrollPane.y = 54;
     logosScrollPane.addView(logosPane, 0,0);	
     
     addChild(verticalScrollbar);
@@ -65,7 +97,20 @@ class LogosView extends PropertyView, implements IView{
     
     addChild(addLogoButton);
     addLogoButton.x = 20;
-    addLogoButton.y = 488;
+    addLogoButton.y = 212;
+    
+    addChild(uploadLogoButton);
+    uploadLogoButton.x = 20;
+    uploadLogoButton.y = 238;
+    
+    
+    addChild(addImageButton);
+    addImageButton.x = 20;
+    addImageButton.y = 462;
+    
+    addChild(uploadImageButton);
+    uploadImageButton.x = 20;
+    uploadImageButton.y = 488;
   }
   
   private function onLogosLoaded(e:KEvent):Void{

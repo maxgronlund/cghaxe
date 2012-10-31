@@ -258,6 +258,9 @@ class EVENT_ID  {
   public static inline var STD_PMS_COLOR_SELECTED             = "std_pms_color_selected";
   public static inline var FOIL_COLOR_SELECTED                = "foil_color_selected";
   public static inline var COLOR_SELECTED                     = "color_selected";
+  
+  public static inline var UPLOAD_LOGO                        = "upload_logo";
+  public static inline var UPLOAD_IMAGE                       = "upload_image";
 
 	
 	

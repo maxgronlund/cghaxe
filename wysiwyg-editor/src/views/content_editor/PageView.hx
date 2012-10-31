@@ -381,9 +381,6 @@ class PageView extends View{
     for( size_y in xml.elementsNamed("size-y") ) 
         sizeY = Std.parseInt(size_y.firstChild().nodeValue);
     
-    
-    trace(sizeX,sizeY);
-    
     for( url in xml.elementsNamed("url") ) {
       var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY);
       placeholder.setSize(sizeX, sizeY);
@@ -393,7 +390,6 @@ class PageView extends View{
   private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):APlaceholder{
      
     var url:String = xml.firstChild().nodeValue.toString();
-    trace(url);
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new BitmapPlaceholder(this, placeholders.length, model, url);
     placeholder.x = posX;
@@ -405,6 +401,7 @@ class PageView extends View{
   
   private function parseTextPlaceholder(xml:Xml):Void{
     
+//    trace(xml.toString());
     for( anchor_point in xml.elementsNamed("anchor-point") ) 
       GLOBAL.Font.anchorPoint =  Std.parseFloat(anchor_point.firstChild().nodeValue);
     

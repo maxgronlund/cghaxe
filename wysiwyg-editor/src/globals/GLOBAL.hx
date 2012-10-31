@@ -99,7 +99,7 @@ class GLOBAL  {
   public static var desktop_controller:IController;
   public static var sibling_controller:IController;
   public static var menu_controller:IController;
-  public static var selection_controller:IController;
+//  public static var selection_controller:IController;
   
   // zoom and pos
   public static var pos_x:Float;

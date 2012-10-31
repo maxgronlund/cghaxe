@@ -39,7 +39,7 @@ class Main
   private var pricesController:IController;
   private var menuController:IController;
   private var pageSelectController:IController;
-  private var selectionController:IController;
+//  private var selectionController:IController;
   private var sidebarController:IController;
   private var desktopController:IController;
   
@@ -135,7 +135,7 @@ class Main
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
     desktopController           = new DesktopController();
-    selectionController         = new SelectionController();
+//    selectionController         = new SelectionController();
     
     setGlobalControllers();     
                                 
@@ -156,7 +156,7 @@ class Main
     pageSelectorView            = new PageSelectorView(pageSelectController);
     desktopView                 = new DesktopView(desktopController);
     gridView                    = new GridView(applicationController);
-    selectionView               = new SelectionView(selectionController);
+//    selectionView               = new SelectionView(selectionController);
     
     // setup views
     setGlobalViews();
@@ -230,7 +230,7 @@ class Main
     GLOBAL.sidebar_controller         = sidebarController;
     GLOBAL.desktop_controller         = desktopController;
     GLOBAL.menu_controller            = menuController;
-    GLOBAL.selection_controller       = selectionController;
+//    GLOBAL.selection_controller       = selectionController;
     
   }
 

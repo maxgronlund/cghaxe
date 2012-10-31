@@ -21,14 +21,10 @@ class DesktopView extends View, implements IView{
   private var moveLeft:Bool;
   private var zoom:Bool;
   private var zoomFactor:Float;
-  
   private var zoomDone:Bool;
   private var alignDone:Bool;
-
-  
   private var placeholders:Int;
   private var pageView:AView;
-  
   private var glimmer_foils_index:UInt;
 
   
@@ -49,14 +45,11 @@ class DesktopView extends View, implements IView{
     //Pages.addEventListener(EVENT_ID.PAGE_SELECTED, centerPage);
     bmpData    = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.DESKTOP_HEIGHT,false, COLOR.DESKTOP );
     backdrop   = new Bitmap(bmpData);
-    
     Application.addEventListener(EVENT_ID.CENTER_PAGE, centerPage);
     
   }
   
-  
-  
-  
+
   private function centerPage(e:Event):Void{
     glimmerFoils();
     this.x = 0;
@@ -80,7 +73,6 @@ class DesktopView extends View, implements IView{
     this.width    *= z;
     this.height   *= z;
     
-    
     Zoom.setZoom(1/z);
     
     this.x += (SIZE.DESKTOP_WIDTH-(pageView.width/Zoom.getZoomFactor()))/2.0;
@@ -88,8 +80,7 @@ class DesktopView extends View, implements IView{
     
   }
   
-  private function setSizes():Void{
-    
+  private function setSizes():Void{  
     trace('setSizes');
     
     sizeX = pagesView.width;

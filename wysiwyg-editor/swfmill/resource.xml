@@ -16,7 +16,6 @@
       <bitmap id="CardButton" import="library/images/card_button.png" />
       <bitmap id="ColorViewButton" import="library/images/colors_view_button.png" />
       <bitmap id="CreateTextfieldButton" import="library/images/create_textfield_button.png" />
-<!--  <bitmap id="ColorPickerButton" import="library/images/color_picker_button.png" /> -->
       <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
       <bitmap id="DecorationsViewButton" import="library/images/decorations_view_button.png" />
       <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
@@ -28,7 +27,8 @@
       <bitmap id="LogoViewButton" import="library/images/logo_view_button.png" />
       <bitmap id="MaskButton" import="library/images/mask_button.png" />
       <bitmap id="MoveButton" import="library/images/move_button.png" />
-      <bitmap id="PlaceholdersButton" import="library/images/placeholders_view_button.png" />
+      <bitmap id="MoveButton" import="library/images/move_button.png" />
+      <bitmap id="OneStateButtonBack" import="library/images/one_state_button_back.png" />
       <bitmap id="PlaceholderButton" import="library/images/placeholder_button.png" />
       <bitmap id="PriceViewButton" import="library/images/price_view_button.png" />
       <bitmap id="SaveButtonBitmap" import="library/images/save_button.png" />
