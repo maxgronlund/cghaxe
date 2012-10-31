@@ -23,7 +23,15 @@ class LogosModel extends Model, implements IModel {
       case EVENT_ID.LOGO_SELECTED:{
         logosXml = param.getXml();
       }
+      case EVENT_ID.IMAGE_SELECTED:{
+        logosXml = param.getXml();
+      }
       case EVENT_ID.ADD_LOGO_TO_PAGE:{
+        if(logosXml != null){
+          dispatchXML(EVENT_ID.ADD_LOGO_TO_PAGE, logosXml);
+        }
+      }
+      case EVENT_ID.ADD_IMAGE_TO_PAGE:{
         if(logosXml != null){
           dispatchXML(EVENT_ID.ADD_LOGO_TO_PAGE, logosXml);
         }

@@ -4,27 +4,24 @@ import flash.display.Bitmap;
 import flash.geom.Point;
 import flash.Vector;
 
-class LogosPane extends View, implements IView{
+class ImagesPane extends View, implements IView{
   
   private var selectedButton:Int;
   private var vectorsButtons:Vector<OneStateTextAndImageButton>;
   private var buttonIndex:UInt;
   private var buttonPos:UInt;
-  
-  
+
   
   public function new(vectorsController:IController){	
     super(vectorsController);
-    bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
-    backdrop				= new Bitmap(bmpData);
+    bmpData         = new BitmapData(172,20,false, COLOR.SCROLLPANE );
+    backdrop        = new Bitmap(bmpData);
     
-    vectorsButtons = new Vector<OneStateTextAndImageButton>();
-    buttonIndex	= 0;
-    selectedButton = 0;
-    buttonPos	= 0;
-    selectedButton = 0;
-    
-    
+    vectorsButtons  = new Vector<OneStateTextAndImageButton>();
+    buttonIndex	    = 0;
+    selectedButton  = 0;
+    buttonPos     	= 0;
+    selectedButton  = 0;
   }
   
   override public function init():Void{
@@ -32,20 +29,22 @@ class LogosPane extends View, implements IView{
   }
   
   override public function onAddedToStage(e:Event):Void{
+  
   	super.onAddedToStage(e);
   	addChild(backdrop);
+  
   }
 
 
   override public function setParam(param:IParameter):Void{
-    
+    trace('add image', param.getLabel(), EVENT_ID.ADD_IMAGE_BUTTON);
     switch ( param.getLabel() ){
-      case EVENT_ID.ADD_LOGO_BUTTON:{
-        param.setLabel(EVENT_ID.LOGO_SELECTED);
+      case EVENT_ID.ADD_IMAGE_BUTTON:{
+        param.setLabel(EVENT_ID.IMAGE_SELECTED);
         addButton(param);
       }
       
-      case EVENT_ID.LOGO_SELECTED:{
+      case EVENT_ID.IMAGE_SELECTED:{
         selectButton( param.getInt());
       }
     }
@@ -62,8 +61,7 @@ class LogosPane extends View, implements IView{
   
   private function addButton(param:IParameter	):Void{
     
-    var vectorTitle:String = 'Logo-'+Std.string(buttonIndex);
-
+    var vectorTitle:String = 'Image-'+Std.string(buttonIndex);
     param.setString(vectorTitle);
     param.setInt(buttonIndex);
     var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
@@ -80,7 +78,6 @@ class LogosPane extends View, implements IView{
     buttonIndex++;
     
     selectButton(0);
-    
 
     
 	}
@@ -95,19 +92,8 @@ class LogosPane extends View, implements IView{
   }
   
   override public function setString(id:String, s:String):Void{
-    
-    //switch ( id )	{
-    //	case 'load_default_font':{
-    //		fontButtons[0].setOn(true);
-    //	}
-    //	case EVENT_ID.FONT: selectFont(s);
-    //}
+
   }
-  
-  //public function doStuff():Void{
-  //  
-  //}
-  
-  
+
   
 }

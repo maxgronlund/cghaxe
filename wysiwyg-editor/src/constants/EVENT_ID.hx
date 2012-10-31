@@ -236,7 +236,9 @@ class EVENT_ID  {
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";
   public static inline var LOGO_SCROLL                        = "logo_scroll";
+  public static inline var IMAGE_SCROLL                       = "image_scroll";
   public static inline var ADD_LOGO_BUTTON                    = "add_logo_button";
+  public static inline var ADD_IMAGE_BUTTON                   = "add_image_button";
   public static inline var LOGO_SELECTED                      = "logo_selected";
   public static inline var IMAGE_SELECTED                     = "image_selected";
   public static inline var ADD_LOGO_TO_PAGE                   = "add_logo_to_page";

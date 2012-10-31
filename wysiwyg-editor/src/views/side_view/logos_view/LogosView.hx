@@ -9,14 +9,13 @@ class LogosView extends PropertyView, implements IView{
   //private var logosColorPicker:LogosColorPicker;
   private var logosScrollPane:AView;
   private var logosPane:AView;
-  private var verticalScrollbar:VerticalScrollbar;
+  private var logoScrollbar:VerticalScrollbar;
   private var uploadLogoButton:OneStateTextAndImageButton;
   private var addLogoButton:OneStateTextAndImageButton;
   
-  
-  
-  
-  
+  private var imagesScrollPane:AView;
+  private var imagesPane:AView;
+  private var imagesScrollbar:VerticalScrollbar;
   private var uploadImageButton:OneStateTextAndImageButton;
   private var addImageButton:OneStateTextAndImageButton;
   
@@ -30,25 +29,30 @@ class LogosView extends PropertyView, implements IView{
     backdrop              = new LogoViewBack();
     logosScrollPane       = new ScrollPane(logosController);
     logosPane             = new LogosPane(logosController);
-    verticalScrollbar     = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
+    logoScrollbar         = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
     uploadLogoButton      = new OneStateTextAndImageButton();
     addLogoButton         = new OneStateTextAndImageButton();
+    uploadLogoButton.setFormat(0, 3, 0xffffff, 'center');
+    addLogoButton.setFormat(0, 3, 0xffffff, 'center');
+    
+    
+    imagesScrollPane      = new ScrollPane(logosController);
+    imagesScrollbar       = new VerticalScrollbar(logosController, EVENT_ID.IMAGE_SCROLL);
+    imagesPane            = new ImagesPane(logosController);
     uploadImageButton     = new OneStateTextAndImageButton();
     addImageButton        = new OneStateTextAndImageButton();
     
-    uploadLogoButton.setFormat(0, 3, 0xffffff, 'center');
-    addLogoButton.setFormat(0, 3, 0xffffff, 'center');
     uploadImageButton.setFormat(0, 3, 0xffffff, 'center');
     addImageButton.setFormat(0, 3, 0xffffff, 'center');
     
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
-//    logosColorPicker.visible 	= false;
+
   }
   
   
   override public function init():Void{
-      trace('init');
+
     selectButton.init( controller,
               new Point(190,30), 
               new LogoViewButton(), 
@@ -58,32 +62,26 @@ class LogosView extends PropertyView, implements IView{
             new Point(150,22), 
             new OneStateButtonBack(), 
             new Parameter( EVENT_ID.ADD_LOGO_TO_PAGE));
-    
     addLogoButton.fireOnMouseUp(false);
-    
     
     uploadLogoButton.init( controller, 
             new Point(150,22),  
             new OneStateButtonBack(), 
             new Parameter( EVENT_ID.UPLOAD_LOGO) );
-            
-
-    
     uploadLogoButton.fireOnMouseUp(false);
+    
     
     
     addImageButton.init(controller,
             new Point(150,22), 
             new OneStateButtonBack(), 
-            new Parameter( EVENT_ID.UPLOAD_IMAGE));
-
+            new Parameter( EVENT_ID.ADD_IMAGE_TO_PAGE));
     addImageButton.fireOnMouseUp(false);
     
     uploadImageButton.init(controller,
             new Point(150,22), 
             new OneStateButtonBack(), 
             new Parameter( EVENT_ID.UPLOAD_IMAGE));
-
     uploadImageButton.fireOnMouseUp(false);
     
   }
@@ -91,62 +89,68 @@ class LogosView extends PropertyView, implements IView{
   override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
     
-    
 
-    
-    // font selection pane
+    // logo selection pane
     addChild(logosScrollPane);
     logosScrollPane.setSize( 174, 200);
     logosScrollPane.x = 9;
     logosScrollPane.y = 54;
     logosScrollPane.addView(logosPane, 0,0);	
     
-    addChild(verticalScrollbar);
-    verticalScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
-    verticalScrollbar.x = logosScrollPane.getSize().x-2;
-    verticalScrollbar.y = logosScrollPane.y;
+    addChild(logoScrollbar);
+    logoScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
+    logoScrollbar.x = logosScrollPane.getSize().x-1;
+    logoScrollbar.y = logosScrollPane.y;
     
     addChild(addLogoButton);
     addLogoButton.x = 20;
     addLogoButton.y = 212;
     
-    
     addChild(uploadLogoButton);
     uploadLogoButton.x = 20;
     uploadLogoButton.y = 238;
     
+
+    // image selection pane
+    addChild(imagesScrollPane);
+    imagesScrollPane.setSize( 174, 200);
+    imagesScrollPane.x = 9;
+    imagesScrollPane.y = 54 + 236;
+    imagesScrollPane.addView(imagesPane, 0,0);	
+    
+    addChild(imagesScrollbar);
+    imagesScrollbar.setSize(imagesPane.getFloat('height'), imagesScrollPane.getFloat('mask_height'));
+    imagesScrollbar.x = imagesScrollPane.getSize().x-1;
+    imagesScrollbar.y = imagesScrollPane.y;
     
     addChild(addImageButton);
     addImageButton.x = 20;
-    addImageButton.y = 462;
+    addImageButton.y = 448;
     
     addChild(uploadImageButton);
     uploadImageButton.x = 20;
-    uploadImageButton.y = 488;
-    
-    /*
-    trace(TRANSLATION.add_ons_button);
-    trace(TRANSLATION.name);*/
+    uploadImageButton.y = 474;
+
   }
   
   private function onLogosLoaded(e:KEvent):Void{
-    //var logosXml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    
+
     for(logo in e.getXml().elementsNamed('logo')){
       //trace(logo.toString());
-      var param:IParameter = new Parameter(EVENT_ID.ADD_LOGO_BUTTON);
-      param.setXml(logo);
-      logosPane.setParam(param);
+      var logoParam:IParameter = new Parameter(EVENT_ID.ADD_LOGO_BUTTON);
+      logoParam.setXml(logo);
+      logosPane.setParam(logoParam);
+      
+      var imageParam:IParameter = new Parameter(EVENT_ID.ADD_IMAGE_BUTTON);
+      imageParam.setXml(logo);
+      imagesPane.setParam(imageParam);
     }
 
   }
   
   private function onLoadDefaultTool(e:IKEvent):Void{
-    verticalScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
+    logoScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
 
-
-    
-    
     uploadLogoButton.setText(TRANSLATION.upload_logo); 
     uploadLogoButton.updateLabel();      
     addLogoButton.setText(TRANSLATION.add_logo);    
@@ -155,14 +159,7 @@ class LogosView extends PropertyView, implements IView{
     uploadImageButton.updateLabel();     
     addImageButton.setText(TRANSLATION.add_image); 
     addImageButton.updateLabel();        
-    
-    
-    
-    
-    
-    
-    
-    
+
   }
   
   override public function setParam(param:IParameter):Void{
@@ -170,6 +167,10 @@ class LogosView extends PropertyView, implements IView{
     switch( param.getLabel() ){
       case EVENT_ID.LOGO_SELECTED: {
         logosPane.setParam(param);
+
+      }
+      case EVENT_ID.IMAGE_SELECTED: {
+        imagesPane.setParam(param);
       }
 
       
@@ -179,9 +180,10 @@ class LogosView extends PropertyView, implements IView{
 	
 	override public function setFloat(id:String, f:Float):Void{
     switch ( id ) {
-      case EVENT_ID.LOGO_SCROLL:{
+      case EVENT_ID.LOGO_SCROLL:
         logosPane.y = -(logosPane.getFloat('height')-logosScrollPane.getFloat('mask_height')) * f;
-      }
+      case EVENT_ID.IMAGE_SCROLL:
+        imagesPane.y = -(imagesPane.getFloat('height')-imagesScrollPane.getFloat('mask_height')) * f;
     }
 	}
 }
