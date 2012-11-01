@@ -41,7 +41,7 @@ class GLOBAL  {
   public static var edit_mode:String;
   public static var admin_mode:Bool;
   public static var hitTest:CGHitTest;
-  public static var language_name:String;
+  public static var language_id:String;
   
   // zoom
   public static var Zoom:ZoomTools;

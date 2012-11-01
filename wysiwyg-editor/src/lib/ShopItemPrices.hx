@@ -51,7 +51,9 @@ class ShopItemPrices
   }
   
   public function parsePrices(xml:Xml):Void{
+
     for( prices in xml.elementsNamed("prices") ) {
+      //trace(prices.toString());
       for( price in prices.elementsNamed("price") ) {
         
         var _min_units:UInt;
@@ -67,6 +69,7 @@ class ShopItemPrices
         }
         
         for( unit_price in price.elementsNamed("price") ) {
+          
           _unit_price = Std.parseFloat(unit_price.firstChild().nodeValue.toString());
         }
         

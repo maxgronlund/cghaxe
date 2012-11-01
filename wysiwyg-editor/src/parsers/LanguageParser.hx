@@ -111,5 +111,16 @@ class LanguageParser
 
     for(add_image in xml_data.elementsNamed("add-image") ) 
       TRANSLATION.add_image = add_image.firstChild().nodeValue.toString();
+
+    for(total_price_label in xml_data.elementsNamed("total-price-label") ) 
+      TRANSLATION.total_price_label = total_price_label.firstChild().nodeValue.toString();
+
+    for(i_got_a_cliche in xml_data.elementsNamed("i-got-a-cliche") ) 
+      TRANSLATION.i_got_a_cliche = i_got_a_cliche.firstChild().nodeValue.toString();
+
+    for(card in xml_data.elementsNamed("card") ) 
+      TRANSLATION.card = card.firstChild().nodeValue.toString();
+      
+
   }
 }

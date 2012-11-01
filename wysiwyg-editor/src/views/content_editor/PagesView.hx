@@ -12,7 +12,7 @@ class PagesView extends View, implements IView{
   
   private var pages:Vector<PageView>;
 
-  private var productId:Int;
+  //private var productId:Int;
   private var pageInFocus:PageView;
   
   public function new(desktopController:IController){	

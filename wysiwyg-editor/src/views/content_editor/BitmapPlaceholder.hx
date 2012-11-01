@@ -111,6 +111,7 @@ class BitmapPlaceholder extends APlaceholder{
     resizeHandle    = new ResizeHandle();
     sizeX = 0;
     sizeY = 0;
+    
   }
   
   private function onMouseOver(e:MouseEvent):Void{
@@ -179,7 +180,7 @@ class BitmapPlaceholder extends APlaceholder{
   private function onMouseMove(e:MouseEvent){}
   
   private function onAddedToStage(e:Event){
-
+    
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadImageComplete);
     imageLoader.load(new URLRequest(imageUrl));
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
@@ -188,7 +189,7 @@ class BitmapPlaceholder extends APlaceholder{
   }
   
   private function onLoadImageComplete(e:Event):Void{
-
+    
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
     backdrop = e.target.loader.content;
     
@@ -203,17 +204,19 @@ class BitmapPlaceholder extends APlaceholder{
 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     //foilify('silver');
-    //if(bmpSizeX != 0 && bmpSizeY != 0){
-    //  setSize(bmpSizeX, bmpSizeY);
-    //  sizeX = this.width;
-    //  sizeY = this.height;
-    //} else {
-    //  sizeX     = this.width;
-    //  sizeY     = this.height;
-    //  
-    //}
-    //sizeX             = this.width;
-    //sizeY             = this.height;
+    sizeX             = this.width;
+    sizeY             = this.height;
+    
+    if(sizeX != 0 && sizeY != 0){
+      setSize(sizeX, sizeY);
+      sizeX = this.width;
+      sizeY = this.height;
+    } else {
+      sizeX     = this.width;
+      sizeY     = this.height;
+      
+    }
+    
     widthHeightRatio  = this.width/this.height;
     setSize(sizeX, sizeY);
 	}

@@ -123,6 +123,7 @@ class PresetModel extends Model, implements IModel
     }
 
     for(print_prices in xml.elementsNamed("print-prices")){
+      trace(print_prices.toString());
       Application.dispatchXML(EVENT_ID.PRESET_PRICES, print_prices);
     }
     
@@ -162,7 +163,6 @@ class PresetModel extends Model, implements IModel
       for(pages in associated_product.elementsNamed("pages") ) {
         for(page in pages.elementsNamed("page") ) {
           if(first_associated_product)
-            
             buildPage(page);
         }
       }
@@ -177,7 +177,7 @@ class PresetModel extends Model, implements IModel
   }
   private function parseLanguage(xml_data:Xml):Void{
     languageParser.parse(xml_data);
-    trace(TRANSLATION.upload_logo);
+    
   }
   
   private function parseXmlData(xml_data:Xml):Void{
@@ -234,7 +234,7 @@ class PresetModel extends Model, implements IModel
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.user_uuid                 = GLOBAL.user_uuid;
-    variables.language_name             = GLOBAL.language_name;
+    variables.language_id               = GLOBAL.language_id;
     variables.preset_sibling_selected 	= productSelected;
     variables._method = 'put';
     request.data = variables;

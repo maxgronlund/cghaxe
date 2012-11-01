@@ -12,14 +12,15 @@ class ParameterParser
 	}
 	
 	public function parse(params:Dynamic<String>):Void{
-	  //trace('ParameterParser::parse');
+	  
 	  if(params.shop_item_id != null){
       GLOBAL.shop_item_id = Std.parseInt(params.shop_item_id);
+      
     }
 	  
-	  if(params.language_name != null){
+	  if(params.language_id != null){
 //	    trace(params.language_name);
-	    GLOBAL.language_name = params.language_name;
+	    GLOBAL.language_id = params.language_id;
 	  }
 	  
 	  if(params.authenticity_token != null){
@@ -142,7 +143,7 @@ class ParameterParser
     }
 
     GLOBAL.params = params;
-
+    trace('shop_itemf',GLOBAL.shop_item_id );
 	}
 	
 }

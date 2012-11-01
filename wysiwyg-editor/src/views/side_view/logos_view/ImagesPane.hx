@@ -37,7 +37,7 @@ class ImagesPane extends View, implements IView{
 
 
   override public function setParam(param:IParameter):Void{
-    trace('add image', param.getLabel(), EVENT_ID.ADD_IMAGE_BUTTON);
+    
     switch ( param.getLabel() ){
       case EVENT_ID.ADD_IMAGE_BUTTON:{
         param.setLabel(EVENT_ID.IMAGE_SELECTED);
@@ -61,7 +61,7 @@ class ImagesPane extends View, implements IView{
   
   private function addButton(param:IParameter	):Void{
     
-    var vectorTitle:String = 'Image-'+Std.string(buttonIndex);
+    var vectorTitle:String = 'Photo-'+Std.string(buttonIndex);
     param.setString(vectorTitle);
     param.setInt(buttonIndex);
     var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();

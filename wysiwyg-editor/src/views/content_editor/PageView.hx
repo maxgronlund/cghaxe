@@ -37,7 +37,7 @@ class PageView extends View{
   private var startPoint:Point;
   private var placeholderHasMouse:Bool;
   private var pagePresetXML:Xml;
-  private var pageDesignXML:Xml;
+
   private var hideMaskPresent:Bool;
   
   private var frontShotSizeX:Float;
@@ -388,8 +388,9 @@ class PageView extends View{
   }
   
   private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):APlaceholder{
-     
+    
     var url:String = xml.firstChild().nodeValue.toString();
+     trace('addBitmapPlaceholder', url);
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new BitmapPlaceholder(this, placeholders.length, model, url);
     placeholder.x = posX;
@@ -746,14 +747,14 @@ class PageView extends View{
      
       Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
       parsePagePresetXml();
-      //parsePageDesignXML();
+
       var param = new Parameter(EVENT_ID.CENTER_PAGE);
       param.setInt(0);
       Application.dispatchParameter(param);
     }
     else{
       parsePagePresetXml();
-      //parsePageDesignXML();
+
     }
     //trace('allImagesLoaded');
     

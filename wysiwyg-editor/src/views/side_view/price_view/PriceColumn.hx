@@ -6,9 +6,7 @@ class PriceColumn extends MovieClip {
 	private var price_labels:Array<OnePrice>;
 	private var extraChilds:Array<Dynamic>;
 	private var total_label:FormatedText;
-	private var title_label:FormatedText;
 	private var title:String;
-	
 	private var amount_std_pms_color:UInt;
   private var amount_custom_pms1_color:UInt;
   private var amount_custom_pms2_color:UInt;
@@ -16,22 +14,25 @@ class PriceColumn extends MovieClip {
   private var amount_greetings:UInt;
   private var amount_laser_color:UInt;
   private var amount_cliche:UInt;
-
+  private var pageHeaderBack:Rectangle;
+  private var pageTitle:FormatedText;
   private var column_total_price:Float;
   private var iAlreadyHaveACliche:Bool;
+  private var marginLeft:Int;
 	
 	public function new(title:String){		
 	  super();
 	  iAlreadyHaveACliche = false;
-	  this.title = title;
-	  prices = new Array();
-  	price_labels = new Array();
-  	extraChilds = new Array();
-  	//price_labels.push(new OnePrice('foil'));
-  	//price_labels.push(new OnePrice('one-pms-color'));
-  	//price_labels.push(new OnePrice('std-color'));
-  	title_label = new FormatedText('helvetica', 'Item', 12, false);
-  	total_label = new FormatedText('helvetica', 'total', 12, false);
+	  this.title          = title;
+	  prices              = new Array();
+  	price_labels        = new Array();
+  	extraChilds         = new Array();
+  	
+  	total_label         = new FormatedText('helvetica', 'total', 12, false);
+  	marginLeft          = 10;
+  	pageHeaderBack      = new Rectangle(190, 18, 0x000000, 0xB3B3B3, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+  	pageTitle           = new FormatedText('helvetica', '0.0', 12, false, 0x333333);
+  	
 	}
 	
 	public function getTitle():String{
@@ -110,7 +111,7 @@ class PriceColumn extends MovieClip {
     	switch ( price.getPrintType() )
     	{
     	 case 'cliche':
-    	   price.setUnitsLabel("1");    	   
+    	   //price.setUnitsLabel("1");    	   
     	   offset_i += 1;
     	   var checkbox = new Checkbox(iAlreadyHaveACliche, this);
     	   checkbox.x = 0;
@@ -126,7 +127,7 @@ class PriceColumn extends MovieClip {
        	   print_price = 0;
        	 }
     	 default:
-         price.setUnitsLabel(Std.string(GLOBAL.preset_quantity));
+          //price.setUnitsLabel(Std.string(GLOBAL.preset_quantity));
     	}
     	
     	price.setItemLabel(price.getPrettyPrintType());
@@ -139,18 +140,19 @@ class PriceColumn extends MovieClip {
     if(price_labels.length == 0)
       return;
       
-    addChild(title_label);
-    addChild(total_label);
     
-    title_label.x = 10;
-    title_label.y = -18;
-    title_label.setLabel(title);
+    addChild(pageHeaderBack);
+    pageHeaderBack.y = -18;
+    addChild(pageTitle);
+    pageTitle.x = marginLeft;
+    pageTitle.y = -18;
+    pageTitle.setLabel(title);
     
-    total_label.x = 140;
-    total_label.y = 18*(price_labels.length+offset_i);
-    
-    var rounded_total_price:Float = Std.int(total_price*100)/100;
-    total_label.setLabel(Std.string(total_price));
+    //total_label.x = 170 ;
+    //total_label.y = 18*(price_labels.length+offset_i);
+    //
+    //var rounded_total_price:Float = Std.int(total_price*100)/100;
+    //total_label.setLabel(Std.string(total_price));
     
   }
   

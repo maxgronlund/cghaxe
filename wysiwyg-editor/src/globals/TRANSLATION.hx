@@ -36,6 +36,10 @@ class TRANSLATION  {
   public static var upload_image:String;
   public static var add_logo:String;
   public static var add_image:String;
+  public static var total_price_label:String;
+  public static var i_got_a_cliche:String;
+  public static var card:String;
+
 
 }
 
