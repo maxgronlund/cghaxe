@@ -130,7 +130,7 @@ class ApplicationModel extends Model, implements IModel
       }
       case 'load preset files from backend':{
         presetLoader.addEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded); 
-        presetLoader.load(GLOBAL.preset_file_url+"&shop_item="+GLOBAL.shop_item_id, EVENT_ID.PRESET_FILE_LOADED);
+        presetLoader.load(GLOBAL.preset_file_url, EVENT_ID.PRESET_FILE_LOADED);
         
       }
       
