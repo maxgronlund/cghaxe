@@ -134,15 +134,15 @@ class ApplicationModel extends Model, implements IModel
         
       }
       
-      case 'load price xml from backend':{
-        if(GLOBAL.price_file_url == 'na'){
-          loadSeq();
-        }else{
-          priceLoader.addEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded); 
-          priceLoader.load(GLOBAL.price_file_url, EVENT_ID.PRICE_FILE_LOADED);
-        }
-        
-      }
+      //case 'load price xml from backend':{
+      //  if(GLOBAL.price_file_url == 'na'){
+      //    loadSeq();
+      //  }else{
+      //    priceLoader.addEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded); 
+      //    priceLoader.load(GLOBAL.price_file_url, EVENT_ID.PRICE_FILE_LOADED);
+      //  }
+      //  
+      //}
       
       //case 'load design files from backend':{
       //  pageDesignLoader.addEventListener( EVENT_ID.DESIGN_FILE_LOADED, onDesignLoaded);
