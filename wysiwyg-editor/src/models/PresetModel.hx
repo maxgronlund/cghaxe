@@ -20,7 +20,6 @@ class PresetModel extends Model, implements IModel
   private var productSelected:String;
   private var loader:URLLoader;
   private var pms_converter:PMSColorToRGBConverter;
-  private var languageParser:LanguageParser;
   
   
   public function new(){
@@ -30,7 +29,6 @@ class PresetModel extends Model, implements IModel
     associatedProducts  = new Vector<Int>();
     pms_converter       = new PMSColorToRGBConverter();
     assProdIndex        = 0;
-    languageParser      = new LanguageParser();
   }
   
   override public function init():Void{
@@ -49,8 +47,11 @@ class PresetModel extends Model, implements IModel
       // building the pages
       parsePreset(preset);
       GLOBAL.shop_item_prices.parsePrices(preset);
+ 
     }
   }
+  
+  
   
   private function countPlaceholders(xml:Xml):Void{
 //    trace('..countPlaceholders.');
@@ -67,21 +68,15 @@ class PresetModel extends Model, implements IModel
     dispatchParameter(param);
   }
   
-  
-  
-  
   // building pages and getting url's for masks
   private function parsePreset(xml:Xml):Void{
-    
-    
-    for( language in xml.elementsNamed("language") ) {
-       parseLanguage(language);
-    }
-    
+
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
-
+    
+    
+    
     for( font_set in xml.elementsNamed("font-set") ) {
       GLOBAL.font_set = font_set.firstChild().nodeValue.toString();
     }
@@ -123,7 +118,6 @@ class PresetModel extends Model, implements IModel
     }
 
     for(print_prices in xml.elementsNamed("print-prices")){
-      trace(print_prices.toString());
       Application.dispatchXML(EVENT_ID.PRESET_PRICES, print_prices);
     }
     
@@ -137,14 +131,16 @@ class PresetModel extends Model, implements IModel
     
     for(logos in xml.elementsNamed("logos")){
       dispatchXML(EVENT_ID.LOGOS_LOADED, logos);
+      //for(logo in logos.elementsNamed("logo")){
+      //  trace(logo.firstChild().nodeValue.toString());
+      //}
     }
     
-    for(photos in xml.elementsNamed("photos")){
-      dispatchXML(EVENT_ID.IMAGES_LOADED, photos);
-    }
+
   }
   
   private function pickUpDesignsforAssProduct(xml:Xml):Void{
+    
     var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_PAGE_TO_SIDEBAR);
     param.setXml(xml);
     dispatchParameter(param);
@@ -163,6 +159,7 @@ class PresetModel extends Model, implements IModel
       for(pages in associated_product.elementsNamed("pages") ) {
         for(page in pages.elementsNamed("page") ) {
           if(first_associated_product)
+            
             buildPage(page);
         }
       }
@@ -175,10 +172,7 @@ class PresetModel extends Model, implements IModel
     param.setXml(xml);
     dispatchParameter(param);
   }
-  private function parseLanguage(xml_data:Xml):Void{
-    languageParser.parse(xml_data);
-    
-  }
+
   
   private function parseXmlData(xml_data:Xml):Void{
     //trace(xml_data.toString());
@@ -234,10 +228,13 @@ class PresetModel extends Model, implements IModel
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.user_uuid                 = GLOBAL.user_uuid;
-    variables.language_id               = GLOBAL.language_id;
+    //variables.language_name             = GLOBAL.language_name;
+    
     variables.preset_sibling_selected 	= productSelected;
+
     variables._method = 'put';
     request.data = variables;
+    
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onSavedComplete);
     loader.load(request);

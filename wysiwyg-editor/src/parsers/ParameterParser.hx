@@ -75,7 +75,7 @@ class ParameterParser
     
     if(params.save_path != null){
   //    trace(params.save_path);
-      GLOBAL.save_path = params.save_path;
+      //GLOBAL.save_path = params.save_path;
     }
 
     if(params.edit_mode != null){
