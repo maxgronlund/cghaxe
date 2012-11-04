@@ -39,7 +39,7 @@ class DesktopView extends View, implements IView{
   	Application.addEventListener(EVENT_ID.ZOOM, onZoom);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
     Pages.addEventListener(EVENT_ID.SWF_LOADED, onFontLoaded);
-    Application.addEventListener(EVENT_ID.ALL_IMAGES_LOADED, onAllImagesLoaded);
+    Application.addEventListener(EVENT_ID.ALL_PHOTOS_LOADED, onAllImagesLoaded);
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);

@@ -21,7 +21,7 @@ class TRANSLATION  {
   public static var custom_pms_1:String;
   public static var custom_pms_2:String;
   public static var foil_color_picker:String;
-  public static var laser_color_picker:String;
+  public static var digital_print_picker:String;
   public static var color_button:String;
   public static var print_button:String;
   public static var symbols_button:String;
@@ -39,6 +39,7 @@ class TRANSLATION  {
   public static var total_price_label:String;
   public static var i_got_a_cliche:String;
   public static var card:String;
+  public static var units:String;
 
 
 }

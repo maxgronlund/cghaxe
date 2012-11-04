@@ -2,7 +2,7 @@ import flash.events.Event;
 import flash.display.BitmapData;
 import flash.display.Bitmap;
 import flash.geom.Point;
-import flash.events.KeyboardEvent;
+
 
 class MenuView extends View, implements IView
 {
@@ -27,28 +27,17 @@ class MenuView extends View, implements IView
     
     bmpData             = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.MENU_VIEW_HEIGHT,false,COLOR.MENU );
     backdrop            = new Bitmap(bmpData);
-                    	  
     saveButton 		      = new OneStateButton();
     buyNowButton 		    = new OneStateButton();
     maskButton 		      = new TwoStateButton();
-/*		moveButton 		      = new TwoStateButton();
-		textButton 		      = new TwoStateButton();
-*/
     gridButton 		      = new TwoStateButton();
     trashButton 		    = new OneStateButton();
     zoomInButton 	      = new OneStateButton();
     zoomOutButton       = new OneStateButton();
     zoomTo100Button     = new OneStateButton();
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onSetDefaultTool);
-    
- 
-  
-  }
 
-  
- 
-  
-  private function onKeyUp(event:KeyboardEvent):Void{}
+  }
   
   private function onSetDefaultTool(e:IKEvent):Void{
     addButtons();
@@ -92,7 +81,6 @@ class MenuView extends View, implements IView
             new Parameter( EVENT_ID.ZOOM_OUT ) );
     zoomOutButton.fireOnMouseUp(false);
 
-
     zoomInButton.init( GLOBAL.desktop_controller,
             new Point(40,29), 
             new ZoomInButtonBitmap(), 
@@ -112,17 +100,15 @@ class MenuView extends View, implements IView
     addChild(backdrop);
     backdrop.width = SIZE.MENU_VIEW_WIDTH;
     
-    
-    
-    stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-
   }
   
   private function addButtons():Void{
     addChild(saveButton);
     saveButton.fireOnMouseUp(false);
-    addChild(buyNowButton);
-    buyNowButton.fireOnMouseUp(false);
+    if(!GLOBAL.admin_mode){
+      addChild(buyNowButton);
+      buyNowButton.fireOnMouseUp(false);
+    }
     
     if(GLOBAL.admin_mode){
       addChild(maskButton);
@@ -147,14 +133,18 @@ class MenuView extends View, implements IView
     zoomInButton.x      = zoomTo100Button.x - zoomInButton.getWidth();
     zoomOutButton.x     = zoomInButton.x - zoomOutButton.getWidth();
   }
-  private function onKeyPressed(event:KeyboardEvent):Void{
-
-     switch(event.keyCode){
-       case 8:{
-         controller.setParam(new Parameter(EVENT_ID.TRASH_PLACEHOLDER));
-       }; 
-     }
-   }
+  
+  //import flash.events.KeyboardEvent;
+  //stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+  //private function onKeyUp(event:KeyboardEvent):Void{}
+  //  
+  //private function onKeyPressed(event:KeyboardEvent):Void{
+  //   switch(event.keyCode){
+  //     case 8:{
+  //       controller.setParam(new Parameter(EVENT_ID.TRASH_PLACEHOLDER));
+  //     }; 
+  //   }
+  // }
   
   override public function update(id:String, index:Int, value:String):Void{
   }

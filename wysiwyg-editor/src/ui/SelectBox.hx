@@ -47,10 +47,10 @@ class SelectBox extends MouseHandler
     createAlertBox();
     createBackdrop();
     createLines();
-    alertBox.visible    = false;
-    rect.visible        = false;
-    transparency                    = 0.08;
-    backdrop.alpha                  = transparency;
+    alertBox.visible      = false;
+    rect.visible          = false;
+    transparency          = 0.08;
+    backdrop.alpha        = transparency;
 
     setFocus(false);
   }

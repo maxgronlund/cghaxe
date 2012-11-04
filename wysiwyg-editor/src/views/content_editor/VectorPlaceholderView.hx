@@ -48,7 +48,9 @@ class VectorPlaceholderView extends APlaceholder {
   private var vectorFileScreenName:String;
   private var url:String;
   private var vectorFilePosX:Float;
-  private var pmsColor:Int;
+  private var stdPmsColor:Int;
+  private var pms1Color:UInt; 
+  private var pms2Color:UInt;
   private var foilColor:String;
   private var focus:Bool;
   private var collition:Bool;
@@ -118,7 +120,9 @@ class VectorPlaceholderView extends APlaceholder {
     foilShine.graphics.endFill();
 
     foilColor                         = GLOBAL.foilColor;
-    pmsColor                          = GLOBAL.stdPmsColor;
+    stdPmsColor                       = GLOBAL.stdPmsColor;
+    pms1Color                         = GLOBAL.pms1Color;
+    pms2Color                         = GLOBAL.pms2Color;
     printType                         = GLOBAL.printType;
     sizeX                             = 0;
     sizeY                             = 0;
@@ -155,7 +159,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   public function color(_color:UInt):Void {
-    pmsColor = _color;
+    stdPmsColor = _color;
     colorTransform = vectorMovie.transform.colorTransform;
     colorTransform.color = _color;
     vectorMovie.transform.colorTransform = colorTransform;
@@ -299,7 +303,7 @@ class VectorPlaceholderView extends APlaceholder {
     str += '\t\t\t<url>' + url + '</url>\n';
     str += '\t\t\t<print-type>' + printType + '</print-type>\n';
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-    str += '\t\t\t<pms-color>' + Std.string(pmsColor) + '</pms-color>\n';
+    str += '\t\t\t<pms-color>' + Std.string(stdPmsColor) + '</pms-color>\n';
     str += '\t\t</placeholder>\n';
     return str;
   }
@@ -363,7 +367,12 @@ class VectorPlaceholderView extends APlaceholder {
     switch ( printType ){
       case CONST.STD_PMS_COLOR:{
         unfoilify();
-        color(pmsColor);
+      }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        unfoilify();
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        unfoilify();
       }
       case CONST.FOIL_COLOR:{
         foilify(foilColor);
@@ -412,6 +421,14 @@ class VectorPlaceholderView extends APlaceholder {
       case CONST.STD_PMS_COLOR:{
         unfoilify();
         color(GLOBAL.stdPmsColor);
+      }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        unfoilify();
+        color(GLOBAL.pms1Color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        unfoilify();
+        color(GLOBAL.pms2Color);
       }
       case CONST.FOIL_COLOR:{
         foilify(GLOBAL.foilColor);
@@ -462,15 +479,15 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function getStdPmsColor():String {
-    return Std.string(pmsColor);
+    return Std.string(stdPmsColor);
   }
   
   override public function getPms1Color():String {
-    return 'pms1Color';
+    return Std.string(pms1Color);
   }
   
   override public function getPms2Color():String {
-    return 'pms2Color';
+    return Std.string(pms2Color);
   }
   
   override public function getFoilColor():String {

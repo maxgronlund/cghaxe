@@ -29,6 +29,7 @@
 -cp src/views/application
 -cp src/views/content_editor
 -cp src/views/content_editor/placeholder
+-cp src/views/overlays
 -cp src/views/side_view
 -cp src/views/side_view/text_view
 -cp src/views/side_view/color_view

@@ -79,7 +79,7 @@ class EVENT_ID  {
   public static inline var DESKTOP_VIEW_MOVE                = "desktop_view_move";
   
   public static inline var PAGE_BACKDROP_LOADED:String      = "page_backdrop_loaded";
-  public static inline var ALL_IMAGES_LOADED:String             = "images_loaded";
+  public static inline var ALL_PHOTOS_LOADED:String             = "images_loaded";
   
   
 //  public static inline var PRESET_FILE_URL                  = "preset_file_url";
@@ -165,7 +165,7 @@ class EVENT_ID  {
   public static inline var SHOW_TEXT:String                 = "text_view";
   public static inline var SHOW_GREETINGS:String            = "show_greetings";
   public static inline var SHOW_SYMBOLS:String              = "show_symbols";
-  public static inline var SHOW_LOGOS:String                = "show_logos";
+  public static inline var SHOW_MY_UPLOADS:String           = "show_my_uploads";
   public static inline var SHOW_DESIGNS:String              = "show_designs";
   public static inline var SHOW_TEXT_SUGGESTIONS:String     = "show_text_suggestion_view";
   public static inline var SHOW_COLOR_PICKERS:String        = "show_color_pickers";
@@ -235,15 +235,15 @@ class EVENT_ID  {
   
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";
-  public static inline var IMAGES_LOADED:String               = "images_loaded";
+  public static inline var PHOTOS_LOADED:String               = "images_loaded";
   public static inline var LOGO_SCROLL                        = "logo_scroll";
-  public static inline var IMAGE_SCROLL                       = "image_scroll";
+  public static inline var PHOTO_SCROLL                       = "image_scroll";
   public static inline var ADD_LOGO_BUTTON                    = "add_logo_button";
   public static inline var ADD_IMAGE_BUTTON                   = "add_image_button";
   public static inline var LOGO_SELECTED                      = "logo_selected";
-  public static inline var IMAGE_SELECTED                     = "image_selected";
+  public static inline var PHOTO_SELECTED                     = "image_selected";
   public static inline var ADD_LOGO_TO_PAGE                   = "add_logo_to_page";
-  public static inline var ADD_IMAGE_TO_PAGE                  = "add_image_to_page";
+  public static inline var ADD_PHOTO_TO_PAGE                  = "add_image_to_page";
   
   
   public static inline var GREETING_COLOR_SELECTED            = "greeting_color_selected";
@@ -265,8 +265,12 @@ class EVENT_ID  {
   public static inline var COLOR_SELECTED                     = "color_selected";
   
   public static inline var UPLOAD_LOGO                        = "upload_logo";
-  public static inline var UPLOAD_IMAGE                       = "upload_image";
-
+  public static inline var UPLOAD_PHOTO                       = "upload_image";
+  public static inline var DELETE_KEY_PRESSED                 = "delete_key_pressed";
+  public static inline var ENABLE_DELETE_KEY                  = "enable_delete_key";
+  public static inline var DISABLE_DELETE_KEY                 = "disable_delete_key";
+  
+  public static inline var UPDATE_QUANTITY                    = "update_quantity";
 	
 	
 }

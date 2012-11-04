@@ -99,6 +99,13 @@ class ColorView extends PropertyView, implements IView{
         foilColorPicker.alpha           = 1.0;
         colorPicker.alpha               = 0.3;
       }
+      case 'bitmap_place_holder':{
+        stdPmsColorPicker.alpha         = 1.0;
+        customPms1ColorPicker.alpha     = 1.0;
+        customPms2ColorPicker.alpha     = 1.0;
+        foilColorPicker.alpha           = 1.0;
+        colorPicker.alpha               = 0.3;
+      }
       default:{
         stdPmsColorPicker.alpha         = 0.3;
         customPms1ColorPicker.alpha     = 0.3;
@@ -229,8 +236,9 @@ class ColorView extends PropertyView, implements IView{
   }
   
   private function onEnableTool(cmd:String):Void{
+
     switch ( cmd ){
-      case 'Laser':{
+      case 'Digital Print':{
         colorText.visible                 = true;
         colorPicker.visible               = true;
       }

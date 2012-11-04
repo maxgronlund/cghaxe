@@ -43,8 +43,8 @@ class ApplicationModel extends Model, implements IModel
         startLoadSeq(); //!!! <-- remove param
       }
       // triggered when all images is loaded
-      case EVENT_ID.ALL_IMAGES_LOADED: {
-        dispatchParameter(new Parameter(EVENT_ID.ALL_IMAGES_LOADED));
+      case EVENT_ID.ALL_PHOTOS_LOADED: {
+        dispatchParameter(new Parameter(EVENT_ID.ALL_PHOTOS_LOADED));
         loadSeq();
       }
     }

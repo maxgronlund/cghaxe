@@ -37,7 +37,7 @@ class FontModel  {
   
   private function onLoadDefaultFont(e:IKEvent):Void{
     
-    switch(GLOBAL.font_set){
+    switch(TRANSLATION.name){
       case 'se', 'dk', 'en', 'de', 'fi', 'no', 'ru': {
         fontPackage = SystemFonts.avant_garde_gothic;
       }

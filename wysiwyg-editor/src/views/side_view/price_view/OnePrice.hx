@@ -15,9 +15,9 @@ class OnePrice extends MovieClip {
 	  //if(price_type != "foil" && price_type != "one-pms-color" && price_type != "std-color" && price_type != "cliche" && price_type != "shop-item")
 	  //  trace("Error selecting price_type!!!", price_type);
 	  
-		item_label = new FormatedText('helvetica', 'item', 12, false);
+		item_label = new FormatedText('helvetica', '0.0', 11, false, 0x444444);
 //  	units_label = new FormatedText('helvetica', 'units', 12, false);
-  	price_label = new FormatedText('helvetica', 'price', 12, false);
+  	price_label = new FormatedText('helvetica', '0.0', 11, false, 0x444444);
   	
   	addChild(item_label);
   	//addChild(units_label);
@@ -49,6 +49,9 @@ class OnePrice extends MovieClip {
 	   case 'one-pms-color':
 	     return "PMS color";
 	     
+	   case 'one-pms-color-4':
+   	   return "Image";
+	     
 	   case 'std-color':
 	     return "STD PMS color";
 	     
@@ -72,9 +75,11 @@ class OnePrice extends MovieClip {
 	//  //units_label.setLabel(s);
 	//}
 	
-	public function setPriceLabel(s:String):Void {
-	  var x:Float = Std.int(Std.parseFloat(s)*100)/100.0;
-	  price_label.setLabel(Std.string(x));
+	public function setPriceLabel(price:Float):Void {
+
+	  var valuta:Valuta = new Valuta();
+	  
+	  price_label.setLabel(valuta.toString(price));
 	  price_label.x = 180 - price_label.getWidth();
 	}
 

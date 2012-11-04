@@ -12,13 +12,13 @@ class LogosView extends PropertyView, implements IView{
   private var logoScrollbar:VerticalScrollbar;
   private var uploadLogoButton:OneStateTextAndImageButton;
   private var addLogoButton:OneStateTextAndImageButton;
-  
-  private var imagesScrollPane:AView;
-  private var imagesPane:AView;
-  private var imagesScrollbar:VerticalScrollbar;
+  /*
+  private var photosScrollPane:AView;
+  private var photosPane:AView;
+  private var photosScrollbar:VerticalScrollbar;
   private var uploadImageButton:OneStateTextAndImageButton;
   private var addImageButton:OneStateTextAndImageButton;
-  
+  */
   public function new(logosController:IController){	
     super(logosController);
     
@@ -35,18 +35,18 @@ class LogosView extends PropertyView, implements IView{
     uploadLogoButton.setFormat(0, 3, 0xffffff, 'center');
     addLogoButton.setFormat(0, 3, 0xffffff, 'center');
     
-    
-    imagesScrollPane      = new ScrollPane(logosController);
-    imagesScrollbar       = new VerticalScrollbar(logosController, EVENT_ID.IMAGE_SCROLL);
-    imagesPane            = new ImagesPane(logosController);
+    /*
+    photosScrollPane      = new ScrollPane(logosController);
+    photosScrollbar       = new VerticalScrollbar(logosController, EVENT_ID.PHOTO_SCROLL);
+    photosPane            = new PhotosPane(logosController);
     uploadImageButton     = new OneStateTextAndImageButton();
     addImageButton        = new OneStateTextAndImageButton();
     
     uploadImageButton.setFormat(0, 3, 0xffffff, 'center');
     addImageButton.setFormat(0, 3, 0xffffff, 'center');
-    
+    */
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
-    Preset.addEventListener(EVENT_ID.IMAGES_LOADED, onImagesLoaded);
+    Preset.addEventListener(EVENT_ID.PHOTOS_LOADED, onPhotosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
 
   }
@@ -57,7 +57,7 @@ class LogosView extends PropertyView, implements IView{
     selectButton.init( controller,
               new Point(190,30), 
               new LogoViewButton(), 
-              new Parameter( EVENT_ID.SHOW_LOGOS));
+              new Parameter( EVENT_ID.SHOW_MY_UPLOADS));
     
     addLogoButton.init(controller,
             new Point(150,22), 
@@ -72,18 +72,19 @@ class LogosView extends PropertyView, implements IView{
     uploadLogoButton.fireOnMouseUp(false);
     
     
-    
+    /*
     addImageButton.init(controller,
             new Point(150,22), 
             new OneStateButtonBack(), 
-            new Parameter( EVENT_ID.ADD_IMAGE_TO_PAGE));
+            new Parameter( EVENT_ID.ADD_PHOTO_TO_PAGE));
     addImageButton.fireOnMouseUp(false);
     
     uploadImageButton.init(controller,
             new Point(150,22), 
             new OneStateButtonBack(), 
-            new Parameter( EVENT_ID.UPLOAD_IMAGE));
+            new Parameter( EVENT_ID.UPLOAD_PHOTO));
     uploadImageButton.fireOnMouseUp(false);
+    */
     
   }
   
@@ -93,7 +94,7 @@ class LogosView extends PropertyView, implements IView{
 
     // logo selection pane
     addChild(logosScrollPane);
-    logosScrollPane.setSize( 174, 200);
+    logosScrollPane.setSize( 174, 150);
     logosScrollPane.x = 9;
     logosScrollPane.y = 54;
     logosScrollPane.addView(logosPane, 0,0);	
@@ -111,18 +112,18 @@ class LogosView extends PropertyView, implements IView{
     uploadLogoButton.x = 20;
     uploadLogoButton.y = 238;
     
-
+/*
     // image selection pane
-    addChild(imagesScrollPane);
-    imagesScrollPane.setSize( 174, 200);
-    imagesScrollPane.x = 9;
-    imagesScrollPane.y = 54 + 236;
-    imagesScrollPane.addView(imagesPane, 0,0);	
+    addChild(photosScrollPane);
+    photosScrollPane.setSize( 174, 150);
+    photosScrollPane.x = 9;
+    photosScrollPane.y = 54 + 236;
+    photosScrollPane.addView(photosPane, 0,0);	
     
-    addChild(imagesScrollbar);
-    imagesScrollbar.setSize(imagesPane.getFloat('height'), imagesScrollPane.getFloat('mask_height'));
-    imagesScrollbar.x = imagesScrollPane.getSize().x-1;
-    imagesScrollbar.y = imagesScrollPane.y;
+    addChild(photosScrollbar);
+    photosScrollbar.setSize(photosPane.getFloat('height'), photosScrollPane.getFloat('mask_height'));
+    photosScrollbar.x = photosScrollPane.getSize().x-1;
+    photosScrollbar.y = photosScrollPane.y;
     
     addChild(addImageButton);
     addImageButton.x = 20;
@@ -131,7 +132,7 @@ class LogosView extends PropertyView, implements IView{
     addChild(uploadImageButton);
     uploadImageButton.x = 20;
     uploadImageButton.y = 474;
-
+*/
   }
   
   private function onLogosLoaded(e:KEvent):Void{
@@ -143,14 +144,15 @@ class LogosView extends PropertyView, implements IView{
     }
   }
   
-  private function onImagesLoaded(e:KEvent):Void{
-
+  private function onPhotosLoaded(e:KEvent):Void{
+    /*
     for(photo in e.getXml().elementsNamed('photo')){
 
       var imageParam:IParameter = new Parameter(EVENT_ID.ADD_IMAGE_BUTTON);
       imageParam.setXml(photo);
-      imagesPane.setParam(imageParam);
+      photosPane.setParam(imageParam);
     }
+    */
 
   }
   
@@ -160,11 +162,13 @@ class LogosView extends PropertyView, implements IView{
     uploadLogoButton.setText(TRANSLATION.upload_logo); 
     uploadLogoButton.updateLabel();      
     addLogoButton.setText(TRANSLATION.add_logo);    
-    addLogoButton.updateLabel();         
+    addLogoButton.updateLabel();    
+    /*     
     uploadImageButton.setText(TRANSLATION.upload_image); 
     uploadImageButton.updateLabel();     
     addImageButton.setText(TRANSLATION.add_image); 
-    addImageButton.updateLabel();        
+    addImageButton.updateLabel();     
+    */   
 
   }
   
@@ -175,9 +179,10 @@ class LogosView extends PropertyView, implements IView{
         logosPane.setParam(param);
 
       }
-      case EVENT_ID.IMAGE_SELECTED: {
-        imagesPane.setParam(param);
-      }
+      /*
+      case EVENT_ID.PHOTO_SELECTED: 
+        photosPane.setParam(param);
+      */
 
       
     }
@@ -188,8 +193,10 @@ class LogosView extends PropertyView, implements IView{
     switch ( id ) {
       case EVENT_ID.LOGO_SCROLL:
         logosPane.y = -(logosPane.getFloat('height')-logosScrollPane.getFloat('mask_height')) * f;
-      case EVENT_ID.IMAGE_SCROLL:
-        imagesPane.y = -(imagesPane.getFloat('height')-imagesScrollPane.getFloat('mask_height')) * f;
+      /*  
+      case EVENT_ID.PHOTO_SCROLL:
+        photosPane.y = -(photosPane.getFloat('height')-photosScrollPane.getFloat('mask_height')) * f;
+      */
     }
 	}
 }

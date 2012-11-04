@@ -19,8 +19,12 @@ class ParameterParser
     }
 	  
 	  if(params.language_id != null){
-//	    trace(params.language_name);
+	    trace(GLOBAL.language_id);
 	    GLOBAL.language_id = params.language_id;
+	  }
+	  
+	  if(params.copy_preset != null){
+	    GLOBAL.copy_preset = params.copy_preset;
 	  }
 	  
 	  if(params.authenticity_token != null){
@@ -89,7 +93,7 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.symbols_view, 0,0,EVENT_ID.SHOW_SYMBOLS);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
-          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_LOGOS);
+          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_MY_UPLOADS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
@@ -101,7 +105,7 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.symbols_view, 0,0,EVENT_ID.SHOW_SYMBOLS);
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
-          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_LOGOS);
+          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_MY_UPLOADS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         } 
@@ -113,7 +117,7 @@ class ParameterParser
           //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.symbols_view, 0,0,EVENT_ID.SHOW_SYMBOLS);
-          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_LOGOS);
+          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_MY_UPLOADS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
           GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
@@ -142,8 +146,7 @@ class ParameterParser
       GLOBAL.Designs.setString('location_name', params.location_name);
     }
 
-    GLOBAL.params = params;
-    trace('shop_itemf',GLOBAL.shop_item_id );
+
 	}
 	
 }

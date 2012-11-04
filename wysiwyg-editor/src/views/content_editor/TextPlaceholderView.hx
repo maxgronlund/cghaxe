@@ -126,11 +126,11 @@ class TextPlaceholderView extends APlaceholder {
     
   }
   
-
   private function onAddedToStage(e:Event){
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
     loadFont();
+    GLOBAL.Pages.calculatePrice();
   }
   
   public function isFoiled():Bool {
@@ -304,8 +304,6 @@ class TextPlaceholderView extends APlaceholder {
 
   private function onKeyPressed(event:KeyboardEvent):Void{
     var step:Float = 150/72;
-//    trace("Keycode: ");
-//    trace(event.charCode);
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 
@@ -314,10 +312,7 @@ class TextPlaceholderView extends APlaceholder {
     }
   }
   
-//  private function onKeyUp(event:KeyboardEvent):Void{
-//    //pageView.hitTest();
-//  }
-  
+
   private function insertTags(str:String):String{
     
     var txt:String;
@@ -406,18 +401,18 @@ class TextPlaceholderView extends APlaceholder {
 
   private function loadFont():Void{
 
-    fontFileName      = GLOBAL.Font.fileName;
-    fontSize          = GLOBAL.Font.fontSize;       
-    fontAlign         = GLOBAL.Font.fontAlign;
-    fontLeading       = GLOBAL.Font.leading;
-    letterSpacing     = GLOBAL.Font.letterSpacing;
-    printType         = GLOBAL.printType; 
-    foilColor         = GLOBAL.foilColor;
-    stdPmsColor       = GLOBAL.stdPmsColor;
-    pms1Color         = GLOBAL.pms1Color;
-    pms2Color         = GLOBAL.pms2Color;
-    laserColor        = GLOBAL.laserColor;
-    garamond          = GLOBAL.garamond;
+    fontFileName                    = GLOBAL.Font.fileName;
+    fontSize                        = GLOBAL.Font.fontSize;       
+    fontAlign                       = GLOBAL.Font.fontAlign;
+    fontLeading                     = GLOBAL.Font.leading;
+    letterSpacing                   = GLOBAL.Font.letterSpacing;
+    printType                       = GLOBAL.printType; 
+    foilColor                       = GLOBAL.foilColor;
+    stdPmsColor                     = GLOBAL.stdPmsColor;
+    pms1Color                       = GLOBAL.pms1Color;
+    pms2Color                       = GLOBAL.pms2Color;
+    laserColor                      = GLOBAL.laserColor;
+    garamond                        = GLOBAL.garamond;
     setFontScreenColor();
     if(fontMovie != null){
       removeChild(fontMovie);
@@ -482,12 +477,10 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function hitTest():Void{
-//    trace('hit test');
     pageView.hitTest();
   }
     
   override public function onUpdatePlaceholder(event:Event):Void{
-    //trace('onUpdatePlaceholder');
     
     fontFileName      = GLOBAL.Font.fileName;
     fontSize          = GLOBAL.Font.fontSize;       
@@ -538,7 +531,6 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getPrintType():String {
-
     return printType;
   }
     
@@ -565,7 +557,7 @@ class TextPlaceholderView extends APlaceholder {
         setFoil();
         
       }
-      case CONST.LASER_COLOR:{
+      case CONST.DIGITAL_PRINT:{
         was_foiled = false;
         unfoilify();
       }
@@ -593,7 +585,7 @@ class TextPlaceholderView extends APlaceholder {
       }   
       case CONST.FOIL_COLOR:    setFontScreenColorForFoil();
       case CONST.GARAMOND:      setFontScreenColorForFoil(); 
-      case CONST.LASER_COLOR:   fontScreenColor            = laserColor; 
+      case CONST.DIGITAL_PRINT:   fontScreenColor            = laserColor; 
     }
   }
 
@@ -649,11 +641,7 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   override public function calculateAnchorPoint():Float{
-//    trace('############################################');
-//    trace('#      DISPATCH EVENT TO MOVE MOUSE HIT POINT');
-//    trace('############################################');
-    
-    
+
     //GLOBAL.MOVE_TOOL;
     // !!! colide with the hit test
     //font.setText(textWithTags);
@@ -708,16 +696,17 @@ class TextPlaceholderView extends APlaceholder {
       MouseTrap.capture();
       unfoilify();
       pageView.setPlaceholderInFocus(this);
+      pageView.setString(EVENT_ID.DISABLE_DELETE_KEY, 'yes');
       setTextOnTop(true);
       trace('prevent the pageView from release the inFocus and capture the mouse here');
     }else{
+      pageView.setString(EVENT_ID.ENABLE_DELETE_KEY, 'now');
       MouseTrap.release();
     }
-    
   }
   
   private function setTextOnTop(b:Bool):Void {
-    trace('setTextOnTop', b);
+    //trace('setTextOnTop', b);
     MouseTrap.capture();
    
     font.selectable(b);
@@ -777,9 +766,9 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function onRemovedFromStage(e:Event){
-    GLOBAL.Pages.calculatePrice();
     removeEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	model.removeEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
+  	GLOBAL.Pages.calculatePrice();
   }
   
   override public function getPlaceholderType():String{

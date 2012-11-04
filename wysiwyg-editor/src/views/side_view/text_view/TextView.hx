@@ -49,22 +49,13 @@ class TextView extends PropertyView, implements IView{
     GLOBAL.Application.addEventListener(EVENT_ID.ADD_FONT_SCROLL_BAR, onAddFontScrollBar);
     GLOBAL.Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
   }
-  
-  
+   
   private function onUpdateSideView(e:IKEvent):Void{
     
     var b:Bool = e.getString() == 'garamond_place_holder';
     garamond(b);
     garamondButton.setOn(b);
-   //   garamond(true);
-   //   garamondButton.setOn(true);
-   // }else{
-   //   garamond(false);
-   //   garamondButton.setOn(false);
-   // }
-   // //garamondButton.setOn(e.getString() == 'garamond_place_holder');
-    
-    
+
 	}
   
   override public function onAddedToStage(e:Event):Void{
@@ -87,12 +78,6 @@ class TextView extends PropertyView, implements IView{
     fontScrollPane.x = 9;
     fontScrollPane.y = 204;
     fontScrollPane.addView(fontPane, 0,0);	
-
-    // font scroll bar
- //   addChild(fontScrollbar);
- //   fontScrollbar.setSize(fontPane.getFloat('height'), fontScrollPane.getFloat('mask_height'));
- //   fontScrollbar.x = fontScrollPane.getSize().x-2;
- //   fontScrollbar.y = fontScrollPane.y;
     
     addChild(textAlign);
     textAlign.x = 8;
@@ -109,8 +94,7 @@ class TextView extends PropertyView, implements IView{
   }
   
   private function onAddFontScrollBar(e:IKEvent):Void{
-    // font scroll bar
-    
+
     if(fontPane.getFloat('height') > fontScrollPane.getFloat('mask_height')){
       addChild(fontScrollbar);
       fontScrollbar.setSize(fontPane.getFloat('height'), fontScrollPane.getFloat('mask_height'));
@@ -120,10 +104,8 @@ class TextView extends PropertyView, implements IView{
     
   }
   
-  override public function setFloat(id:String, f:Float):Void{
-    
+  override public function setFloat(id:String, f:Float):Void{ 
     switch ( id ) {
-      
       case EVENT_ID.FONT_SCROLL:{
         fontPane.y = -(fontPane.getFloat('height')-fontScrollPane.getFloat('mask_height')) * f;
       }
@@ -166,11 +148,5 @@ class TextView extends PropertyView, implements IView{
       fontPane.setString('use garamond', 'foo');
     }
   }
-  
-  //private function onUpdateFontPane(s):Void{
-  //  trace('setParam');
-  //  fontPane.setString(EVENT_ID.UPDATE_FONT_PANE, s);
-  //}
-  
-  
+
 }

@@ -1,30 +1,18 @@
-/* Holds the stack of pages
-* can be moved around
-* can sort the stack
-*/
 import flash.events.Event;
-//import flash.display.BitmapData;
-//import flash.display.Bitmap;
 import flash.geom.Point;
 import flash.Vector;
+import flash.events.KeyboardEvent;
 
 class PagesView extends View, implements IView{
   
   private var pages:Vector<PageView>;
-
-  //private var productId:Int;
   private var pageInFocus:PageView;
   
   public function new(desktopController:IController){	
     
     super(desktopController);
     Application.addEventListener(EVENT_ID.RESET_WYSIWYG, onResetWysiwyg);
-
-    
-//    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
     Application.addEventListener(EVENT_ID.ADD_PAGES_TO_STAGE, addPagesToStage);
-
-//    DesignImages.addEventListener(EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE, onAddDesignImageToPage);
     Designs.addEventListener(EVENT_ID.ADD_DESIGN_TO_PAGE, onAddPageDesignToPage);
     Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
     Pages.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
@@ -55,7 +43,11 @@ class PagesView extends View, implements IView{
   }
 
   private function addPagesToStage(e:IKEvent):Void{
-    addPages();
+    for( i in 0...pages.length){
+      addChild(pages[i]);
+      pages[i].visible = false;
+    }
+   stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
   }
   
   private function removePages():Void{
@@ -98,6 +90,7 @@ class PagesView extends View, implements IView{
   
   private function putPageOnTop(id:Int):Void{
     pageInFocus = pages[id];
+    pageInFocus.setString(EVENT_ID.ENABLE_DELETE_KEY, 'sir');
     
     var side_of_top_paper:Bool = pageInFocus.getModel().getBool('front_of_paper');
     var i:Int = pages.length;
@@ -124,16 +117,6 @@ class PagesView extends View, implements IView{
     }
   }
   
-  
-  private function addPages():Void{
-
-    for( i in 0...pages.length){
-      addChild(pages[i]);
-      pages[i].visible = false;
-    }
-   
-  }
-
   override public function setString(id:String, s:String):Void{
     switch ( id ){
       case 'set_pages_to_top_left':setPagesToTopLeft();
@@ -157,4 +140,14 @@ class PagesView extends View, implements IView{
   override public function getView(i:Int):AView{
     return pages[i];
 	}
+
+  private function onKeyUp(event:KeyboardEvent):Void{}
+    
+  private function onKeyPressed(event:KeyboardEvent):Void{
+     switch(event.keyCode){
+       case 8:{
+         pageInFocus.setString(EVENT_ID.DELETE_KEY_PRESSED, 'foo');
+       }; 
+     }
+   }
 }

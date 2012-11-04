@@ -185,44 +185,35 @@ class BitmapPlaceholder extends APlaceholder{
     imageLoader.load(new URLRequest(imageUrl));
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
+    GLOBAL.Pages.calculatePrice();
 
   }
   
   private function onLoadImageComplete(e:Event):Void{
-    
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
     backdrop = e.target.loader.content;
     
-    backdrop.scaleX *= 0.5;
-    backdrop.scaleY *= 0.5;
+    backdrop.scaleX       *= 0.5;
+    backdrop.scaleY       *= 0.5;
 
     addChild(backdrop);
     addChild(selectBox);
     addChild(resizeHandle);
     selectBox.visible     = false;
     resizeHandle.visible  = false;
-
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    //foilify('silver');
-    sizeX             = this.width;
-    sizeY             = this.height;
+    widthHeightRatio  = this.width/this.height;
     
-    if(sizeX != 0 && sizeY != 0){
-      setSize(sizeX, sizeY);
+    if(sizeX == -1){
       sizeX = this.width;
       sizeY = this.height;
-    } else {
-      sizeX     = this.width;
-      sizeY     = this.height;
-      
     }
-    
-    widthHeightRatio  = this.width/this.height;
     setSize(sizeX, sizeY);
 	}
 	
 	override public function setSize(sizeX:Float, sizeY:Float):Void{
-	  
+	  this.sizeX = sizeX;
+    this.sizeY = sizeY;
 	  if(backdrop != null){
       backdrop.width     = sizeX;
       backdrop.height    = sizeY;
@@ -230,8 +221,6 @@ class BitmapPlaceholder extends APlaceholder{
       resizeHandle.x    = sizeX - 32;
       resizeHandle.y    = sizeY - 32;
     }
-    this.sizeX = sizeX;
-    this.sizeY = sizeY;
   }
 
   private function handleKeyboard(b:Bool):Void{
@@ -252,7 +241,7 @@ class BitmapPlaceholder extends APlaceholder{
   override public function getXml() : String {
     
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
-      str += '\t\t\t<placeholder-type>' + 'bitmap_placeholder' + '</placeholder-type>\n';
+      str += '\t\t\t<placeholder-type>' + 'bitmap_place_holder' + '</placeholder-type>\n';
       str += '\t\t\t<print-type>' + printType + '</print-type>\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
@@ -291,16 +280,16 @@ class BitmapPlaceholder extends APlaceholder{
     
     printType = GLOBAL.printType;
     // TO DO
-    //switch ( GLOBAL.printType ){
-    //  case CONST.STD_PMS_COLOR:{
-    //    unfoilify();
-    //    color(GLOBAL.stdPmsColor);
-    //  }
-    //  case CONST.FOIL_COLOR:{
-    //    foilify(GLOBAL.foilColor);
-    //  }
-    //}
-    //GLOBAL.Pages.calculatePrice();
+    switch ( GLOBAL.printType ){
+      case CONST.STD_PMS_COLOR:{
+        unfoilify();
+        color(GLOBAL.stdPmsColor);
+      }
+      case CONST.FOIL_COLOR:{
+        foilify(GLOBAL.foilColor);
+      }
+    }
+    GLOBAL.Pages.calculatePrice();
   }
   
   override public function setFocus(b:Bool):Void{
@@ -341,7 +330,7 @@ class BitmapPlaceholder extends APlaceholder{
   }
 
   override public function getPlaceholderType():String{
-    return 'bitmap_placeholder';
+    return 'bitmap_place_holder';
   }
   
   override public function getPms1Color():String{

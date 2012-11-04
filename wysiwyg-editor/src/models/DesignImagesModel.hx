@@ -19,7 +19,7 @@ class DesignImagesModel extends Model, implements IModel {
   override public function setParam(param:IParameter):Void{
     
     switch ( param.getLabel() ){
-      case EVENT_ID.DESIGN_IMAGE_SELECTED:{
+      case EVENT_ID.DESIGN_PHOTO_SELECTED:{
         //trace('DESIGN_SELECTED');
         designImagesXml = param.getXml();
       }

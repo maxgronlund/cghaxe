@@ -51,10 +51,8 @@ class PresetModel extends Model, implements IModel
     }
   }
   
-  
-  
+
   private function countPlaceholders(xml:Xml):Void{
-//    trace('..countPlaceholders.');
     var placeholders:UInt = 0;
     for(pages in xml.elementsNamed("pages") ) {
        for(page in pages.elementsNamed("page") ) {
@@ -75,15 +73,19 @@ class PresetModel extends Model, implements IModel
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
     
-    
-    
-    for( font_set in xml.elementsNamed("font-set") ) {
-      GLOBAL.font_set = font_set.firstChild().nodeValue.toString();
+    for( language in xml.elementsNamed("language") ) {
+       var languageParser:LanguageParser = new LanguageParser();
+       languageParser.parse(language);
+       
     }
     
     for( preset_quantity in xml.elementsNamed("preset-quantity") ) {
-       GLOBAL.preset_quantity = preset_quantity.firstChild().nodeValue.toString();
-       GLOBAL.preset_quantity_text_field.setText(GLOBAL.preset_quantity);
+      var param:IParameter        = new Parameter(EVENT_ID.UPDATE_QUANTITY);
+      GLOBAL.preset_quantity      = preset_quantity.firstChild().nodeValue.toString();
+      param.setString(GLOBAL.preset_quantity);
+      
+      dispatchParameter(param);
+       //GLOBAL.preset_quantity_text_field.setText(GLOBAL.preset_quantity);
     }
 
     for( preset_id in xml.elementsNamed("preset-id") ) {
@@ -131,12 +133,10 @@ class PresetModel extends Model, implements IModel
     
     for(logos in xml.elementsNamed("logos")){
       dispatchXML(EVENT_ID.LOGOS_LOADED, logos);
-      //for(logo in logos.elementsNamed("logo")){
-      //  trace(logo.firstChild().nodeValue.toString());
-      //}
     }
-    
-
+    for(photos in xml.elementsNamed("photos")){
+      dispatchXML(EVENT_ID.PHOTOS_LOADED, photos);
+    }
   }
   
   private function pickUpDesignsforAssProduct(xml:Xml):Void{
@@ -212,12 +212,12 @@ class PresetModel extends Model, implements IModel
   }
   
   private function save_preset():Void{
-    trace('save_preset');
+    trace('save_preset', GLOBAL.save_path);
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
     
-    GLOBAL.preset_quantity = GLOBAL.preset_quantity_text_field.getQuantity();
+    //GLOBAL.preset_quantity              = GLOBAL.preset_quantity_text_field.getQuantity();
     
     variables.authenticity_token 			  = GLOBAL.authenticity_token;
     variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
@@ -248,7 +248,7 @@ class PresetModel extends Model, implements IModel
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
     
-    GLOBAL.preset_quantity = GLOBAL.preset_quantity_text_field.getQuantity();
+    //GLOBAL.preset_quantity = GLOBAL.preset_quantity_text_field.getQuantity();
     
     variables.authenticity_token 			  = GLOBAL.authenticity_token;
     variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;

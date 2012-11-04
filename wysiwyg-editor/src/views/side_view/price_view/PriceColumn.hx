@@ -10,9 +10,10 @@ class PriceColumn extends MovieClip {
 	private var amount_std_pms_color:UInt;
   private var amount_custom_pms1_color:UInt;
   private var amount_custom_pms2_color:UInt;
+  private var amount_custom_pms4_color:UInt;
   private var amount_foil_color:UInt;
   private var amount_greetings:UInt;
-  private var amount_laser_color:UInt;
+  private var amount_digital_print:UInt;
   private var amount_cliche:UInt;
   private var pageHeaderBack:Rectangle;
   private var pageTitle:FormatedText;
@@ -28,10 +29,10 @@ class PriceColumn extends MovieClip {
   	price_labels        = new Array();
   	extraChilds         = new Array();
   	
-  	total_label         = new FormatedText('helvetica', 'total', 12, false);
-  	marginLeft          = 10;
-  	pageHeaderBack      = new Rectangle(190, 18, 0x000000, 0xB3B3B3, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
-  	pageTitle           = new FormatedText('helvetica', '0.0', 12, false, 0x333333);
+  	total_label         = new FormatedText('helvetica', 'total', 11, false);
+  	marginLeft          = 8;
+  	pageHeaderBack      = new Rectangle(190, 18, 0x000000, 0xC8C8C8, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+  	pageTitle           = new FormatedText('helvetica', '0.0', 11, false, 0x555555);
   	
 	}
 	
@@ -75,6 +76,9 @@ class PriceColumn extends MovieClip {
 	  if(amount_custom_pms2_color > 0) {
 	    price_labels.push(new OnePrice('one-pms-color'));
 	  }
+	  if(amount_custom_pms4_color > 0) {
+	    price_labels.push(new OnePrice('one-pms-color-4'));
+	  }
 	  if(amount_cliche > 0) {
 	    for(i in 0...amount_cliche) {
 	      price_labels.push(new OnePrice('cliche'));
@@ -91,49 +95,51 @@ class PriceColumn extends MovieClip {
   	    price_labels.push(new OnePrice('greeting'));
 	    }
 	  }
-	  if(amount_laser_color > 0) {
+	  if(amount_digital_print > 0) {
 	    price_labels.push(new OnePrice('laser'));
 	  }
     
     var total_price:Float = 0;
     
-    var offset_i:UInt = 0;
+    var posY:UInt = 10;
+    
     for(i in 0...price_labels.length) {
       
       var price:OnePrice = price_labels[i];
       addChild(price);
       price.x = 0;
-    	price.y = 18*(i+offset_i);
-    	
-    	var units:Int = Std.parseInt(GLOBAL.preset_quantity);
-    	var print_price:Float = getPrintPrice(units, price.getPrintType());
-    	
-    	switch ( price.getPrintType() )
-    	{
-    	 case 'cliche':
-    	   //price.setUnitsLabel("1");    	   
-    	   offset_i += 1;
-    	   var checkbox = new Checkbox(iAlreadyHaveACliche, this);
-    	   checkbox.x = 0;
-       	 checkbox.y = 18*(i+offset_i);
-    	   addChild(checkbox);
-    	   extraChilds.push(checkbox);
-    	   var checkbox_label = new FormatedText('helvetica', 'I already have a cliché', 12, false);
-      	 addChild(checkbox_label);
-      	 extraChilds.push(checkbox_label);
-      	 checkbox_label.x = 25;
-      	 checkbox_label.y = 18*(i+offset_i);
-      	 if(iAlreadyHaveACliche == true){
+      price.y = posY;
+      
+      var units:Int = Std.parseInt(GLOBAL.preset_quantity);
+      var print_price:Float = getPrintPrice(units, price.getPrintType());
+      
+      switch ( price.getPrintType() )
+      {
+       case 'cliche':  	   
+         var checkbox = new Checkbox(iAlreadyHaveACliche, this);
+         posY += 24;
+         checkbox.x = 8;
+         checkbox.y = posY;
+         addChild(checkbox);
+         extraChilds.push(checkbox);
+         var checkbox_label = new FormatedText('helvetica', 'I already have a cliché', 12, false);
+         addChild(checkbox_label);
+         extraChilds.push(checkbox_label);
+         checkbox_label.x = 25;
+         checkbox_label.y = posY;
+         if(iAlreadyHaveACliche == true){
        	   print_price = 0;
        	 }
-    	 default:
+       default:
           //price.setUnitsLabel(Std.string(GLOBAL.preset_quantity));
-    	}
-    	
-    	price.setItemLabel(price.getPrettyPrintType());
-    	    	
-    	total_price += print_price;
-    	price.setPriceLabel(Std.string(print_price));
+      }
+      
+      price.setItemLabel(price.getPrettyPrintType());
+          	
+      total_price += print_price;
+      price.setPriceLabel(print_price);
+      
+      posY += 20;
     }
     column_total_price = total_price;
     
@@ -179,14 +185,17 @@ class PriceColumn extends MovieClip {
   public function set_amount_custom_pms2_color(amount:UInt):Void {
     amount_custom_pms2_color = amount;
   }
+  public function set_amount_custom_pms4_color(amount:UInt):Void {
+    amount_custom_pms4_color = amount;
+  }
   public function set_amount_foil_color(amount:UInt):Void {
     amount_foil_color = amount;
   }
   public function set_amount_greetings(amount:UInt):Void {
     amount_greetings = amount;
   }
-  public function set_amount_laser_color(amount:UInt):Void {
-    amount_laser_color = amount;
+  public function set_amount_digital_print(amount:UInt):Void {
+    amount_digital_print = amount;
   }
   public function set_amount_cliche(amount:UInt):Void {
     amount_cliche = amount;
@@ -248,6 +257,8 @@ class PriceColumn extends MovieClip {
 	     return selected_price.getFoilPrice();
 	   case "one-pms-color":
 	     return selected_price.getOnePmsColorPrice();
+	   case "one-pms-color-4":
+   	   return selected_price.getOnePmsColorPrice4();
 	   case "std-color":
 	     return selected_price.getStdColorPrice();
 	   case "cliche":

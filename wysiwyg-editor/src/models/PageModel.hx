@@ -17,9 +17,10 @@ class PageModel extends Model, implements IModel
   private var amount_std_pms_color:UInt;
   private var amount_custom_pms1_color:UInt;
   private var amount_custom_pms2_color:UInt;
+  private var amount_custom_pms4_color:UInt;
   private var amount_foil_color:UInt;
   private var amount_greetings:UInt;
-  private var amount_laser_color:UInt;
+  private var amount_digital_print:UInt;
   private var amount_cliche:UInt;
   
     
@@ -74,9 +75,10 @@ class PageModel extends Model, implements IModel
       case 'amount_std_pms_color':{amount_std_pms_color = i;}
       case 'amount_custom_pms1_color':{amount_custom_pms1_color = i;}
       case 'amount_custom_pms2_color':{amount_custom_pms2_color = i;}
+      case 'amount_custom_pms4_color':{amount_custom_pms4_color = i;}
       case 'amount_foil_color':{amount_foil_color = i;}
       case 'amount_greetings':{amount_greetings = i;}
-      case 'amount_laser_color':{amount_laser_color = i;}
+      case 'amount_digital_print':{amount_digital_print = i;}
       case 'amount_cliche':{amount_cliche = i;}
     }
   }
@@ -88,9 +90,10 @@ class PageModel extends Model, implements IModel
       case 'amount_std_pms_color':{return amount_std_pms_color;}
       case 'amount_custom_pms1_color':{return amount_custom_pms1_color;}
       case 'amount_custom_pms2_color':{return amount_custom_pms2_color;}
+      case 'amount_custom_pms4_color':{return amount_custom_pms4_color;}
       case 'amount_foil_color':{return amount_foil_color;}
       case 'amount_greetings':{return amount_greetings;}
-      case 'amount_laser_color':{return amount_laser_color;}
+      case 'amount_digital_print':{return amount_digital_print;}
       case 'amount_cliche':{return amount_cliche;}
     }
     return -1;
@@ -115,14 +118,6 @@ class PageModel extends Model, implements IModel
       case 'no_move':{ trace('no move'); 	}
       case 'page_name':               page_name     = s;
       case EVENT_ID.SET_PAGE_XML:     fileStr       += s;
-      //case EVENT_ID.UPDATE_PMS1:{
-      //  dispatchParameter(new Parameter(EVENT_ID.UPDATE_PMS1));
-      //}
-      //case EVENT_ID.UPDATE_PMS2:{
-      //  dispatchParameter(new Parameter(EVENT_ID.UPDATE_PMS2));
-      //}
-
-
     }
   }
   

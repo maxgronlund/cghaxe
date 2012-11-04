@@ -61,6 +61,7 @@ class Main
   private var desktopView:AView;
   private var gridView:AView;
   private var selectionView:AView;
+//  private var insertImageDialogView:AView;
   
 
   private var foil:Foil;
@@ -156,6 +157,7 @@ class Main
     pageSelectorView            = new PageSelectorView(pageSelectController);
     desktopView                 = new DesktopView(desktopController);
     gridView                    = new GridView(applicationController);
+//    insertImageDialogView       = new InsertImageDialogView(logosController);
 //    selectionView               = new SelectionView(selectionController);
     
     // setup views
@@ -288,6 +290,7 @@ class Main
     applicationView.addView(menuView, 0,0);
     applicationView.addView(pageSelectorView, 0, SIZE.MENU_VIEW_HEIGHT);
     applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
+    //applicationView.addView(insertImageDialogView, 115, 200); 
     gridView.mouseChildren = false;
     gridView.mouseEnabled = false;
 

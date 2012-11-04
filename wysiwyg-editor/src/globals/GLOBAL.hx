@@ -10,7 +10,7 @@ class GLOBAL  {
   public static var product_name:String;
   public static var shop_item_name:String;
 
-  public static var font_set;
+
   public static var Application:IModel;
   public static var Menu:IModel;
   public static var Preset:IModel;
@@ -24,7 +24,7 @@ class GLOBAL  {
   public static var Font:FontModel;
   public static var userParser:UserParser;
   public static var preset_quantity:String;
-  public static var preset_quantity_text_field:Dynamic;
+  //public static var preset_quantity_text_field:Dynamic;
   public static var min_quantity:UInt=1;
   public static var iAlreadyHaveACliche:Hash<Bool>;
   
@@ -42,6 +42,7 @@ class GLOBAL  {
   public static var admin_mode:Bool;
   public static var hitTest:CGHitTest;
   public static var language_id:String;
+  public static var copy_preset:String;
   
   // zoom
   public static var Zoom:ZoomTools;
@@ -74,7 +75,7 @@ class GLOBAL  {
   public static var preset_shop_item_id:String;
   
   
-  public static var params:Dynamic;
+//  public static var params:Dynamic;
 
   public static var printType:String;
   public static var stdPmsColor:UInt;
@@ -136,7 +137,7 @@ class GLOBAL  {
   public static var custom_pms_1:String;
   public static var custom_pms_2:String;
   public static var foil_color_picker:String;
-  public static var laser_color_picker:String;
+  public static var digital_print_picker:String;
   public static var color_button:String;
   public static var print_button:String;
   public static var symbols_button:String;

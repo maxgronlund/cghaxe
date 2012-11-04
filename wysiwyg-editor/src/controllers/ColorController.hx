@@ -84,7 +84,7 @@ class ColorController extends Controller, implements IController{
     Pages.setParam(param);
   }
   private function onColorSelected(param:IParameter):Void{
-    GLOBAL.printType    = CONST.LASER_COLOR;
+    GLOBAL.printType    = CONST.DIGITAL_PRINT;
     GLOBAL.laserColor  = param.getUInt();
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));

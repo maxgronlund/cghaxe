@@ -64,8 +64,8 @@ class LanguageParser
     for(foil_color_picker in xml_data.elementsNamed("foil-color-picker") ) 
       TRANSLATION.foil_color_picker = foil_color_picker.firstChild().nodeValue.toString();
 
-    for(laser_color_picker in xml_data.elementsNamed("laser-color-picker") ) 
-      TRANSLATION.laser_color_picker = laser_color_picker.firstChild().nodeValue.toString();
+    for(digital_print_picker in xml_data.elementsNamed("laser-color-picker") ) 
+      TRANSLATION.digital_print_picker = digital_print_picker.firstChild().nodeValue.toString();
 
     for(upload_image in xml_data.elementsNamed("upload-image") ) 
       TRANSLATION.upload_image = upload_image.firstChild().nodeValue.toString();
@@ -120,6 +120,9 @@ class LanguageParser
 
     for(card in xml_data.elementsNamed("card") ) 
       TRANSLATION.card = card.firstChild().nodeValue.toString();
+
+    for(units in xml_data.elementsNamed("units") ) 
+      TRANSLATION.units = units.firstChild().nodeValue.toString();
       
 
   }

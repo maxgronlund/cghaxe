@@ -37,18 +37,15 @@ class PageView extends View{
   private var startPoint:Point;
   private var placeholderHasMouse:Bool;
   private var pagePresetXML:Xml;
-
   private var hideMaskPresent:Bool;
-  
   private var frontShotSizeX:Float;
   private var frontShotSizeY:Float;
-  
   private var hitPointX:Float;
   private var hitPointY:Float;
-  
   private var posX:Float;
   private var posY:Float;
   private var designXml:Xml;
+  private var deletable:Bool;
 
   
   public function new(controller:IController){	
@@ -60,11 +57,13 @@ class PageView extends View{
     startPoint                    = new Point(0,0);
     placeholderHasMouse           = false;
     hideMaskPresent               = false;
+    deletable                     = false;
     
     Pages.addEventListener(EVENT_ID.CALCULATE_PRICE, calculatePrice);
   }
   
   private function calculatePrice(e:Event): Void {    
+
     var std_pms_colors                = new Array();
     var custom_pms1_colors            = new Array();
     var custom_pms2_colors            = new Array();
@@ -74,16 +73,19 @@ class PageView extends View{
     var amount_std_pms_color:UInt     = 0;
     var amount_custom_pms1_color:UInt = 0;
     var amount_custom_pms2_color:UInt = 0;
+    var amount_custom_pms4_color:UInt = 0;
     var amount_foil_color:UInt        = 0;
     var amount_greetings:UInt         = 0;
-    var amount_laser_color:UInt       = 0;
+    var amount_digital_print:UInt       = 0;
     var amount_cliche:UInt             = 0;
     
     var empty_string:EReg = ~/^[\s]*$/;
     
     for(i in 0...placeholders.length) {      
       if(true){
-        if(StringTools.trim(placeholders[i].getTextFieldText()) != ''){
+        if(placeholders[i].getPlaceholderType() == 'bitmap_place_holder') {
+          amount_custom_pms4_color = 1;
+        } else if(StringTools.trim(placeholders[i].getTextFieldText()) != ''){
           switch ( placeholders[i].getPrintType() )
           {
             case CONST.STD_PMS_COLOR:{
@@ -135,6 +137,7 @@ class PageView extends View{
               }
               
             }
+            
             case CONST.FOIL_COLOR:{
               //Check if there's already a foil color
               var color:String = placeholders[i].getFoilColor();              
@@ -164,7 +167,7 @@ class PageView extends View{
                   text_foil_colors.push(color);
                   amount_foil_color += 1;
                 }
-              } else if( placeholders[i].getPlaceholderType() == 'bitmap_placeholder' ) {
+              } else if( placeholders[i].getPlaceholderType() == 'bitmap_place_holder' ) {
                 var text_color_is_used:Bool = false;
                 amount_cliche = 1;
                 for(i in 0...text_foil_colors.length) {
@@ -180,11 +183,11 @@ class PageView extends View{
           
               
             }
-            case CONST.LASER_COLOR:{
-              amount_laser_color = 1;
+            case CONST.DIGITAL_PRINT:{
+              amount_digital_print = 1;
             }
             default:{
-              amount_laser_color = 1;
+              amount_digital_print = 1;
             }
           }
         }
@@ -194,9 +197,10 @@ class PageView extends View{
     model.setInt('amount_std_pms_color', amount_std_pms_color);
     model.setInt('amount_custom_pms1_color', amount_custom_pms1_color);
     model.setInt('amount_custom_pms2_color', amount_custom_pms2_color);
+    model.setInt('amount_custom_pms4_color', amount_custom_pms4_color);
     model.setInt('amount_foil_color', amount_foil_color);
     model.setInt('amount_greetings', amount_greetings);
-    model.setInt('amount_laser_color', amount_laser_color);
+    model.setInt('amount_digital_print', amount_digital_print);
     model.setInt('amount_cliche', amount_cliche);
 
     GLOBAL.price_view.addColumn(model);
@@ -234,7 +238,6 @@ class PageView extends View{
   private function onPms1Update(e:IKEvent):Void{
     
     for(i in 0...placeholders.length) {
-     
       if(placeholders[i].getPrintType() == CONST.CUSTOM_PMS1_COLOR){
         placeholders[i].updateColor( GLOBAL.pms1Color);
       }
@@ -258,7 +261,8 @@ class PageView extends View{
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{addDesignToPage(param);}
       case EVENT_ID.ADD_GREETING_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), false);}
       case EVENT_ID.ADD_SYMBOL_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), true);}
-      case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(), onPosX(), onPosY());}
+      case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),   onPosX(), onPosY(), -1, -1);}
+      case EVENT_ID.ADD_PHOTO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),  onPosX(), onPosY(), -1, -1);}
     }
   }
   
@@ -296,7 +300,6 @@ class PageView extends View{
     }
   }
   
- 
   private function parsePlaceholder(xml:Xml):Void{
     
     for( pos_x in xml.elementsNamed("pos-x") ) 
@@ -316,13 +319,33 @@ class PageView extends View{
         parseVectorPlaceholder(xml, posX, posY);
       case "text_placeholder":
         parseTextPlaceholder(xml);
-      case "bitmap_placeholder":
+      case "bitmap_place_holder":
         parseBitmapPlaceholder(xml, posX, posY);
       
       default:
         parseTextPlaceholder(xml);
     }
 
+  }
+  
+  override public function setString(id:String,s:String ): Void
+  {
+    switch ( id ){
+      case EVENT_ID.DELETE_KEY_PRESSED:{
+        
+        if(deletable){
+          onDestroyPlaceholder();
+          GLOBAL.Pages.calculatePrice();
+        }
+      }
+        
+      case EVENT_ID.ENABLE_DELETE_KEY:{
+        deletable = true;
+      }
+      case EVENT_ID.DISABLE_DELETE_KEY:{
+        deletable = false;
+      }
+    }
   }
   
   private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool = false):Void{
@@ -337,6 +360,12 @@ class PageView extends View{
     
     for(pms_color in xml.elementsNamed("pms-color") ) 
       GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
+      
+    for( pms1_color in xml.elementsNamed("pms1-color") ) 
+      GLOBAL.pms1Color =  Std.parseInt(pms1_color.firstChild().nodeValue);
+    
+    for( pms2_color in xml.elementsNamed("pms2-color") ) 
+        GLOBAL.pms2Color =  Std.parseInt(pms2_color.firstChild().nodeValue);
     
     for(print_type in xml.elementsNamed("print-type") ) 
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
@@ -382,20 +411,20 @@ class PageView extends View{
         sizeY = Std.parseInt(size_y.firstChild().nodeValue);
     
     for( url in xml.elementsNamed("url") ) {
-      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY);
-      placeholder.setSize(sizeX, sizeY);
+      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY, sizeX, sizeY);
+      //placeholder.setSize(sizeX, sizeY);
     }
   }
   
-  private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):APlaceholder{
+  private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float, sizeX:Float, sizeY:Float):APlaceholder{
     
     var url:String = xml.firstChild().nodeValue.toString();
-     trace('addBitmapPlaceholder', url);
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new BitmapPlaceholder(this, placeholders.length, model, url);
     placeholder.x = posX;
   	placeholder.y = posY;
     placeholders.push(placeholder);
+    placeholder.setSize(sizeX, sizeY);
     addChild(placeholder);
     return placeholder;
   }
@@ -419,7 +448,7 @@ class PageView extends View{
       GLOBAL.pms1Color =  Std.parseInt(pms1_color.firstChild().nodeValue);
       
     for( pms2_color in xml.elementsNamed("pms2-color") ) 
-      GLOBAL.pms1Color =  Std.parseInt(pms2_color.firstChild().nodeValue);
+      GLOBAL.pms2Color =  Std.parseInt(pms2_color.firstChild().nodeValue);
       
     for( foil_color in xml.elementsNamed("foil-color") ) 
       GLOBAL.foilColor =  foil_color.firstChild().nodeValue;
@@ -455,17 +484,16 @@ class PageView extends View{
     addTextPlaceholder(10,10);
   }
   
-  private function onDestroyPlaceholder(e:IKEvent){
+  private function onDestroyPlaceholder(e:IKEvent = null ){
     removeChild(inFocus);
-    
     var index:UInt = 0;
     for(i in 0...placeholders.length){
       if(placeholders[i] == inFocus) index = i;
     }
     placeholders.splice(index,1);
-    
     inFocus = null;
   }
+  
   
   private function onRemovePlaceholders(){
     for(i in 0...placeholders.length){
@@ -745,7 +773,7 @@ class PageView extends View{
       GLOBAL.size_x = backdrop.width;
       GLOBAL.size_y = backdrop.height;
      
-      Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
+      Application.setString(EVENT_ID.ALL_PHOTOS_LOADED, 'foo');
       parsePagePresetXml();
 
       var param = new Parameter(EVENT_ID.CENTER_PAGE);
@@ -761,7 +789,7 @@ class PageView extends View{
   }
   
   private function pageDesignImageLoaded():Void{
-    Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
+    Application.setString(EVENT_ID.ALL_PHOTOS_LOADED, 'foo');
   }
   
   public function useHideMask(b:Bool):Void{
