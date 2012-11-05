@@ -11,14 +11,12 @@ class DesignsController extends Controller, implements IController{
       }
 
       case EVENT_ID.DESIGN_SELECTED:{
-        trace('DESIGN_SELECTED');
         GLOBAL.designs_view.setParam(param);
         Designs.setParam(param);
         //GLOBAL.designs_view.setInt(EVENT_ID.DESIGN_SELECTED, param.getInt());
       }
 
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{
-        trace('ADD_DESIGN_TO_PAGE');
         Designs.setParam(param);
       }
       case EVENT_ID.DESIGN_SCROLL:{

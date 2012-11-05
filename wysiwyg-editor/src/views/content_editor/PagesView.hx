@@ -27,7 +27,7 @@ class PagesView extends View, implements IView{
   }
   
   private function onAddSymbolToPage(e:IKEvent):Void{
-    trace('onAddSymbolToPage');
+    
     pageInFocus.setParam(e.getParam());
   }
   
@@ -66,12 +66,12 @@ class PagesView extends View, implements IView{
   }
 
   private function onPageSelected(e:IKEvent):Void{
-    //trace('update sitebar here');
+    
     putPageOnTop( e.getInt());
   }
   
   private function onBuildDesignPage(e:IKEvent):Void{
-    trace('3...onBuildDesignPage');
+    
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
     pages.push(pageView); 
@@ -79,6 +79,7 @@ class PagesView extends View, implements IView{
   }
   
   private function onBuildPage(e:IKEvent):Void{
+    
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
     pages.push(pageView); 

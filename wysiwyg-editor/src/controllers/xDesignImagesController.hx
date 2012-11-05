@@ -10,13 +10,11 @@ class DesignImagesController extends Controller, implements IController{
         GLOBAL.side_view.showView(EVENT_ID.SHOW_DESIGN_IMAGES, true);
       }
       case EVENT_ID.DESIGN_PHOTO_SELECTED:{
-        trace('DESIGN_PHOTO_SELECTED');
         GLOBAL.design_images_view.setParam(param);
         DesignImages.setParam(param);
       }
 
       case EVENT_ID.ADD_DESIGN_IMAGE_TO_PAGE:{
-        //trace('ADD_DESIGN_IMAGE_TO_PAGE');
         DesignImages.setParam(param);
       }
       case EVENT_ID.DESIGN_PHOTO_SCROLL:{

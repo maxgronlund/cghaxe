@@ -15,7 +15,7 @@ class ParameterParser
 	  
 	  if(params.shop_item_id != null){
       GLOBAL.shop_item_id = Std.parseInt(params.shop_item_id);
-      
+      trace(GLOBAL.shop_item_id);
     }
 	  
 	  if(params.language_id != null){

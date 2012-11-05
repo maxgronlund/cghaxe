@@ -14,6 +14,7 @@ class ApplicationView extends View, implements IView
   
   override public function onAddedToStage(e:Event){
     super.onAddedToStage(e);	
+    
     //addChild(backdrop);
     //backdrop.height = stage.stageHeight;
     //backdrop.width = stage.stageWidth;

@@ -15,7 +15,6 @@ class TextSuggestionController extends Controller, implements IController{
         GLOBAL.side_view.showView(EVENT_ID.SHOW_TEXT_SUGGESTIONS, true);
       }
       case EVENT_ID.TEXT_SUGGESTION_SELECTED:{
-        trace('TEXT_SUGGESTION_SELECTED');
         for(place_holder_text in param.getXml().elementsNamed('place-holder-text')){
           TEXT_SUGGESTION.text = place_holder_text.firstChild().nodeValue.toString();
         }
@@ -23,9 +22,6 @@ class TextSuggestionController extends Controller, implements IController{
       }
       
       case EVENT_ID.ADD_TEXT_SUGGESTION:{
-        trace('ADD_TEXT_SUGGESTION');
-        //trace(param.getXml().toString());
-        //Pages.setParam(param);
         Designs.dispatchParameter(param);
       }
       case EVENT_ID.SUGGESTION_SCROLL:{

@@ -120,6 +120,7 @@ class ColorView extends PropertyView, implements IView{
   
   
   override public function onAddedToStage(e:Event):Void{
+
     super.onAddedToStage(e);
     // texts
     addChild(stdColorText);

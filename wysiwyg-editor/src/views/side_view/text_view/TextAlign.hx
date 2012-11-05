@@ -67,7 +67,6 @@ class TextAlign extends View
   
   
   override public function setParam(param:IParameter):Void{
-
     switch ( param.getLabel() ){
       case EVENT_ID.ALIGN_LEFT: setLeft();
       case EVENT_ID.ALIGN_CENTER: setLCenter();

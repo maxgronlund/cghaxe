@@ -300,6 +300,7 @@ class Main
   
   private function loadParams():Void{
     parameterParser.parse(flash.Lib.current.loaderInfo.parameters);
-	}	
-	
+    
+  }	
+  
 }

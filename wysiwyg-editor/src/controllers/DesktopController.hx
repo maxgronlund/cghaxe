@@ -11,15 +11,12 @@ class DesktopController extends Controller, implements IController
     
     switch ( param.getLabel() ){
       case EVENT_ID.ZOOM_IN:{
-        //trace('zoom');
         Zoom.zoomIn();	
       }
       case EVENT_ID.ZOOM_OUT:{
-        //trace('zoom');
         Zoom.zoomOut();
       }
       case EVENT_ID.ZOOM_100:{
-        //trace('ZOOM_100');
         Zoom.resetZoom();
         GLOBAL.desktop_view.setParam(param);
         

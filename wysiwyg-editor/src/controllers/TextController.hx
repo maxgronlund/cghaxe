@@ -41,8 +41,7 @@ class TextController extends Controller, implements IController{
 	}
 	
   private function onUseGaramond(param:IParameter):Void{
-    
-    trace('onUseGaramond', param.getBool());
+
     if(param.getBool()){
 
       GLOBAL.Font.fileName        = "garamond";
@@ -65,19 +64,12 @@ class TextController extends Controller, implements IController{
     updatePlaceholder();
     
   }
-  
-  //private function onPlaceholderSelected(param:IParameter):Void{
-  //  
-  //  trace('onPlaceholderSelected', param.getLabel());
-  //  GLOBAL.Font.setXml(param.getString());
-  //}
 
   
   private function onFontSelected(param:IParameter):Void {
-//   trace('onFontSelected');
+
     
     fontStyleIndex = 0;
-    // feedback to deselect old selected button
     GLOBAL.text_view.setParam(param); 
     GLOBAL.Font.fontPackage   = param.getFontPackage();
     GLOBAL.Font.fileName      = GLOBAL.Font.fontPackage.fileName(fontStyleIndex);

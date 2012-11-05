@@ -10,13 +10,11 @@ class VectorsController extends Controller, implements IController{
         GLOBAL.side_view.showView(EVENT_ID.SHOW_VECTORS, true);
       }
       case EVENT_ID.VECTOR_SELECTED:{
-        trace('VECTOR_SELECTED');
         GLOBAL.vectors_view.setParam(param);
         Vectors.setParam(param);
       }
 
       case EVENT_ID.ADD_VECTOR_TO_PAGE:{
-        //trace('ADD_DESIGN_IMAGE_TO_PAGE');
         Vectors.setParam(param);
       }
       case EVENT_ID.VECTOR_SCROLL:{

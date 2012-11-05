@@ -40,12 +40,13 @@ class MenuView extends View, implements IView
   }
   
   private function onSetDefaultTool(e:IKEvent):Void{
+
     addButtons();
     textButton.setOn(true);
   }
   
   override public function init():Void { 
-    
+
     //SaveButtonBitmap
     saveButton.init( controller,
             new Point(80,29), 
@@ -99,10 +100,11 @@ class MenuView extends View, implements IView
     super.onAddedToStage(e);	
     addChild(backdrop);
     backdrop.width = SIZE.MENU_VIEW_WIDTH;
-    
+
   }
   
   private function addButtons():Void{
+    
     addChild(saveButton);
     saveButton.fireOnMouseUp(false);
     if(!GLOBAL.admin_mode){
@@ -126,12 +128,15 @@ class MenuView extends View, implements IView
     }
     gridButton.x	= posX;
     trashButton.x     = gridButton.x + gridButton.getWidth();
-    buyNowButton.x    = trashButton.x + trashButton.getWidth();
+    if(!GLOBAL.admin_mode){
+      buyNowButton.x    = trashButton.x + trashButton.getWidth();
+    }
     
     
     zoomTo100Button.x   = SIZE.MENU_VIEW_WIDTH - zoomTo100Button.getWidth();
     zoomInButton.x      = zoomTo100Button.x - zoomInButton.getWidth();
     zoomOutButton.x     = zoomInButton.x - zoomOutButton.getWidth();
+    
   }
   
   //import flash.events.KeyboardEvent;

@@ -32,9 +32,8 @@ class PresetModel extends Model, implements IModel
   }
   
   override public function init():Void{
-  	super.init();
-  	Application.addEventListener(EVENT_ID.PASS_PRESET_FILE, onParsePreset);
-  	
+    super.init();
+    Application.addEventListener(EVENT_ID.PASS_PRESET_FILE, onParsePreset);
     Pages.addEventListener(EVENT_ID.SAVE_XML, savePreset);
     Pages.addEventListener(EVENT_ID.BUY_NOW, buyNow);
   }
@@ -68,7 +67,7 @@ class PresetModel extends Model, implements IModel
   
   // building pages and getting url's for masks
   private function parsePreset(xml:Xml):Void{
-
+    
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
@@ -76,10 +75,10 @@ class PresetModel extends Model, implements IModel
     for( language in xml.elementsNamed("language") ) {
        var languageParser:LanguageParser = new LanguageParser();
        languageParser.parse(language);
-       
     }
-    
+
     for( preset_quantity in xml.elementsNamed("preset-quantity") ) {
+      
       var param:IParameter        = new Parameter(EVENT_ID.UPDATE_QUANTITY);
       GLOBAL.preset_quantity      = preset_quantity.firstChild().nodeValue.toString();
       param.setString(GLOBAL.preset_quantity);
@@ -168,6 +167,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function buildPage(xml:Xml):Void{
+
     var param:IParameter = new Parameter(EVENT_ID.BUILD_PAGE);
     param.setXml(xml);
     dispatchParameter(param);
@@ -175,7 +175,7 @@ class PresetModel extends Model, implements IModel
 
   
   private function parseXmlData(xml_data:Xml):Void{
-    //trace(xml_data.toString());
+
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {
@@ -212,7 +212,6 @@ class PresetModel extends Model, implements IModel
   }
   
   private function save_preset():Void{
-    trace('save_preset', GLOBAL.save_path);
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
@@ -275,7 +274,7 @@ class PresetModel extends Model, implements IModel
   private function onBuySavedComplete(e:Event):Void{
   	loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.removeEventListener(Event.COMPLETE, onBuySavedComplete);
-    
+
   	var request:URLRequest              = new URLRequest(GLOBAL.buy_path+"&preset_quantity="+GLOBAL.preset_quantity+"&shop_item_id="+GLOBAL.shop_item_id+"&preset_id="+GLOBAL.preset_id); 
     request.method                      = URLRequestMethod.GET;  
 
@@ -285,7 +284,6 @@ class PresetModel extends Model, implements IModel
   }
   
   private function onSavedComplete(e:Event):Void{
-    trace('onSavedComplete');
   	onComplete();
   }
   

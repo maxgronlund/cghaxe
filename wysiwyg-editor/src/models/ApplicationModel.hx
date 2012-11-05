@@ -36,7 +36,6 @@ class ApplicationModel extends Model, implements IModel
   }
   
   override public function setString( id:String, s:String):Void{
-    //trace(s);
     switch(id){        
       case EVENT_ID.START_LOAD_SEQ:{
         loadIndex   = 0;
@@ -51,14 +50,7 @@ class ApplicationModel extends Model, implements IModel
   }
 
   private function startLoadSeq():Void{
-//    trace('\n\n\n     <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< - >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-//    * NOTHING GAINED BY BREAKING THE LOAD OF PRESET AND PRICES DOWN TO TWO REQUEST 
-//    * TWO ISSUES INTRODUCED
-//    * 1: WAIT FORTHE FIRST LOAD TO COMPLETE AND THEN DO THE NEXT LOAD 
-//    * 2: LOAD SIMULTANILUS AND DEAL WITH SYNCRONATION \n
-//    * BOTH SULUTIONS INTRODUCES SLOW PERFORMANCE AND UNNESSESERRY COMPLEXCITY
-//    * !NOTE THE SAVED XML FILE IS NOT THE SAME AS THE INFO REQUIRED IN THE XML FILES
-//    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<< o >>>>>>>>>>>>>>>><<<<<<<<<<<<<>>>>>>>>\n\n');
+    
     switch (GLOBAL.edit_mode) {
       
       
@@ -127,6 +119,7 @@ class ApplicationModel extends Model, implements IModel
       case 'reset wysiwyg':{
         dispatchParameter(new Parameter(EVENT_ID.RESET_WYSIWYG));
         loadSeq();
+        
       }
       case 'load preset files from backend':{
         presetLoader.addEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded); 
@@ -152,6 +145,7 @@ class ApplicationModel extends Model, implements IModel
       case 'pass preset':{
         dispatchXML(EVENT_ID.PASS_PRESET_FILE, presetXml);
         loadSeq();
+        
       }
       
       case 'pass preset price':{
@@ -166,13 +160,9 @@ class ApplicationModel extends Model, implements IModel
       
       case 'add pages to stage':{
         dispatchParameter(new Parameter(EVENT_ID.ADD_PAGES_TO_STAGE));
-        
-        
       }
       case 'add placeholders':{
-        //trace('add placeholders');
         Designs.setParam(new Parameter(EVENT_ID.ADD_DESIGN));
-        //trace('add placeholders done');
       } 
       case 'configure preset side view': configurePresetSideView();
       case 'set defaults':{
@@ -211,6 +201,7 @@ class ApplicationModel extends Model, implements IModel
         loadSeq();
       }
     }
+    
   }
 
   private function configurePresetSideView():Void{
@@ -222,8 +213,6 @@ class ApplicationModel extends Model, implements IModel
   }
   
   private function onPresetLoaded(e:XmlEvent):Void{
-    //trace('onPresetLoaded');
-    //trace(e.getXml().toString());
     presetLoader.removeEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded);
     presetXml = e.getXml();
     loadSeq();

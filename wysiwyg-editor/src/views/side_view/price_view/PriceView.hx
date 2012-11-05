@@ -41,20 +41,20 @@ class PriceView extends PropertyView, implements IView{
     priceColumns                  = new Array();
     iAlreadyHaveACliche           = new Hash();
     GLOBAL.iAlreadyHaveACliche    = iAlreadyHaveACliche;
-    marginLeft=8;
-    valuta = new Valuta();
+    marginLeft                    = 8;
+    valuta                        = new Valuta();
     Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
     Preset.addEventListener(EVENT_ID.UPDATE_QUANTITY, onUpdateQuantity);
 	}
 	
 	private function onUpdateQuantity(e:KEvent):Void{
-	  trace('onUpdateQuantity');
+	  
 	  GLOBAL.preset_quantity = e.getString();
 	  unitTextFiels.setText(GLOBAL.preset_quantity);
 	}
 	
 	override public function onAddedToStage(e:Event):Void{
-	  trace('onAddedToStage');
+	  
     super.onAddedToStage(e);
     
     addChild(productHeaderBack);
@@ -92,19 +92,22 @@ class PriceView extends PropertyView, implements IView{
     totalPrice.setLabel('0');
     totalPrice.x = 140;
     totalPrice.y = 108;
+
     
   }
 	
 	override public function init():Void{
+	  
 		selectButton.init( controller,
                         new Point(190,30), 
                         new PriceViewButton(), 
                         new Parameter( EVENT_ID.SHOW_PRICES));
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+    
 	}
 	
 	private function onLoadDefaultTool(e:IKEvent):Void{
-
+    
 	  productHeader.setLabel(TRANSLATION.card);
 	  unitsLabel.setLabel(TRANSLATION.units);
 	  totalPriceLabel.setLabel(TRANSLATION.total_price_label);
@@ -242,7 +245,7 @@ class PriceView extends PropertyView, implements IView{
       var units:UInt;
       var foil_price:Float;
       var one_pms_color_price:Float;
-      var one_pms_color4_price:Float;
+      var full_color_price:Float;
       var std_color_price:Float;
       
       for( units_xml in print_price_xml.elementsNamed("units")) {
@@ -257,14 +260,14 @@ class PriceView extends PropertyView, implements IView{
       //for( one_pms_color_price_xml in print_price_xml.elementsNamed("one-pms-color")) {
       //  one_pms_color_price = Std.parseFloat(one_pms_color_price_xml.firstChild().nodeValue.toString());
       //}
-      for( one_pms_color4_price_xml in print_price_xml.elementsNamed("four-pms-color")) {
-        one_pms_color4_price = Std.parseFloat(one_pms_color4_price_xml.firstChild().nodeValue.toString());
+      for( full_color_price_xml in print_price_xml.elementsNamed("full-color")) {
+        full_color_price = Std.parseFloat(full_color_price_xml.firstChild().nodeValue.toString());
       }
       for( std_color_price_xml in print_price_xml.elementsNamed("std-color")) {
         std_color_price = Std.parseFloat(std_color_price_xml.firstChild().nodeValue.toString());
       }
       
-      prices.push(new PriceModel(units, foil_price, one_pms_color_price, std_color_price, one_pms_color4_price));
+      prices.push(new PriceModel(units, foil_price, one_pms_color_price, std_color_price, full_color_price));
     }
   }
   

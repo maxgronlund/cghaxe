@@ -49,6 +49,7 @@ class PageView extends View{
 
   
   public function new(controller:IController){	
+
     super(controller);
     imageLoader	                  = new Loader();
     printMaskLoader	              = new Loader();
@@ -209,6 +210,7 @@ class PageView extends View{
   }
   
   override public function onAddedToStage(e:Event): Void{
+    
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
@@ -285,7 +287,6 @@ class PageView extends View{
   private function parsePagePresetXml():Void{
     
     if(pagePresetXML != null){
-//      trace(pagePresetXML.toString());
       for( page  in pagePresetXML.elementsNamed("page") ) {
         for( pos_x in page.elementsNamed("pos-x") ) {
              this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
@@ -350,7 +351,6 @@ class PageView extends View{
   
   private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool = false):Void{
     
-    //trace(xml.toString());
     var sizeX = -1;
     var sizeY = -1;
     var canResize = resizable;
@@ -431,7 +431,7 @@ class PageView extends View{
   
   private function parseTextPlaceholder(xml:Xml):Void{
     
-//    trace(xml.toString());
+
     for( anchor_point in xml.elementsNamed("anchor-point") ) 
       GLOBAL.Font.anchorPoint =  Std.parseFloat(anchor_point.firstChild().nodeValue);
     
@@ -766,7 +766,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    
+
     
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
@@ -784,7 +784,7 @@ class PageView extends View{
       parsePagePresetXml();
 
     }
-    //trace('allImagesLoaded');
+
     
   }
   
@@ -802,7 +802,7 @@ class PageView extends View{
   }
   
   private function onShowMask(e:IKEvent):Void{
-    //trace('onShowMask');
+
   	guideMask.visible = e.getBool();
   }
   
