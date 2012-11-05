@@ -9,7 +9,7 @@ class ColorController extends Controller, implements IController{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.SHOW_COLOR_PICKERS:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_COLOR_PICKERS, true);
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_COLOR_PICKERS, param.getBool());
       }
       case EVENT_ID.STD_PMS_COLOR_SELECTED:{ onStdPmsColorSelected(param);}
       case EVENT_ID.FOIL_COLOR_SELECTED:{ onFoilColorSelected(param);}

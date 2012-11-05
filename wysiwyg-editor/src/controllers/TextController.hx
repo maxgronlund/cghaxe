@@ -26,7 +26,7 @@ class TextController extends Controller, implements IController{
       case EVENT_ID.ALIGN_RIGHT:onTextAllign(param);
       case EVENT_ID.ALIGN_LEFT:onTextAllign(param);
       case EVENT_ID.ALIGN_CENTER:onTextAllign(param);
-      case EVENT_ID.SHOW_TEXT: GLOBAL.side_view.showView(EVENT_ID.SHOW_TEXT, true);
+      case EVENT_ID.SHOW_TEXT: GLOBAL.side_view.showView(EVENT_ID.SHOW_TEXT, param.getBool());
       case EVENT_ID.FONT_SELECTED:onFontSelected(param);
       case EVENT_ID.ADD_PLACEHOLDER:{
         TEXT_SUGGESTION.text = 'Type here';
@@ -61,7 +61,7 @@ class TextController extends Controller, implements IController{
     }
     GLOBAL.text_view.setParam(param);
     //GLOBAL.color_view.setParam(param);
-    updatePlaceholder();
+    updateFontPlaceholder();
     
   }
 
@@ -89,38 +89,37 @@ class TextController extends Controller, implements IController{
   private function onFontColorSelected(param:IParameter):Void{
     GLOBAL.Font.fontColor = param.getUInt();
     GLOBAL.text_view.setParam(param);
-    updatePlaceholder();
+    updateFontPlaceholder();
   }
   
   private function onLineSpaceSelected(param:IParameter):Void{
 //    trace('font zize:', param.getFloat());
     GLOBAL.Font.leading = Std.int(param.getFloat());
     GLOBAL.text_view.setParam(param);
-    updatePlaceholder();
+    updateFontPlaceholder();
   }
 
   private function onFontSizeSelected(param:IParameter):Void{
 
     GLOBAL.Font.fontSize = Std.int(param.getFloat());
     GLOBAL.text_view.setParam(param);
-    updatePlaceholder();
+    updateFontPlaceholder();
   }
   
   private function updateFont():Void{
     GLOBAL.Font.styleName 	= GLOBAL.Font.fontPackage.styleName(fontStyleIndex);
-    GLOBAL.Font.fileName 	= GLOBAL.Font.fontPackage.fileName(fontStyleIndex); //!!! do this inside the font model
-    updatePlaceholder();
+    GLOBAL.Font.fileName 	= GLOBAL.Font.fontPackage.fileName(fontStyleIndex); 
   }
   
   private function onTextAllign(param:IParameter):Void{
     GLOBAL.text_view.setParam(param);
     GLOBAL.Font.fontAlign = param.getLabel();
-    updatePlaceholder();
+    updateFontPlaceholder();
   }
 
   
   
-  private function updatePlaceholder():Void{
+  private function updateFontPlaceholder():Void{
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
   }
 }

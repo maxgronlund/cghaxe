@@ -46,8 +46,8 @@ class TextView extends PropertyView, implements IView{
                         new Parameter( EVENT_ID.ADD_PLACEHOLDER));
 
     addTextfieldButton.fireOnMouseUp(false);
-    GLOBAL.Application.addEventListener(EVENT_ID.ADD_FONT_SCROLL_BAR, onAddFontScrollBar);
-    GLOBAL.Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
+    Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
+    Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
   }
    
   private function onUpdateSideView(e:IKEvent):Void{
@@ -93,15 +93,14 @@ class TextView extends PropertyView, implements IView{
 
   }
   
-  private function onAddFontScrollBar(e:IKEvent):Void{
+  private function onAddScrollBars(e:IKEvent):Void{
 
     if(fontPane.getFloat('height') > fontScrollPane.getFloat('mask_height')){
       addChild(fontScrollbar);
       fontScrollbar.setSize(fontPane.getFloat('height'), fontScrollPane.getFloat('mask_height'));
       fontScrollbar.x = fontScrollPane.getSize().x-2;
       fontScrollbar.y = fontScrollPane.y;
-    }
-    
+    } 
   }
   
   override public function setFloat(id:String, f:Float):Void{ 

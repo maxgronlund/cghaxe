@@ -12,6 +12,8 @@ class LogosView extends PropertyView, implements IView{
   private var logoScrollbar:VerticalScrollbar;
   private var uploadLogoButton:OneStateTextAndImageButton;
   private var addLogoButton:OneStateTextAndImageButton;
+  private var back:Rectangle;
+  private var logosBack:Rectangle;
   /*
   private var photosScrollPane:AView;
   private var photosPane:AView;
@@ -24,9 +26,10 @@ class LogosView extends PropertyView, implements IView{
     
     //openLogosColorPickerButton  = new TwoStateButton();
 		//logosColorPicker						= new LogosColorPicker(logosController);
-		
-		
-    backdrop              = new LogoViewBack();
+		back        = new Rectangle(190, 246, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+		logosBack   = new Rectangle(174, 160, 0xC3C3C3, 0xF4F4F4, Rectangle.DRAW_LINES, Rectangle.USE_FILL);
+		//backdrop = null;
+    //backdrop              = new LogoViewBack();
     logosScrollPane       = new ScrollPane(logosController);
     logosPane             = new LogosPane(logosController);
     logoScrollbar         = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
@@ -89,14 +92,20 @@ class LogosView extends PropertyView, implements IView{
   }
   
   override public function onAddedToStage(e:Event):Void{
-    super.onAddedToStage(e);
     
+    super.onAddedToStage(e);
 
+    addChild(back);
+    back.y = 30;
+    
+    addChild(logosBack);
+    logosBack.x = 8;
+    logosBack.y = 43;
     // logo selection pane
     addChild(logosScrollPane);
-    logosScrollPane.setSize( 174, 150);
+    logosScrollPane.setSize( 174, 159);
     logosScrollPane.x = 9;
-    logosScrollPane.y = 54;
+    logosScrollPane.y = 44;
     logosScrollPane.addView(logosPane, 0,0);	
     
     addChild(logoScrollbar);
@@ -106,11 +115,13 @@ class LogosView extends PropertyView, implements IView{
     
     addChild(addLogoButton);
     addLogoButton.x = 20;
-    addLogoButton.y = 212;
+    addLogoButton.y = 218;
     
     addChild(uploadLogoButton);
     uploadLogoButton.x = 20;
-    uploadLogoButton.y = 238;
+    uploadLogoButton.y = 242;
+    
+
     
 /*
     // image selection pane
@@ -133,6 +144,7 @@ class LogosView extends PropertyView, implements IView{
     uploadImageButton.x = 20;
     uploadImageButton.y = 474;
 */
+
   }
   
   private function onLogosLoaded(e:KEvent):Void{
@@ -177,7 +189,6 @@ class LogosView extends PropertyView, implements IView{
     switch( param.getLabel() ){
       case EVENT_ID.LOGO_SELECTED: {
         logosPane.setParam(param);
-
       }
       /*
       case EVENT_ID.PHOTO_SELECTED: 
@@ -198,5 +209,9 @@ class LogosView extends PropertyView, implements IView{
         photosPane.y = -(photosPane.getFloat('height')-photosScrollPane.getFloat('mask_height')) * f;
       */
     }
+	}
+	
+	override public function getHeight():Int{
+		return 276;
 	}
 }

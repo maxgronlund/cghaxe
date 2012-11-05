@@ -3,6 +3,8 @@ import flash.events.Event;
 
 class VectorsView extends PropertyView, implements IView{
 
+  private var back:Rectangle;
+  private var scrollPaneBack:Rectangle;
   private var scrollPane:AView;
   private var vectorsPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
@@ -10,15 +12,16 @@ class VectorsView extends PropertyView, implements IView{
   
   public function new(greetingsController:IController){	
     super(greetingsController);
-
-    backdrop              = new PlaceholdersBackBitmap();
-    scrollPane            = new ScrollPane(greetingsController);
+    back                = new Rectangle(190, 226, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+		scrollPaneBack      = new Rectangle(174, 160, 0xC3C3C3, 0xF4F4F4, Rectangle.DRAW_LINES, Rectangle.USE_FILL);
+    //backdrop              = new PlaceholdersBackBitmap();
+    scrollPane          = new ScrollPane(greetingsController);
     vectorsPane         = new GreetingsPane(greetingsController);
-    verticalScrollbar     = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
-    addVectorButton       = new OneStateButton();
+    verticalScrollbar   = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
+    addVectorButton     = new OneStateButton();
     
-    //Preset.addEventListener(EVENT_ID.GREETINGS_LOADED, onVectorLoaded);
-    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+
+    Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
   }
   
   
@@ -28,21 +31,23 @@ class VectorsView extends PropertyView, implements IView{
   
   override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
+    addChild(back);
+    back.y              = 30;
+    
+    addChild(scrollPaneBack);
+    scrollPaneBack.x    = 8;
+    scrollPaneBack.y    = 43;
 
     addChild(scrollPane);
-    scrollPane.setSize( 174, 430);
-    scrollPane.x = 9;
-    scrollPane.y = 44;
+    scrollPane.setSize( 174, 159);
+    scrollPane.x        = 9;
+    scrollPane.y        = 44;
     scrollPane.addView(vectorsPane, 0,0);	
     
-    addChild(verticalScrollbar);
-    verticalScrollbar.setSize(vectorsPane.getFloat('height'), scrollPane.getFloat('mask_height'));
-    verticalScrollbar.x = scrollPane.getSize().x-2;
-    verticalScrollbar.y = scrollPane.y;
-    
+
     addChild(addVectorButton);
-    addVectorButton.x = 20;
-    addVectorButton.y = 488;
+    addVectorButton.x   = 20;
+    addVectorButton.y   = 218;
   }
   
   private function onVectorLoaded(e:KEvent):Void{
@@ -54,18 +59,16 @@ class VectorsView extends PropertyView, implements IView{
     }
   }
   
-  private function onLoadDefaultTool(e:IKEvent):Void{
-    verticalScrollbar.setSize(vectorsPane.getFloat('height'), scrollPane.getFloat('mask_height'));
+  private function onAddScrollBars(e:IKEvent):Void{
+    
+    if(vectorsPane.getFloat('height') > scrollPane.getFloat('mask_height')){
+      addChild(verticalScrollbar);
+      verticalScrollbar.setSize(vectorsPane.getFloat('height'), scrollPane.getFloat('mask_height'));
+      verticalScrollbar.x = scrollPane.getSize().x-2;
+      verticalScrollbar.y = scrollPane.y;
+    } 
   }
-  
-//  override public function setParam(param:IParameter):Void{
-//
-//    switch( param.getLabel() ){
-//      case EVENT_ID.GREETING_SELECTED: {
-//        vectorsPane.setParam(param);
-//      }
-//    }
-//	}
+
 	
 	override public function setFloat(id:String, f:Float):Void{
     switch ( id ) {
@@ -73,5 +76,8 @@ class VectorsView extends PropertyView, implements IView{
         vectorsPane.y = -(vectorsPane.getFloat('height')-scrollPane.getFloat('mask_height')) * f;
       }
     }
+	}
+	override public function getHeight():Int{
+		return 256;
 	}
 }

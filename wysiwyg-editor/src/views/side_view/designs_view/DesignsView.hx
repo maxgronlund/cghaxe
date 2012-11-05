@@ -4,6 +4,8 @@ import flash.Vector;
 
 class DesignsView extends PropertyView, implements IView{
   
+  private var back:Rectangle;
+  private var scrollPaneBack:Rectangle;
   private var designsScrollPane:AView;
   private var designsPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
@@ -15,19 +17,15 @@ class DesignsView extends PropertyView, implements IView{
   public function new(designsController:IController){	
     //trace('new');
     super(designsController);
-    backdrop            = new PlaceholdersBackBitmap();
+    //backdrop            = new PlaceholdersBackBitmap();
+    back                = new Rectangle(190, 226, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+		scrollPaneBack      = new Rectangle(174, 160, 0xC3C3C3, 0xF4F4F4, Rectangle.DRAW_LINES, Rectangle.USE_FILL);
     
     designsScrollPane   = new ScrollPane(designsController);
     designsPane         = new DesignsPane(designsController);
     verticalScrollbar   = new VerticalScrollbar(designsController, EVENT_ID.DESIGN_SCROLL);
     addDesignButton     = new OneStateButton();
-
-    //Preset.addEventListener(EVENT_ID.PAGE_DESIGNS_LOADED, onPageDesignsLoaded);
-    //Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
-    
-    //Pages.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);
-    
-    //Preset.addEventListener(EVENT_ID.ADD_DESIGN_PAGE_TO_SIDEBAR, onBuildPage);
+    Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
     
   }
   
@@ -47,69 +45,44 @@ class DesignsView extends PropertyView, implements IView{
     addDesignButton.fireOnMouseUp(false);
   }
   
-  //override public function setInt(id:String, i:Int):Void{
-  //  switch ( id )
-  //  {
-  //    case EVENT_ID.DESIGN_SELECTED:
-  //      designsPane.selectButton(i);
-  //  }
-  //}
-  //
-  
-//  private function onBuildPage(e:IKEvent):Void{
-//    
-//    //designsPane.setXml(CONST.XML_FILE, e.getXml());
-//
-//  }
-  
   
   override public function onAddedToStage(e:Event):Void{
-    //trace('onAddedToStage');
+
     super.onAddedToStage(e);
+    
+    addChild(back);
+    back.y              = 30;
+    
+    addChild(scrollPaneBack);
+    scrollPaneBack.x    = 8;
+    scrollPaneBack.y    = 43;
+    
 
     // font selection pane
     addChild(designsScrollPane);
-    designsScrollPane.setSize(174,410);
+    designsScrollPane.setSize(174,159);
     designsScrollPane.x = 9;
-    designsScrollPane.y = 56;
+    designsScrollPane.y = 44;
     designsScrollPane.addView(designsPane, 0,0);	
-    
-    addChild(verticalScrollbar);
-    verticalScrollbar.setSize(designsPane.getFloat('height'), designsScrollPane.getFloat('mask_height'));
-    verticalScrollbar.x = designsScrollPane.getSize().x-2;
-    verticalScrollbar.y = designsScrollPane.y;
+
     
     addChild(addDesignButton);
     addDesignButton.x = 20;
-    addDesignButton.y = 488;
-    
-    
-    //Pages.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onPageSelected);
+    addDesignButton.y = 218;
+
   }
-  
-//  private function onPageSelected(e:IKEvent):Void{
-//    //trace(pages[e.getInt()].toString());
-//    designsPane.setInt(EVENT_ID.PAGE_SELECTED, e.getInt());
-//   //trace(e.getInt()); 
-//  }
-  
-//  private function onPageDesignsLoaded(e:KEvent):Void{
-//    
-//    
-//    var designsXml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-//
-//    for(design in designsXml.elementsNamed('design')){
-//      var param:IParameter = new Parameter(EVENT_ID.ADD_DESIGN_BUTTON);
-//      param.setXml(design);
-//      designsPane.setParam(param);
-//    }
-//
-//  }
-//  
-//  private function onLoadDefaultTool(e:IKEvent):Void{
-//  
-//   // verticalScrollbar.setSize(designsPane.getFloat('height'), designsScrollPane.getFloat('mask_height'));
-//  }
+  private function onAddScrollBars(e:IKEvent):Void{
+    
+    if(designsPane.getFloat('height') > designsScrollPane.getFloat('mask_height')){
+      addChild(verticalScrollbar);
+      verticalScrollbar.setSize(designsPane.getFloat('height'), designsScrollPane.getFloat('mask_height'));
+      verticalScrollbar.x = designsScrollPane.getSize().x-2;
+      verticalScrollbar.y = designsScrollPane.y;
+    } 
+  }
+  override public function getHeight():Int{
+		return 256;
+	}
   
   override public function setParam(param:IParameter):Void{
 

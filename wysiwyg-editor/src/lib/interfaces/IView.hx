@@ -36,6 +36,7 @@ interface IView
 	function setXml(id:String, xml:Xml):Void;
 	function updateFoilEffects(offset_offset:Float=1):Void;
 	function glimmerFoils():Void;
+	function getHeight():Int;
 	
 	
 	function addColumn(title:IModel):Void;

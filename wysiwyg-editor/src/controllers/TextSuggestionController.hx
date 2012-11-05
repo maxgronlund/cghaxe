@@ -12,7 +12,7 @@ class TextSuggestionController extends Controller, implements IController{
     switch ( param.getLabel() )
     {
       case EVENT_ID.SHOW_TEXT_SUGGESTIONS:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_TEXT_SUGGESTIONS, true);
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_TEXT_SUGGESTIONS, param.getBool());
       }
       case EVENT_ID.TEXT_SUGGESTION_SELECTED:{
         for(place_holder_text in param.getXml().elementsNamed('place-holder-text')){

@@ -16,6 +16,7 @@ class ColorView extends PropertyView, implements IView{
   private var foilColorText:FormatedText;
   private var colorText:FormatedText;
   private var pos:Float;
+  private var back:Rectangle;
   
   //private var foil_enable:Bool;
   //private var pms_enable:Bool;
@@ -24,7 +25,8 @@ class ColorView extends PropertyView, implements IView{
   
   public function new(colorController:IController){	
     super(colorController);
-    backdrop            = new BlankBack();
+    //backdrop            = new BlankBack();
+    back        = new Rectangle(190, 260, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
     
     Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
     Application.addEventListener(EVENT_ID.LOAD_CUSTOM_PMS_COLORS, onLoadCustomPmsColors);
@@ -120,8 +122,9 @@ class ColorView extends PropertyView, implements IView{
   
   
   override public function onAddedToStage(e:Event):Void{
-
+    addChild(back);
     super.onAddedToStage(e);
+    
     // texts
     addChild(stdColorText);
     stdColorText.setColor(0x868686);
@@ -319,6 +322,13 @@ class ColorView extends PropertyView, implements IView{
       pos = colorText.y + colorText.height;
       colorPicker.y    = pos;
     }
+    
+    //pos += colorPicker.y + colorPicker.height + 10;
+    back.height = 470;
+    
 
   }
+  override public function getHeight():Int{
+		return 470;
+	}
 }

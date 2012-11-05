@@ -7,7 +7,7 @@ class SymbolsController extends Controller, implements IController{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.SHOW_SYMBOLS:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_SYMBOLS, true);
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_SYMBOLS, param.getBool());
       }
       case EVENT_ID.SYMBOL_SELECTED:{
         GLOBAL.symbols_view.setParam(param);

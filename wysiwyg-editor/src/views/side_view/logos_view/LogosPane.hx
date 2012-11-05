@@ -13,18 +13,18 @@ class LogosPane extends View, implements IView{
   
   
   
+  
   public function new(vectorsController:IController){	
     super(vectorsController);
-    bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
-    backdrop				= new Bitmap(bmpData);
+    bmpData         = new BitmapData(172,20,false, COLOR.SCROLLPANE );
+    backdrop        = new Bitmap(bmpData);
     
-    vectorsButtons = new Vector<OneStateTextAndImageButton>();
-    buttonIndex	= 0;
-    selectedButton = 0;
-    buttonPos	= 0;
-    selectedButton = 0;
-    
-    
+    vectorsButtons  = new Vector<OneStateTextAndImageButton>();
+    buttonIndex	    = 0;
+    selectedButton  = 0;
+    buttonPos	      = 0;
+    selectedButton  = 0;
+
   }
   
   override public function init():Void{
@@ -76,7 +76,7 @@ class LogosPane extends View, implements IView{
     addChild(vectorsButtons[buttonIndex]);
     vectorsButtons[buttonIndex].y = buttonPos;
     
-    buttonPos += 27;
+    buttonPos += 26;
     buttonIndex++;
     
     selectButton(0);

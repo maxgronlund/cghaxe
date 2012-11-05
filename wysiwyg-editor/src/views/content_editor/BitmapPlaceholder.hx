@@ -289,6 +289,7 @@ class BitmapPlaceholder extends APlaceholder{
         foilify(GLOBAL.foilColor);
       }
     }
+    // HMM NOT A PROBLEM BUT DANGERUS, MAY CRASH 
     GLOBAL.Pages.calculatePrice();
   }
   

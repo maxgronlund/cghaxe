@@ -7,7 +7,7 @@ class GreetingsController extends Controller, implements IController{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.SHOW_GREETINGS:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_GREETINGS, true);
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_GREETINGS, param.getBool());
       }
       case EVENT_ID.GREETING_SELECTED:{
         GLOBAL.greetings_view.setParam(param);

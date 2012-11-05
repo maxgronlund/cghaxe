@@ -65,4 +65,7 @@ class View extends AView{
     }
     return 'foo';
   }
+  override public function getHeight():Int{
+		return 516;
+	}
 }

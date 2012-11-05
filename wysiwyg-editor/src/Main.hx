@@ -268,6 +268,12 @@ class Main
     //globals
     GLOBAL.pos_x = 0;
     GLOBAL.pos_y = 0;
+    GLOBAL.Font.fileName        = "calligraphic";
+    GLOBAL.garamond             = false;
+    GLOBAL.Font.fontSize        = 22;
+    GLOBAL.Font.leading         = 24;
+    GLOBAL.printType            = CONST.STD_PMS_COLOR;
+    GLOBAL.foilColor            = 'silver';
 
   }
   

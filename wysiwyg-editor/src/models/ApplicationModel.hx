@@ -61,7 +61,8 @@ class ApplicationModel extends Model, implements IModel
                       'add pages to stage',
                       'set defaults',
                       'show fonts',
-                      'load custom pms'
+                      'load custom pms',
+                      'add_scroll_bars'
                       ];
         loadSeq();
       }
@@ -74,7 +75,8 @@ class ApplicationModel extends Model, implements IModel
                       'add pages to stage',
                       'set defaults',
                       'show fonts',
-                      'load custom pms'
+                      'load custom pms',
+                      'add_scroll_bars'
                       ];
         loadSeq();
       }
@@ -88,7 +90,8 @@ class ApplicationModel extends Model, implements IModel
                       //'pass preset price',
                       'add pages to stage',
                       'set defaults',
-                      'load custom pms'
+                      'load custom pms',
+                      'add_scroll_bars'
                       //'init zoom'
                       //'reset mouse'
                       ];
@@ -181,7 +184,7 @@ class ApplicationModel extends Model, implements IModel
       }
       case 'show fonts':{
         dispatchParameter(new Parameter(EVENT_ID.SHOW_FONT_SET));
-        dispatchParameter(new Parameter(EVENT_ID.ADD_FONT_SCROLL_BAR));
+        //dispatchParameter(new Parameter(EVENT_ID.ADD_FONT_SCROLL_BAR));
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_FONT));
         loadSeq();
       }
@@ -200,6 +203,12 @@ class ApplicationModel extends Model, implements IModel
         dispatchParameter(new Parameter(EVENT_ID.LOAD_CUSTOM_PMS_COLORS));
         loadSeq();
       }
+      case 'add_scroll_bars':{
+        dispatchParameter(new Parameter(EVENT_ID.ADD_SCROLL_BARS));
+        loadSeq();
+      }
+      
+      
     }
     
   }

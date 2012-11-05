@@ -69,6 +69,11 @@ class AView extends Sprite, implements IView
 		return new Point(0,0);
 	}
 	
+	public function getHeight():Int{
+		trace("getHeight: must be overriden in a subclass");
+		return 30;
+	}
+	
 	public function getInt(id:String):Int{
 		trace("getInt: must be overriden in a subclass");
 		return 0;

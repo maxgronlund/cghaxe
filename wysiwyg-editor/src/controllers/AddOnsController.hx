@@ -17,7 +17,7 @@ class AddOnsController extends Controller, implements IController
     switch ( param.getLabel() )
     {
       case EVENT_ID.SHOW_ADD_ONS:
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_ADD_ONS, true);
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_ADD_ONS, param.getBool());
     }	
   }
   

@@ -5,11 +5,11 @@ class LogosController extends Controller, implements IController{
   }
 
   override public function setParam(param:IParameter):Void{
-    
+      
     switch ( param.getLabel() ){
       
       case EVENT_ID.SHOW_MY_UPLOADS:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_MY_UPLOADS, true);
+        GLOBAL.side_view.showView(EVENT_ID.SHOW_MY_UPLOADS, param.getBool());
       }
       
       case EVENT_ID.LOGO_SELECTED:{

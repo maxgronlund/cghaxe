@@ -46,10 +46,12 @@ class PropertyButton extends MouseHandler
 	
 	override private function onMouseDown(e:MouseEvent){
 		super.onMouseDown(e); 
-		controller.setParam(param);
+		
 		mouseDown = true;
-		selected	= true;
-		setState(2);
+		selected	= !selected;
+		setState(selected ? 2:0);
+		param.setBool(selected);
+		controller.setParam(param);
 	}
 	
 	private function setState(state:Int):Void{
@@ -61,6 +63,7 @@ class PropertyButton extends MouseHandler
 	}
 	
 	public function setOn(b:Bool):Void{
+	  //trace(b);
 		selected = b;
 		setState(b?2:0);
 	}
