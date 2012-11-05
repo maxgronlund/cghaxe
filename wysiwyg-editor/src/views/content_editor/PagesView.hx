@@ -27,7 +27,6 @@ class PagesView extends View, implements IView{
   }
   
   private function onAddSymbolToPage(e:IKEvent):Void{
-    
     pageInFocus.setParam(e.getParam());
   }
   
@@ -48,6 +47,7 @@ class PagesView extends View, implements IView{
       pages[i].visible = false;
     }
    stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
+   Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Pages Added to Desktop');
   }
   
   private function removePages():Void{
@@ -66,7 +66,6 @@ class PagesView extends View, implements IView{
   }
 
   private function onPageSelected(e:IKEvent):Void{
-    
     putPageOnTop( e.getInt());
   }
   
@@ -79,7 +78,7 @@ class PagesView extends View, implements IView{
   }
   
   private function onBuildPage(e:IKEvent):Void{
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Building Page');
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
     pages.push(pageView); 
@@ -95,7 +94,6 @@ class PagesView extends View, implements IView{
     
     var side_of_top_paper:Bool = pageInFocus.getModel().getBool('front_of_paper');
     var i:Int = pages.length;
-    //stack pages put last page on stage first
     while( i > 0){
       i--;
       var pageView                = pages[i];

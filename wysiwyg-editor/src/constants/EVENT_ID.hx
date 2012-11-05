@@ -50,7 +50,7 @@ class EVENT_ID  {
   //public static inline var ADD_FONT_SCROLL_BAR:String       = "add_font_scroll_bar";
   public static inline var ADD_SCROLL_BARS:String           = "add_scroll_bars";
   public static inline var PLACEHOLDER_SELECTED:String      = 'placeholder_selected';
-  public static inline var SWF_LOADED:String               = 'font_loaded';
+  public static inline var PLACEHOLDER_LOADED:String               = 'font_loaded';
   public static inline var UPDATE_FONT_PANE:String          = 'update_font_pane';
   public static inline var ADD_PLACEHOLDER                  = "add_placeholder";
   
@@ -272,6 +272,9 @@ class EVENT_ID  {
   public static inline var DISABLE_DELETE_KEY                 = "disable_delete_key";
   
   public static inline var UPDATE_QUANTITY                    = "update_quantity";
+  
+  public static inline var UPDATE_LOAD_PROGRESS               = "update_load_progress";
+  public static inline var CLOSE_LOAD_PROGRESS                = "close_load_progress";
 	
 	
 }

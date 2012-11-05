@@ -209,6 +209,9 @@ class BitmapPlaceholder extends APlaceholder{
       sizeY = this.height;
     }
     setSize(sizeX, sizeY);
+    var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_LOADED);
+    param.setInt(id);
+    model.setParam(param);
 	}
 	
 	override public function setSize(sizeX:Float, sizeY:Float):Void{

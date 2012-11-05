@@ -210,11 +210,10 @@ class PageView extends View{
   }
   
   override public function onAddedToStage(e:Event): Void{
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page Added to Desktop');
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
-    
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
 
@@ -228,9 +227,6 @@ class PageView extends View{
     model.addEventListener(EVENT_ID.TRASH_PLACEHOLDER, onDestroyPlaceholder);
     model.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     model.addEventListener(EVENT_ID.GET_PAGE_POS_XML + Std.string(model.getInt('pageId')), onGetPagePosXml  );
-    //GLOBAL.Application.addEventListener(EVENT_ID.PMS1_COLOR_SELECTED, onPms1Update);
-    //GLOBAL.Application.addEventListener(EVENT_ID.PMS2_COLOR_SELECTED, onPms2Update);
-    
     model.addEventListener(EVENT_ID.UPDATE_PMS1, onPms1Update);
     model.addEventListener(EVENT_ID.UPDATE_PMS2, onPms2Update);
     loadFrontShot();
@@ -281,11 +277,12 @@ class PageView extends View{
   }
 
   private function onPageXmlLoaded(e:IKEvent):Void{  
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page XML loaded');
     pagePresetXML = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
   }
   
   private function parsePagePresetXml():Void{
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parse Page XML');
     if(pagePresetXML != null){
       for( page  in pagePresetXML.elementsNamed("page") ) {
         for( pos_x in page.elementsNamed("pos-x") ) {
@@ -678,6 +675,7 @@ class PageView extends View{
   }
 
   private function loadFrontShot():Void{
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Loading Front Shot');
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.addEventListener(IOErrorEvent.IO_ERROR, frontShotErrorHandler);
     imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
@@ -688,6 +686,7 @@ class PageView extends View{
   }
 
   private function onLoadFrontShotComplete(e:Event):Void{
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Front Shot Loaded');
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.removeEventListener(IOErrorEvent.IO_ERROR, frontShotErrorHandler);
     backdrop = e.target.loader.content;
@@ -701,7 +700,7 @@ class PageView extends View{
 	}
 	
   private function loadPrintMask():Void{
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Loading Print Mask');
     var print_mask_url:String = model.getString('print_mask_url');
     if(print_mask_url == ''){
       loadHideMask();
@@ -714,11 +713,12 @@ class PageView extends View{
   }
   
   private function printMaskErrorHandler(Event:IOErrorEvent):Void {
-      trace("ioErrorHandler: " + Event);
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'ERROR Loading Print Mask');
+    trace("ioErrorHandler: " + Event);
   }
   
   private function onloadPrintMaskComplete(e:Event):Void{
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Print Mask Loaded');
     printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onloadPrintMaskComplete);
     printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, printMaskErrorHandler);
     guideMask = e.target.loader.content;
@@ -732,7 +732,7 @@ class PageView extends View{
   }
   
   private function loadHideMask():Void{
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Loading Hide Mask');
     var hide_mask_url:String = model.getString('hide_mask_url');
 
     if(hide_mask_url == '' || hide_mask_url == null ||  hide_mask_url == '/assets/fallback/hide_mask.png'){
@@ -749,11 +749,12 @@ class PageView extends View{
   }
   
   private function hideMaskErrorHandler(Event:IOErrorEvent):Void {
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'ERROR Loading Hide Mask');
       trace("ioErrorHandler: " + Event);
   }
   
   private function onLoadHideMaskComplete(e:Event):Void{
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Hide Mask Loaded');
     printMaskLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadHideMaskComplete);
     printMaskLoader.removeEventListener(IOErrorEvent.IO_ERROR, hideMaskErrorHandler);
     hideMask                    = e.target.loader.content;
@@ -766,8 +767,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-
-    
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page Images Loaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;
@@ -784,11 +784,10 @@ class PageView extends View{
       parsePagePresetXml();
 
     }
-
-    
   }
   
   private function pageDesignImageLoaded():Void{
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page Design Backdrop Loaded');
     Application.setString(EVENT_ID.ALL_PHOTOS_LOADED, 'foo');
   }
   

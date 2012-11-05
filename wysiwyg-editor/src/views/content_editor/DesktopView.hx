@@ -38,7 +38,7 @@ class DesktopView extends View, implements IView{
   	pagesView = new PagesView(desktopController);
   	Application.addEventListener(EVENT_ID.ZOOM, onZoom);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
-    Pages.addEventListener(EVENT_ID.SWF_LOADED, onFontLoaded);
+    Pages.addEventListener(EVENT_ID.PLACEHOLDER_LOADED, onPlaceholderLoaded);
     Application.addEventListener(EVENT_ID.ALL_PHOTOS_LOADED, onAllImagesLoaded);
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
@@ -75,13 +75,11 @@ class DesktopView extends View, implements IView{
   	pagesView.x = 10;
   	pagesView.y = 10;
   	glimmerFoils();
-//  	trace('bamm');
-    //addChild(new FoilTexture());
-    //addChild(GLOBAL.foil);
+
   }
   
   override public function glimmerFoils():Void{
-//    trace("GlimmerFoils!-------------------------------");
+
     glimmer_foils_index = 0;
     addEventListener(Event.ENTER_FRAME, onUpdateGlimmerFoils);
   }
@@ -122,24 +120,27 @@ class DesktopView extends View, implements IView{
   
   private function onPlaceholderCount(e:KEvent):Void{
     placeholders = e.getInt();
-//    trace(placeholders);
   }
-  
-  private function onFontLoaded(e:KEvent):Void{
+  private function onPlaceholderLoaded(e:KEvent):Void{
     
     sizeX = pagesView.width/Zoom.getZoomFactor();
     sizeY = pagesView.height/Zoom.getZoomFactor();
     
     placeholders--;
-    if(placeholders == 0) 
+    if(placeholders == 0){
+      Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Placeholders Loaded');
+      Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'foo');
       setSizes();
+    }
+
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
-//    trace('onAllImagesLoaded');
+    
     if(placeholders == 0) {
       placeholders--;
-      setSizes();       
+      setSizes();  
+      Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Backdrops Loaded');     
     }
   }
   

@@ -19,28 +19,27 @@ class SideView extends View, implements IView
   
   
   public function new(controller:IController){	
-  	super(controller);
-  	Application.addEventListener(EVENT_ID.LOAD_DEFAULT_SIDEVIEW, onLoadDefaultSiteView);
-  	posY = 0;
-  	views = new Vector<AView>();
-  	index = 0;
-  	backdrop        = new Bitmap(new BitmapData(190,486,false,0xDEDEDE ));
+    super(controller);
+    Application.addEventListener(EVENT_ID.LOAD_DEFAULT_SIDEVIEW, onLoadDefaultSiteView);
+    posY = 0;
+    views = new Vector<AView>();
+    index = 0;
+    backdrop        = new Bitmap(new BitmapData(190,486,false,0xDEDEDE ));
   }
   
   override public function onAddedToStage(e:Event){
-  	super.onAddedToStage(e);	
-  	addChild(backdrop);
-  	backdrop.y = 500;
+    super.onAddedToStage(e);	
+    addChild(backdrop);
+    backdrop.y = 500;
   }
   
-  override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{
-      
-      view.setString('viewId', id);
-      views.push(view);
-      views[index].y = posY;
-      posY += 30;
-      addChild(views[index]);
-      index++;  
+  override public function addView(view:AView, posX:Int, posY:Int, id:String = null):Void{ 
+    view.setString('viewId', id);
+    views.push(view);
+    views[index].y = posY;
+    posY += 30;
+    addChild(views[index]);
+    index++;  
   }
   
   private function onLoadDefaultSiteView(e:IKEvent):Void{

@@ -29,22 +29,17 @@ class PagesModel extends Model, implements IModel {
   override public function init():Void{	
     super.init();
     Application.addEventListener(EVENT_ID.PASS_PRICE_FILE, onParsePrice);
-    //pageInFocus = null;
-    //print_mask_url = '';
-    //hide_mask_url = '';
     Preset.addEventListener(EVENT_ID.BUILD_PAGE, onBuildPage);                
-    //Designs.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Preset.addEventListener(EVENT_ID.LOAD_FRONT_SHOT, onLoadFrontShot);
     Preset.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     Designs.addEventListener(EVENT_ID.PAGE_XML_LOADED, onPageXmlLoaded);
     Application.addEventListener(EVENT_ID.TRASH_PLACEHOLDERS, onDestroyPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_PAGE_DESIGN, onAddPagedesign);
     Application.addEventListener(EVENT_ID.PRESET_PAGEDESIGN_XML, onPresetPagedesignXml);
-    //Application.addEventListener(EVENT_ID.LOAD_DEFAULT_PAGE, onLoadDefaultPage);
   }
   
   private function onAddPagedesign(e:IKEvent):Void{
-    trace('onAddPagedesign');
+
     pageInFocus.dispatchParameter(new Parameter(EVENT_ID.TRASH_PLACEHOLDERS));
     pageInFocus.dispatchParameter(e.getParam());
   }
@@ -66,8 +61,7 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onPresetPagedesignXml(e:IKEvent):Void{
-    // relaated to the sidebar
-    //trace('onPresetPagedesignXml');
+
     pageInFocus.dispatchParameter(e.getParam());
   }
   
@@ -79,7 +73,6 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onBuildDesignPage( e:IKEvent):Void{
-    trace('2...onBuildDesignPage');
 
     var pageModel = buildPage(e);
     
@@ -96,10 +89,11 @@ class PagesModel extends Model, implements IModel {
   }
 
   private function onBuildPage( e:IKEvent ):Void{
-
+    
     var pageModel = buildPage(e);
     for(title in e.getXml().elementsNamed("title") ) {
-         pageModel.setString('page_name', title.firstChild().nodeValue.toString());
+      pageModel.setString('page_name', title.firstChild().nodeValue.toString());
+      GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Building ' + title.firstChild().nodeValue.toString() + ' Page');
     } 
     
     //trace('onBuildPage');

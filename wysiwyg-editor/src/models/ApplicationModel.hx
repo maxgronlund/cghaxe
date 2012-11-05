@@ -46,18 +46,27 @@ class ApplicationModel extends Model, implements IModel
         dispatchParameter(new Parameter(EVENT_ID.ALL_PHOTOS_LOADED));
         loadSeq();
       }
+      case EVENT_ID.UPDATE_LOAD_PROGRESS:{
+        loadProgress(s);
+      }
+      case EVENT_ID.CLOSE_LOAD_PROGRESS:{
+        var param = new Parameter(EVENT_ID.CLOSE_LOAD_PROGRESS);
+         param.setString(s);
+         dispatchEvent(new KEvent(param.getLabel(),param));
+      }
     }
   }
 
   private function startLoadSeq():Void{
-    
+    loadProgress('Start Load Sequence');
     switch (GLOBAL.edit_mode) {
       
       
       case 'user_preset':{
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
-                      'pass preset',
+                      'parse preset',
+                      //'parse preset price',
                       'add pages to stage',
                       'set defaults',
                       'show fonts',
@@ -71,7 +80,8 @@ class ApplicationModel extends Model, implements IModel
         
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend', 
-                      'pass preset',
+                      'parse preset',
+                      //'parse preset price',
                       'add pages to stage',
                       'set defaults',
                       'show fonts',
@@ -86,8 +96,8 @@ class ApplicationModel extends Model, implements IModel
         loadStage = [ 'reset wysiwyg',
                       'load preset files from backend',
                       //'load price xml from backend',  
-                      'pass preset',
-                      //'pass preset price',
+                      'parse preset',
+                      //'parse preset price',
                       'add pages to stage',
                       'set defaults',
                       'load custom pms',
@@ -100,7 +110,7 @@ class ApplicationModel extends Model, implements IModel
       //case 'system_design':{
       //  loadStage = [ 'reset wysiwyg',
       //                'load design files from backend',
-      //                'pass design',
+      //                'parse design',
       //                'add pages to stage',
       //                'set defaults',
       //                'show design page'
@@ -121,10 +131,11 @@ class ApplicationModel extends Model, implements IModel
     switch( stage ) {
       case 'reset wysiwyg':{
         dispatchParameter(new Parameter(EVENT_ID.RESET_WYSIWYG));
+        loadProgress('Reset Interface');
         loadSeq();
-        
       }
       case 'load preset files from backend':{
+        loadProgress('Request Preset XML');
         presetLoader.addEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded); 
         presetLoader.load(GLOBAL.preset_file_url+"&language_id="+GLOBAL.language_id, EVENT_ID.PRESET_FILE_LOADED);
         
@@ -145,18 +156,21 @@ class ApplicationModel extends Model, implements IModel
       //  pageDesignLoader.load(GLOBAL.design_file_url, EVENT_ID.DESIGN_FILE_LOADED);
       //}
  
-      case 'pass preset':{
+      case 'parse preset':{
         dispatchXML(EVENT_ID.PASS_PRESET_FILE, presetXml);
         loadSeq();
         
       }
       
-      case 'pass preset price':{
-        dispatchXML(EVENT_ID.PASS_PRICE_FILE, priceXml);
-        loadSeq();
-      }
+      //case 'parse preset price':{
+      //  loadProgress('Parse Price XML');
+      //  //trace('onParsePrice', priceXml.toString());
+      //  dispatchXML(EVENT_ID.PASS_PRICE_FILE, priceXml);
+      //  loadSeq();
+      //}
       
-      case 'pass design':{
+      case 'parse design':{
+        loadProgress('Parse Design ');
         dispatchXML(EVENT_ID.PASS_DESIGN_FILE, pageDesignXml);
         loadSeq();                                               
       }
@@ -165,10 +179,12 @@ class ApplicationModel extends Model, implements IModel
         dispatchParameter(new Parameter(EVENT_ID.ADD_PAGES_TO_STAGE));
       }
       case 'add placeholders':{
+        loadProgress('Add Placeholders');
         Designs.setParam(new Parameter(EVENT_ID.ADD_DESIGN));
       } 
       case 'configure preset side view': configurePresetSideView();
       case 'set defaults':{
+        loadProgress('Set Defaults');
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_SIDEVIEW));
         dispatchParameter(new Parameter(EVENT_ID.DESELECT_PLACEHOLDERS));
         dispatchParameter(new Parameter(EVENT_ID.SET_DEFAULT_TOOL));
@@ -176,6 +192,7 @@ class ApplicationModel extends Model, implements IModel
         loadSeq();
       }
       case 'show design page':{
+        loadProgress('Show Pagedesign');
         var param:IParameter = new Parameter( EVENT_ID.PAGE_SELECTED);
         param.setInt(0);
         Pages.dispatchParameter(param);
@@ -184,33 +201,33 @@ class ApplicationModel extends Model, implements IModel
       }
       case 'show fonts':{
         dispatchParameter(new Parameter(EVENT_ID.SHOW_FONT_SET));
-        //dispatchParameter(new Parameter(EVENT_ID.ADD_FONT_SCROLL_BAR));
         dispatchParameter(new Parameter(EVENT_ID.LOAD_DEFAULT_FONT));
+        loadProgress('Show Fonts');
         loadSeq();
       }
-      case 'clead selected page':{
-        dispatchParameter(new Parameter(EVENT_ID.TRASH_PLACEHOLDERS));
-        loadSeq();
-      }
+      //case 'clead selected page':{
+      //  dispatchParameter(new Parameter(EVENT_ID.TRASH_PLACEHOLDERS));
+      //  loadProgress('Clear Selected Page');
+      //  loadSeq();
+      //}
       
-      case 'pass preset page design':{
-        var param:IParameter = new Parameter(EVENT_ID.PRESET_PAGEDESIGN_XML);
-        param.setXml(pageDesignXml);
-        dispatchParameter(param);
-      }
+      //case 'parse preset page design':{
+      //  var param:IParameter = new Parameter(EVENT_ID.PRESET_PAGEDESIGN_XML);
+      //  param.setXml(pageDesignXml);
+      //  dispatchParameter(param);
+      //}
       
       case 'load custom pms':{
+        loadProgress('Load Custom PMS Colors');
         dispatchParameter(new Parameter(EVENT_ID.LOAD_CUSTOM_PMS_COLORS));
         loadSeq();
       }
       case 'add_scroll_bars':{
+        loadProgress('Add Scrollbars');
         dispatchParameter(new Parameter(EVENT_ID.ADD_SCROLL_BARS));
         loadSeq();
       }
-      
-      
     }
-    
   }
 
   private function configurePresetSideView():Void{
@@ -222,15 +239,22 @@ class ApplicationModel extends Model, implements IModel
   }
   
   private function onPresetLoaded(e:XmlEvent):Void{
+    loadProgress('Preset XML Loaded');
     presetLoader.removeEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded);
     presetXml = e.getXml();
     loadSeq();
   }
   
-  private function onPriceLoaded(e:XmlEvent):Void{
-    priceLoader.removeEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded);
-    priceXml = e.getXml();
-    loadSeq();
+  //private function onPriceLoaded(e:XmlEvent):Void{
+  //  priceLoader.removeEventListener( EVENT_ID.PRICE_FILE_LOADED, onPriceLoaded);
+  //  priceXml = e.getXml();
+  //  loadSeq();
+  //}
+  
+  public function loadProgress(s:String):Void{
+     var param = new Parameter(EVENT_ID.UPDATE_LOAD_PROGRESS);
+     param.setString(s);
+     dispatchEvent(new KEvent(param.getLabel(),param));
   }
   
 

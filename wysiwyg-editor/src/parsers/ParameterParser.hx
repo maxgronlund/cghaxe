@@ -13,13 +13,13 @@ class ParameterParser
 	
 	public function parse(params:Dynamic<String>):Void{
 	  
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Loading Parameters');
+
 	  if(params.shop_item_id != null){
       GLOBAL.shop_item_id = Std.parseInt(params.shop_item_id);
-      
     }
 	  
 	  if(params.language_id != null){
-
 	    GLOBAL.language_id = params.language_id;
 	  }
 	  
@@ -28,12 +28,10 @@ class ParameterParser
 	  }
 	  
 	  if(params.authenticity_token != null){
-      //trace('authenticity_token: ', params.authenticity_token);
       GLOBAL.authenticity_token = params.authenticity_token;
     }
     
     if(params.wysiwyg_session != null){
-      //trace('wysiwyg_session: ', params.wysiwyg_session);
       GLOBAL.wysiwyg_session = params.wysiwyg_session;
     }
     
@@ -64,22 +62,13 @@ class ParameterParser
       GLOBAL.preset_quantity = params.preset_quantity;
     }
     
-    
     // page design
     if(params.design_xml_file_url != null){
-      //GLOBAL.design_file_url = params.design_xml_file_url;
       GLOBAL.preset_file_url = params.design_xml_file_url;
     }
     
     if(params.shop_item_name != null){
       GLOBAL.shop_item_name = params.shop_item_name;
-//      trace('Shop item name', GLOBAL.shop_item_name);
-    }
-    
-    
-    if(params.save_path != null){
-  //    trace(params.save_path);
-      //GLOBAL.save_path = params.save_path;
     }
 
     if(params.edit_mode != null){
@@ -127,11 +116,6 @@ class ParameterParser
         }
       }
     }
-    
-    if(params.start_load_seq != null){
-      //trace('start_load_seq: ', params.start_load_seq);
-      Application.setString(EVENT_ID.START_LOAD_SEQ, 'bang');
-    }
 
     if(params.brides_first_name != null){
       GLOBAL.Designs.setString('brides_first_name', params.brides_first_name);
@@ -145,8 +129,9 @@ class ParameterParser
     if(params.location_name != null){
       GLOBAL.Designs.setString('location_name', params.location_name);
     }
-
-
+    if(params.start_load_seq != null){
+      Application.setString(EVENT_ID.START_LOAD_SEQ, 'bang');
+    }
 	}
 	
 }

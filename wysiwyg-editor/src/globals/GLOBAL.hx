@@ -152,4 +152,5 @@ class GLOBAL  {
   public static var upload_image:String;
   public static var add_logo:String;
   public static var add_image:String;
+  public static var placeholders:Int;
 }

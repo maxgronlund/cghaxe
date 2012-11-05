@@ -40,7 +40,7 @@ class PageModel extends Model, implements IModel
       	dispatchParameter(param);
       	GLOBAL.text_controller.setParam(param);
       }
-      case EVENT_ID.SWF_LOADED:{
+      case EVENT_ID.PLACEHOLDER_LOADED:{
         Pages.dispatchParameter(param);
       }
       case EVENT_ID.ADD_PLACEHOLDER:{

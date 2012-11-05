@@ -61,6 +61,7 @@ class Main
   private var desktopView:AView;
   private var gridView:AView;
   private var selectionView:AView;
+  private var loadProgressView:AView;
 //  private var insertImageDialogView:AView;
   
 
@@ -90,6 +91,8 @@ class Main
     if( version.check() ){
       Lib.current.scaleMode=StageScaleMode.NO_SCALE;
       buildApp();
+      init();
+      buildInterface();
       loadParams();
       Application.setString(EVENT_ID.ALL_FILES_LOADED, 'fo');
     }
@@ -158,6 +161,7 @@ class Main
     desktopView                 = new DesktopView(desktopController);
     gridView                    = new GridView(applicationController);
 //    insertImageDialogView       = new InsertImageDialogView(logosController);
+    loadProgressView            = new LoadProgressView(logosController);
 //    selectionView               = new SelectionView(selectionController);
     
     // setup views
@@ -166,8 +170,7 @@ class Main
     // system
     GLOBAL.hitTest = new CGHitTest();
     
-    init();
-    buildInterface();
+    
   }
 
   
@@ -283,30 +286,20 @@ class Main
     Lib.current.addChild(applicationView);
     Lib.current.addChild(sideView);
     applicationView.addView(desktopView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
-/*    
-    sideView.addView(textView, 0,0,EVENT_ID.SHOW_TEXT);
-    sideView.addView(textSuggestionView, 0,30,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
-    sideView.addView(foilView, 0,60,EVENT_ID.SHOW_FOIL);
-    sideView.addView(addOnsView, 0,90,EVENT_ID.SHOW_ADD_ONS);
-    sideView.addView(garamondView, 0,120,EVENT_ID.SHOW_GARAMOND);
-    sideView.addView(logoView, 0,150,EVENT_ID.SHOW_LOGO);
-    sideView.addView(priceView, 0,180,EVENT_ID.SHOW_PRICES);
-    sideView.addView(blindView, 0,430,EVENT_ID.SHOW_BLIND_VIEW);
-*/    
     applicationView.addView(menuView, 0,0);
     applicationView.addView(pageSelectorView, 0, SIZE.MENU_VIEW_HEIGHT);
     applicationView.addView(gridView, 0, SIZE.MENU_VIEW_HEIGHT + SIZE.PAGESELESCTOR_HEIGHT); 
     //applicationView.addView(insertImageDialogView, 115, 200); 
     gridView.mouseChildren = false;
     gridView.mouseEnabled = false;
+    applicationView.addView(loadProgressView, 115+55, 200); 
 
     // position views
     sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
   }
   
   private function loadParams():Void{
-    parameterParser.parse(flash.Lib.current.loaderInfo.parameters);
-    
+    parameterParser.parse(flash.Lib.current.loaderInfo.parameters);  
   }	
   
 }

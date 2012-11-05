@@ -95,38 +95,37 @@ class PriceView extends PropertyView, implements IView{
 
     
   }
-	
-	override public function init():Void{
-	  
-		selectButton.init( controller,
+  
+  override public function init():Void{
+    
+  	selectButton.init( controller,
                         new Point(190,30), 
                         new PriceViewButton(), 
                         new Parameter( EVENT_ID.SHOW_PRICES));
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
-	}
-	
-	private function onLoadDefaultTool(e:IKEvent):Void{
-    
-	  productHeader.setLabel(TRANSLATION.card);
-	  unitsLabel.setLabel(TRANSLATION.units);
-	  totalPriceLabel.setLabel(TRANSLATION.total_price_label);
-	  
   }
-	
-	//public function getIAlreadyHaveACliche():Hash{
-	//  return iAlreadyHaveACliche;
-	//}
-	
-	private function clearColumns():Void{
-	  for(i in 0...priceColumns.length){
-	    iAlreadyHaveACliche.set(priceColumns[i].getTitle(), priceColumns[i].getIAlreadyHaveACliche());
-	    removeChild(priceColumns[i]);
+  
+  private function onLoadDefaultTool(e:IKEvent):Void{
+    productHeader.setLabel(TRANSLATION.card);
+    unitsLabel.setLabel(TRANSLATION.units);
+    totalPriceLabel.setLabel(TRANSLATION.total_price_label);
+    
+  }
+  
+  //public function getIAlreadyHaveACliche():Hash{
+  //  return iAlreadyHaveACliche;
+  //}
+  
+  private function clearColumns():Void{
+    for(i in 0...priceColumns.length){
+      iAlreadyHaveACliche.set(priceColumns[i].getTitle(), priceColumns[i].getIAlreadyHaveACliche());
+      removeChild(priceColumns[i]);
     }
     GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
-	  priceColumns = new Array();
-	}
-	
+    priceColumns = new Array();
+  }
+  
   override public function addColumn(model:IModel):Void{
 
     var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
@@ -194,11 +193,8 @@ class PriceView extends PropertyView, implements IView{
   private function addAllPrices(){
     var total_price:Float = 0;
     var y:Float = 120;
-    
-    
-   
+
     shopItemTitle.setLabel(GLOBAL.product_name);
-    
 
     quantity = Std.parseInt(GLOBAL.preset_quantity);
     
@@ -225,9 +221,7 @@ class PriceView extends PropertyView, implements IView{
       totalPriceLabel.y = 110;
       totalPrice.y = 110;
     }
-    
 
-    
     totalPrice.setLabel(valuta.toString(total_price));
 	  totalPrice.x = 180 - totalPrice.getWidth();
   }
@@ -240,7 +234,7 @@ class PriceView extends PropertyView, implements IView{
   }
   
   private function parsePrice(prices_xml:Xml):Void{
-  
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parse Price XML');
     for( print_price_xml in prices_xml.elementsNamed("print-price") ) {
       var units:UInt;
       var foil_price:Float;

@@ -43,30 +43,38 @@ class PresetModel extends Model, implements IModel
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
     for( preset in xml.elementsNamed("preset") ) {
       countPlaceholders(preset);
-      // building the pages
       parsePreset(preset);
-      GLOBAL.shop_item_prices.parsePrices(preset);
+      
+      
+      //GLOBAL.shop_item_prices.parsePrices(preset);
  
     }
   }
   
 
   private function countPlaceholders(xml:Xml):Void{
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Counting Placeholders');
+    
     var placeholders:UInt = 0;
-    for(pages in xml.elementsNamed("pages") ) {
-       for(page in pages.elementsNamed("page") ) {
-         for( placeholder in page.elementsNamed("placeholder") ) {
-             placeholders++;
-         }
+
+    for(xml_data in xml.elementsNamed("xml-data") ) {
+      for( page in xml_data.elementsNamed("page") ) {
+        for( placeholder in page.elementsNamed("placeholder") ) {
+          placeholders++;
+        }
       }
     }
+
     var param:IParameter        = new Parameter(EVENT_ID.PLACEHOLDER_COUNT);
     param.setInt(placeholders);
     dispatchParameter(param);
+    GLOBAL.placeholders = placeholders;
   }
   
   // building pages and getting url's for masks
   private function parsePreset(xml:Xml):Void{
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parse Preset');
+    
     
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
@@ -84,7 +92,6 @@ class PresetModel extends Model, implements IModel
       param.setString(GLOBAL.preset_quantity);
       
       dispatchParameter(param);
-       //GLOBAL.preset_quantity_text_field.setText(GLOBAL.preset_quantity);
     }
 
     for( preset_id in xml.elementsNamed("preset-id") ) {
@@ -92,6 +99,7 @@ class PresetModel extends Model, implements IModel
     }
         
     for(pages in xml.elementsNamed("pages") ) {
+      GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parsing Pages');
       for(page in pages.elementsNamed("page") ) {
         buildPage(page);
       } 
@@ -120,6 +128,10 @@ class PresetModel extends Model, implements IModel
 
     for(print_prices in xml.elementsNamed("print-prices")){
       Application.dispatchXML(EVENT_ID.PRESET_PRICES, print_prices);
+    }
+    
+    for(prices in xml.elementsNamed("prices")){
+      Application.dispatchXML(EVENT_ID.PASS_PRICE_FILE, prices);
     }
     
     for( cliche_price_xml in xml.elementsNamed("cliche-price")) {

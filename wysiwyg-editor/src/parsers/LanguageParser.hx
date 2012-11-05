@@ -7,6 +7,9 @@ class LanguageParser
   }
   
   public function parse(xml_data:Xml):Void{
+    
+    GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parsing Language');
+    
     for(text in xml_data.elementsNamed("text") ) 
       TRANSLATION.text = text.firstChild().nodeValue.toString();
 
@@ -124,6 +127,7 @@ class LanguageParser
     for(units in xml_data.elementsNamed("units") ) 
       TRANSLATION.units = units.firstChild().nodeValue.toString();
       
+    GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Language Parsed');
 
   }
 }

@@ -46,14 +46,16 @@ class ShopItemPrices
 	}
 	
 	public function onParsePrice(e:IKEvent):Void{
+	  
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
+    trace('onParsePrice', xml.toString());
     parsePrices(xml);
   }
   
   public function parsePrices(xml:Xml):Void{
-
+    //trace(xml.toString());
     for( prices in xml.elementsNamed("prices") ) {
-      //trace(prices.toString());
+      
       for( price in prices.elementsNamed("price") ) {
         
         var _min_units:UInt;

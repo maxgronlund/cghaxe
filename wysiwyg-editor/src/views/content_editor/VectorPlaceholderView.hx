@@ -353,7 +353,7 @@ class VectorPlaceholderView extends APlaceholder {
     bitmap = new Bitmap(bitmapInfo);
 
     
-    var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
+    var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_LOADED);
     param.setInt(id);
     model.setParam(param);
 
