@@ -96,7 +96,7 @@ class PriceColumn extends MovieClip {
 	    }
 	  }
 	  if(amount_digital_print > 0) {
-	    price_labels.push(new OnePrice('laser'));
+	    price_labels.push(new OnePrice('digital-print'));
 	  }
     
     var total_price:Float = 0;
@@ -257,7 +257,7 @@ class PriceColumn extends MovieClip {
 	     return selected_price.getFoilPrice();
 	   case "one-pms-color":
 	     return selected_price.getOnePmsColorPrice();
-	   case "one-pms-color-4":
+	   case "digital-print":
    	   return selected_price.getOnePmsColorPrice4();
 	   case "std-color":
 	     return selected_price.getStdColorPrice();

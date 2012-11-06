@@ -55,8 +55,8 @@ class OnePrice extends MovieClip {
 	   case 'std-color':
 	     return "STD PMS color";
 	     
-	   case 'laser':
-   	   return "Laser";
+	   case 'digital-print':
+   	   return "Digital Print";
    	   
    	 case 'cliche':
        return "Cliché";  
