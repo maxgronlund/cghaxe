@@ -8,6 +8,8 @@ class LoadProgressView extends View, implements IView
   private var rect:Rectangle;
   private var title:FormatedText;
   private var body:FormatedText;
+  private var count:UInt;
+  private var countInfo:String;
   
   public function new(logosController:IController){	
     super(logosController);
@@ -17,6 +19,8 @@ class LoadProgressView extends View, implements IView
     body       = new FormatedText('helvetica', '0.0', 12, false);
     Application.addEventListener(EVENT_ID.UPDATE_LOAD_PROGRESS, onUpdateLoadProgress);
     Application.addEventListener(EVENT_ID.CLOSE_LOAD_PROGRESS, onCloseLoadProgress);
+    count = 0;
+    countInfo = '000: ';
     
   }
   override public function init():Void{
@@ -38,7 +42,18 @@ class LoadProgressView extends View, implements IView
   }
   
   private function onUpdateLoadProgress(e:IKEvent):Void{
-    body.setLabel(e.getString());
+
+    
+    count ++;
+    if(count < 10){
+      countInfo = '00' + Std.string(count) + ': '+ e.getString();
+    }else if(count < 100){
+      countInfo = '0' + Std.string(count) + ': '+ e.getString();
+    }else{
+      countInfo = Std.string(count) + ': '+ e.getString();
+    }
+    body.setLabel( countInfo );
+    trace(countInfo);
   }
   
   private function onCloseLoadProgress(e:IKEvent):Void{

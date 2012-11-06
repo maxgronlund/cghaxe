@@ -20,6 +20,7 @@
       <bitmap id="DecorationsViewButton" import="library/images/decorations_view_button.png" />
       <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
       <bitmap id="FoilViewButton" import="library/images/foil_view_button.png" />
+      <bitmap id="FullColorButton" import="library/images/full_color_button.png" />
       <bitmap id="GarmondPrintButton" import="library/images/garamond_button.png" />
       <bitmap id="GreetingsViewButton" import="library/images/greetings_view_button.png" />
       <bitmap id="GridButton" import="library/images/grid_button.png" />
@@ -29,6 +30,7 @@
       <bitmap id="MoveButton" import="library/images/move_button.png" />
       <bitmap id="MoveButton" import="library/images/move_button.png" />
       <bitmap id="OneStateButtonBack" import="library/images/one_state_button_back.png" />
+      <bitmap id="OsButtonBack" import="library/images/os_button.png" />
       <bitmap id="PlaceholderButton" import="library/images/placeholder_button.png" />
       <bitmap id="PriceViewButton" import="library/images/price_view_button.png" />
       <bitmap id="SaveButtonBitmap" import="library/images/save_button.png" />
@@ -105,12 +107,13 @@
         
         <!-- backdrops -->
         <!-- V 2.0 -->
-        <bitmap id="AddOnsViewBack" import="library/images/add_ons_view.png" />
-        <bitmap id="BlankBack" import="library/images/blank_back.png" />
+        
+        
         <bitmap id="ColorPickerBitmap" import="library/images/color_picker.png" />
         <bitmap id="CustomPMSPickerBitmap" import="library/images/custom_pms_picker.png" />
-        <bitmap id="GreetingsPickerBack" import="library/images/greetings_picker.png" />
         <bitmap id="FoilPickerBitmap" import="library/images/foil_picker.png" />
+        <bitmap id="StdPMSPickerBitmap" import="library/images/std_pms_picker.png" />
+
         
         <bitmap id="SilverFoilTexture" import="library/images/silver_foil_texture.jpg" />	
         <bitmap id="GoldFoilTexture" import="library/images/gold_foil_texture.jpg" />	
@@ -119,20 +122,19 @@
         <bitmap id="GreenFoilTexture" import="library/images/green_foil_texture.jpg" />	
         <bitmap id="BlueFoilTexture" import="library/images/blue_foil_texture.jpg" />		
         
-        <bitmap id="FoilViewBack" import="library/images/foil_view.png" />
-        <bitmap id="LogoViewBack" import="library/images/logo_view.png" />
-        <bitmap id="StdPMSPickerBitmap" import="library/images/std_pms_picker.png" />
-        <bitmap id="PlaceholdersBackBitmap" import="library/images/placeholder_view.png" />
-        <bitmap id="PriceViewBack" import="library/images/price_view.png" />
-        <bitmap id="ColorPickerBitmap" import="library/images/color_picker.jpg" />
-        <bitmap id="TextViewBack" import="library/images/text_view.png" />
-        <bitmap id="TestBack" import="library/images/test_back.png" />
+       
+        
+        
+       
+        
+        
+        
         <bitmap id="ZoomOutButtonBitmap" import="library/images/zoom_out_button.png" />
         <bitmap id="ZoomInButtonBitmap" import="library/images/zoom_in_button.png" />
         
         
         
-        <bitmap id="LoadingBitmap" import="library/images/loading.png" />
+        
         
         
                 

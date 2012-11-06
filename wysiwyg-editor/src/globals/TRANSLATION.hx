@@ -22,6 +22,7 @@ class TRANSLATION  {
   public static var custom_pms_2:String;
   public static var foil_color_picker:String;
   public static var digital_print_picker:String;
+  public static var full_color_button:String;
   public static var color_button:String;
   public static var print_button:String;
   public static var symbols_button:String;

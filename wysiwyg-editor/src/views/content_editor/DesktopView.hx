@@ -26,7 +26,7 @@ class DesktopView extends View, implements IView{
   private var alignDone:Bool;
 
   
-  private var placeholders:Int;
+  private var placeholdersToLoad:Int;
   private var pageView:AView;
   
   private var glimmer_foils_index:UInt;
@@ -65,7 +65,7 @@ class DesktopView extends View, implements IView{
   override public function init():Void{
   	pagesView.init();
   	this.visible = false;
-  	placeholders = 0;
+  	placeholdersToLoad = 0;
   }
   
   override public function onAddedToStage(e:Event){
@@ -119,15 +119,15 @@ class DesktopView extends View, implements IView{
   }  
   
   private function onPlaceholderCount(e:KEvent):Void{
-    placeholders = e.getInt();
+    placeholdersToLoad = e.getInt();
   }
   private function onPlaceholderLoaded(e:KEvent):Void{
     
     sizeX = pagesView.width/Zoom.getZoomFactor();
     sizeY = pagesView.height/Zoom.getZoomFactor();
     
-    placeholders--;
-    if(placeholders == 0){
+    placeholdersToLoad--;
+    if(placeholdersToLoad == 0){
       Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Placeholders Loaded');
       Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'foo');
       setSizes();
@@ -136,9 +136,8 @@ class DesktopView extends View, implements IView{
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
-    
-    if(placeholders == 0) {
-      placeholders--;
+    if(placeholdersToLoad == 0) {
+      //placeholdersToLoad--;
       setSizes();  
       Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Backdrops Loaded');     
     }

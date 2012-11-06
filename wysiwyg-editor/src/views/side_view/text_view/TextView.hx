@@ -12,10 +12,18 @@ class TextView extends PropertyView, implements IView{
   private var addTextfieldButton:OneStateButton;
   private var textAlign:TextAlign;
   private var garamondButton:TwoStateButton;
+  private var back:Rectangle;
+  
+  private var lineSpaceLabel:FormatedText;
+  private var fontSizeLabel:FormatedText;
+  private var alignLabel:FormatedText;
+  private var fontLabel:FormatedText;
+  private var marginLeft:Int;
   
   public function new(textController:IController){	
     super(textController);
-    backdrop              = new TextViewBack();
+    //backdrop              = new TextViewBack();
+    back                  = new Rectangle(190, 486, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);                       
     fontScrollPane        = new ScrollPane(textController);
     fontPane    	        = new FontPane(textController);
     fontScrollbar         = new VerticalScrollbar(textController, EVENT_ID.FONT_SCROLL);
@@ -24,6 +32,11 @@ class TextView extends PropertyView, implements IView{
     fontSizePopup         = new FontSizePopup(textController);
     addTextfieldButton    = new OneStateButton();
     garamondButton        = new TwoStateButton();
+    marginLeft            = 10;
+    lineSpaceLabel        = new FormatedText('helvetica', '0.0', 12, false, 0x868686);
+    fontSizeLabel         = new FormatedText('helvetica', '0.0', 12, false, 0x868686);
+    alignLabel            = new FormatedText('helvetica', '0.0', 12, false, 0x868686);
+    fontLabel             = new FormatedText('helvetica', '0.0', 12, false, 0x868686);
   }
   
   override public function init():Void {
@@ -61,6 +74,8 @@ class TextView extends PropertyView, implements IView{
   override public function onAddedToStage(e:Event):Void{
     
     super.onAddedToStage(e);
+    addChild(back);
+    back.y = 30;
     
     addChild(addTextfieldButton);
     addTextfieldButton.x = 20;

@@ -157,6 +157,7 @@ class ApplicationModel extends Model, implements IModel
       //}
  
       case 'parse preset':{
+        loadProgress('Parse XML');
         dispatchXML(EVENT_ID.PASS_PRESET_FILE, presetXml);
         loadSeq();
         

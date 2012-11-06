@@ -18,11 +18,12 @@ class PriceView extends PropertyView, implements IView{
   private var marginLeft:Int;
   private var valuta:Valuta;
   private var quantity:Float;
+  private var back:Rectangle;
   
   public function new(priceController:IController){	
     super(priceController);
-    backdrop				              = new PriceViewBack();
-                                  
+    //backdrop				              = new PriceViewBack();
+    back                          = new Rectangle(190, 486, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);                       
     productHeaderBack             = new Rectangle(190, 18, 0x000000, 0x999999, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
     productHeader                 = new FormatedText('helvetica', '0.0', 11, false, 0xffffff);
                                   
@@ -56,6 +57,8 @@ class PriceView extends PropertyView, implements IView{
 	override public function onAddedToStage(e:Event):Void{
 	  
     super.onAddedToStage(e);
+    addChild(back);
+    back.y = 30;
     
     addChild(productHeaderBack);
     productHeaderBack.x   = 0;

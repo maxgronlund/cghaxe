@@ -117,16 +117,16 @@ class PriceColumn extends MovieClip {
       {
        case 'cliche':  	   
          var checkbox = new Checkbox(iAlreadyHaveACliche, this);
-         posY += 24;
+         posY += 18;
          checkbox.x = 8;
          checkbox.y = posY;
          addChild(checkbox);
          extraChilds.push(checkbox);
-         var checkbox_label = new FormatedText('helvetica', 'I already have a cliché', 12, false);
+         var checkbox_label = new FormatedText('helvetica', TRANSLATION.i_got_a_cliche, 11, false, 0x555555);
          addChild(checkbox_label);
          extraChilds.push(checkbox_label);
          checkbox_label.x = 25;
-         checkbox_label.y = posY;
+         checkbox_label.y = posY+2;
          if(iAlreadyHaveACliche == true){
        	   print_price = 0;
        	 }

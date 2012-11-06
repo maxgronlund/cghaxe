@@ -9,10 +9,8 @@ class PageController extends Controller, implements IController
   override public function setParam(param:IParameter):Void{
     Pages.setParam(param);
     
-    //switch ( param.id )
-    //{
-    //  case expression:
-    //    statement
-    //}
+    Pages.dispatchEvent( new KEvent(EVENT_ID.UPDATE_TOOL_SIZES, param));
+    
+    
   }
 }

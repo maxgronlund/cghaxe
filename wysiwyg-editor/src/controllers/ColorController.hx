@@ -18,6 +18,7 @@ class ColorController extends Controller, implements IController{
       case EVENT_ID.PMS2_COLOR_SELECTED:{ onPms2ColorSelected(param);}
       case EVENT_ID.UPDATE_PMS1:{ updatePms1Color(param);}
       case EVENT_ID.UPDATE_PMS2:{ updatePms2Color(param);}
+      case EVENT_ID.FULL_COLOR:{onFullColorSelected(param);}
      
     }	
   }
@@ -86,6 +87,14 @@ class ColorController extends Controller, implements IController{
   private function onColorSelected(param:IParameter):Void{
     GLOBAL.printType    = CONST.DIGITAL_PRINT;
     GLOBAL.laserColor  = param.getUInt();
+    GLOBAL.text_view.setParam(param);
+    Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
+    Pages.setParam(param);
+  }
+  
+  private function onFullColorSelected(param:IParameter):Void{
+    GLOBAL.printType    = CONST.STD_PMS_COLOR;
+    GLOBAL.stdPmsColor  = param.getUInt();
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);

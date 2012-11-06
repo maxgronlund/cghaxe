@@ -69,6 +69,9 @@ class LanguageParser
 
     for(digital_print_picker in xml_data.elementsNamed("laser-color-picker") ) 
       TRANSLATION.digital_print_picker = digital_print_picker.firstChild().nodeValue.toString();
+      
+    for(full_color_button in xml_data.elementsNamed("full-color-button") ) 
+      TRANSLATION.full_color_button = full_color_button.firstChild().nodeValue.toString();
 
     for(upload_image in xml_data.elementsNamed("upload-image") ) 
       TRANSLATION.upload_image = upload_image.firstChild().nodeValue.toString();

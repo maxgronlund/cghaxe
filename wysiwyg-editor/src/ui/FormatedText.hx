@@ -36,6 +36,10 @@ class FormatedText extends Sprite
     textField.text                  = str;
   }
   
+  public function appendText(str:String):Void {
+    textField.text                  = str;
+  }
+  
   private function configureLabel():Void {
     textField = new TextField();
     textField.useRichTextClipboard  = ediable;

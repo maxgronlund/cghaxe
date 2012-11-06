@@ -177,7 +177,8 @@ class EVENT_ID  {
   
   
   
-  public static inline var USE_GARAMOND:String              = "use_garamond";                                                    
+  public static inline var USE_GARAMOND:String               = "use_garamond"; 
+  public static inline var FULL_COLOR:String                 = "full_color";                                                    
   public static inline var SHOW_FOIL:String                  = "foil_view";
 /*  public static inline var SHOW_GARAMOND:String              = "garamond_vies";*/
   public static inline var SHOW_IMAGE:String                 = "image_view";
@@ -275,6 +276,7 @@ class EVENT_ID  {
   
   public static inline var UPDATE_LOAD_PROGRESS               = "update_load_progress";
   public static inline var CLOSE_LOAD_PROGRESS                = "close_load_progress";
+  public static inline var UPDATE_TOOL_SIZES                  = "update_tool_sizes";
 	
 	
 }

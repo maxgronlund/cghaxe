@@ -74,6 +74,7 @@ class PageSelectorView extends View, implements IView {
       }
       GLOBAL.desktop_view.glimmerFoils();
     }
+    
   }
 
   private function addPageSelectorLink(pageName:String):Void{

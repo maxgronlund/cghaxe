@@ -48,7 +48,6 @@ class ShopItemPrices
 	public function onParsePrice(e:IKEvent):Void{
 	  
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    trace('onParsePrice', xml.toString());
     parsePrices(xml);
   }
   

@@ -46,6 +46,7 @@ class PageView extends View{
   private var posY:Float;
   private var designXml:Xml;
   private var deletable:Bool;
+  private var placeHolderCount:UInt;
 
   
   public function new(controller:IController){	
@@ -59,6 +60,7 @@ class PageView extends View{
     placeholderHasMouse           = false;
     hideMaskPresent               = false;
     deletable                     = false;
+    placeHolderCount              = 0;
     
     Pages.addEventListener(EVENT_ID.CALCULATE_PRICE, calculatePrice);
   }
@@ -216,6 +218,7 @@ class PageView extends View{
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
+    Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
 
   }
 
@@ -282,7 +285,7 @@ class PageView extends View{
   }
   
   private function parsePagePresetXml():Void{
-    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parse Page XML');
+    
     if(pagePresetXML != null){
       for( page  in pagePresetXML.elementsNamed("page") ) {
         for( pos_x in page.elementsNamed("pos-x") ) {
@@ -296,9 +299,18 @@ class PageView extends View{
         }
       }
     }
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page XML Parsed');
+    if( placeHolderCount == 0 && model.getInt('pageId') == 0){
+      Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'foo');
+    }
+  }
+  
+  private function onPlaceholderCount(e:KEvent):Void{
+    placeHolderCount = e.getInt();
   }
   
   private function parsePlaceholder(xml:Xml):Void{
+    
     
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
@@ -321,7 +333,7 @@ class PageView extends View{
         parseBitmapPlaceholder(xml, posX, posY);
       
       default:
-        parseTextPlaceholder(xml);
+        return;
     }
 
   }
@@ -767,7 +779,7 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page Images Loaded');
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Page Images Loaded');
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     if( model.getInt('pageId') == 0){
       GLOBAL.size_x = backdrop.width;

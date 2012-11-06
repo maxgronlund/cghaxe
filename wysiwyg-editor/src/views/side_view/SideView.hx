@@ -21,6 +21,8 @@ class SideView extends View, implements IView
   public function new(controller:IController){	
     super(controller);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_SIDEVIEW, onLoadDefaultSiteView);
+    
+    Pages.addEventListener(EVENT_ID.UPDATE_TOOL_SIZES, onUpdateToolSizes);
     posY = 0;
     views = new Vector<AView>();
     index = 0;
@@ -90,5 +92,18 @@ class SideView extends View, implements IView
       }
     }
   }
-  
+  private function onUpdateToolSizes(e:IKEvent):Void{
+
+    posY = 0;
+    
+    for( i in 0...views.length){
+      views[i].y = posY;
+      if(views[i] == selectedView){
+        posY += selectedView.getHeight();
+      }
+      else{
+        posY += SIZE.PROPERTY_BUTTON_HEIGHT;
+      }
+    }
+  }
 }

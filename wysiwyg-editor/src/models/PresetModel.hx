@@ -53,6 +53,7 @@ class PresetModel extends Model, implements IModel
   
 
   private function countPlaceholders(xml:Xml):Void{
+
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Counting Placeholders');
     
     var placeholders:UInt = 0;
@@ -69,6 +70,7 @@ class PresetModel extends Model, implements IModel
     param.setInt(placeholders);
     dispatchParameter(param);
     GLOBAL.placeholders = placeholders;
+
   }
   
   // building pages and getting url's for masks
@@ -99,7 +101,7 @@ class PresetModel extends Model, implements IModel
     }
         
     for(pages in xml.elementsNamed("pages") ) {
-      GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parsing Pages');
+      
       for(page in pages.elementsNamed("page") ) {
         buildPage(page);
       } 
@@ -110,7 +112,9 @@ class PresetModel extends Model, implements IModel
     }
     
     for(save_path in xml.elementsNamed("save-path") ) {
+      
       GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+      Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Save Path Loaded');
     }
     
     for(buy_path in xml.elementsNamed("buy-path") ) {
@@ -187,7 +191,7 @@ class PresetModel extends Model, implements IModel
 
   
   private function parseXmlData(xml_data:Xml):Void{
-
+    GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parsing XML Data');
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {

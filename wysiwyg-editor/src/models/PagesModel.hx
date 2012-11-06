@@ -66,7 +66,7 @@ class PagesModel extends Model, implements IModel {
   }
   
   private function onPageXmlLoaded(e:IKEvent):Void{
-    //!!! why this only thing happens is that the event is getting casted to a parameter???
+
     var param:IParameter        = new Parameter(EVENT_ID.PAGE_XML_LOADED);
     param.setXml(e.getXml());
     pageModels[e.getInt()].dispatchParameter(param);
@@ -89,11 +89,11 @@ class PagesModel extends Model, implements IModel {
   }
 
   private function onBuildPage( e:IKEvent ):Void{
-    
     var pageModel = buildPage(e);
     for(title in e.getXml().elementsNamed("title") ) {
+      GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS, title.firstChild().nodeValue.toString());
       pageModel.setString('page_name', title.firstChild().nodeValue.toString());
-      GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Building ' + title.firstChild().nodeValue.toString() + ' Page');
+      
     } 
     
     //trace('onBuildPage');
