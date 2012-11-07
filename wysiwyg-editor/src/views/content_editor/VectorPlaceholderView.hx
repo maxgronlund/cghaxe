@@ -429,22 +429,26 @@ class VectorPlaceholderView extends APlaceholder {
     
   override public function onUpdatePlaceholder(event:Event):Void{    
     
-    printType = GLOBAL.printType;
+    
     
     switch ( GLOBAL.printType ){
       case CONST.STD_PMS_COLOR:{
+        printType = GLOBAL.printType;
         unfoilify();
         color(GLOBAL.stdPmsColor);
       }
       case CONST.CUSTOM_PMS1_COLOR:{
+        printType = GLOBAL.printType;
         unfoilify();
         color(GLOBAL.pms1Color);
       }
       case CONST.CUSTOM_PMS2_COLOR:{
+        printType = GLOBAL.printType;
         unfoilify();
         color(GLOBAL.pms2Color);
       }
       case CONST.FOIL_COLOR:{
+        printType = GLOBAL.printType;
         foilify(GLOBAL.foilColor);
       }
     }
