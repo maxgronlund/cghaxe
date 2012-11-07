@@ -414,15 +414,26 @@ class PageView extends View{
     //var url;
     
     for( size_x in xml.elementsNamed("size-x") )
-        sizeX = Std.parseInt(size_x.firstChild().nodeValue);
+      sizeX = Std.parseInt(size_x.firstChild().nodeValue);
     
     for( size_y in xml.elementsNamed("size-y") ) 
-        sizeY = Std.parseInt(size_y.firstChild().nodeValue);
+      sizeY = Std.parseInt(size_y.firstChild().nodeValue);
+        
+    for(foil_color in xml.elementsNamed("foil-color") ) 
+      GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
+    //
+    for(pms_color in xml.elementsNamed("pms-color") ) 
+      GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
+    
+    for(print_type in xml.elementsNamed("print-type") ) 
+      GLOBAL.printType = print_type.firstChild().nodeValue.toString();
     
     for( url in xml.elementsNamed("url") ) {
       var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY, sizeX, sizeY);
       //placeholder.setSize(sizeX, sizeY);
     }
+    
+    
   }
   
   private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float, sizeX:Float, sizeY:Float):APlaceholder{
