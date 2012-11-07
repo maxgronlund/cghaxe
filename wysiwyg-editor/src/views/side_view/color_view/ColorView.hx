@@ -68,8 +68,9 @@ class ColorView extends PropertyView, implements IView{
     customColor1Text   = new FormatedText('helvetica', 'CUSTOM PMS 1', 11, false);
     customColor2Text   = new FormatedText('helvetica', 'CUSTOM PMS 2', 11, false);
     foilColorText      = new FormatedText('helvetica', 'FOIL', 11, false);
-    colorText          = new FormatedText('helvetica', 'LASER COLOR', 11, false);
+    colorText          = new FormatedText('helvetica', 'DIGITAL PRINT', 11, false);
     fullColorText      = new FormatedText('helvetica', 'FULL COLOR', 11, false);
+
   }
   
   private function onLoadCustomPmsColors(e:IKEvent):Void{
@@ -84,7 +85,7 @@ class ColorView extends PropertyView, implements IView{
     customColor1Text.setLabel(TRANSLATION.custom_pms_1);
     customColor2Text.setLabel(TRANSLATION.custom_pms_2);
     foilColorText.setLabel(TRANSLATION.foil_color_picker);
-    colorText.setLabel(TRANSLATION.standard_pms);
+    colorText.setLabel(TRANSLATION.digital_print_picker);
     fullColorText.setLabel(TRANSLATION.full_color_button);
     
     
@@ -222,21 +223,24 @@ class ColorView extends PropertyView, implements IView{
     
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     
-    stdPmsText.visible              = true;
-    stdPmsColorPicker.visible         = true;
+    foilColorText.visible             = false;
+    foilColorPicker.visible           = false;
     
+    stdPmsText.visible                = false;
+    stdPmsColorPicker.visible         = false;
     
-    foilColorText.visible             = true;
-    foilColorPicker.visible           = true;
-    colorText.visible                 = true;
+    colorText.visible                 = false;
     
-    customColor1Text.visible          = true;
-    customPms1ColorPicker.visible     = true;
+    customColor1Text.visible          = false;
+    customPms1ColorPicker.visible     = false;
     
-    customColor2Text.visible          = true;
-    customPms2ColorPicker.visible     = true;
+    customColor2Text.visible          = false;
+    customPms2ColorPicker.visible     = false;
     
-    colorPicker.visible               = true;
+    colorPicker.visible               = false;
+    
+    fullColorButton.visible           = false;
+    fullColorText.visible             = false;
     
     customPms1ColorPicker.setString("id", EVENT_ID.PMS1_COLOR_SELECTED);
     customPms2ColorPicker.setString("id", EVENT_ID.PMS2_COLOR_SELECTED);
@@ -264,15 +268,15 @@ class ColorView extends PropertyView, implements IView{
   }
   
   private function disableTools():Void{
+    foilColorText.visible             = false;
+    foilColorPicker.visible           = false;
     stdPmsText.visible                = false;
     stdPmsColorPicker.visible         = false;
     customColor1Text.visible          = false;
-    customColor2Text.visible          = false;
-    foilColorText.visible             = false;
-    colorText.visible                 = false;
     customPms1ColorPicker.visible     = false;
+    customColor2Text.visible          = false;
     customPms2ColorPicker.visible     = false;
-    foilColorPicker.visible           = false;
+    colorText.visible                 = false;
     colorPicker.visible               = false;
     fullColorButton.visible           = false;
     fullColorText.visible             = false;
@@ -289,7 +293,7 @@ class ColorView extends PropertyView, implements IView{
       case 'PMS':{
         //colorText.visible                 = true;
         //colorPicker.visible               = true;
-        stdPmsText.visible              = true;
+        stdPmsText.visible                = true;
         stdPmsColorPicker.visible         = true;
         customColor1Text.visible          = true;
         customColor2Text.visible          = true;
@@ -299,7 +303,8 @@ class ColorView extends PropertyView, implements IView{
         fullColorText.visible             = true;              
       }
       case 'Digital Print':{
-        
+        colorText.visible                 = true;
+        colorPicker.visible               = true;
                   
       }
     }
@@ -310,7 +315,7 @@ class ColorView extends PropertyView, implements IView{
 
  override public function setParam(param:IParameter):Void{
    
-   trace(param.getLabel() );
+   //trace(param.getLabel() );
    
    switch ( param.getLabel() ){
      
@@ -337,6 +342,14 @@ class ColorView extends PropertyView, implements IView{
   private function PositionPickers(): Void{
 
     pos = 40;
+    
+    if(foilColorPicker.visible){
+      foilColorText.y = pos;
+      pos = foilColorText.y + foilColorText.height;
+      foilColorPicker.y   = pos;
+      pos  = 10 + foilColorPicker.y + foilColorPicker.height;
+    }
+    
     if(customColor1Text.visible){
       stdPmsText.y = pos;
       pos = stdPmsText.y + stdPmsText.height;
@@ -354,37 +367,30 @@ class ColorView extends PropertyView, implements IView{
       pos = 10 + customPms2ColorPicker.y + customPms2ColorPicker.height; 
     }
     
-    if(foilColorPicker.visible){
-      foilColorText.y = pos;
-      pos = foilColorText.y + foilColorText.height;
-      foilColorPicker.y   = pos;
-      pos  = 10 + foilColorPicker.y + foilColorPicker.height;
-    }
-    
-    if(colorPicker.visible){
-      colorText.y = pos;
-      pos = colorText.y + colorText.height;
-      colorPicker.y    = pos;
-      pos  = 10 + colorText.y + colorText.height;
-    }
-    
     if(fullColorButton.visible){
       fullColorText.y     = pos;
       fullColorButton.y   = pos+18;
       pos  = 10 + fullColorButton.y + fullColorButton.height;
     }
+
+    if(colorPicker.visible){
+      colorText.y = pos;
+      pos = colorText.y + colorText.height;
+      colorPicker.y    = pos;
+      pos  = 10 + colorPicker.y + colorPicker.height;
+    }
+    
     back.height = pos-30;
 
     
   }
   
-  //override public function setString(id:String, s:String):Void{
-  //  switch ( id ){
-  //    
-  //    case EVENT_ID.UPDATE_TOOL_SIZES:
-  //      PositionPickers();
-  //  }
-  //}
+  override public function setString(id:String, s:String):Void{
+    switch ( id ){
+      case 'uncheck full color':
+        PositionPickers();
+    }
+  }
   
   override public function getHeight():Int{
 		return Std.int(pos );

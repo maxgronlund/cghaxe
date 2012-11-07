@@ -19,7 +19,6 @@ class ColorController extends Controller, implements IController{
       case EVENT_ID.UPDATE_PMS1:{ updatePms1Color(param);}
       case EVENT_ID.UPDATE_PMS2:{ updatePms2Color(param);}
       case EVENT_ID.FULL_COLOR:{onFullColorSelected(param);}
-     
     }	
   }
 
@@ -29,6 +28,7 @@ class ColorController extends Controller, implements IController{
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);
+    //GLOBAL.color_view.setString('uncheck full color', 'fo');
   }
   
   private function onPms1ColorSelected(param:IParameter):Void{
