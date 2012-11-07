@@ -303,7 +303,7 @@ class VectorPlaceholderView extends APlaceholder {
     str += '\t\t\t<url>' + url + '</url>\n';
     str += '\t\t\t<print-type>' + printType + '</print-type>\n';
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-    str += '\t\t\t<pms-color>' + Std.string(stdPmsColor) + '</pms-color>\n';
+    str += '\t\t\t<std_pms_color>' + Std.string(stdPmsColor) + '</std_pms_color>\n';
     str += '\t\t</placeholder>\n';
     return str;
   }

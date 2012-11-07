@@ -41,7 +41,9 @@ class TRANSLATION  {
   public static var i_got_a_cliche:String;
   public static var card:String;
   public static var units:String;
-
+  public static var logo:String;
+  public static var cliche:String;
+  
 
 }
 

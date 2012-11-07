@@ -129,6 +129,12 @@ class LanguageParser
 
     for(units in xml_data.elementsNamed("units") ) 
       TRANSLATION.units = units.firstChild().nodeValue.toString();
+    
+    for(logo in xml_data.elementsNamed("logo") ) 
+      TRANSLATION.logo = logo.firstChild().nodeValue.toString();
+      
+    for(cliche in xml_data.elementsNamed("cliche") ) 
+      TRANSLATION.cliche = cliche.firstChild().nodeValue.toString();
       
     GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Language Parsed');
 

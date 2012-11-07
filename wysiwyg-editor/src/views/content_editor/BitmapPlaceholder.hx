@@ -292,7 +292,7 @@ class BitmapPlaceholder extends APlaceholder{
       str += '\t\t\t<placeholder-type>' + 'bitmap_place_holder' + '</placeholder-type>\n';
       str += '\t\t\t<print-type>' + printType + '</print-type>\n';
       str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-      str += '\t\t\t<pms-color>' + Std.string(GLOBAL.stdPmsColor) + '</pms-color>\n';
+      str += '\t\t\t<std_pms_color>' + Std.string(stdPmsColor) + '</std_pms_color>\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
       str += '\t\t\t<size-x>' + Std.string(sizeX) + '</size-x>\n';
