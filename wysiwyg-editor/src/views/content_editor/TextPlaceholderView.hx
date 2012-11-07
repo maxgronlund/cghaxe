@@ -284,8 +284,8 @@ class TextPlaceholderView extends APlaceholder {
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
     str += '\t\t\t<std-pms-color>' + Std.string(stdPmsColor) + '</std-pms-color>\n';
     str += '\t\t\t<laser-color>' + Std.string(laserColor) + '</laser-color>\n';
-    //str += '\t\t\t<pms1-color>' + Std.string(pms1Color) + '</pms1-color>\n';
-    //str += '\t\t\t<pms2-color>' + Std.string(pms2Color) + '</pms2-color>\n';
+    str += '\t\t\t<pms1-color>' + Std.string(GLOBAL.pms1Color) + '</pms1-color>\n';
+    str += '\t\t\t<pms2-color>' + Std.string(GLOBAL.pms2Color) + '</pms2-color>\n';
     str += '\t\t\t<line-space>' + Std.string(fontLeading) + '</line-space>\n';
     str += '\t\t\t<font-size>' + Std.string(fontSize) + '</font-size>\n';
     str += '\t\t\t<font-align>' + fontAlign + '</font-align>\n';
