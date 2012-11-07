@@ -241,6 +241,11 @@ class BitmapPlaceholder extends APlaceholder{
     model.setParam(param);
     
     switch ( printType ){
+      
+      case CONST.DIGITAL_PRINT:{
+        unfoilify();
+        uncolor();
+      }
       case CONST.STD_PMS_COLOR:{
         unfoilify();
         color(GLOBAL.stdPmsColor);

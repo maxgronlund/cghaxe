@@ -393,6 +393,6 @@ class ColorView extends PropertyView, implements IView{
   }
   
   override public function getHeight():Int{
-		return Std.int(pos );
+		return Std.int(pos-30 );
 	}
 }
