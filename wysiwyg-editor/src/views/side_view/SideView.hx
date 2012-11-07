@@ -21,12 +21,47 @@ class SideView extends View, implements IView
   public function new(controller:IController){	
     super(controller);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_SIDEVIEW, onLoadDefaultSiteView);
-    
+    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Pages.addEventListener(EVENT_ID.UPDATE_TOOL_SIZES, onUpdateToolSizes);
     posY = 0;
     views = new Vector<AView>();
     index = 0;
     backdrop        = new Bitmap(new BitmapData(190,486,false,0xDEDEDE ));
+  }
+  
+  private function onPageSelected(e:IKEvent):Void{
+    
+    var print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+    
+    
+    hideAllViews();
+    
+    for(print_types in print_types.elementsNamed('print-types')){
+      for(print_type in print_types.elementsNamed('print-type')){
+        for(title in print_type.elementsNamed('title')){
+          showTool( title.firstChild().nodeValue.toString());
+        }
+      }
+    } 
+  }
+  
+  private function hideAllViews():Void{
+    views[getIndex('show_greetings')].visible = false;
+    //var i = getIndex('Greetings');
+    //for( i in 0...views.length){
+    //  views[i].visible = false;
+    //}
+  }
+  
+  private function showTool(id:String):Void{
+    trace( id);
+    switch ( id ){
+      case 'Greetings':{views[getIndex('show_greetings')].visible = true;}
+      case 'Logo':{}
+      case 'Symbols':{}
+      case 'Photo':{}
+      case 'Text':{}
+    }
   }
   
   override public function onAddedToStage(e:Event){
@@ -51,7 +86,7 @@ class SideView extends View, implements IView
   }
   
   override public function showView(id:String, b:Bool):Void{
-    
+    trace(id);
     selectedView.update('deselect', 0 , 'na');
     posY = 0;
 

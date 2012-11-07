@@ -231,6 +231,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function save_preset():Dynamic{
+    trace('Save preset',GLOBAL.save_path);
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
