@@ -183,6 +183,7 @@ class PagesModel extends Model, implements IModel {
       }
       case EVENT_ID.BUY_NOW:{
       	//getXml('foo');
+      	calculatePrice();
       	dispatchParameter(param);
       }
       case EVENT_ID.ADD_PLACEHOLDER:{

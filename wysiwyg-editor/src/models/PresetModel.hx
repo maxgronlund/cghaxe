@@ -224,10 +224,13 @@ class PresetModel extends Model, implements IModel
   
   public function savePreset(e:IKEvent):Void{
     ExternalInterface.call("openSavingBox()");
-    save_preset();
+    loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
+    loader.addEventListener(Event.COMPLETE, onSavedComplete);
+    loader.load(save_preset());
+    
   }
   
-  private function save_preset():Void{
+  private function save_preset():Dynamic{
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
@@ -249,40 +252,42 @@ class PresetModel extends Model, implements IModel
 
     variables._method = 'put';
     request.data = variables;
+    return request;
     
-    loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
-    loader.addEventListener(Event.COMPLETE, onSavedComplete);
-    loader.load(request);
     
     
   }
   
   public function buyNow(e:IKEvent):Void{
     ExternalInterface.call("openSavingBox()");
-    var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
-    request.method                      = URLRequestMethod.POST;  
-    var variables:URLVariables          = new URLVariables();
-    
-    //GLOBAL.preset_quantity = GLOBAL.preset_quantity_text_field.getQuantity();
-    
-    variables.authenticity_token 			  = GLOBAL.authenticity_token;
-    variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
-    variables.xml_data 				          = Pages.getString('file_xml');
-    variables.xml_prices                = Pages.getString('price_xml');
-    variables.shop_item_id              = GLOBAL.shop_item_id;
-    variables.quantity                  = GLOBAL.preset_quantity;    
-    variables.cliches                   = clicheInfo();
-    variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
-    variables.shop_item_id              = GLOBAL.shop_item_id;
-    variables.user_uuid                 = GLOBAL.user_uuid;
-    variables.preset_sibling_selected 	= productSelected;
-
-    variables._method = 'put';
-    request.data = variables;
-    
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onBuySavedComplete);
-    loader.load(request);
+    loader.load(save_preset());
+    //ExternalInterface.call("openSavingBox()");
+    //var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
+    //request.method                      = URLRequestMethod.POST;  
+    //var variables:URLVariables          = new URLVariables();
+    //
+    ////GLOBAL.preset_quantity = GLOBAL.preset_quantity_text_field.getQuantity();
+    //
+    //variables.authenticity_token 			  = GLOBAL.authenticity_token;
+    //variables._wysiwyg_session 				  = GLOBAL.wysiwyg_session;
+    //variables.xml_data 				          = Pages.getString('file_xml');
+    //variables.xml_prices                = Pages.getString('price_xml');
+    //variables.shop_item_id              = GLOBAL.shop_item_id;
+    //variables.quantity                  = GLOBAL.preset_quantity;    
+    //variables.cliches                   = clicheInfo();
+    //variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
+    //variables.shop_item_id              = GLOBAL.shop_item_id;
+    //variables.user_uuid                 = GLOBAL.user_uuid;
+    //variables.preset_sibling_selected 	= productSelected;
+    //
+    //variables._method = 'put';
+    //request.data = variables;
+    //
+    //loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
+    //loader.addEventListener(Event.COMPLETE, onBuySavedComplete);
+    //loader.load(request);
     
     
   }

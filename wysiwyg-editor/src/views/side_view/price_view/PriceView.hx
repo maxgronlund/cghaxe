@@ -45,10 +45,11 @@ class PriceView extends PropertyView, implements IView{
     prices                        = new Array();
     priceColumns                  = new Array();
     if(GLOBAL.iAlreadyHaveACliche == null){
-      iAlreadyHaveACliche           = new Hash();
-      GLOBAL.iAlreadyHaveACliche    = iAlreadyHaveACliche;
+      //iAlreadyHaveACliche           = new Hash();
+      //GLOBAL.iAlreadyHaveACliche    = iAlreadyHaveACliche;
+      GLOBAL.iAlreadyHaveACliche    = new Hash();
     } else {
-      iAlreadyHaveACliche           = GLOBAL.iAlreadyHaveACliche;
+      //iAlreadyHaveACliche           = GLOBAL.iAlreadyHaveACliche;
     }
     
     marginLeft                    = 8;
@@ -144,10 +145,10 @@ class PriceView extends PropertyView, implements IView{
   
   private function clearColumns():Void{
     for(i in 0...priceColumns.length){
-      iAlreadyHaveACliche.set(priceColumns[i].getTitle(), priceColumns[i].getIAlreadyHaveACliche());
+      GLOBAL.iAlreadyHaveACliche.set(priceColumns[i].getTitle(), priceColumns[i].getIAlreadyHaveACliche());
       removeChild(priceColumns[i]);
     }
-    GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
+   // GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
     priceColumns = new Array();
   }
   
@@ -155,7 +156,7 @@ class PriceView extends PropertyView, implements IView{
 
     var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
 
-    var haveACliche:Bool = iAlreadyHaveACliche.get(price_column.getTitle());
+    var haveACliche:Bool = GLOBAL.iAlreadyHaveACliche.get(price_column.getTitle());
     price_column.setIAlreadyHaveACliche(haveACliche);
     
     price_column.set_amount_std_pms_color(model.getInt('amount_std_pms_color'));
