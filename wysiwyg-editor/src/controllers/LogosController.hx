@@ -30,7 +30,11 @@ class LogosController extends Controller, implements IController{
         Logos.setParam(param);
       }
 
-      case EVENT_ID.ADD_LOGO_TO_PAGE:{Logos.setParam(param);}
+      case EVENT_ID.ADD_LOGO_TO_PAGE:{
+        // EVENT_ID.FULL_COLOR
+        GLOBAL.printType    = CONST.DIGITAL_PRINT;
+        Logos.setParam(param);
+      }
       case EVENT_ID.ADD_PHOTO_TO_PAGE:{Logos.setParam(param);}
       case EVENT_ID.LOGO_SCROLL:{GLOBAL.logos_view.setFloat(EVENT_ID.LOGO_SCROLL, param.getFloat());}
       case EVENT_ID.PHOTO_SCROLL:{GLOBAL.logos_view.setFloat(EVENT_ID.PHOTO_SCROLL, param.getFloat());}
