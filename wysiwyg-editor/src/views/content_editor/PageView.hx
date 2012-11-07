@@ -101,8 +101,10 @@ class PageView extends View{
               }
           
               if(!text_color_is_used) {
-                std_pms_colors.push(color);
-                amount_std_pms_color += 1;
+                if(color != "9672088"){
+                  std_pms_colors.push(color);
+                  amount_std_pms_color += 1;
+                }
               }
               
             }
@@ -196,10 +198,20 @@ class PageView extends View{
       }
     }
     
-    model.setInt('amount_std_pms_color', amount_std_pms_color);
-    model.setInt('amount_custom_pms1_color', amount_custom_pms1_color);
-    model.setInt('amount_custom_pms2_color', amount_custom_pms2_color);
-    model.setInt('amount_custom_pms4_color', amount_custom_pms4_color);
+    
+    if(amount_custom_pms4_color > 0){
+      model.setInt('amount_std_pms_color', 0);
+      model.setInt('amount_custom_pms1_color', 0);
+      model.setInt('amount_custom_pms2_color', 0);
+      model.setInt('amount_custom_pms4_color', amount_custom_pms4_color);
+      
+    } else {
+      model.setInt('amount_custom_pms1_color', amount_custom_pms1_color);
+      model.setInt('amount_custom_pms2_color', amount_custom_pms2_color);
+      model.setInt('amount_custom_pms4_color', 0);
+      model.setInt('amount_std_pms_color', amount_std_pms_color);
+    }
+    
     model.setInt('amount_foil_color', amount_foil_color);
     model.setInt('amount_greetings', amount_greetings);
     model.setInt('amount_digital_print', amount_digital_print);
