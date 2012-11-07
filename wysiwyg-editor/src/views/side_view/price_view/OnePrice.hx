@@ -41,28 +41,28 @@ class OnePrice extends MovieClip {
 	  switch ( getPrintType() )
 	  {
 	   case 'foil':
-	     return "Foil Color";
+	     return TRANSLATION.foil_color;
 	     
 	   case 'greeting':
    	   return "Greeting";
 	     
 	   case 'one-pms-color':
-	     return "Custom PMS color";
+	     return TRANSLATION.custom_pms_1;
 	     
 	   case 'two-pms-color':
-   	   return "Two Custom PMS colors";
+   	   return TRANSLATION.custom_pms_2;
 	     
 	   case 'one-pms-color-4':
-   	   return "Logo";
+   	   return TRANSLATION.logo;
 	     
 	   case 'std-color':
-	     return "STD PMS color";
+	     return TRANSLATION.standard_pms;
 	     
 	   case 'digital-print':
    	   return "Digital Print";
    	   
    	 case 'cliche':
-       return "Cliché";  
+       return TRANSLATION.cliche;  
 	     
 	   default:
 	     return "Extra";
