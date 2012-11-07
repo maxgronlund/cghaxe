@@ -207,6 +207,7 @@ class PriceView extends PropertyView, implements IView{
 	//}
 	
 	override public function update(id:String, index:Int, value:String):Void{
+	  super.update(id,index,value);
 	  switch ( id )
 	  {
 	   case 'addAllPrices':

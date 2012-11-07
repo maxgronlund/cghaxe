@@ -30,7 +30,7 @@ class SideView extends View, implements IView
   }
   
   private function onPageSelected(e:IKEvent):Void{
-    
+    return;
     var print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
     
     
@@ -87,7 +87,7 @@ class SideView extends View, implements IView
   
   override public function showView(id:String, b:Bool):Void{
     trace(id);
-    selectedView.update('deselect', 0 , 'na');
+    //selectedView.update('deselect', 0 , 'na');
     posY = 0;
 
     
