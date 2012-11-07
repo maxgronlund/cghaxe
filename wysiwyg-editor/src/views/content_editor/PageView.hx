@@ -86,9 +86,7 @@ class PageView extends View{
     
     for(i in 0...placeholders.length) {      
       if(true){
-        if(placeholders[i].getPlaceholderType() == 'bitmap_place_holder') {
-          amount_custom_pms4_color = 1;
-        } else if(StringTools.trim(placeholders[i].getTextFieldText()) != ''){
+        if(StringTools.trim(placeholders[i].getTextFieldText()) != ''){
           switch ( placeholders[i].getPrintType() )
           {
             case CONST.STD_PMS_COLOR:{
@@ -187,7 +185,8 @@ class PageView extends View{
               
             }
             case CONST.DIGITAL_PRINT:{
-              amount_digital_print = 1;
+              //amount_digital_print = 1;
+              amount_custom_pms4_color = 1;
             }
             default:{
               amount_digital_print = 1;
