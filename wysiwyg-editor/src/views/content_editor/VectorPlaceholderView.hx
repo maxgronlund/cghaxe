@@ -387,6 +387,20 @@ class VectorPlaceholderView extends APlaceholder {
     this.setChildIndex(selectBox, this.numChildren - 1);
   }
   
+  override public function updateColor(_color:Int):Void{
+    switch ( printType ){
+      case CONST.STD_PMS_COLOR:{
+        color(_color);
+      }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        color(_color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        color(_color);
+      }
+    }  
+  }
+  
   public function resizeBackdrop():Void {
     foilTexture.width   = this.width;
     foilTexture.height  = this.height;

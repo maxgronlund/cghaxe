@@ -47,7 +47,10 @@ class OnePrice extends MovieClip {
    	   return "Greeting";
 	     
 	   case 'one-pms-color':
-	     return "PMS color";
+	     return "Custom PMS color";
+	     
+	   case 'two-pms-color':
+   	   return "Two Custom PMS colors";
 	     
 	   case 'one-pms-color-4':
    	   return "Image";

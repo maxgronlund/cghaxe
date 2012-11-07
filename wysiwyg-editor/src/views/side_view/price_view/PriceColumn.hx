@@ -70,12 +70,20 @@ class PriceColumn extends MovieClip {
 	  if(amount_std_pms_color > 0) {
 	    price_labels.push(new OnePrice('std-color'));
 	  }
-	  if(amount_custom_pms1_color > 0) {
+	  
+	  var amount_custom_pms:Int = Std.int(amount_custom_pms1_color + amount_custom_pms2_color);
+	  if(amount_custom_pms == 2) {
+	    price_labels.push(new OnePrice('two-pms-color'));
+	  } else if(amount_custom_pms == 1) {
 	    price_labels.push(new OnePrice('one-pms-color'));
 	  }
-	  if(amount_custom_pms2_color > 0) {
-	    price_labels.push(new OnePrice('one-pms-color'));
-	  }
+	  
+	  //if(amount_custom_pms1_color > 0) {
+	  //  price_labels.push(new OnePrice('one-pms-color'));
+	  //}
+	  //if(amount_custom_pms2_color > 0) {
+	  //  price_labels.push(new OnePrice('one-pms-color'));
+	  //}
 	  if(amount_custom_pms4_color > 0) {
 	    price_labels.push(new OnePrice('one-pms-color-4'));
 	  }
@@ -257,6 +265,8 @@ class PriceColumn extends MovieClip {
 	     return selected_price.getFoilPrice();
 	   case "one-pms-color":
 	     return selected_price.getOnePmsColorPrice();
+	   case "two-pms-color":
+   	   return selected_price.getTwoPmsColorPrice();
 	   case "digital-print":
    	   return selected_price.getOnePmsColorPrice4();
 	   case "std-color":

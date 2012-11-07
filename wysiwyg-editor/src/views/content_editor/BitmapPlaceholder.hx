@@ -36,6 +36,9 @@ class BitmapPlaceholder extends APlaceholder{
   private var imageLoader:Loader;
   private var backdrop:Bitmap;
   private var printType:String;
+  private var stdPmsColor:Int;
+  private var pms1Color:UInt; 
+  private var pms2Color:UInt;
   
   private var foilColor:String;
   private var foiled:Bool;
@@ -82,6 +85,11 @@ class BitmapPlaceholder extends APlaceholder{
     imageLoader	                      = new Loader();
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     printType                         = GLOBAL.printType;
+    stdPmsColor                       = GLOBAL.stdPmsColor;
+    pms1Color                         = GLOBAL.pms1Color;
+    pms2Color                         = GLOBAL.pms2Color;
+    printType                         = GLOBAL.printType;
+    foilColor                         = GLOBAL.foilColor;
     
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
@@ -231,6 +239,24 @@ class BitmapPlaceholder extends APlaceholder{
     var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_LOADED);
     param.setInt(id);
     model.setParam(param);
+    
+    switch ( printType ){
+      case CONST.STD_PMS_COLOR:{
+        unfoilify();
+        color(GLOBAL.stdPmsColor);
+      }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        unfoilify();
+        color(GLOBAL.pms1Color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        unfoilify();
+        color(GLOBAL.pms2Color);
+      }
+      case CONST.FOIL_COLOR:{
+        foilify(foilColor);
+      }
+    }
 	}
 	
 	override public function setSize(sizeX:Float, sizeY:Float):Void{
@@ -265,6 +291,8 @@ class BitmapPlaceholder extends APlaceholder{
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
       str += '\t\t\t<placeholder-type>' + 'bitmap_place_holder' + '</placeholder-type>\n';
       str += '\t\t\t<print-type>' + printType + '</print-type>\n';
+      str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
+      str += '\t\t\t<pms-color>' + Std.string(GLOBAL.stdPmsColor) + '</pms-color>\n';
       str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
       str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
       str += '\t\t\t<size-x>' + Std.string(sizeX) + '</size-x>\n';
@@ -328,6 +356,20 @@ class BitmapPlaceholder extends APlaceholder{
     }
     // HMM NOT A PROBLEM BUT DANGERUS, MAY CRASH 
     GLOBAL.Pages.calculatePrice();
+  }
+  
+  override public function updateColor(_color:Int):Void{
+    switch ( printType ){
+      case CONST.STD_PMS_COLOR:{
+        color(_color);
+      }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        color(_color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        color(_color);
+      }
+    }  
   }
   
   override public function setFocus(b:Bool):Void{
