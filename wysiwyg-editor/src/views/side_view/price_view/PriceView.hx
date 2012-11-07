@@ -267,6 +267,7 @@ class PriceView extends PropertyView, implements IView{
       var units:UInt;
       var foil_price:Float;
       var one_pms_color_price:Float;
+      var two_pms_color_price:Float;
       var full_color_price:Float;
       var std_color_price:Float;
       
@@ -279,9 +280,9 @@ class PriceView extends PropertyView, implements IView{
       for( one_pms_color_price_xml in print_price_xml.elementsNamed("one-pms-color")) {
         one_pms_color_price = Std.parseFloat(one_pms_color_price_xml.firstChild().nodeValue.toString());
       }
-      //for( one_pms_color_price_xml in print_price_xml.elementsNamed("one-pms-color")) {
-      //  one_pms_color_price = Std.parseFloat(one_pms_color_price_xml.firstChild().nodeValue.toString());
-      //}
+      for( two_pms_color_price_xml in print_price_xml.elementsNamed("two-pms-color")) {
+        two_pms_color_price = Std.parseFloat(two_pms_color_price_xml.firstChild().nodeValue.toString());
+      }
       for( full_color_price_xml in print_price_xml.elementsNamed("full-color")) {
         full_color_price = Std.parseFloat(full_color_price_xml.firstChild().nodeValue.toString());
       }
@@ -289,7 +290,7 @@ class PriceView extends PropertyView, implements IView{
         std_color_price = Std.parseFloat(std_color_price_xml.firstChild().nodeValue.toString());
       }
       
-      prices.push(new PriceModel(units, foil_price, one_pms_color_price, std_color_price, full_color_price));
+      prices.push(new PriceModel(units, foil_price, one_pms_color_price, std_color_price, full_color_price, two_pms_color_price));
     }
   }
   
