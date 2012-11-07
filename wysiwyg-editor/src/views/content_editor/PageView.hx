@@ -366,7 +366,7 @@ class PageView extends View{
     for(foil_color in xml.elementsNamed("foil-color") ) 
       GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
     
-    for(pms_color in xml.elementsNamed("pms-color") ) 
+    for(pms_color in xml.elementsNamed("std-pms-color") ) 
       GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
       
     for( pms1_color in xml.elementsNamed("pms1-color") ) 
@@ -460,7 +460,7 @@ class PageView extends View{
     for( print_type in xml.elementsNamed("print-type") ) 
       GLOBAL.printType =  print_type.firstChild().nodeValue;
       
-    for( std_pms_color in xml.elementsNamed("std_pms_color") ) 
+    for( std_pms_color in xml.elementsNamed("std-pms-color") ) 
       GLOBAL.stdPmsColor =  Std.parseInt(std_pms_color.firstChild().nodeValue);
       
     for( pms1_color in xml.elementsNamed("pms1-color") ) 

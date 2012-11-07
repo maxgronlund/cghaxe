@@ -248,7 +248,7 @@ class BitmapPlaceholder extends APlaceholder{
       }
       case CONST.STD_PMS_COLOR:{
         unfoilify();
-        color(GLOBAL.stdPmsColor);
+        color(stdPmsColor);
       }
       case CONST.CUSTOM_PMS1_COLOR:{
         unfoilify();
@@ -339,6 +339,7 @@ class BitmapPlaceholder extends APlaceholder{
     switch ( GLOBAL.printType ){
       case CONST.STD_PMS_COLOR:{
         unfoilify();
+        stdPmsColor = GLOBAL.stdPmsColor;
         color(GLOBAL.stdPmsColor);
       }
       case CONST.CUSTOM_PMS1_COLOR:{
@@ -366,6 +367,7 @@ class BitmapPlaceholder extends APlaceholder{
   override public function updateColor(_color:Int):Void{
     switch ( printType ){
       case CONST.STD_PMS_COLOR:{
+        stdPmsColor = GLOBAL.stdPmsColor;
         color(_color);
       }
       case CONST.CUSTOM_PMS1_COLOR:{
