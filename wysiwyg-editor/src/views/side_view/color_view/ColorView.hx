@@ -101,7 +101,7 @@ class ColorView extends PropertyView, implements IView{
   
   private function onUpdateSideView( e:IKEvent ): Void{
    
-
+    trace(e.getString());
     setPrintTypes();
     
     switch ( e.getString() ){
@@ -114,6 +114,8 @@ class ColorView extends PropertyView, implements IView{
         customPms2ColorPicker.alpha     = 1.0;
         foilColorPicker.alpha           = 1.0;
         colorPicker.alpha               = 0.3;
+        fullColorText.alpha             = 0.3;
+        fullColorButton.alpha           = 0.3;
       }
       case 'text_place_holder':{
         stdPmsColorPicker.alpha         = 1.0;
@@ -121,6 +123,8 @@ class ColorView extends PropertyView, implements IView{
         customPms2ColorPicker.alpha     = 1.0;
         foilColorPicker.alpha           = 1.0;
         colorPicker.alpha               = 1.0;
+        fullColorText.alpha             = 1.0;
+        fullColorButton.alpha           = 1.0;
       }
       
       case 'garamond_place_holder':{
@@ -129,13 +133,17 @@ class ColorView extends PropertyView, implements IView{
         customPms2ColorPicker.alpha     = 0.3;
         foilColorPicker.alpha           = 1.0;
         colorPicker.alpha               = 0.3;
+        fullColorText.alpha             = 0.3;
+        fullColorButton.alpha           = 0.3;
       }
       case 'bitmap_place_holder':{
         stdPmsColorPicker.alpha         = 1.0;
         customPms1ColorPicker.alpha     = 1.0;
         customPms2ColorPicker.alpha     = 1.0;
         foilColorPicker.alpha           = 1.0;
-        colorPicker.alpha               = 0.3;
+        colorPicker.alpha               = 1.0;
+        fullColorText.alpha             = 1.0;
+        fullColorButton.alpha           = 1.0;
       }
       default:{
         stdPmsColorPicker.alpha         = 0.3;
@@ -393,6 +401,6 @@ class ColorView extends PropertyView, implements IView{
   }
   
   override public function getHeight():Int{
-		return Std.int(pos-30 );
+		return Std.int(pos );
 	}
 }
