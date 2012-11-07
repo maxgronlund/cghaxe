@@ -23,6 +23,7 @@ class PriceController extends Controller, implements IController
       case EVENT_ID.ADD_PRICE_COLUMN:{
         //price_view.setParam(param);
       }
+      case EVENT_ID.BUY_NOW: Pages.setParam(param);
     }	
   }
 }

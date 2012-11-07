@@ -20,6 +20,10 @@ class PriceView extends PropertyView, implements IView{
   private var quantity:Float;
   private var back:Rectangle;
   
+  private var buyNowButton:OneStateTextAndImageButton;
+  
+  
+  
   public function new(priceController:IController){	
     super(priceController);
     //backdrop				              = new PriceViewBack();
@@ -44,6 +48,8 @@ class PriceView extends PropertyView, implements IView{
     GLOBAL.iAlreadyHaveACliche    = iAlreadyHaveACliche;
     marginLeft                    = 8;
     valuta                        = new Valuta();
+    buyNowButton                  = new OneStateTextAndImageButton();
+    buyNowButton.setFormat(0, 7, 0x000000, 'center');
     Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
     Preset.addEventListener(EVENT_ID.UPDATE_QUANTITY, onUpdateQuantity);
 	}
@@ -95,8 +101,11 @@ class PriceView extends PropertyView, implements IView{
     totalPrice.setLabel('0');
     totalPrice.x = 140;
     totalPrice.y = 108;
-
     
+    addChild(buyNowButton);
+    buyNowButton.x = 45;
+    buyNowButton.y = totalPrice.y + 30;
+
   }
   
   override public function init():Void{
@@ -107,12 +116,20 @@ class PriceView extends PropertyView, implements IView{
                         new Parameter( EVENT_ID.SHOW_PRICES));
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
+    buyNowButton.init( controller,
+             new Point(100,30), 
+             new OsButtonBack(), 
+             new Parameter( EVENT_ID.BUY_NOW ) );
+    buyNowButton.fireOnMouseUp(false);
+    
   }
   
   private function onLoadDefaultTool(e:IKEvent):Void{
     productHeader.setLabel(TRANSLATION.card);
     unitsLabel.setLabel(TRANSLATION.units);
     totalPriceLabel.setLabel(TRANSLATION.total_price_label);
+    buyNowButton.setText(TRANSLATION.buy_button);
+    buyNowButton.updateLabel();    
     
   }
   
@@ -227,6 +244,8 @@ class PriceView extends PropertyView, implements IView{
 
     totalPrice.setLabel(valuta.toString(total_price));
 	  totalPrice.x = 180 - totalPrice.getWidth();
+	  
+	  buyNowButton.y = totalPrice.y + 30;
   }
   
   

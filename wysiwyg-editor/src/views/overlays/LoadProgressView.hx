@@ -53,7 +53,7 @@ class LoadProgressView extends View, implements IView
       countInfo = Std.string(count) + ': '+ e.getString();
     }
     body.setLabel( countInfo );
-    trace(countInfo);
+    //trace(countInfo);
   }
   
   private function onCloseLoadProgress(e:IKEvent):Void{

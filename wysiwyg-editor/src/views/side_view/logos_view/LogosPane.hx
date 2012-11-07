@@ -62,15 +62,23 @@ class LogosPane extends View, implements IView{
   
   private function addButton(param:IParameter	):Void{
     
-    var vectorTitle:String = 'Logo-'+Std.string(buttonIndex);
-
-    param.setString(vectorTitle);
+    //var logoTitle:String = 'Logo-'+Std.string(buttonIndex);
+    //
+    //for(title in logo.elementsNamed('title')){
+    //  logoTitle = title.firstChild().nodeValue.toString();
+    //}
+    //
+    //
+    //
+    //param.setString(logoTitle);
+    
+    
     param.setInt(buttonIndex);
     var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
     oneStateTextAndImageButton.init( controller, new Point(171, 27), new PlaceholderButton(), param );
     oneStateTextAndImageButton.fireOnMouseUp(false);
     oneStateTextAndImageButton.jumpBack(false);
-    oneStateTextAndImageButton.setText(vectorTitle);
+    oneStateTextAndImageButton.setText(param.getString());
     
     vectorsButtons[buttonIndex] = oneStateTextAndImageButton;
     addChild(vectorsButtons[buttonIndex]);

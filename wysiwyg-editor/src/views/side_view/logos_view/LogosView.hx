@@ -149,9 +149,18 @@ class LogosView extends PropertyView, implements IView{
   
   private function onLogosLoaded(e:KEvent):Void{
 
+    
+
     for(logo in e.getXml().elementsNamed('logo')){
       var logoParam:IParameter = new Parameter(EVENT_ID.ADD_LOGO_BUTTON);
-      logoParam.setXml(logo);
+      for(title in logo.elementsNamed('title')){
+        logoParam.setString(title.firstChild().nodeValue.toString());
+      }
+      for(url in logo.elementsNamed('url')){
+        //logoParam.setString(title.firstChild().nodeValue.toString());
+        logoParam.setXml(url);
+      }
+      //logoParam.setXml(logo);
       logosPane.setParam(logoParam);
     }
   }
