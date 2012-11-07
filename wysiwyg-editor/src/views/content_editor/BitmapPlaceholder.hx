@@ -95,6 +95,24 @@ class BitmapPlaceholder extends APlaceholder{
     blueFoilTexture                   = new BlueFoilTexture();
     foilTexture = silverFoilTexture;
     
+    silverFoilTexture.width *= 2;
+    silverFoilTexture.height *= 2;
+    
+    goldFoilTexture.width *= 2;
+    goldFoilTexture.height *= 2;
+    
+    yellowFoilTexture.width *= 2;
+    yellowFoilTexture.height *= 2;
+    
+    redFoilTexture.width *= 2;
+    redFoilTexture.height *= 2;
+    
+    greenFoilTexture.width *= 2;
+    greenFoilTexture.height *= 2;
+    
+    blueFoilTexture.width *= 2;
+    blueFoilTexture.height *= 2;
+    
     foilShadow = new Sprite();
     foilShadow.graphics.beginFill(0x494949);
     foilShadow.alpha = 0.0;
@@ -197,6 +215,7 @@ class BitmapPlaceholder extends APlaceholder{
     backdrop.scaleY       *= 0.5;
 
     addChild(backdrop);
+    default_colorTransform = backdrop.transform.colorTransform;
     addChild(selectBox);
     addChild(resizeHandle);
     selectBox.visible     = false;
@@ -282,14 +301,29 @@ class BitmapPlaceholder extends APlaceholder{
   override public function onUpdatePlaceholder(event:Event):Void{    
     
     printType = GLOBAL.printType;
+    trace("Setting printype to", printType);
     // TO DO
     switch ( GLOBAL.printType ){
       case CONST.STD_PMS_COLOR:{
         unfoilify();
         color(GLOBAL.stdPmsColor);
       }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        unfoilify();
+        color(GLOBAL.pms1Color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        unfoilify();
+        color(GLOBAL.pms2Color);
+      }
       case CONST.FOIL_COLOR:{
+        uncolor();
         foilify(GLOBAL.foilColor);
+      }
+      case CONST.DIGITAL_PRINT:{
+        trace("Setting printype to DIGITAL_PRINT");
+        uncolor();
+        unfoilify();
       }
     }
     // HMM NOT A PROBLEM BUT DANGERUS, MAY CRASH 
@@ -412,8 +446,7 @@ class BitmapPlaceholder extends APlaceholder{
       foilShine.graphics.drawRect(0,0,1024,1017);
       foilShine.graphics.endFill();
     
-    foilTexture.width *= 2;
-    foilTexture.height *= 2;
+    
     
     foil.addChild(foilTexture);
     foil.addChild(foilShadow);

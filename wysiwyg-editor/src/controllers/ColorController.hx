@@ -93,7 +93,7 @@ class ColorController extends Controller, implements IController{
   }
   
   private function onFullColorSelected(param:IParameter):Void{
-    GLOBAL.printType    = CONST.STD_PMS_COLOR;
+    GLOBAL.printType    = CONST.DIGITAL_PRINT;
     GLOBAL.stdPmsColor  = param.getUInt();
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
