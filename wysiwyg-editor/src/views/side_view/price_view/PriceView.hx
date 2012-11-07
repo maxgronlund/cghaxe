@@ -44,8 +44,13 @@ class PriceView extends PropertyView, implements IView{
                                   
     prices                        = new Array();
     priceColumns                  = new Array();
-    iAlreadyHaveACliche           = new Hash();
-    GLOBAL.iAlreadyHaveACliche    = iAlreadyHaveACliche;
+    if(GLOBAL.iAlreadyHaveACliche == null){
+      iAlreadyHaveACliche           = new Hash();
+      GLOBAL.iAlreadyHaveACliche    = iAlreadyHaveACliche;
+    } else {
+      iAlreadyHaveACliche           = GLOBAL.iAlreadyHaveACliche;
+    }
+    
     marginLeft                    = 8;
     valuta                        = new Valuta();
     buyNowButton                  = new OneStateTextAndImageButton();

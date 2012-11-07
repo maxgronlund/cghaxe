@@ -239,7 +239,7 @@ class PresetModel extends Model, implements IModel
     variables.xml_data 				          = Pages.getString('file_xml');
     variables.xml_prices                = Pages.getString('price_xml');
     variables.quantity                  = GLOBAL.preset_quantity;
-    variables.cliches                   = GLOBAL.iAlreadyHaveACliche;
+    variables.cliches                   = clicheInfo();
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.user_uuid                 = GLOBAL.user_uuid;
@@ -270,8 +270,8 @@ class PresetModel extends Model, implements IModel
     variables.xml_data 				          = Pages.getString('file_xml');
     variables.xml_prices                = Pages.getString('price_xml');
     variables.shop_item_id              = GLOBAL.shop_item_id;
-    variables.quantity                  = GLOBAL.preset_quantity;
-    variables.cliches                   = GLOBAL.iAlreadyHaveACliche;
+    variables.quantity                  = GLOBAL.preset_quantity;    
+    variables.cliches                   = clicheInfo();
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.user_uuid                 = GLOBAL.user_uuid;
@@ -285,6 +285,29 @@ class PresetModel extends Model, implements IModel
     loader.load(request);
     
     
+  }
+  
+  private function clicheInfo():String{
+    var cliches:String = "{\n";
+    var iterator = GLOBAL.iAlreadyHaveACliche.keys();
+    var unended_comma = false;
+    for(page_key in iterator) {
+      if(GLOBAL.iAlreadyHaveACliche.get(page_key) == true){
+        if(unended_comma){
+          unended_comma = false;
+          cliches = cliches + ",\n";
+        }
+        cliches = cliches + '"' + page_key + '":true';
+        if(iterator.hasNext()) {
+          unended_comma = true;
+        } else {
+          cliches = cliches + "\n";
+        }
+        
+      }
+    }
+    cliches = cliches + "\n}"; 
+    return cliches;
   }
   
   private function onBuySavedComplete(e:Event):Void{

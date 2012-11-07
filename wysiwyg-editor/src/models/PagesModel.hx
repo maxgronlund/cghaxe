@@ -94,7 +94,15 @@ class PagesModel extends Model, implements IModel {
       GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS, title.firstChild().nodeValue.toString());
       pageModel.setString('page_name', title.firstChild().nodeValue.toString());
       
+    }
+    if(GLOBAL.iAlreadyHaveACliche == null){
+      GLOBAL.iAlreadyHaveACliche = new Hash();
     } 
+    for(i_got_a_cliche in e.getXml().elementsNamed("i-got-a-cliche") ) {
+      GLOBAL.iAlreadyHaveACliche.set(pageModel.getString('page_name'), true);
+    }
+    
+    
     
     //trace('onBuildPage');
     // picked up by PagesView and DesignPane
