@@ -46,7 +46,7 @@ class SideView extends View, implements IView
   }
   
   private function hideAllViews():Void{
-    views[getIndex('show_greetings')].visible = false;
+    //views[getIndex('show_greetings')].visible = false;
     //var i = getIndex('Greetings');
     //for( i in 0...views.length){
     //  views[i].visible = false;
