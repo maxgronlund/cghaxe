@@ -269,6 +269,8 @@ class PriceColumn extends MovieClip {
    	   return selected_price.getTwoPmsColorPrice();
 	   case "digital-print":
    	   return selected_price.getOnePmsColorPrice4();
+   	 case "one-pms-color-4": 
+   	 return selected_price.getOnePmsColorPrice4();
 	   case "std-color":
 	     return selected_price.getStdColorPrice();
 	   case "cliche":
