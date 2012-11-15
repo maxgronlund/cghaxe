@@ -26,6 +26,7 @@ class DesignsView extends PropertyView, implements IView{
     verticalScrollbar   = new VerticalScrollbar(designsController, EVENT_ID.DESIGN_SCROLL);
     addDesignButton     = new OneStateButton();
     Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
   }
   
@@ -34,7 +35,7 @@ class DesignsView extends PropertyView, implements IView{
     //trace('init');
     selectButton.init( controller,
               new Point(190,30), 
-              new DesignsViewButton(), 
+              new ToolSelectionButton(), 
               new Parameter( EVENT_ID.SHOW_DESIGNS));
     
     addDesignButton.init(controller,
@@ -81,23 +82,29 @@ class DesignsView extends PropertyView, implements IView{
     } 
   }
   override public function getHeight():Int{
-		return 256;
-	}
+  	return 256;
+  }
   
   override public function setParam(param:IParameter):Void{
-
+  
     //switch( param.getLabel() ){
     //  case EVENT_ID.DESIGN_SELECTED: {
     //    designsPane.setParam(param);
     //  }
     //}
-	}
-	
-	override public function setFloat(id:String, f:Float):Void{
+  }
+  
+  override public function setFloat(id:String, f:Float):Void{
     switch ( id ) {
       case EVENT_ID.DESIGN_SCROLL:{
         designsPane.y = -(designsPane.getFloat('height')-designsScrollPane.getFloat('mask_height')) * f;
       }
     }
 	}
+
+  private function onLoadDefaultTool(e:IKEvent):Void{
+    selectButton.setText(TRANSLATION.designs_button);
+  }
+
 }
+

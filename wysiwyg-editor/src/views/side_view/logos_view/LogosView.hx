@@ -11,9 +11,14 @@ class LogosView extends PropertyView, implements IView{
   private var logosPane:AView;
   private var logoScrollbar:VerticalScrollbar;
   private var uploadLogoButton:OneStateTextAndImageButton;
+  private var uploadLogoIButton:OneStateTextAndImageButton;
   private var addLogoButton:OneStateTextAndImageButton;
+  private var addLogoIButton:OneStateTextAndImageButton;
   private var back:Rectangle;
   private var logosBack:Rectangle;
+  
+  private var addLogoInfo:InfoMessageView;
+  private var uploadLogoInfo:InfoMessageView;
   /*
   private var photosScrollPane:AView;
   private var photosPane:AView;
@@ -35,9 +40,15 @@ class LogosView extends PropertyView, implements IView{
     logoScrollbar         = new VerticalScrollbar(logosController, EVENT_ID.LOGO_SCROLL);
     uploadLogoButton      = new OneStateTextAndImageButton();
     addLogoButton         = new OneStateTextAndImageButton();
-    uploadLogoButton.setFormat(0, 3, 0xffffff, 'center');
-    addLogoButton.setFormat(0, 3, 0xffffff, 'center');
     
+    uploadLogoIButton       = new OneStateTextAndImageButton();
+    uploadLogoIButton.setFormat(0, 3, 0x333333, 'center');
+    
+    uploadLogoButton.setFormat(0, 3, 0x333333, 'center');
+    addLogoButton.setFormat(0, 3, 0x333333, 'center');
+    
+    addLogoIButton       = new OneStateTextAndImageButton();
+    addLogoIButton.setFormat(0, 3, 0x333333, 'center');
     /*
     photosScrollPane      = new ScrollPane(logosController);
     photosScrollbar       = new VerticalScrollbar(logosController, EVENT_ID.PHOTO_SCROLL);
@@ -47,7 +58,19 @@ class LogosView extends PropertyView, implements IView{
     
     uploadImageButton.setFormat(0, 3, 0xffffff, 'center');
     addImageButton.setFormat(0, 3, 0xffffff, 'center');
+    
+    
     */
+    
+    addLogoInfo         = new InfoMessageView(GLOBAL.tool_tips_controller, 
+                                                TOOL_TIPS.MY_UPLOADS_ADD,
+                                                'right', 
+                                                'top');
+                                                
+    uploadLogoInfo         = new InfoMessageView(GLOBAL.tool_tips_controller, 
+                                               TOOL_TIPS.MY_UPLOADS_UPLOAD,
+                                               'right', 
+                                                'top');
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
     Preset.addEventListener(EVENT_ID.PHOTOS_LOADED, onPhotosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
@@ -59,32 +82,47 @@ class LogosView extends PropertyView, implements IView{
 
     selectButton.init( controller,
               new Point(190,30), 
-              new LogoViewButton(), 
+              new ToolSelectionButton(), 
               new Parameter( EVENT_ID.SHOW_MY_UPLOADS));
     
     addLogoButton.init(controller,
             new Point(150,22), 
-            new OneStateButtonBack(), 
+            new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.ADD_LOGO_TO_PAGE));
     addLogoButton.fireOnMouseUp(false);
     
+    
+    
+    addLogoIButton.init( GLOBAL.tool_tips_controller,
+                        new Point(22,22), 
+                        new OneStateButtonBackS(), 
+                        new Parameter( TOOL_TIPS.MY_UPLOADS_ADD));
+                        
+                        
+                        
+    
     uploadLogoButton.init( controller, 
             new Point(150,22),  
-            new OneStateButtonBack(), 
+            new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.UPLOAD_LOGO) );
     uploadLogoButton.fireOnMouseUp(false);
+    
+    uploadLogoIButton.init( GLOBAL.tool_tips_controller,
+                        new Point(22,22), 
+                        new OneStateButtonBackS(), 
+                        new Parameter( TOOL_TIPS.MY_UPLOADS_UPLOAD));
     
     
     /*
     addImageButton.init(controller,
             new Point(150,22), 
-            new OneStateButtonBack(), 
+            new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.ADD_PHOTO_TO_PAGE));
     addImageButton.fireOnMouseUp(false);
     
     uploadImageButton.init(controller,
             new Point(150,22), 
-            new OneStateButtonBack(), 
+            new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.UPLOAD_PHOTO));
     uploadImageButton.fireOnMouseUp(false);
     */
@@ -114,13 +152,35 @@ class LogosView extends PropertyView, implements IView{
     logoScrollbar.y = logosScrollPane.y;
     
     addChild(addLogoButton);
-    addLogoButton.x = 20;
-    addLogoButton.y = 218;
+    addLogoButton.x = 9;
+    addLogoButton.y = 214;
+    
+    addChild(addLogoIButton);
+    addLogoIButton.x = 9+154;
+    addLogoIButton.y = 214;
+    
+    
+    
     
     addChild(uploadLogoButton);
-    uploadLogoButton.x = 20;
-    uploadLogoButton.y = 242;
+    uploadLogoButton.x = 9;
+    uploadLogoButton.y = 246;
     
+    addChild(uploadLogoIButton);
+    uploadLogoIButton.x = 9+154;
+    uploadLogoIButton.y = 246;
+    
+    //fixedSizeInfo.x = uploadLogoIButton.x;
+  	//fixedSizeInfo.y = uploadLogoIButton.y;
+    //addChild(fixedSizeInfo);
+    
+    addLogoInfo.x = addLogoIButton.x;
+  	addLogoInfo.y = addLogoIButton.y;
+    addChild(addLogoInfo);
+    
+    uploadLogoInfo.x = uploadLogoIButton.x;
+  	uploadLogoInfo.y = uploadLogoIButton.y;
+    addChild(uploadLogoInfo);
 
     
 /*
@@ -181,9 +241,26 @@ class LogosView extends PropertyView, implements IView{
     logoScrollbar.setSize(logosPane.getFloat('height'), logosScrollPane.getFloat('mask_height'));
 
     uploadLogoButton.setText(TRANSLATION.upload_logo); 
-    uploadLogoButton.updateLabel();      
+    uploadLogoButton.updateLabel();  
+    
+    uploadLogoIButton.setText('?');    
+    uploadLogoIButton.updateLabel();
+        
     addLogoButton.setText(TRANSLATION.add_logo);    
-    addLogoButton.updateLabel();    
+    addLogoButton.updateLabel();  
+    
+    addLogoIButton.setText('?');    
+    addLogoIButton.updateLabel();
+    
+    selectButton.setText(TRANSLATION.my_uploads_button); 
+    
+    addLogoInfo.setContent( TOOL_TIPS.my_uploads_add_title,
+                            TOOL_TIPS.my_uploads_add_body ,
+                            TOOL_TIPS.my_uploads_add_link);
+                              
+    uploadLogoInfo.setContent( TOOL_TIPS.my_uploads_upload_title ,
+                              TOOL_TIPS.my_uploads_upload_body ,
+                              TOOL_TIPS.my_uploads_upload_link); 
     /*     
     uploadImageButton.setText(TRANSLATION.upload_image); 
     uploadImageButton.updateLabel();     
@@ -218,9 +295,9 @@ class LogosView extends PropertyView, implements IView{
         photosPane.y = -(photosPane.getFloat('height')-photosScrollPane.getFloat('mask_height')) * f;
       */
     }
-	}
-	
-	override public function getHeight():Int{
-		return 276;
-	}
+  }
+  
+  override public function getHeight():Int{
+    return 276;
+  }
 }

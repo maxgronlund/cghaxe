@@ -9,18 +9,19 @@ class SymbolsView extends VectorsView, implements IView{
     vectorsPane           = new SymbolsPane(symbolsController);
     verticalScrollbar     = new VerticalScrollbar(symbolsController, EVENT_ID.SYMBOL_SCROLL);
     Preset.addEventListener(EVENT_ID.SYMBOLS_LOADED, onVectorLoaded);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
   }
   
   override public function init():Void{
     //trace('init');     
     selectButton.init( controller,
               new Point(190,30), 
-              new SymbolsViewButton(), 
+              new ToolSelectionButton(), 
               new Parameter( EVENT_ID.SHOW_SYMBOLS));
     
     addVectorButton.init(controller,
             new Point(150,22), 
-            new AddSymbolButton(), 
+            new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.ADD_SYMBOL_TO_PAGE));
     
     super.init();
@@ -51,5 +52,10 @@ class SymbolsView extends VectorsView, implements IView{
         vectorsPane.y = -(vectorsPane.getFloat('height')-scrollPane.getFloat('mask_height')) * f;
       }
     }
+  }
+  private function onLoadDefaultTool(e:IKEvent):Void{
+    selectButton.setText(TRANSLATION.symbols_button);
+    addVectorButton.setText(TRANSLATION.add_symbol);
+    addVectorButton.updateLabel();
   }
 }

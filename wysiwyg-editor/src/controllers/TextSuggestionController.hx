@@ -22,7 +22,9 @@ class TextSuggestionController extends Controller, implements IController{
       }
       
       case EVENT_ID.ADD_TEXT_SUGGESTION:{
-        Designs.dispatchParameter(param);
+        trace('Add Text suggestion', param.getXml().toString());
+      //   TEXT_SUGGESTION.text = 'Type here';
+      //   Designs.dispatchParameter(param);
       }
       case EVENT_ID.SUGGESTION_SCROLL:{
         GLOBAL.text_suggestion_view.setFloat(EVENT_ID.SUGGESTION_SCROLL, param.getFloat());

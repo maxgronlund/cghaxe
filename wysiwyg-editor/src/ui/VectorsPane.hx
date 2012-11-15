@@ -28,18 +28,18 @@ class VectorsPane extends View, implements IView{
   	addChild(backdrop);
   }
 
-  override public function setParam(param:IParameter):Void{
-    
-    //switch ( param.getLabel() ){
-    //  case EVENT_ID.ADD_GREETING_BUTTON:{
-    //    param.setLabel(EVENT_ID.GREETING_SELECTED);
-    //    addButton(param);
-    //  }
-    //  case EVENT_ID.GREETING_SELECTED:{
-    //    selectButton( param.getInt());
-    //  }
-    //}
-  }
+  //override public function setParam(param:IParameter):Void{
+  //  
+  //  //switch ( param.getLabel() ){
+  //  //  case EVENT_ID.ADD_GREETING_BUTTON:{
+  //  //    param.setLabel(EVENT_ID.GREETING_SELECTED);
+  //  //    addButton(param);
+  //  //  }
+  //  //  case EVENT_ID.GREETING_SELECTED:{
+  //  //    selectButton( param.getInt());
+  //  //  }
+  //  //}
+  //}
   
   private function selectButton(id:Int):Void{
     if(id != selectedButton){

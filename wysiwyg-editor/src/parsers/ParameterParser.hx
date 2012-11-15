@@ -78,13 +78,13 @@ class ParameterParser
         case 'system_design':{
           GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
-          //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
+          GLOBAL.side_view.addView(GLOBAL.text_suggestion_view, 0,0,EVENT_ID.SHOW_TEXT_SUGGESTIONS);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.symbols_view, 0,0,EVENT_ID.SHOW_SYMBOLS);
-          GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
-          GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_MY_UPLOADS);
-          GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
-          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
+          //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
+          //GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_MY_UPLOADS);
+          //GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
+//          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
         
         case 'system_preset':{
@@ -96,19 +96,19 @@ class ParameterParser
           GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_DESIGNS);
           GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_MY_UPLOADS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
-          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
+//          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         } 
         
         case 'user_preset':{
           GLOBAL.side_view.addView(GLOBAL.color_view, 0,0, EVENT_ID.SHOW_COLOR_PICKERS);
           //trace('system_preset: ', params.system_preset);
           GLOBAL.side_view.addView(GLOBAL.text_view, 0,0,EVENT_ID.SHOW_TEXT);
-          //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.greetings_view, 0,0,EVENT_ID.SHOW_GREETINGS);
           GLOBAL.side_view.addView(GLOBAL.symbols_view, 0,0,EVENT_ID.SHOW_SYMBOLS);
+          //GLOBAL.side_view.addView(GLOBAL.designs_view, 0,0,EVENT_ID.SHOW_PAGE_DESIGN);
           GLOBAL.side_view.addView(GLOBAL.logos_view, 0,0,EVENT_ID.SHOW_MY_UPLOADS);
           GLOBAL.side_view.addView(GLOBAL.price_view, 0,0,EVENT_ID.SHOW_PRICES);
-          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
+//          GLOBAL.side_view.addView(GLOBAL.blind_view, 0,0,EVENT_ID.SHOW_BLIND_VIEW);
         }
 
         case 'system_preview':{

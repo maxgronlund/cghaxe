@@ -54,7 +54,7 @@ class PresetModel extends Model, implements IModel
 
   private function countPlaceholders(xml:Xml):Void{
 
-    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Counting Placeholders');
+    
     
     var placeholders:UInt = 0;
 
@@ -65,7 +65,8 @@ class PresetModel extends Model, implements IModel
         }
       }
     }
-
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Placeholders counted to:'+ Std.string(placeholders));
+    
     var param:IParameter        = new Parameter(EVENT_ID.PLACEHOLDER_COUNT);
     param.setInt(placeholders);
     dispatchParameter(param);
@@ -77,7 +78,6 @@ class PresetModel extends Model, implements IModel
   private function parsePreset(xml:Xml):Void{
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parse Preset');
     
-    
     for( preset in xml.elementsNamed("title") ) {
        GLOBAL.product_name = preset.firstChild().nodeValue.toString();
     }
@@ -85,6 +85,11 @@ class PresetModel extends Model, implements IModel
     for( language in xml.elementsNamed("language") ) {
        var languageParser:LanguageParser = new LanguageParser();
        languageParser.parse(language);
+    }
+    
+    for( tool_tips in xml.elementsNamed("tool-tips") ) {
+       var toolTipParser:ToolTipParser = new ToolTipParser();
+       toolTipParser.parse(tool_tips);
     }
 
     for( preset_quantity in xml.elementsNamed("preset-quantity") ) {
@@ -149,8 +154,19 @@ class PresetModel extends Model, implements IModel
     for(logos in xml.elementsNamed("logos")){
       dispatchXML(EVENT_ID.LOGOS_LOADED, logos);
     }
+    
     for(photos in xml.elementsNamed("photos")){
       dispatchXML(EVENT_ID.PHOTOS_LOADED, photos);
+    }
+    
+    for(print_types in xml.elementsNamed("print-types")){
+      //trace(print_types.toString());
+      dispatchXML(EVENT_ID.PRINT_TYPES_LOADED, print_types);
+    }
+    
+    for(text_suggestion in xml.elementsNamed("text-suggestion")){
+      //trace(text_suggestions.toString());
+      dispatchXML(EVENT_ID.TEXT_SUGGESTION_LOADED, text_suggestion);
     }
   }
   
@@ -192,6 +208,7 @@ class PresetModel extends Model, implements IModel
   
   private function parseXmlData(xml_data:Xml):Void{
     GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parsing XML Data');
+    
     var page_index:Int = 0;
   
     for(page in xml_data.elementsNamed("page") ) {

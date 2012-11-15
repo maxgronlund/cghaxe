@@ -1,7 +1,6 @@
 import flash.geom.Point;
 import flash.events.Event;
-import flash.display.BitmapData;
-import flash.display.Bitmap;
+
 
 class LoadProgressView extends View, implements IView
 {
@@ -43,7 +42,6 @@ class LoadProgressView extends View, implements IView
   
   private function onUpdateLoadProgress(e:IKEvent):Void{
 
-    
     count ++;
     if(count < 10){
       countInfo = '00' + Std.string(count) + ': '+ e.getString();
@@ -57,6 +55,7 @@ class LoadProgressView extends View, implements IView
   }
   
   private function onCloseLoadProgress(e:IKEvent):Void{
+    trace(e.getString());
     this.visible = false;
     
   }

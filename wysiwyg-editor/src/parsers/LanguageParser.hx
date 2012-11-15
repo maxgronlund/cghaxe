@@ -70,8 +70,8 @@ class LanguageParser
     for(digital_print_picker in xml_data.elementsNamed("laser-color-picker") ) 
       TRANSLATION.digital_print_picker = digital_print_picker.firstChild().nodeValue.toString();
       
-    for(full_color_button in xml_data.elementsNamed("full-color-button") ) 
-      TRANSLATION.full_color_button = full_color_button.firstChild().nodeValue.toString();
+    for(pms_4 in xml_data.elementsNamed("pms-4") ) 
+      TRANSLATION.pms_4 = pms_4.firstChild().nodeValue.toString();
 
     for(upload_image in xml_data.elementsNamed("upload-image") ) 
       TRANSLATION.upload_image = upload_image.firstChild().nodeValue.toString();
@@ -94,7 +94,7 @@ class LanguageParser
     for(line_space in xml_data.elementsNamed("line-space") ) 
       TRANSLATION.line_space = line_space.firstChild().nodeValue.toString();
 
-    for(font_size in xml_data.elementsNamed("font_-size") ) 
+    for(font_size in xml_data.elementsNamed("font-size") ) 
       TRANSLATION.font_size = font_size.firstChild().nodeValue.toString();
 
     for(font_align in xml_data.elementsNamed("font-align") ) 
@@ -135,6 +135,15 @@ class LanguageParser
       
     for(cliche in xml_data.elementsNamed("cliche") ) 
       TRANSLATION.cliche = cliche.firstChild().nodeValue.toString();
+      
+    for(add_symbol in xml_data.elementsNamed("add-symbol") ) 
+      TRANSLATION.add_symbol = add_symbol.firstChild().nodeValue.toString();
+
+    for(add_greeting in xml_data.elementsNamed("add-greeting") ) 
+      TRANSLATION.add_greeting = add_greeting.firstChild().nodeValue.toString();
+
+    for(add_design in xml_data.elementsNamed("add-design") ) 
+      TRANSLATION.add_design = add_design.firstChild().nodeValue.toString();
       
     GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Language Parsed');
 

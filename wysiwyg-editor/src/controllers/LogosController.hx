@@ -31,7 +31,7 @@ class LogosController extends Controller, implements IController{
       }
 
       case EVENT_ID.ADD_LOGO_TO_PAGE:{
-        // EVENT_ID.FULL_COLOR
+        // EVENT_ID.PMS4_COLOR
         GLOBAL.printType    = CONST.DIGITAL_PRINT;
         Logos.setParam(param);
       }

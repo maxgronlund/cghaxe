@@ -60,11 +60,12 @@ class TextSuggestionPane extends View, implements IView{
   
   private function addButton(param:IParameter	):Void{
 
-		
-		var placeholderTitle:String;
-
-		// get title from xml
-		for( title in param.getXml().elementsNamed("title") ) {
+    //trace(param.getXml().toString());
+    //return;
+    var placeholderTitle:String;
+    
+    // get title from xml
+    for( title in param.getXml().elementsNamed("title") ) {
       placeholderTitle = title.firstChild().nodeValue;
       param.setString(placeholderTitle);
     }

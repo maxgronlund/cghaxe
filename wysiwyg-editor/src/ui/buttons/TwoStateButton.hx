@@ -111,6 +111,10 @@ class TwoStateButton extends MouseHandler
   	param.setBool(b);
   }	
   
+  public function setState(b:Bool):Void{
+  	setOn(b);
+  }
+  
   public function getWidth():Float{
   	return multiStateImage.width/6;
   }

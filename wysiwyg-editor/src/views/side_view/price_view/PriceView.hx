@@ -3,7 +3,8 @@ import flash.events.Event;
 
 class PriceView extends PropertyView, implements IView{
   
-  private var productHeader:FormatedText;
+  private var priceTitle:FormatedText;
+//  private var productHeader:FormatedText;
   private var shopItemTitle:FormatedText;
   private var totalPriceLabel:FormatedText;
   private var totalPrice:FormatedText;
@@ -26,18 +27,19 @@ class PriceView extends PropertyView, implements IView{
   
   public function new(priceController:IController){	
     super(priceController);
-    //backdrop				              = new PriceViewBack();
+    //backdrop                    = new PriceViewBack();
     back                          = new Rectangle(190, 486, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);                       
-    productHeaderBack             = new Rectangle(190, 18, 0x000000, 0x999999, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
-    productHeader                 = new FormatedText('helvetica', '0.0', 11, false, 0xffffff);
+    productHeaderBack             = new Rectangle(190, 30, 0x000000, 0xAFAFAF, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+    priceTitle                    = new FormatedText('helvetica', '0.0', 14, false, 0xffffff);
+    //productHeader                 = new FormatedText('helvetica', '0.0', 11, false, 0xffffff);
                                   
-    shopItemTitle                 = new FormatedText('helvetica', '0.0', 11, false);
+    shopItemTitle                 = new FormatedText('helvetica', '0.0', 12, false);
     
     unitsLabel                    = new FormatedText('helvetica', '0.0', 11, false);
     unitTextFiels                 = new UnitTextField();
     
     shopItemPrice                 = new FormatedText('helvetica', '0.0', 11, false);
-    shopItemTitle.setColor(0xdedede);
+    //shopItemTitle.setColor(0xdedede);
 
     totalPriceLabel               = new FormatedText('helvetica', '0.0', 11, false);
     totalPrice                    = new FormatedText('helvetica', '0.0', 11, false);
@@ -58,7 +60,12 @@ class PriceView extends PropertyView, implements IView{
     buyNowButton.setFormat(0, 7, 0x000000, 'center');
     Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
     Preset.addEventListener(EVENT_ID.UPDATE_QUANTITY, onUpdateQuantity);
-	}
+	  Pages.addEventListener(EVENT_ID.CALCULATE_PRICE, calculatePrice);
+  }
+  
+  private function calculatePrice(e:Event): Void {
+    update('clearColumns', 0, '');
+  }
 	
 	private function onUpdateQuantity(e:KEvent):Void{
 	  
@@ -67,63 +74,72 @@ class PriceView extends PropertyView, implements IView{
 	}
 	
 	override public function onAddedToStage(e:Event):Void{
-	  
-    super.onAddedToStage(e);
+	  super.onAddedToStage(e);
     addChild(back);
-    back.y = 30;
+    back.y = 0;
     
     addChild(productHeaderBack);
     productHeaderBack.x   = 0;
-    productHeaderBack.y   = 30;
-    
-    addChild(productHeader);
-    productHeader.x       = marginLeft;
-    productHeader.y       = 30;
+    productHeaderBack.y   = 0;
+
+    addChild(priceTitle);
+    priceTitle.x            = marginLeft;
+    priceTitle.y            = 6;
 
     addChild(shopItemTitle);
     shopItemTitle.x       = marginLeft;
-    shopItemTitle.y       = 54;
+    shopItemTitle.y       = 40;
     
     addChild(unitsLabel);
     unitsLabel.x          = marginLeft;
-    unitsLabel.y          = 78;
+    unitsLabel.y          = 64;
     
     addChild(unitTextFiels);
     unitTextFiels.init();
     unitTextFiels.x       = 64;
-    unitTextFiels.y       = 78;
+    unitTextFiels.y       = 64;
     
-
     addChild(shopItemPrice);
     shopItemPrice.x       = 140;
-    shopItemPrice.y       = 78;
+    shopItemPrice.y       = 64;
 
     addChild(totalPriceLabel);
     totalPriceLabel.setLabel('');
     totalPriceLabel.x = marginLeft;
-    totalPriceLabel.y = 108;
+    totalPriceLabel.y = 94;
     
     addChild(totalPrice);
     totalPrice.setLabel('0');
     totalPrice.x = 140;
-    totalPrice.y = 108;
+    totalPrice.y = 94;
     
     addChild(buyNowButton);
-    buyNowButton.x = 45;
-    buyNowButton.y = totalPrice.y + 30;
-
+    buyNowButton.x = 20;
+    buyNowButton.y = totalPrice.y;
   }
   
   override public function init():Void{
     
-  	selectButton.init( controller,
+  	//selectButton.init( 
+  	//                    controller,
+    //                    new Point(190,30), 
+    //                    new PriceViewButton(), 
+    //                    new Parameter( EVENT_ID.SHOW_PRICES)
+    //                    
+    //                  );
+                      
+    selectButton.init( 
+                        controller,
                         new Point(190,30), 
                         new PriceViewButton(), 
-                        new Parameter( EVENT_ID.SHOW_PRICES));
+                        new Parameter( EVENT_ID.SHOW_PRICES)
+    
+                      );
+    
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     
     buyNowButton.init( controller,
-             new Point(100,30), 
+             new Point(150,30), 
              new OsButtonBack(), 
              new Parameter( EVENT_ID.BUY_NOW ) );
     buyNowButton.fireOnMouseUp(false);
@@ -131,31 +147,26 @@ class PriceView extends PropertyView, implements IView{
   }
   
   private function onLoadDefaultTool(e:IKEvent):Void{
-    productHeader.setLabel(TRANSLATION.card);
+    priceTitle.setLabel(TRANSLATION.price_button);
     unitsLabel.setLabel(TRANSLATION.units);
     totalPriceLabel.setLabel(TRANSLATION.total_price_label);
     buyNowButton.setText(TRANSLATION.buy_button);
     buyNowButton.updateLabel();    
     
   }
-  
-  //public function getIAlreadyHaveACliche():Hash{
-  //  return iAlreadyHaveACliche;
-  //}
+
   
   private function clearColumns():Void{
     for(i in 0...priceColumns.length){
       GLOBAL.iAlreadyHaveACliche.set(priceColumns[i].getTitle(), priceColumns[i].getIAlreadyHaveACliche());
       removeChild(priceColumns[i]);
     }
-   // GLOBAL.iAlreadyHaveACliche = iAlreadyHaveACliche;
     priceColumns = new Array();
   }
   
   override public function addColumn(model:IModel):Void{
 
     var price_column:PriceColumn = new PriceColumn(model.getString('page_name'));
-
     var haveACliche:Bool = GLOBAL.iAlreadyHaveACliche.get(price_column.getTitle());
     price_column.setIAlreadyHaveACliche(haveACliche);
     
@@ -169,6 +180,7 @@ class PriceView extends PropertyView, implements IView{
 
 	  price_column.set_amount_cliche(model.getInt('amount_cliche'));
     priceColumns.push(price_column);
+    
   }
   
   
@@ -195,31 +207,23 @@ class PriceView extends PropertyView, implements IView{
       default:
         return "";
     }
-	}
-	
-	//override public function setParam(param:IParameter):Void{
-	//  switch ( param.id )
-	//  {
-	//    case EVENT_ID.ADD_PRICE_COLUMN:{
-  //      addColumn(model);
-  //    }
-	//  }
-	//}
-	
-	override public function update(id:String, index:Int, value:String):Void{
-	  super.update(id,index,value);
-	  switch ( id )
-	  {
-	   case 'addAllPrices':
-	     addAllPrices();
-	   case 'clearColumns':
-	     clearColumns();
-	  }
-	}
-	
+  }
+  
+  
+  override public function update(id:String, index:Int, value:String):Void{
+    super.update(id,index,value);
+    switch ( id )
+    {
+     case 'addAllPrices':
+       addAllPrices();
+     case 'clearColumns':
+       clearColumns();
+    }
+  }
+  
   private function addAllPrices(){
     var total_price:Float = 0;
-    var y:Float = 120;
+    var y:Float = 108;
 
     shopItemTitle.setLabel(GLOBAL.product_name);
 
@@ -253,6 +257,9 @@ class PriceView extends PropertyView, implements IView{
 	  totalPrice.x = 180 - totalPrice.getWidth();
 	  
 	  buyNowButton.y = totalPrice.y + 30;
+	  
+	  back.height = 900;
+	  
   }
   
   
@@ -269,7 +276,7 @@ class PriceView extends PropertyView, implements IView{
       var foil_price:Float;
       var one_pms_color_price:Float;
       var two_pms_color_price:Float;
-      var full_color_price:Float;
+      var pms4_color_price:Float;
       var std_color_price:Float;
       
       for( units_xml in print_price_xml.elementsNamed("units")) {
@@ -284,14 +291,14 @@ class PriceView extends PropertyView, implements IView{
       for( two_pms_color_price_xml in print_price_xml.elementsNamed("two-pms-color")) {
         two_pms_color_price = Std.parseFloat(two_pms_color_price_xml.firstChild().nodeValue.toString());
       }
-      for( full_color_price_xml in print_price_xml.elementsNamed("full-color")) {
-        full_color_price = Std.parseFloat(full_color_price_xml.firstChild().nodeValue.toString());
+      for( pms4_color_price_xml in print_price_xml.elementsNamed("pms4-color")) {
+        pms4_color_price = Std.parseFloat(pms4_color_price_xml.firstChild().nodeValue.toString());
       }
       for( std_color_price_xml in print_price_xml.elementsNamed("std-color")) {
         std_color_price = Std.parseFloat(std_color_price_xml.firstChild().nodeValue.toString());
       }
       
-      prices.push(new PriceModel(units, foil_price, one_pms_color_price, std_color_price, full_color_price, two_pms_color_price));
+      prices.push(new PriceModel(units, foil_price, one_pms_color_price, std_color_price, pms4_color_price, two_pms_color_price));
     }
   }
   

@@ -8,7 +8,7 @@ class VectorsView extends PropertyView, implements IView{
   private var scrollPane:AView;
   private var vectorsPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
-  private var addVectorButton:OneStateButton;
+  private var addVectorButton:OneStateTextAndImageButton;
   
   public function new(greetingsController:IController){	
     super(greetingsController);
@@ -18,14 +18,15 @@ class VectorsView extends PropertyView, implements IView{
     scrollPane          = new ScrollPane(greetingsController);
     vectorsPane         = new GreetingsPane(greetingsController);
     verticalScrollbar   = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
-    addVectorButton     = new OneStateButton();
-    
+    addVectorButton     = new OneStateTextAndImageButton();
+    addVectorButton.setFormat(0, 3, 0x333333, 'center');
 
     Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
   }
   
   
   override public function init():Void{
+    
     addVectorButton.fireOnMouseUp(false);
   }
   

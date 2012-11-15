@@ -86,11 +86,9 @@ class SideView extends View, implements IView
   }
   
   override public function showView(id:String, b:Bool):Void{
-    trace(id);
-    //selectedView.update('deselect', 0 , 'na');
+
     posY = 0;
 
-    
     for( i in 0...views.length){
       views[i].y = posY;
       this.setChildIndex(views[i], this.numChildren - 1);
@@ -105,10 +103,10 @@ class SideView extends View, implements IView
         posY += SIZE.PROPERTY_BUTTON_HEIGHT;
       }
     }
-    if(b)
-      setChildIndex(selectedView, this.numChildren - 1);
+    if(b){
+      this.setChildIndex(selectedView, this.numChildren - 1);
+    }
   }
-  
   
   private function getIndex(viewId:String):Int{
     

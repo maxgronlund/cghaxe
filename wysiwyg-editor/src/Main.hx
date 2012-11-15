@@ -42,6 +42,7 @@ class Main
 //  private var selectionController:IController;
   private var sidebarController:IController;
   private var desktopController:IController;
+  private var toolTipsController:IController;
   
   // views
   private var applicationView:ApplicationView;
@@ -53,7 +54,7 @@ class Main
   private var greetingsView:AView;
   private var symbolsView:AView;
   private var logosView:AView;
-  private var blindView:AView;
+//  private var blindView:AView;
   private var addOnsView:AView;
   private var priceView:AView;
   private var menuView:AView;
@@ -139,6 +140,7 @@ class Main
     foilController		          = new FoilController();
     addOnsController	          = new AddOnsController();
     desktopController           = new DesktopController();
+    toolTipsController          = new ToolTipsController();
 //    selectionController         = new SelectionController();
     
     setGlobalControllers();     
@@ -153,7 +155,7 @@ class Main
     greetingsView               = new GreetingsView(greetingsController);
     symbolsView                 = new SymbolsView(symbolsController);
     logosView                   = new LogosView(logosController);
-    blindView                   = new BlindView(sidebarController);
+//    blindView                   = new BlindView(sidebarController);
     addOnsView                  = new AddOnsView(addOnsController);
     priceView                   = new PriceView(pricesController);
     menuView                    = new MenuView(menuController);
@@ -221,7 +223,7 @@ class Main
     GLOBAL.greetings_view             = greetingsView;
     GLOBAL.symbols_view               = symbolsView;
     GLOBAL.logos_view                 = logosView;
-    GLOBAL.blind_view                 = blindView;
+//    GLOBAL.blind_view                 = blindView;
     GLOBAL.foil			              		= foil;
   }
   
@@ -235,6 +237,7 @@ class Main
     GLOBAL.logos_controller           = logosController;
     GLOBAL.sidebar_controller         = sidebarController;
     GLOBAL.desktop_controller         = desktopController;
+    GLOBAL.tool_tips_controller       = toolTipsController;
     GLOBAL.menu_controller            = menuController;
 //    GLOBAL.selection_controller       = selectionController;
     
@@ -263,7 +266,7 @@ class Main
     greetingsView.init();
     symbolsView.init();
     logosView.init();
-    blindView.init();
+//    blindView.init();
     priceView.init();
     pageSelectorView.init();
     desktopView.init();

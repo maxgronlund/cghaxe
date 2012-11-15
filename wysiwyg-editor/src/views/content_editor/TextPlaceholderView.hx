@@ -413,10 +413,11 @@ class TextPlaceholderView extends APlaceholder {
     pms2Color                       = GLOBAL.pms2Color;
     laserColor                      = GLOBAL.laserColor;
     garamond                        = GLOBAL.garamond;
+    
+    
     setFontScreenColor();
     if(fontMovie != null){
       removeChild(fontMovie);
-      //trace("Removed Child fontMovie");
       fontMovie = null;
     }
     
@@ -678,6 +679,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function updateFocus():Void{
+    //trace('updateFocus');
     updatePrice();
     resizeBackdrop();
     selectBox.setFocus(focus);

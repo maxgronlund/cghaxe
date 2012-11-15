@@ -39,7 +39,7 @@ class DesktopView extends View, implements IView{
   	Application.addEventListener(EVENT_ID.ZOOM, onZoom);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
     Pages.addEventListener(EVENT_ID.PLACEHOLDER_LOADED, onPlaceholderLoaded);
-    Application.addEventListener(EVENT_ID.ALL_PHOTOS_LOADED, onAllImagesLoaded);
+    Application.addEventListener(EVENT_ID.ALL_IMAGES_LOADED, onAllImagesLoaded);
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
@@ -129,23 +129,22 @@ class DesktopView extends View, implements IView{
     placeholdersToLoad--;
     if(placeholdersToLoad == 0){
       Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Placeholders Loaded');
-      Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'foo');
+      Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'From DesktopView');
       setSizes();
     }
 
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
+
     if(placeholdersToLoad == 0) {
-      //placeholdersToLoad--;
-      setSizes();  
-      Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Backdrops Loaded');     
+      if( this.visible == false) 
+        setSizes();  
+      Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Backdrops Loaded No Placeholders to Load');     
     }
   }
   
   private function setSizes():Void{
-    
-//    trace('setSizes');
     
     sizeX = pagesView.width;
     sizeY = pagesView.height;

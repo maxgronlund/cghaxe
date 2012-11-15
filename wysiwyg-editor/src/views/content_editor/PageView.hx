@@ -79,8 +79,8 @@ class PageView extends View{
     var amount_custom_pms4_color:UInt = 0;
     var amount_foil_color:UInt        = 0;
     var amount_greetings:UInt         = 0;
-    var amount_digital_print:UInt       = 0;
-    var amount_cliche:UInt             = 0;
+    var amount_digital_print:UInt     = 0;
+    var amount_cliche:UInt            = 0;
     
     var empty_string:EReg = ~/^[\s]*$/;
     
@@ -223,7 +223,7 @@ class PageView extends View{
   }
   
   override public function onAddedToStage(e:Event): Void{
-    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page Added to Desktop');
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page Added');
     super.onAddedToStage(e);
     Application.addEventListener(EVENT_ID.DESELECT_PLACEHOLDERS, onDeselectPlaceholders);
     Designs.addEventListener(EVENT_ID.ADD_TEXT_SUGGESTION, onAddTextSuggestion);
@@ -300,19 +300,20 @@ class PageView extends View{
     if(pagePresetXML != null){
       for( page  in pagePresetXML.elementsNamed("page") ) {
         for( pos_x in page.elementsNamed("pos-x") ) {
-             this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
+          this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
         }
         for( pos_y in page.elementsNamed("pos-y") ) {
-             this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
+          this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
         }
         for( placeholder in page.elementsNamed("placeholder") ) {
-            parsePlaceholder(placeholder);
+          parsePlaceholder(placeholder);
         }
       }
     }
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page XML Parsed');
+    
     if( placeHolderCount == 0 && model.getInt('pageId') == 0){
-      Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'foo');
+      Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'From Last PageView');
     }
   }
   
@@ -322,6 +323,7 @@ class PageView extends View{
   
   private function parsePlaceholder(xml:Xml):Void{
     
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parse Placeholder');
     
     for( pos_x in xml.elementsNamed("pos-x") ) 
        posX =  Std.parseFloat(pos_x.firstChild().nodeValue);
@@ -334,7 +336,7 @@ class PageView extends View{
     for( plc_type in xml.elementsNamed("placeholder-type") ){
       placeholder_type = plc_type.firstChild().nodeValue;
     }
-
+    
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
@@ -342,11 +344,14 @@ class PageView extends View{
         parseTextPlaceholder(xml);
       case "bitmap_place_holder":
         parseBitmapPlaceholder(xml, posX, posY);
-      
-      default:
-        return;
+      default:{
+        trace('-------------------------------------------');
+        trace(' >>>>>>>> PLEASE SAVE THIS AGAIN <<<<<<<<<<');
+        trace('-------------------------------------------');
+        parseTextPlaceholder(xml);
+      }
+        
     }
-
   }
   
   override public function setString(id:String,s:String ): Void
@@ -374,6 +379,9 @@ class PageView extends View{
     var sizeX = -1;
     var sizeY = -1;
     var canResize = resizable;
+    
+    //if(GLOBAL.printType == 'foo')
+    //  ;
     
     for(foil_color in xml.elementsNamed("foil-color") ) 
       GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
@@ -403,6 +411,8 @@ class PageView extends View{
       var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize);
       placeholder.setSize(sizeX, sizeY);
     }
+    //trace('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    //trace(GLOBAL.printType);
   }
   
   private function addVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool):APlaceholder{
@@ -503,7 +513,6 @@ class PageView extends View{
       GLOBAL.garamond = gara.firstChild().nodeValue == 'true';
     }
     
-    
     addTextPlaceholder(posX,posY);
   }
   
@@ -512,6 +521,7 @@ class PageView extends View{
   }
   
   private function onAddTextSuggestion(e:IKEvent):Void {
+    trace('onAddTextSuggestion');
     addTextPlaceholder(10,10);
   }
   
@@ -548,6 +558,7 @@ class PageView extends View{
   }
   
   private function addTextPlaceholder(posX:Float, posY:Float):Void{
+    
     var placeholder:APlaceholder		= new TextPlaceholderView(this, placeholders.length, model, TEXT_SUGGESTION.text);
     placeholder.x = posX;
   	placeholder.y = posY;
@@ -784,7 +795,7 @@ class PageView extends View{
   
   private function hideMaskErrorHandler(Event:IOErrorEvent):Void {
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'ERROR Loading Hide Mask');
-      trace("ioErrorHandler: " + Event);
+    trace("ioErrorHandler: " + Event);
   }
   
   private function onLoadHideMaskComplete(e:Event):Void{
@@ -801,15 +812,16 @@ class PageView extends View{
   }
   
   private function allImagesLoaded():Void{
-    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Page Images Loaded');
+    
+    var page_id = model.getInt('pageId');
+    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Images Loaded on Page: '+Std.string(page_id));
     Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
-    if( model.getInt('pageId') == 0){
+    
+    if( page_id == 0){
       GLOBAL.size_x = backdrop.width;
       GLOBAL.size_y = backdrop.height;
-     
-      Application.setString(EVENT_ID.ALL_PHOTOS_LOADED, 'foo');
+      Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
       parsePagePresetXml();
-
       var param = new Parameter(EVENT_ID.CENTER_PAGE);
       param.setInt(0);
       Application.dispatchParameter(param);
@@ -822,7 +834,7 @@ class PageView extends View{
   
   private function pageDesignImageLoaded():Void{
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page Design Backdrop Loaded');
-    Application.setString(EVENT_ID.ALL_PHOTOS_LOADED, 'foo');
+    Application.setString(EVENT_ID.ALL_IMAGES_LOADED, 'foo');
   }
   
   public function useHideMask(b:Bool):Void{

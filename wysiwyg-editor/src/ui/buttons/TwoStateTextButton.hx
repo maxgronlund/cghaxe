@@ -124,7 +124,6 @@ class TwoStateTextButton extends MouseHandler
 	public function enable(b:Bool):Void{
 	  this.alpha = b ? 1.0 : 0.2;
 	  enableMouse(b);
-	  //trace('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++',b);
 	}
 	
 

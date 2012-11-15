@@ -47,7 +47,7 @@ class PagesView extends View, implements IView{
       pages[i].visible = false;
     }
    stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
-   Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Pages Added to Desktop');
+   Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Pages Added to Stage');
   }
   
   private function removePages():Void{

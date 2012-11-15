@@ -9,19 +9,21 @@ class GreetingsView extends VectorsView, implements IView{
     vectorsPane           = new GreetingsPane(greetingsController);
     verticalScrollbar     = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
     Preset.addEventListener(EVENT_ID.GREETINGS_LOADED, onVectorLoaded);
+    Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
   }
   
   override public function init():Void{
                            
     selectButton.init( controller,
               new Point(190,30), 
-              new GreetingsViewButton(), 
+              new ToolSelectionButton(), 
               new Parameter( EVENT_ID.SHOW_GREETINGS));
     
     addVectorButton.init(controller,
             new Point(150,22), 
-            new AddGreetingButton(), 
+            new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.ADD_GREETING_TO_PAGE));
+    addVectorButton.fireOnMouseUp(false);
     
     super.init();
   }
@@ -50,5 +52,10 @@ class GreetingsView extends VectorsView, implements IView{
       }
     }
 	}
+	private function onLoadDefaultTool(e:IKEvent):Void{ 
+    selectButton.setText(TRANSLATION.greetings_button);
+    addVectorButton.setText(TRANSLATION.add_greeting);
+    addVectorButton.updateLabel();  
+  }
 }
 

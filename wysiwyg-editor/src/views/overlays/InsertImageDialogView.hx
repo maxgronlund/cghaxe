@@ -1,7 +1,5 @@
 import flash.geom.Point;
 import flash.events.Event;
-import flash.display.BitmapData;
-import flash.display.Bitmap;
 
 class InsertImageDialogView extends View, implements IView
 {

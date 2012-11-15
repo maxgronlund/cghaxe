@@ -74,13 +74,13 @@ class EVENT_ID  {
   public static inline var PAGEDESIGN_FILE                  = "pagedesign_file";
   public static inline var PASS_DESIGN_FILE:String          = "pass_design_file";
   public static inline var PAGE_DESIGNS_LOADED:String       = "page_designs_loaded";
-//  public static inline var SHOW_PAGE_DESIGN:String          = "show_page_designs";
+//  public static inline var SHOW_PAGE_DESIGN:String        = "show_page_designs";
 
   
   public static inline var DESKTOP_VIEW_MOVE                = "desktop_view_move";
   
   public static inline var PAGE_BACKDROP_LOADED:String      = "page_backdrop_loaded";
-  public static inline var ALL_PHOTOS_LOADED:String             = "images_loaded";
+  public static inline var ALL_IMAGES_LOADED:String         = "ALL_IMAGES_LOADED";
   
   
 //  public static inline var PRESET_FILE_URL                  = "preset_file_url";
@@ -163,12 +163,13 @@ class EVENT_ID  {
   // side views                                              
   public static inline var SHOW_ADD_ONS                     = "show_add_ons";
   public static inline var SHOW_PRICES                      = "show_prices";
-  public static inline var SHOW_TEXT:String                 = "text_view";
+  public static inline var SHOW_TEXT:String                 = "show_text_view";
   public static inline var SHOW_GREETINGS:String            = "show_greetings";
   public static inline var SHOW_SYMBOLS:String              = "show_symbols";
   public static inline var SHOW_MY_UPLOADS:String           = "show_my_uploads";
   public static inline var SHOW_DESIGNS:String              = "show_designs";
   public static inline var SHOW_TEXT_SUGGESTIONS:String     = "show_text_suggestion_view";
+  public static inline var TEXT_SUGGESTION_LOADED:String    = "text_suggestion_loaded";
   public static inline var SHOW_COLOR_PICKERS:String        = "show_color_pickers";
   public static inline var UPDATE_SIDE_VIEWS:String         = "update_side_views";
   public static inline var BUILD_PAGE_DESIGNS:String        = "buile_page_designs";
@@ -178,9 +179,8 @@ class EVENT_ID  {
   
   
   public static inline var USE_GARAMOND:String               = "use_garamond"; 
-  public static inline var FULL_COLOR:String                 = "full_color";                                                    
+  public static inline var PMS4_COLOR:String                 = "PMS4_COLOR";                                                    
   public static inline var SHOW_FOIL:String                  = "foil_view";
-/*  public static inline var SHOW_GARAMOND:String              = "garamond_vies";*/
   public static inline var SHOW_IMAGE:String                 = "image_view";
   public static inline var SHOW_LOGO:String                  = "logo_view";
   public static inline var SHOW_BLIND_VIEW:String            = "blind_view";
@@ -237,7 +237,7 @@ class EVENT_ID  {
   
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";
-  public static inline var PHOTOS_LOADED:String               = "images_loaded";
+  public static inline var PHOTOS_LOADED:String               = "photos_loaded";
   public static inline var LOGO_SCROLL                        = "logo_scroll";
   public static inline var PHOTO_SCROLL                       = "image_scroll";
   public static inline var ADD_LOGO_BUTTON                    = "add_logo_button";
@@ -277,6 +277,8 @@ class EVENT_ID  {
   public static inline var UPDATE_LOAD_PROGRESS               = "update_load_progress";
   public static inline var CLOSE_LOAD_PROGRESS                = "close_load_progress";
   public static inline var UPDATE_TOOL_SIZES                  = "update_tool_sizes";
+  
+  public static inline var PRINT_TYPES_LOADED                 = "print_types_loaded";
 	
 	
 }

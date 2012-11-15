@@ -16,9 +16,9 @@ class FontPane extends View, implements IView{
 	
   public function new(textController:IController){	
     super(textController);
-    backdrop				= new TestBack();
-    bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
-    backdrop				= new Bitmap(bmpData);
+    //backdrop				= new TestBack();
+    //bmpData 				= new BitmapData(172,20,false, COLOR.SCROLLPANE );
+    //backdrop				= new Bitmap(bmpData);
     
     fontButtons = new Vector<OneStateButton>();
     buttonIndex	= 0;
@@ -36,7 +36,7 @@ class FontPane extends View, implements IView{
   
   override public function onAddedToStage(e:Event):Void{
     super.onAddedToStage(e);
-    addChild(backdrop);
+  //  addChild(backdrop);
     //addButtons();
     
   }
@@ -46,7 +46,6 @@ class FontPane extends View, implements IView{
   }
   
   private function addButtons():Void{
-
    switch(TRANSLATION.name){
      case 'se', 'dk', 'en', 'de', 'fi', 'no', 'ru': {
        addButton( new AvantGardeGothicButton(), SystemFonts.avant_garde_gothic);
@@ -107,7 +106,7 @@ class FontPane extends View, implements IView{
        addButton( new VolanteButton(), SystemFonts.volante );
      }
    }
-    backdrop.height = this.height;	
+    //backdrop.height = this.height;  
   }
   
   private function addButton(	bmp:Bitmap, fontPackage:FontPackage):Void{

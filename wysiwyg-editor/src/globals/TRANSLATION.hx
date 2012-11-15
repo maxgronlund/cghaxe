@@ -22,10 +22,11 @@ class TRANSLATION  {
   public static var custom_pms_2:String;
   public static var foil_color_picker:String;
   public static var digital_print_picker:String;
-  public static var full_color_button:String;
+  public static var pms_4:String;
   public static var color_button:String;
   public static var print_button:String;
   public static var symbols_button:String;
+  public static var add_symbol:String;
   public static var price_button:String;
   public static var my_uploads_button:String;
   public static var line_space:String;
@@ -43,6 +44,11 @@ class TRANSLATION  {
   public static var units:String;
   public static var logo:String;
   public static var cliche:String;
+  public static var add_greeting:String;
+  public static var add_design:String;
+  
+  
+
   
 
 }

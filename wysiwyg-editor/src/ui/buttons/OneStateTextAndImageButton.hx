@@ -35,16 +35,17 @@ class OneStateTextAndImageButton extends OneStateButton
   public function setText(s:String):Void{
     labelText = s;
   }
+  
   public function updateLabel():Void{
     formattedText.setLabel(labelText);
     alignText();
   }
+  
   public function setFormat(posX:Int, posY:Int, color:Int, align:String = 'left'):Void{
     this.posX   = posX;
     this.posY   = posY;
     this.color  = color;
     this.align  = align;
-    
     
   }
   

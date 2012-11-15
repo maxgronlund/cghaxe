@@ -69,7 +69,7 @@ class GLOBAL  {
   public static var desktop_view:IView;
   public static var grid_view:IView;
   public static var selection_view:IView;
-  public static var blind_view:AView;
+//  public static var blind_view:AView;
   public static var foil:Foil;
   public static var preset_id:String;
   public static var preset_shop_item_id:String;
@@ -101,6 +101,7 @@ class GLOBAL  {
   public static var desktop_controller:IController;
   public static var sibling_controller:IController;
   public static var menu_controller:IController;
+  public static var tool_tips_controller:IController;
 //  public static var selection_controller:IController;
   
   // zoom and pos

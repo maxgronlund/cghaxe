@@ -42,17 +42,18 @@ class ApplicationModel extends Model, implements IModel
         startLoadSeq(); //!!! <-- remove param
       }
       // triggered when all images is loaded
-      case EVENT_ID.ALL_PHOTOS_LOADED: {
-        dispatchParameter(new Parameter(EVENT_ID.ALL_PHOTOS_LOADED));
+      case EVENT_ID.ALL_IMAGES_LOADED: {
+        dispatchParameter(new Parameter(EVENT_ID.ALL_IMAGES_LOADED));
         loadSeq();
       }
       case EVENT_ID.UPDATE_LOAD_PROGRESS:{
         loadProgress(s);
       }
       case EVENT_ID.CLOSE_LOAD_PROGRESS:{
+        loadProgress(s);
         var param = new Parameter(EVENT_ID.CLOSE_LOAD_PROGRESS);
-         param.setString(s);
-         dispatchEvent(new KEvent(param.getLabel(),param));
+        param.setString(s);
+        dispatchEvent(new KEvent(param.getLabel(),param));
       }
     }
   }
@@ -100,6 +101,7 @@ class ApplicationModel extends Model, implements IModel
                       //'parse preset price',
                       'add pages to stage',
                       'set defaults',
+                      'show fonts',
                       'load custom pms',
                       'add_scroll_bars'
                       //'init zoom'

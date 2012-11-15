@@ -222,9 +222,6 @@ class PagesModel extends Model, implements IModel {
   }
   
   override public function calculatePrice():Void{
-    //trace("clearColumns");
-    GLOBAL.price_view.update('clearColumns', 0, '');
-    //trace("CALCULATE_PRICE");
     dispatchEvent(new Event(EVENT_ID.CALCULATE_PRICE));
   }
   

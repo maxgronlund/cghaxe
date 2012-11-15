@@ -18,7 +18,7 @@ class ColorController extends Controller, implements IController{
       case EVENT_ID.PMS2_COLOR_SELECTED:{ onPms2ColorSelected(param);}
       case EVENT_ID.UPDATE_PMS1:{ updatePms1Color(param);}
       case EVENT_ID.UPDATE_PMS2:{ updatePms2Color(param);}
-      case EVENT_ID.FULL_COLOR:{onFullColorSelected(param);}
+      case EVENT_ID.PMS4_COLOR:{onFullColorSelected(param);}
     }	
   }
 

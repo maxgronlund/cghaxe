@@ -31,8 +31,8 @@ class PriceColumn extends MovieClip {
   	
   	total_label         = new FormatedText('helvetica', 'total', 11, false);
   	marginLeft          = 8;
-  	pageHeaderBack      = new Rectangle(190, 18, 0x000000, 0xC8C8C8, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
-  	pageTitle           = new FormatedText('helvetica', '0.0', 11, false, 0x555555);
+  	pageHeaderBack      = new Rectangle(190, 18, 0x000000, 0xAFAFAF, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+  	pageTitle           = new FormatedText('helvetica', '0.0', 11, false, 0xFFFFFF);
   	
 	}
 	

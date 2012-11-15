@@ -127,6 +127,7 @@ class VectorPlaceholderView extends APlaceholder {
     sizeX                             = 0;
     sizeY                             = 0;
     canResize                         = false;
+
   }
     
   override public function getBitmapMask():Bitmap {

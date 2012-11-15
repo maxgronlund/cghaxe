@@ -41,6 +41,7 @@ class View extends AView{
     addChild(view);
     view.x = posX;
     view.y = posY;
+    this.setChildIndex(view, this.numChildren - 1);
   }
   
   override public function onAddedToStage(e:Event):Void{

@@ -53,7 +53,7 @@ class OnePrice extends MovieClip {
    	   return TRANSLATION.custom_pms_2;
 	     
 	   case 'one-pms-color-4':
-   	   return TRANSLATION.logo;
+   	   return TRANSLATION.pms_4;
 	     
 	   case 'std-color':
 	     return TRANSLATION.standard_pms;

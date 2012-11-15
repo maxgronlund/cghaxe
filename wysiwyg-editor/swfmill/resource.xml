@@ -5,42 +5,49 @@
     <library> 
 	
       <!-- buttons -->
-      <!-- V 2.0 -->
+
+
       <bitmap id="AddOnsButton" import="library/images/add_ons_view_button.png" />
-      <bitmap id="AddGreetingButton" import="library/images/add_greeting_button.png" />
+<!--      <bitmap id="AddGreetingButton" import="library/images/add_greeting_button.png" />-->
       <bitmap id="AddPlaceholderButton" import="library/images/add_placeholder_button.png" />
       <bitmap id="AddPageDesignButton" import="library/images/add_page_design_button.png" />
-      <bitmap id="AddSymbolButton" import="library/images/add_symbol_button.png" />
-      <bitmap id="AddLogoButton" import="library/images/add_logo_button.png" />
+<!--      <bitmap id="AddSymbolButton" import="library/images/add_symbol_button.png" />-->
+<!--      <bitmap id="AddLogoButton" import="library/images/add_logo_button.png" />-->
       <bitmap id="BuyButtonBitmap" import="library/images/buy_button.png" />
       <bitmap id="CardButton" import="library/images/card_button.png" />
       <bitmap id="ColorViewButton" import="library/images/colors_view_button.png" />
-      <bitmap id="CreateTextfieldButton" import="library/images/create_textfield_button.png" />
-      <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
+<!--      <bitmap id="CreateTextfieldButton" import="library/images/create_textfield_button.png" /> -->
+<!--      <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" /> -->
       <bitmap id="DecorationsViewButton" import="library/images/decorations_view_button.png" />
       <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
       <bitmap id="FoilViewButton" import="library/images/foil_view_button.png" />
-      <bitmap id="FullColorButton" import="library/images/full_color_button.png" />
+      <bitmap id="Pms4Button" import="library/images/pms_4.png" />
       <bitmap id="GarmondPrintButton" import="library/images/garamond_button.png" />
-      <bitmap id="GreetingsViewButton" import="library/images/greetings_view_button.png" />
+<!--      <bitmap id="GreetingsViewButton" import="library/images/greetings_view_button.png" /> -->
       <bitmap id="GridButton" import="library/images/grid_button.png" />
       <bitmap id="InsertButton" import="library/images/insert_button.png" />
-      <bitmap id="LogoViewButton" import="library/images/logo_view_button.png" />
+<!--      <bitmap id="LogoViewButton" import="library/images/logo_view_button.png" /> -->
       <bitmap id="MaskButton" import="library/images/mask_button.png" />
-      <bitmap id="MoveButton" import="library/images/move_button.png" />
-      <bitmap id="MoveButton" import="library/images/move_button.png" />
-      <bitmap id="OneStateButtonBack" import="library/images/one_state_button_back.png" />
+<!--      <bitmap id="MoveButton" import="library/images/move_button.png" />-->
+<!--      <bitmap id="MoveButton" import="library/images/move_button.png" />-->
+      <bitmap id="OneStateButtonBackL" import="library/images/one_state_button_back_l.png" />
+      <bitmap id="OneStateButtonBackL2State" import="library/images/one_state_button_back_l_2_state.png" />
+      <bitmap id="OneStateButtonBackM" import="library/images/one_state_button_back_m.png" />
+      <bitmap id="OneStateButtonBackS" import="library/images/one_state_button_back_s.png" />
       <bitmap id="OsButtonBack" import="library/images/os_button.png" />
       <bitmap id="PlaceholderButton" import="library/images/placeholder_button.png" />
       <bitmap id="PriceViewButton" import="library/images/price_view_button.png" />
       <bitmap id="SaveButtonBitmap" import="library/images/save_button.png" />
-      <bitmap id="SymbolsViewButton" import="library/images/symbols_view_button.png" />
+<!--      <bitmap id="SymbolsViewButton" import="library/images/symbols_view_button.png" /> -->
       <bitmap id="TextAlignLeftButton" import="library/images/text_align_left.png" />
       <bitmap id="TextAlignCenterButton" import="library/images/text_align_center.png" />
       <bitmap id="TextAlignRightButton" import="library/images/text_align_right.png" />
       <bitmap id="TextButton" import="library/images/text_button.png" />
-      <bitmap id="TextViewButton" import="library/images/text_view_button.png" />
+<!--      <bitmap id="TextViewButton" import="library/images/text_view_button.png" /> -->
       <bitmap id="TrashButton" import="library/images/trash_button.png" />
+      
+      <bitmap id="ToolSelectionButton" import="library/images/tool_selection_button.png" />
+      
       <bitmap id="ZoomTo100Button" import="library/images/zoom_100_button.png" />
       <bitmap id="ZoomInButton" import="library/images/zoom_in_button.png" />
       <bitmap id="ZoomOutButton" import="library/images/zoom_out_button.png" />
