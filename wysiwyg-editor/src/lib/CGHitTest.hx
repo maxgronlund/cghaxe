@@ -17,12 +17,27 @@ class CGHitTest
 	
 	public function textFieldHitBitmap(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
 	{
+	  
 		return textFieldHitBitmapPixelCount(textField, textFieldX, textFieldY, bitmapMask, bitmapMaskX, bitmapMaskY) >= pixelHitAmount;
 	}
 	
-	public function bitmapHitBitmapMask(bitmap:Bitmap, bitmapX:Int, bitmapY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
+	public function bitmapHitBitmapMask(bitmap:Bitmap, bitmapX:Int, bitmapY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int, bitmapScale:Float=1.0)
 	{
-		return bitmapDataHitBitmapDataMaskPixelCount(bitmap.bitmapData, bitmapX, bitmapY, bitmapMask.bitmapData, bitmapMaskX, bitmapMaskY) >= pixelHitAmount;
+	  var hit:Bool = false;
+	  
+  	if((bitmapX-(bitmap.width*bitmapScale*4)) > bitmapMaskX)
+  	  hit = true;
+  	else if((bitmapY-(bitmap.height*bitmapScale*4)) > bitmapMaskY)
+    	hit = true;
+    else if(bitmapX < (bitmapMaskX-(bitmapMask.width/2.08)))
+      hit = true;
+    else if(bitmapY < (bitmapMaskY-(bitmapMask.height/2.08)))
+    	hit = true;
+  	
+  	if(hit == false)
+  	  hit = bitmapDataHitBitmapDataMaskPixelCount(bitmap.bitmapData, bitmapX, bitmapY, bitmapMask.bitmapData, bitmapMaskX, bitmapMaskY, bitmapScale) >= pixelHitAmount;
+  	  
+		return hit;
 	}
 	
   public function textFieldHitBitmapPixelCount(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
@@ -48,14 +63,15 @@ class CGHitTest
   	return count;
   }
   
-  public function bitmapDataHitBitmapDataMaskPixelCount(bitmapData:BitmapData, bitmapX:Int, bitmapY:Int, bitmapDataMask:BitmapData, maskX:Int, maskY:Int)
+  public function bitmapDataHitBitmapDataMaskPixelCount(bitmapData:BitmapData, bitmapX:Int, bitmapY:Int, bitmapDataMask:BitmapData, maskX:Int, maskY:Int, bitmapScale:Float=1.0)
   {
     maskX = 0;
     maskY = 0;
     var count = 0;
+    var tolerance:UInt = 0xFF444444;
     //var non_transparent_pixels = 0;
     
-    var hitColor:UInt = 0xFF000000;
+    //var hitColor:UInt = 0xFF000000;
     
     for(x in 0...bitmapData.width)
     {
@@ -65,10 +81,10 @@ class CGHitTest
     		{
     		  //non_transparent_pixels += 1;
     		  
-    		  var pixelX:Int = Std.int((x-bitmapX+maskX)*(150/71));
-    			var pixelY:Int = Std.int((y-bitmapY+maskY)*(150/72));
+    		  var pixelX:Int = Std.int((((x*bitmapScale*4)-bitmapX)+maskX)*(150/71));
+    			var pixelY:Int = Std.int((((y*bitmapScale*4)-bitmapY)+maskY)*(150/72));
     		  
-    			if(bitmapDataMask.getPixel32(pixelX, pixelY) == hitColor)
+    			if(bitmapDataMask.getPixel32(pixelX, pixelY) < tolerance)
     			{
     				count = count + 1;
     			}

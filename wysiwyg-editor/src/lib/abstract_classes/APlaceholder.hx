@@ -15,6 +15,10 @@ class APlaceholder extends Sprite{
 
   }
   
+  public function getScale():Float{
+	  return 1.0;
+	}
+  
   public function calculateAnchorPoint(): Float {
     trace("calculateAnchorPoint: must be overriden in a subclass");
     return 0.0;

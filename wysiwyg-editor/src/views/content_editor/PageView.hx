@@ -646,7 +646,7 @@ class PageView extends View{
   }
   
   private function hitTestVectorPlaceholder():Void {
-    if(GLOBAL.hitTest.bitmapHitBitmapMask(inFocus.getBitmapMask(), -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0))
+    if(GLOBAL.hitTest.bitmapHitBitmapMask(inFocus.getBitmapMask(), -Std.int(inFocus.x*(72/150)), -Std.int(inFocus.y*(72/150)), guideMask, 0, 0, inFocus.getScale()))
       inFocus.alert(true);
     else
       inFocus.alert(false);

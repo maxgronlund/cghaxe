@@ -77,6 +77,8 @@ class VectorPlaceholderView extends APlaceholder {
   private var selectBox:SelectBox;
   private var widthHeightRatio:Float;
   private var canResize:Bool;
+  private var originalWidth:Float;
+  private var originalHeight:Float;
 
  
   public function new(pageView:PageView, id:Int, model:IModel, url:String, canResize:Bool){	
@@ -339,6 +341,9 @@ class VectorPlaceholderView extends APlaceholder {
     var scale:Float = 0.25;
     addChild(vectorMovie);
     
+    originalWidth = vectorMovie.width;
+    originalHeight = vectorMovie.height;
+    
     default_colorTransform = vectorMovie.transform.colorTransform;
     vectorMovie.width *= scale;
     vectorMovie.height *= scale;
@@ -414,6 +419,10 @@ class VectorPlaceholderView extends APlaceholder {
     
     selectBox.resizeBackdrop(vectorMovie.width, vectorMovie.height, 0, 0);
   }
+  
+  override public function getScale():Float{
+	  return vectorMovie.width/originalWidth;
+	}
   
   override public function setSize(sizeX:Float, sizeY:Float):Void{
 

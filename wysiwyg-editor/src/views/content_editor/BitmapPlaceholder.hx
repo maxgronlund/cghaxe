@@ -54,6 +54,8 @@ class BitmapPlaceholder extends APlaceholder{
   private var foilShadow:Sprite;
   private var foilShine:Sprite;
   private var foilBitmapDataForOverlay:BitmapData;
+  private var originalBackdropWidth:Float;
+  private var originalBackdropHeight:Float;
   
   private var colorTransform:ColorTransform;
   private var default_colorTransform:ColorTransform;
@@ -219,6 +221,9 @@ class BitmapPlaceholder extends APlaceholder{
     imageLoader.contentLoaderInfo.removeEventListener(Event.COMPLETE, onLoadImageComplete);
     backdrop = e.target.loader.content;
     
+    originalBackdropWidth = backdrop.width;
+    originalBackdropHeight = backdrop.height;
+    
     backdrop.scaleX       *= 0.5;
     backdrop.scaleY       *= 0.5;
 
@@ -262,6 +267,10 @@ class BitmapPlaceholder extends APlaceholder{
         foilify(foilColor);
       }
     }
+	}
+	
+	override public function getScale():Float{
+	  return backdrop.width/originalBackdropWidth;
 	}
 	
 	override public function setSize(sizeX:Float, sizeY:Float):Void{
