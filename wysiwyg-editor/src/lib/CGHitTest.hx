@@ -18,10 +18,10 @@ class CGHitTest
 	public function textFieldHitBitmap(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
 	{
 	  
-		return textFieldHitBitmapPixelCount(textField, textFieldX, textFieldY, bitmapMask, bitmapMaskX, bitmapMaskY) >= pixelHitAmount;
+		return textFieldHitBitmapPixel(textField, textFieldX, textFieldY, bitmapMask, bitmapMaskX, bitmapMaskY);
 	}
 	
-	public function bitmapHitBitmapMask(bitmap:Bitmap, bitmapX:Int, bitmapY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int, bitmapScale:Float=1.0)
+	public function bitmapHitBitmapMask(bitmap:Bitmap, bitmapX:Int, bitmapY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int, bitmapScale:Float=0.25)
 	{
 	  var hit:Bool = false;
 	  
@@ -40,30 +40,18 @@ class CGHitTest
 		return hit;
 	}
 	
-  public function textFieldHitBitmapPixelCount(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
+  public function textFieldHitBitmapPixel(textField:TextField, textFieldX:Int, textFieldY:Int, bitmapMask:Bitmap, bitmapMaskX:Int, bitmapMaskY:Int)
   {
     
     /// The bounds and The Matrix parametres are IMPORTANT
     var bounds = textField.getBounds(textField);
   	var textFieldSnapshot:BitmapData = new BitmapData(Std.int(bounds.width+0.5), Std.int(bounds.height+0.5), true, 0x00000000);   
   	textFieldSnapshot.draw(textField, new Matrix(1,0,0,1,-bounds.x,-bounds.y));
-  	
-  	//// Show the generated bitmap from textfield  used in hittest
-  	//if( test_tmp != null)
-  	//  flash.Lib.current.removeChild(test_tmp);
-  	//test_tmp = new Bitmap(textFieldSnapshot);
-  	//test_tmp.x = 100;
-  	//test_tmp.y = 100;
-  	//flash.Lib.current.addChild(test_tmp);
-  	
-  	var bitmapDataMask:BitmapData = bitmapMask.bitmapData;
   			
-  	var count = bitmapDataHitBitmapDataMaskPixelCount(textFieldSnapshot, textFieldX, textFieldY, bitmapDataMask, bitmapMaskX, bitmapMaskY);
-  	
-  	return count;
+  	return bitmapHitBitmapMask(new Bitmap(textFieldSnapshot), textFieldX, textFieldY, bitmapMask, bitmapMaskX, bitmapMaskY);
   }
   
-  public function bitmapDataHitBitmapDataMaskPixelCount(bitmapData:BitmapData, bitmapX:Int, bitmapY:Int, bitmapDataMask:BitmapData, maskX:Int, maskY:Int, bitmapScale:Float=1.0)
+  public function bitmapDataHitBitmapDataMaskPixelCount(bitmapData:BitmapData, bitmapX:Int, bitmapY:Int, bitmapDataMask:BitmapData, maskX:Int, maskY:Int, bitmapScale:Float=0.25)
   {
     maskX = 0;
     maskY = 0;
