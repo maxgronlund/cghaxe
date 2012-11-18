@@ -403,8 +403,6 @@ class PageView extends View{
     
     for(print_type in xml.elementsNamed("print-type") ) {
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
-      if(GLOBAL.printType == 'digital_print')
-        GLOBAL.printType = CONST.STD_PMS_COLOR;
     }
       
       
@@ -458,8 +456,6 @@ class PageView extends View{
     
     for(print_type in xml.elementsNamed("print-type") ) {
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
-      if(GLOBAL.printType == 'digital_print')
-        GLOBAL.printType = CONST.STD_PMS_COLOR;
     }
     
     for( url in xml.elementsNamed("url") ) {

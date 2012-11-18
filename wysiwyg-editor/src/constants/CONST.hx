@@ -15,7 +15,7 @@ class CONST {
   public static inline var CUSTOM_PMS4_COLOR          = "custom_pms4_color";
   public static inline var FOIL_COLOR                 = "foil_color";
   public static inline var GARAMOND                   = "garamond";
-  public static inline var DIGITAL_PRINT              = "digital_print_2";
+  public static inline var DIGITAL_PRINT              = "digital_print";
   public static inline var PRINT_TYPES                = "print_types";
   public static inline var XML_FILE                   = "xml_file";
 
