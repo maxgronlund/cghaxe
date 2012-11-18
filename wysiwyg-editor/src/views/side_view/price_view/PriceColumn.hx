@@ -103,9 +103,9 @@ class PriceColumn extends MovieClip {
   	    price_labels.push(new OnePrice('greeting'));
 	    }
 	  }
-	  //if(amount_digital_print > 0) {
-	  //  price_labels.push(new OnePrice('digital-print'));
-	  //}
+	  if(amount_digital_print > 0) {
+	    price_labels.push(new OnePrice('digital-print'));
+	  }
     
     var total_price:Float = 0;
     

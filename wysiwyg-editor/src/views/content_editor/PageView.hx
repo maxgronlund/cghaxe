@@ -220,7 +220,7 @@ class PageView extends View{
     
     model.setInt('amount_foil_color', amount_foil_color);
     model.setInt('amount_greetings', amount_greetings);
-    //model.setInt('amount_digital_print', amount_digital_print);
+    model.setInt('amount_digital_print', amount_digital_print);
     model.setInt('amount_cliche', amount_cliche);
 
     GLOBAL.price_view.addColumn(model);
