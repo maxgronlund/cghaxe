@@ -67,7 +67,7 @@ class PriceColumn extends MovieClip {
     }
 	  extraChilds = new Array();
 	  
-	  if(amount_std_pms_color > 0) {
+	  for(i in 0...amount_std_pms_color) {
 	    price_labels.push(new OnePrice('std-color'));
 	  }
 	  
