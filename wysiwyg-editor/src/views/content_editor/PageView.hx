@@ -101,10 +101,16 @@ class PageView extends View{
               }
           
               if(!text_color_is_used) {
-                if(color != "9672088"){
+                if( placeholders[i].getPlaceholderType() == 'greeting' ) {
+                  if(color != "9672088"){
+                    std_pms_colors.push(color);
+                    amount_std_pms_color += 1;
+                  }
+                } else {
                   std_pms_colors.push(color);
                   amount_std_pms_color += 1;
                 }
+                
               }
               
             }
@@ -159,7 +165,7 @@ class PageView extends View{
                     amount_cliche = 1;
                   }
                 }
-              } else if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
+              } else if( (placeholders[i].getPlaceholderType() == 'vector_placeholder') || (placeholders[i].getPlaceholderType() == 'greeting') ) {
                 var text_color_is_used:Bool = false;
                 for(i in 0...text_foil_colors.length) {
                   if(text_foil_colors[i] == color) {
