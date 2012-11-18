@@ -41,7 +41,7 @@ class LogosView extends PropertyView, implements IView{
     uploadLogoButton      = new OneStateTextAndImageButton();
     addLogoButton         = new OneStateTextAndImageButton();
     
-    uploadLogoIButton       = new OneStateTextAndImageButton();
+    uploadLogoIButton     = new OneStateTextAndImageButton();
     uploadLogoIButton.setFormat(0, 3, 0x333333, 'center');
     
     uploadLogoButton.setFormat(0, 3, 0x333333, 'center');

@@ -73,7 +73,7 @@ class InfoMessageView extends View, implements IView
     
   }
   override public function onAddedToStage(e:Event):Void{
-    trace('onAddedToStage');
+//    trace('onAddedToStage');
     
     super.onAddedToStage(e);
     addChild(rect);

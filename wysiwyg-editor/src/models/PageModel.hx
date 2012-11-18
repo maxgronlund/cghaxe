@@ -192,6 +192,7 @@ class PageModel extends Model, implements IModel
         return fileStr;
       }
       case CONST.PRINT_TYPES:{
+        if(print_types == null) return 'na';
         return print_types.toString();
       }
     }

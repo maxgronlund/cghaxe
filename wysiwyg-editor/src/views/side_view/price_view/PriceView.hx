@@ -61,6 +61,7 @@ class PriceView extends PropertyView, implements IView{
     Application.addEventListener(EVENT_ID.PRESET_PRICES_XML_PARSED, onParsePrice);
     Preset.addEventListener(EVENT_ID.UPDATE_QUANTITY, onUpdateQuantity);
 	  Pages.addEventListener(EVENT_ID.CALCULATE_PRICE, calculatePrice);
+	  //Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
   }
   
   private function calculatePrice(e:Event): Void {

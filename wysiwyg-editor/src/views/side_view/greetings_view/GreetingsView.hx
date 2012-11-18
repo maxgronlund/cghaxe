@@ -10,6 +10,10 @@ class GreetingsView extends VectorsView, implements IView{
     verticalScrollbar     = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
     Preset.addEventListener(EVENT_ID.GREETINGS_LOADED, onVectorLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+    addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, 
+                                                 TOOL_TIPS.GREETINGS_ADD,
+                                                 'right', 
+                                                 'top');
   }
   
   override public function init():Void{
@@ -24,6 +28,11 @@ class GreetingsView extends VectorsView, implements IView{
             new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.ADD_GREETING_TO_PAGE));
     addVectorButton.fireOnMouseUp(false);
+    
+    addVectorIButton.init( GLOBAL.tool_tips_controller,
+                        new Point(22,22), 
+                        new OneStateButtonBackS(), 
+                        new Parameter( TOOL_TIPS.GREETINGS_ADD));
     
     super.init();
   }
@@ -55,7 +64,19 @@ class GreetingsView extends VectorsView, implements IView{
 	private function onLoadDefaultTool(e:IKEvent):Void{ 
     selectButton.setText(TRANSLATION.greetings_button);
     addVectorButton.setText(TRANSLATION.add_greeting);
-    addVectorButton.updateLabel();  
+    addVectorButton.updateLabel(); 
+    
+    addVectorIButton.setText('?');    
+    addVectorIButton.updateLabel();
+    
+    
+    
+    addVectorInfo.setContent( TOOL_TIPS.greetings_add_title,
+                              TOOL_TIPS.greetings_add_body,
+                              TOOL_TIPS.greetings_add_link);
+    //addVectorIButton.setContent( TOOL_TIPS.greetings_add_title,
+    //                             TOOL_TIPS.greetings_add_body,
+    //                             TOOL_TIPS.greetings_add_link); 
   }
 }
 

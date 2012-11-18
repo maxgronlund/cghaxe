@@ -277,7 +277,7 @@ class EVENT_ID  {
   public static inline var UPDATE_LOAD_PROGRESS               = "update_load_progress";
   public static inline var CLOSE_LOAD_PROGRESS                = "close_load_progress";
   public static inline var UPDATE_TOOL_SIZES                  = "update_tool_sizes";
-  
+  public static inline var POSSITION_TOOLS                    = "possition_tools";
   public static inline var PRINT_TYPES_LOADED                 = "print_types_loaded";
 	
 	

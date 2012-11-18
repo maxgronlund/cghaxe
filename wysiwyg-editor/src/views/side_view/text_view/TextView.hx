@@ -16,11 +16,7 @@ class TextView extends PropertyView, implements IView{
   
   private var fixedSizeIButton:OneStateTextAndImageButton;
   private var fixedSizeButton:TwoStateTextAndImageButton;
-  
-  //private var resizableIButton:OneStateTextAndImageButton;
-  //private var resizableButton:OneStateTextAndImageButton;
-  
-  
+
   private var addTextfieldButton:OneStateTextAndImageButton;
   private var addTextfieldIButton:OneStateTextAndImageButton;
   
@@ -33,6 +29,9 @@ class TextView extends PropertyView, implements IView{
   
   private var fixedSizeInfo:InfoMessageView;
   private var addTextfieldInfo:InfoMessageView;
+  
+  var print_types:Xml;
+  private var pos:Int;
   
   public function new(textController:IController){	
     super(textController);
@@ -108,6 +107,7 @@ class TextView extends PropertyView, implements IView{
     Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
     Application.addEventListener(EVENT_ID.UPDATE_SIDE_VIEWS, onUpdateSideView);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
   }
    
   private function onUpdateSideView(e:IKEvent):Void{
@@ -118,103 +118,231 @@ class TextView extends PropertyView, implements IView{
 
 	}
   
+  private function onPageSelected(e:IKEvent):Void{
+    disableTools();
+    if(Pages.getString(CONST.PRINT_TYPES) != 'na'){
+      print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+      setPrintTypes();
+    }
+    PositionTools();
+  }
+  
+  private function disableTools():Void{
+    //return;
+    back.visible                  = false;
+    selectButton.visible          = false;
+    
+    lineSpaceLabel.visible        = false;
+    fontSizeLabel.visible         = false;
+    lineSpacePopup.visible        = false;
+    fontSizePopup.visible         = false;
+    
+    alignLabel.visible            = false;
+    textAlign.visible             = false;
+    
+    fontLabel.visible             = false;
+    
+    fixedSizeIButton.visible      = false;
+    fixedSizeInfo.visible         = false;
+    fixedSizeButton.visible       = false;
+    
+    scrollPaneBack.visible        = false;
+    fontScrollPane.visible        = false;
+    fontScrollbar.visible         = false;
+    
+    addTextfieldInfo.visible      = false;
+    addTextfieldIButton.visible   = false;
+    addTextfieldButton.visible    = false;
+
+  }
+  
+  private function onEnableTool(cmd:String):Void{
+    
+    switch ( cmd ){
+      case 'Foil, Garamond':{
+        back.visible                  = true;
+        selectButton.visible          = true;
+        fontLabel.visible             = true;
+        fixedSizeButton.visible       = true;
+        fixedSizeIButton.visible      = true;
+        addTextfieldIButton.visible   = true;                                
+        addTextfieldButton.visible    = true;
+      }
+      case 'Text':{
+        back.visible                  = true;
+        selectButton.visible          = true;                                        
+        lineSpaceLabel.visible        = true;
+        fontSizeLabel.visible         = true;
+        lineSpacePopup.visible        = true;
+        fontSizePopup.visible         = true;                                        
+        alignLabel.visible            = true;
+        textAlign.visible             = true;                                        
+        fontLabel.visible             = true;                                                                                
+        scrollPaneBack.visible        = true;
+        fontScrollPane.visible        = true;
+        fontScrollbar.visible         = true;                            
+        addTextfieldIButton.visible   = true;                                
+        addTextfieldButton.visible    = true; 
+      }
+    }
+    PositionTools();
+  }
+  
+  private function PositionTools(): Void{
+    pos = 0;
+    if(back.visible){
+      pos = 34;
+
+      if(lineSpaceLabel.visible){
+        lineSpaceLabel.y = pos;
+        fontSizeLabel.y = pos;
+        pos += 16;
+        lineSpacePopup.y = pos;
+        fontSizePopup.y = pos;
+        pos += 32;
+      }
+      if(textAlign.visible){
+        alignLabel.y = pos;
+        pos += 16;
+        textAlign.y = pos;
+        pos  += 40;
+      }
+      if(scrollPaneBack.visible || fixedSizeButton.visible){
+        fontLabel.y = pos;
+        pos += 16;
+      }
+      if(fixedSizeButton.visible){
+        fixedSizeButton.y = pos;
+        fixedSizeIButton.y = pos;
+        fixedSizeInfo.y = pos;
+        pos += 32;
+      }
+      if(scrollPaneBack.visible){
+        scrollPaneBack.y = pos-1;
+        fontScrollPane.y = pos;
+        fontScrollbar.y = pos;
+        pos += 170;
+      }
+      addTextfieldButton.y = pos;
+      addTextfieldIButton.y = pos;
+      addTextfieldInfo.y = pos;
+      
+      back.height = pos;
+      pos += 30;
+    }
+  }
+  
+  private function setPrintTypes():Void{
+
+    disableTools();
+    for(print_types in print_types.elementsNamed('print-types')){
+      for(print_type in print_types.elementsNamed('print-type')){
+        for(title in print_type.elementsNamed('title')){
+          onEnableTool( title.firstChild().nodeValue.toString());
+        }
+      }
+    }
+    //PositionTools();
+  }
+  
   override public function onAddedToStage(e:Event):Void{
     
     super.onAddedToStage(e);
     
-    var posY = 30;
+    pos = 30;
     addChild(back);
-    back.y = posY;
+    back.y = pos;
     
-    posY += 4;
+    pos += 4;
     
     addChild(lineSpaceLabel);
     lineSpaceLabel.x   = marginLeft;
-    lineSpaceLabel.y   = posY;
+    lineSpaceLabel.y   = pos;
     
     addChild(fontSizeLabel);
     fontSizeLabel.x   = 110;
-    fontSizeLabel.y   = posY;
+    fontSizeLabel.y   = pos;
     
-    posY  += 14;
+    pos  += 14;
     
     addChild(lineSpacePopup);
     lineSpacePopup.x = 8;
-    lineSpacePopup.y = posY;
+    lineSpacePopup.y = pos;
     
     addChild(fontSizePopup);
     fontSizePopup.x = 110;
-    fontSizePopup.y = posY;
+    fontSizePopup.y = pos;
     
-    posY += 32;
+    pos += 32;
     
     addChild(alignLabel);
     alignLabel.x   = marginLeft;
-    alignLabel.y   = posY;
+    alignLabel.y   = pos;
     
-    posY  += 14;
+    pos  += 14;
     
     addChild(textAlign);
     textAlign.x = marginLeft;
-    textAlign.y = posY;
+    textAlign.y = pos;
     
-    posY += 36;
+    pos += 40;
     
     addChild(fontLabel);
     fontLabel.x = marginLeft;
-    fontLabel.y = posY;
+    fontLabel.y = pos;
     
-    posY += 14;
+    pos += 14;
     
     addChild(fixedSizeButton);
     fixedSizeButton.x = marginLeft;
-    fixedSizeButton.y = posY;
+    fixedSizeButton.y = pos;
     
     addChild(fixedSizeIButton);
     fixedSizeIButton.x = marginLeft+154;
-    fixedSizeIButton.y = posY;
+    fixedSizeIButton.y = pos;
 
-    posY  += 38;
+    pos  += 30;
     
     addChild(scrollPaneBack);
     scrollPaneBack.x    = 8;
-    scrollPaneBack.y    = posY;
+    scrollPaneBack.y    = pos;
     
-    posY +=1;
+    pos +=1;
     
     addChild(fontScrollPane);
     fontScrollPane.setSize(174,159);
     fontScrollPane.x = 9;
-    fontScrollPane.y = posY;
+    fontScrollPane.y = pos;
     fontScrollPane.addView(fontPane, 0,0);	
     
-    posY += 169;
+    pos += 169;
     
 
     addChild(addTextfieldButton);
     addTextfieldButton.x = marginLeft;
-    addTextfieldButton.y = posY;
+    addTextfieldButton.y = pos;
     addTextfieldButton.fireOnMouseUp(false);
     
     addChild(addTextfieldIButton);
     addTextfieldIButton.x = marginLeft+154;
-    addTextfieldIButton.y = posY;
+    //addTextfieldIButton.y = pos;
     addTextfieldIButton.fireOnMouseUp(false);
     
     
     
-    back.height = posY ;
+    back.height = pos ;
     
     setChildIndex(lineSpacePopup, this.numChildren - 1);
 
     
     fixedSizeInfo.x = fixedSizeIButton.x;
-  	fixedSizeInfo.y = fixedSizeIButton.y;
+  	//fixedSizeInfo.y = fixedSizeIButton.y;
     addChild(fixedSizeInfo);
     
     addTextfieldInfo.x = addTextfieldIButton.x;
-    addTextfieldInfo.y = addTextfieldIButton.y;
     addChild(addTextfieldInfo);
+    
+    PositionTools();
 
   }
   
@@ -226,7 +354,7 @@ class TextView extends PropertyView, implements IView{
     fixedSizeIButton.setText('?');    
     fixedSizeIButton.updateLabel();
     
-    fixedSizeButton.setText('Garamond');    
+    fixedSizeButton.setText(TRANSLATION.garamond);    
     fixedSizeButton.updateLabel();
     
     fontLabel.setLabel(TRANSLATION.select_font);
@@ -243,10 +371,6 @@ class TextView extends PropertyView, implements IView{
     addTextfieldInfo.setContent( TOOL_TIPS.text_add_title,
                                  TOOL_TIPS.text_add_body,
                                  TOOL_TIPS.text_add_link);
-    
-    trace(TOOL_TIPS.text_add_title);
-
-    
   }
   
   private function onAddScrollBars(e:IKEvent):Void{
@@ -271,7 +395,6 @@ class TextView extends PropertyView, implements IView{
     
     switch ( param.getLabel() ){
       case EVENT_ID.FONT_SELECTED:{
-        
         fontPane.setParam(param);   
       }
       case EVENT_ID.LINE_SPACE_SELECTED:{
@@ -308,6 +431,6 @@ class TextView extends PropertyView, implements IView{
   }
 
   override public function getHeight():Int{
-		return 380;
+		return pos;
 	}
 }

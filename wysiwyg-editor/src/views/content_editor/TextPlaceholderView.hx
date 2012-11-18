@@ -666,7 +666,6 @@ class TextPlaceholderView extends APlaceholder {
   override public function setFocus(b:Bool):Void{
     focus             = b;
     if(!focus){
-      
       hideTags();
       setTextOnTop(false);
       if(was_foiled == true)
@@ -679,7 +678,6 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function updateFocus():Void{
-    //trace('updateFocus');
     updatePrice();
     resizeBackdrop();
     selectBox.setFocus(focus);
@@ -708,9 +706,7 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function setTextOnTop(b:Bool):Void {
-    //trace('setTextOnTop', b);
     MouseTrap.capture();
-   
     font.selectable(b);
     textOnTop = b;
     if(b){
@@ -757,6 +753,8 @@ class TextPlaceholderView extends APlaceholder {
     var param:IParameter = new Parameter(EVENT_ID.UPDATE_SIDE_VIEWS);
     param.setString(getPlaceholderType());
     GLOBAL.Application.dispatchParameter(param);
+    //trace('updateSideView');
+    //setFocus(true);
   }
 
   private function onGetXml(event:Event):Void{

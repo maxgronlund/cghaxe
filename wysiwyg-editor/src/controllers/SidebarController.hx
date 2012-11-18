@@ -13,7 +13,7 @@ class SidebarController extends Controller, implements IController
 				GLOBAL.side_view.setString('set_default_tool', 'na');
 			}
       case EVENT_ID.SHOW_BLIND_VIEW:{
-        GLOBAL.side_view.showView(EVENT_ID.SHOW_BLIND_VIEW, true);
+        //GLOBAL.side_view.showView(EVENT_ID.SHOW_BLIND_VIEW, true);
       }
 		}
 	}

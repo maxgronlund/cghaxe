@@ -23,6 +23,11 @@ class SymbolsView extends VectorsView, implements IView{
             new Point(150,22), 
             new OneStateButtonBackL(), 
             new Parameter( EVENT_ID.ADD_SYMBOL_TO_PAGE));
+            
+    addVectorIButton.init( GLOBAL.tool_tips_controller,
+                        new Point(22,22), 
+                        new OneStateButtonBackS(), 
+                        new Parameter( TOOL_TIPS.SYMBOLS_ADD));
     
     super.init();
   }
@@ -57,5 +62,11 @@ class SymbolsView extends VectorsView, implements IView{
     selectButton.setText(TRANSLATION.symbols_button);
     addVectorButton.setText(TRANSLATION.add_symbol);
     addVectorButton.updateLabel();
+    addVectorIButton.setText('?');    
+    addVectorIButton.updateLabel();
+    
+    addVectorInfo.setContent( TOOL_TIPS.symbols_add_title,
+                              TOOL_TIPS.symbols_add_body,
+                              TOOL_TIPS.symbols_add_link);
   }
 }

@@ -145,6 +145,9 @@ class LanguageParser
     for(add_design in xml_data.elementsNamed("add-design") ) 
       TRANSLATION.add_design = add_design.firstChild().nodeValue.toString();
       
+    for(garamond in xml_data.elementsNamed("garamond") ) 
+      TRANSLATION.garamond = garamond.firstChild().nodeValue.toString();
+      
     GLOBAL.Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Language Parsed');
 
   }

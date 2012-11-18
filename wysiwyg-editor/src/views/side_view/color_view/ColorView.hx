@@ -10,16 +10,22 @@ class ColorView extends PropertyView, implements IView{
   private var customPms2ColorPicker:CustomPmsColorPicker;
   private var foilColorPicker:FoilColorPicker;
   private var colorPicker:ColorPicker;  
-  private var stdPmsText:FormatedText;
-  private var customColor1Text:FormatedText;
-  private var customColor2Text:FormatedText;
+  private var stdPmsLabel:FormatedText;
+  private var customColor1Label:FormatedText;
+  private var customColor2Label:FormatedText;
   private var foilColorText:FormatedText;
-  private var colorText:FormatedText;
+  private var colorLabel:FormatedText;
   private var pms4Text:FormatedText;
-  private var pos:Float;
   private var back:Rectangle;
   private var pms4Button:TwoStateButton;
   
+  private var stdPmsColorPickerI:OneStateTextAndImageButton;
+  private var customPms1ColorPickerI:OneStateTextAndImageButton;
+  private var customPms2ColorPickerI:OneStateTextAndImageButton;
+  private var foilColorPickerI:OneStateTextAndImageButton;
+  private var colorPickerI:OneStateTextAndImageButton;
+  private var pms4I:OneStateTextAndImageButton;
+  private var pos:Float;
   //
 
   var print_types:Xml;
@@ -42,11 +48,32 @@ class ColorView extends PropertyView, implements IView{
     customPms2ColorPicker   = new CustomPmsColorPicker(controller);
     foilColorPicker         = new FoilColorPicker(controller);
     colorPicker             = new ColorPicker(controller);
-    pms4Button         = new TwoStateButton();
+    pms4Button              = new TwoStateButton();
     
     //foil_enable             = false;
     //pms_enable              = false;
     //laser_enable            = false;
+    createInfoButtons();
+  }
+  
+  private function createInfoButtons():Void{
+    stdPmsColorPickerI     = new OneStateTextAndImageButton();
+    stdPmsColorPickerI.setFormat(0, 3, 0x333333, 'center');
+    
+    customPms1ColorPickerI     = new OneStateTextAndImageButton();
+    customPms1ColorPickerI.setFormat(0, 3, 0x333333, 'center');
+    
+    customPms2ColorPickerI     = new OneStateTextAndImageButton();
+    customPms2ColorPickerI.setFormat(0, 3, 0x333333, 'center');
+    
+    foilColorPickerI     = new OneStateTextAndImageButton();
+    foilColorPickerI.setFormat(0, 3, 0x333333, 'center');
+    
+    colorPickerI     = new OneStateTextAndImageButton();
+    colorPickerI.setFormat(0, 3, 0x333333, 'center');
+    
+    pms4I     = new OneStateTextAndImageButton();
+    pms4I.setFormat(0, 3, 0x333333, 'center');
   }
   
   
@@ -68,13 +95,41 @@ class ColorView extends PropertyView, implements IView{
     foilColorPicker.init();
     colorPicker.init();
 
-    stdPmsText         = new FormatedText('helvetica', 'STANDARD PMS', 11, false);
-    customColor1Text   = new FormatedText('helvetica', 'CUSTOM PMS 1', 11, false);
-    customColor2Text   = new FormatedText('helvetica', 'CUSTOM PMS 2', 11, false);
+    stdPmsLabel         = new FormatedText('helvetica', 'STANDARD PMS', 11, false);
+    customColor1Label   = new FormatedText('helvetica', 'CUSTOM PMS 1', 11, false);
+    customColor2Label   = new FormatedText('helvetica', 'CUSTOM PMS 2', 11, false);
     foilColorText      = new FormatedText('helvetica', 'FOIL', 11, false);
-    colorText          = new FormatedText('helvetica', 'DIGITAL PRINT', 11, false);
+    colorLabel          = new FormatedText('helvetica', 'DIGITAL PRINT', 11, false);
     pms4Text          = new FormatedText('helvetica', '4 PMS COLORS', 11, false);
+    
+    initInfoButtons();
 
+  }
+  private function initInfoButtons():Void{
+    stdPmsColorPickerI.init( GLOBAL.tool_tips_controller,
+                                new Point(22,22), 
+                                new OneStateButtonBackS(), 
+                                new Parameter( TOOL_TIPS.MY_UPLOADS_UPLOAD));
+    customPms1ColorPickerI.init( GLOBAL.tool_tips_controller,
+                                new Point(22,22), 
+                                new OneStateButtonBackS(), 
+                                new Parameter( TOOL_TIPS.MY_UPLOADS_UPLOAD));
+    customPms1ColorPickerI.init( GLOBAL.tool_tips_controller,
+                                new Point(22,22), 
+                                new OneStateButtonBackS(), 
+                                new Parameter( TOOL_TIPS.MY_UPLOADS_UPLOAD));
+    customPms2ColorPickerI.init( GLOBAL.tool_tips_controller,
+                                new Point(22,22), 
+                                new OneStateButtonBackS(), 
+                                new Parameter( TOOL_TIPS.MY_UPLOADS_UPLOAD));
+    colorPickerI.init( GLOBAL.tool_tips_controller,
+                                new Point(22,22), 
+                                new OneStateButtonBackS(), 
+                                new Parameter( TOOL_TIPS.MY_UPLOADS_UPLOAD));
+    pms4I.init( GLOBAL.tool_tips_controller,
+                                new Point(22,22), 
+                                new OneStateButtonBackS(), 
+                                new Parameter( TOOL_TIPS.MY_UPLOADS_UPLOAD));
   }
   
   private function onLoadCustomPmsColors(e:IKEvent):Void{
@@ -84,11 +139,11 @@ class ColorView extends PropertyView, implements IView{
   
   private function onLoadDefaultTool(e:IKEvent):Void{
     selectButton.setText(TRANSLATION.color_button);
-    stdPmsText.setLabel(TRANSLATION.standard_pms);
-    customColor1Text.setLabel(TRANSLATION.custom_pms_1);
-    customColor2Text.setLabel(TRANSLATION.custom_pms_2);
+    stdPmsLabel.setLabel(TRANSLATION.standard_pms);
+    customColor1Label.setLabel(TRANSLATION.custom_pms_1);
+    customColor2Label.setLabel(TRANSLATION.custom_pms_2);
     foilColorText.setLabel(TRANSLATION.foil_color_picker);
-    colorText.setLabel(TRANSLATION.digital_print_picker);
+    colorLabel.setLabel(TRANSLATION.digital_print_picker);
     pms4Text.setLabel(TRANSLATION.pms_4);
 
 /*
@@ -97,7 +152,11 @@ class ColorView extends PropertyView, implements IView{
     addLogoButton.setText(TRANSLATION.add_logo);    
     addLogoButton.updateLabel();    
 */
-
+    loadInfoButtons();
+  }
+  
+  private function loadInfoButtons():Void{
+    
   }
   
   private function onUpdateSideView( e:IKEvent ): Void{
@@ -162,34 +221,44 @@ class ColorView extends PropertyView, implements IView{
     addChild(back);
     back.y = 30;
     // texts
-    addChild(stdPmsText);
-    stdPmsText.setColor(0x868686);
-    stdPmsText.visible = false;
-    stdPmsText.x = 10;
-
-    addChild(customColor1Text);
-    customColor1Text.setColor(0x868686);
-    customColor1Text.visible = false;
-    customColor1Text.x = 10;
+    addChild(stdPmsLabel);
+    stdPmsLabel.setColor(0x868686);
+    stdPmsLabel.visible = false;
+    stdPmsLabel.x = 10;
     
-    addChild(customColor2Text);
-    customColor2Text.setColor(0x868686);
-    customColor2Text.visible = false;
-    customColor2Text.x = 10;
+    
+
+    addChild(customColor1Label);
+    customColor1Label.setColor(0x868686);
+    customColor1Label.visible = false;
+    customColor1Label.x = 10;
+    
+    addChild(customColor2Label);
+    customColor2Label.setColor(0x868686);
+    customColor2Label.visible = false;
+    customColor2Label.x = 10;
     
     addChild(foilColorText);
     foilColorText.setColor(0x868686);
     foilColorText.visible = false;
     foilColorText.x = 10;
     
-    addChild(colorText);
-    colorText.setColor(0x868686);
-    colorText.visible = false;
-    colorText.x = 10;
+    addChild(colorLabel);
+    colorLabel.setColor(0x868686);
+    colorLabel.visible = false;
+    colorLabel.x = 10;
     
     addChild(stdPmsColorPicker);
     stdPmsColorPicker.visible = false;
     stdPmsColorPicker.x = 10;
+    
+    //addChild(stdPmsColorPickerI);
+    //stdPmsColorPickerI.visible = false;
+    //stdPmsColorPickerI.x = stdPmsColorPicker.width + 18;
+    
+    
+    
+    
     
     addChild(customPms1ColorPicker);
     customPms1ColorPicker.visible = false;
@@ -203,7 +272,7 @@ class ColorView extends PropertyView, implements IView{
     customPms2ColorPicker.x = 10;
     customPms2ColorPicker.setString('id', EVENT_ID.PMS2_COLOR_SELECTED);
     customPms2ColorPicker.setString('pms_value', EVENT_ID.UPDATE_PMS2);
-    //
+    
     customPms2ColorPicker.setInt('color', 0x008888);
     
     
@@ -229,20 +298,21 @@ class ColorView extends PropertyView, implements IView{
 
     PositionPickers();
     
-    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
+    
     
     foilColorText.visible             = false;
     foilColorPicker.visible           = false;
     
-    stdPmsText.visible                = false;
+    stdPmsLabel.visible                = false;
     stdPmsColorPicker.visible         = false;
+//    stdPmsColorPickerI.visible        = false;
     
-    colorText.visible                 = false;
+    colorLabel.visible                 = false;
     
-    customColor1Text.visible          = false;
+    customColor1Label.visible          = false;
     customPms1ColorPicker.visible     = false;
     
-    customColor2Text.visible          = false;
+    customColor2Label.visible          = false;
     customPms2ColorPicker.visible     = false;
     
     colorPicker.visible               = false;
@@ -252,14 +322,17 @@ class ColorView extends PropertyView, implements IView{
     
     customPms1ColorPicker.setString("id", EVENT_ID.PMS1_COLOR_SELECTED);
     customPms2ColorPicker.setString("id", EVENT_ID.PMS2_COLOR_SELECTED);
+    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     
   }
   
   private function onPageSelected(e:IKEvent):Void{
-    
-    print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
-    setPrintTypes();
-    
+    disableTools();
+    if(Pages.getString(CONST.PRINT_TYPES) != 'na'){
+      print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+      setPrintTypes();
+    }
+    PositionPickers();
   }
   
   private function onLoadPrintTypes(e:KEvent):Void{
@@ -268,7 +341,6 @@ class ColorView extends PropertyView, implements IView{
   }
   
   private function setPrintTypes():Void{
-    disableTools();
     
     for(print_types in print_types.elementsNamed('print-types')){
       for(print_type in print_types.elementsNamed('print-type')){
@@ -277,19 +349,25 @@ class ColorView extends PropertyView, implements IView{
         }
       }
     }
-    PositionPickers();
   }
   
   private function disableTools():Void{
+    back.visible                      = false;
+    selectButton.visible              = false;
+    
     foilColorText.visible             = false;
     foilColorPicker.visible           = false;
-    stdPmsText.visible                = false;
+    
+    stdPmsLabel.visible               = false;
     stdPmsColorPicker.visible         = false;
-    customColor1Text.visible          = false;
+
+    customColor1Label.visible         = false;
     customPms1ColorPicker.visible     = false;
-    customColor2Text.visible          = false;
+    
+    customColor2Label.visible         = false;
     customPms2ColorPicker.visible     = false;
-    colorText.visible                 = false;
+    
+    colorLabel.visible                = false;
     colorPicker.visible               = false;
     pms4Button.visible                = false;
     pms4Text.visible                  = false;
@@ -300,23 +378,33 @@ class ColorView extends PropertyView, implements IView{
     switch ( cmd ){
 
       case 'Foil, Garamond':{
+        back.visible                      = true;
+        selectButton.visible              = true;
+        
         foilColorText.visible             = true;
         foilColorPicker.visible           = true;
       }
       case 'PMS':{
-        //colorText.visible                 = true;
-        //colorPicker.visible               = true;
-        stdPmsText.visible                = true;
+
+        back.visible                      = true;
+        selectButton.visible              = true;
+        
+        stdPmsLabel.visible               = true;
         stdPmsColorPicker.visible         = true;
-        customColor1Text.visible          = true;
-        customColor2Text.visible          = true;
+
+        customColor1Label.visible         = true;
         customPms1ColorPicker.visible     = true;
-        customPms2ColorPicker.visible     = true;      
+        
+        customColor2Label.visible         = true;
+        customPms2ColorPicker.visible     = true;
+              
         pms4Button.visible                = true;
         pms4Text.visible                  = true;              
       }
       case 'Digital Print':{
-        colorText.visible                 = true;
+        back.visible                      = true;
+        selectButton.visible              = true;
+        colorLabel.visible                 = true;
         colorPicker.visible               = true;
                   
       }
@@ -353,47 +441,49 @@ class ColorView extends PropertyView, implements IView{
  //}
 
   private function PositionPickers(): Void{
-
-    pos = 40;
-    
-    if(foilColorPicker.visible){
-      foilColorText.y = pos;
-      pos = foilColorText.y + foilColorText.height;
-      foilColorPicker.y   = pos;
-      pos  = 10 + foilColorPicker.y + foilColorPicker.height;
-    }
-    
-    if(customColor1Text.visible){
-      stdPmsText.y = pos;
-      pos = stdPmsText.y + stdPmsText.height;
-      stdPmsColorPicker.y    = pos;
-      pos = 10 + stdPmsColorPicker.y + stdPmsColorPicker.height; 
-
-      customColor1Text.y = pos;
-      pos = customColor1Text.y + customColor1Text.height;
-      customPms1ColorPicker.y = pos;
-      pos = 10 + customPms1ColorPicker.y + customPms1ColorPicker.height; 
+    pos = 0;
+    if(back.visible){
+      pos = 34;
+      if(foilColorPicker.visible){
+        foilColorText.y = pos;
+        pos = foilColorText.y + foilColorText.height;
+        foilColorPicker.y   = pos;
+        pos  = 10 + foilColorPicker.y + foilColorPicker.height;
+      }
       
-      customColor2Text.y = pos;
-      pos = customColor2Text.y + customColor2Text.height;
-      customPms2ColorPicker.y = pos;
-      pos = 10 + customPms2ColorPicker.y + customPms2ColorPicker.height; 
+      if(customColor1Label.visible){
+        stdPmsLabel.y = pos;
+        pos = stdPmsLabel.y + stdPmsLabel.height;
+        stdPmsColorPicker.y    = pos;
+        //stdPmsColorPickerI.y    = pos;
+        pos = 10 + stdPmsColorPicker.y + stdPmsColorPicker.height; 
+      
+        customColor1Label.y = pos;
+        pos = customColor1Label.y + customColor1Label.height;
+        customPms1ColorPicker.y = pos;
+        pos = 10 + customPms1ColorPicker.y + customPms1ColorPicker.height; 
+        
+        customColor2Label.y = pos;
+        pos = customColor2Label.y + customColor2Label.height;
+        customPms2ColorPicker.y = pos;
+        pos = 10 + customPms2ColorPicker.y + customPms2ColorPicker.height; 
+      }
+      
+      if(pms4Button.visible){
+        pms4Text.y     = pos;
+        pms4Button.y   = pos+18;
+        pos  = 10 + pms4Button.y + pms4Button.height;
+      }
+      
+      if(colorPicker.visible){
+        colorLabel.y = pos;
+        pos = colorLabel.y + colorLabel.height;
+        colorPicker.y    = pos;
+        pos  = 10 + colorPicker.y + colorPicker.height;
+      }
+      
+      back.height = pos-26;
     }
-    
-    if(pms4Button.visible){
-      pms4Text.y     = pos;
-      pms4Button.y   = pos+18;
-      pos  = 10 + pms4Button.y + pms4Button.height;
-    }
-
-    if(colorPicker.visible){
-      colorText.y = pos;
-      pos = colorText.y + colorText.height;
-      colorPicker.y    = pos;
-      pos  = 10 + colorPicker.y + colorPicker.height;
-    }
-    
-    back.height = pos-30;
 
     
   }
@@ -406,6 +496,7 @@ class ColorView extends PropertyView, implements IView{
   }
   
   override public function getHeight():Int{
-		return Std.int(pos );
+    trace(pos);
+    return Std.int(pos );
 	}
 }

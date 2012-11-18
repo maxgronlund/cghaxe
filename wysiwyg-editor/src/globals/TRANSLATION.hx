@@ -46,7 +46,7 @@ class TRANSLATION  {
   public static var cliche:String;
   public static var add_greeting:String;
   public static var add_design:String;
-  
+  public static var garamond:String;
   
 
   

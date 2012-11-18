@@ -9,6 +9,8 @@ class VectorsView extends PropertyView, implements IView{
   private var vectorsPane:AView;
   private var verticalScrollbar:VerticalScrollbar;
   private var addVectorButton:OneStateTextAndImageButton;
+  private var addVectorIButton:OneStateTextAndImageButton;
+  private var addVectorInfo:InfoMessageView;
   
   public function new(greetingsController:IController){	
     super(greetingsController);
@@ -20,14 +22,21 @@ class VectorsView extends PropertyView, implements IView{
     verticalScrollbar   = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
     addVectorButton     = new OneStateTextAndImageButton();
     addVectorButton.setFormat(0, 3, 0x333333, 'center');
-
+    
+    addVectorIButton       = new OneStateTextAndImageButton();
+    addVectorIButton.setFormat(0, 3, 0x333333, 'center');
     Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
+    addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, 
+                                                 TOOL_TIPS.SYMBOLS_ADD,
+                                                 'right', 
+                                                 'top');
   }
   
   
   override public function init():Void{
     
     addVectorButton.fireOnMouseUp(false);
+    
   }
   
   override public function onAddedToStage(e:Event):Void{
@@ -47,8 +56,18 @@ class VectorsView extends PropertyView, implements IView{
     
 
     addChild(addVectorButton);
-    addVectorButton.x   = 20;
+    addVectorButton.x   = 9;
     addVectorButton.y   = 218;
+    
+    addChild(addVectorIButton);
+    addVectorIButton.x   = 154 +9;
+    addVectorIButton.y   = 218;
+    
+    addVectorInfo.x = addVectorIButton.x;
+  	addVectorInfo.y = addVectorIButton.y;
+    addChild(addVectorInfo);
+
+    
   }
   
   private function onVectorLoaded(e:KEvent):Void{

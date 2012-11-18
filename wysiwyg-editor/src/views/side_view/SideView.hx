@@ -21,7 +21,7 @@ class SideView extends View, implements IView
   public function new(controller:IController){	
     super(controller);
     Application.addEventListener(EVENT_ID.LOAD_DEFAULT_SIDEVIEW, onLoadDefaultSiteView);
-    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
+//    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Pages.addEventListener(EVENT_ID.UPDATE_TOOL_SIZES, onUpdateToolSizes);
     posY = 0;
     views = new Vector<AView>();
@@ -29,41 +29,15 @@ class SideView extends View, implements IView
     backdrop        = new Bitmap(new BitmapData(190,486,false,0xDEDEDE ));
   }
   
-  private function onPageSelected(e:IKEvent):Void{
-    return;
-    var print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
-    
-    
-    hideAllViews();
-    
-    for(print_types in print_types.elementsNamed('print-types')){
-      for(print_type in print_types.elementsNamed('print-type')){
-        for(title in print_type.elementsNamed('title')){
-          showTool( title.firstChild().nodeValue.toString());
-        }
-      }
-    } 
-  }
+//  private function onPageSelected(e:IKEvent):Void{
+//    trace('on page-------------');
+//    //if(Pages.getString(CONST.PRINT_TYPES) != 'na'){
+//    //  var print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+//    //}
+//    
+//  }
   
-  private function hideAllViews():Void{
-    //views[getIndex('show_greetings')].visible = false;
-    //var i = getIndex('Greetings');
-    //for( i in 0...views.length){
-    //  views[i].visible = false;
-    //}
-  }
-  
-  private function showTool(id:String):Void{
-    trace( id);
-    switch ( id ){
-      case 'Greetings':{views[getIndex('show_greetings')].visible = true;}
-      case 'Logo':{}
-      case 'Symbols':{}
-      case 'Photo':{}
-      case 'Text':{}
-    }
-  }
-  
+ 
   override public function onAddedToStage(e:Event){
     super.onAddedToStage(e);	
     addChild(backdrop);
@@ -86,27 +60,30 @@ class SideView extends View, implements IView
   }
   
   override public function showView(id:String, b:Bool):Void{
-
+    trace(id);
     posY = 0;
 
     for( i in 0...views.length){
       views[i].y = posY;
       this.setChildIndex(views[i], this.numChildren - 1);
       if( getIndex(id) == i && b ){
-        
         posY += views[i].getHeight();
         views[i].update('select', i , 'na');
         selectedView = views[i];
       }
       else{
         views[i].update('deselect', i , 'na');
-        posY += SIZE.PROPERTY_BUTTON_HEIGHT;
+        if(views[i].getHeight() != 0)
+          posY += SIZE.PROPERTY_BUTTON_HEIGHT;
       }
     }
     if(b){
       this.setChildIndex(selectedView, this.numChildren - 1);
     }
+
   }
+  
+
   
   private function getIndex(viewId:String):Int{
     
@@ -132,10 +109,25 @@ class SideView extends View, implements IView
     for( i in 0...views.length){
       views[i].y = posY;
       if(views[i] == selectedView){
+        if(selectedView.getHeight() == 0){
+          //shiftSelectedView();
+        }
         posY += selectedView.getHeight();
       }
       else{
-        posY += SIZE.PROPERTY_BUTTON_HEIGHT;
+        if(views[i].getHeight() != 0){
+          posY += SIZE.PROPERTY_BUTTON_HEIGHT;
+        }  
+      }
+    }
+  }
+  private function shiftSelectedView():Void{
+    for( i in 0...views.length){
+      
+      if(views[i].getHeight() != 0){
+        views[i].update('select', i , 'na');
+        selectedView = views[i];
+        break;
       }
     }
   }
