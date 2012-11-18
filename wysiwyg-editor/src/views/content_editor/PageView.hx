@@ -89,7 +89,7 @@ class PageView extends View{
         if(StringTools.trim(placeholders[i].getTextFieldText()) != ''){
           switch ( placeholders[i].getPrintType() )
           {
-            case CONST.STD_PMS_COLOR:{
+            case CONST.STD_PMS_COLOR, 'std_pms_color':{
               // Count diffrent colors
               var color:String = placeholders[i].getStdPmsColor();
               var text_color_is_used:Bool = false;
@@ -196,9 +196,9 @@ class PageView extends View{
               //amount_digital_print = 1;
               amount_custom_pms4_color = 1;
             }
-            default:{
-              amount_digital_print = 1;
-            }
+            //default:{
+            //  amount_digital_print = 1;
+            //}
           }
         }
       }
