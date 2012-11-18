@@ -401,8 +401,12 @@ class PageView extends View{
     for( pms2_color in xml.elementsNamed("pms2-color") ) 
         GLOBAL.pms2Color =  Std.parseInt(pms2_color.firstChild().nodeValue);
     
-    for(print_type in xml.elementsNamed("print-type") ) 
+    for(print_type in xml.elementsNamed("print-type") ) {
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
+      if(GLOBAL.printType == 'digital_print')
+        GLOBAL.printType = CONST.STD_PMS_COLOR;
+    }
+      
       
     for( size_x in xml.elementsNamed("size-x") )
         sizeX = Std.parseInt(size_x.firstChild().nodeValue);
@@ -452,8 +456,11 @@ class PageView extends View{
     for(pms_color in xml.elementsNamed("std-pms-color") ) 
       GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
     
-    for(print_type in xml.elementsNamed("print-type") ) 
+    for(print_type in xml.elementsNamed("print-type") ) {
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
+      if(GLOBAL.printType == 'digital_print')
+        GLOBAL.printType = CONST.STD_PMS_COLOR;
+    }
     
     for( url in xml.elementsNamed("url") ) {
       var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY, sizeX, sizeY);
