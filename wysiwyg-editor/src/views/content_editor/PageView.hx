@@ -102,10 +102,16 @@ class PageView extends View{
           
               if(!text_color_is_used) {
                 if( placeholders[i].getPlaceholderType() == 'greeting' ) {
-                  if(color != "9672088"){
+                  if( placeholders[i].isFreeInGreyPms() ){
+                    if(color != "9672088"){
+                      std_pms_colors.push(color);
+                      amount_std_pms_color += 1;
+                    }
+                  } else {
                     std_pms_colors.push(color);
                     amount_std_pms_color += 1;
                   }
+                  
                 } else {
                   std_pms_colors.push(color);
                   amount_std_pms_color += 1;
