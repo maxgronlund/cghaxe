@@ -157,7 +157,7 @@ class TextView extends PropertyView, implements IView{
   }
   
   private function onEnableTool(cmd:String):Void{
-    
+    trace(cmd);
     switch ( cmd ){
       case 'Foil, Garamond':{
         back.visible                  = true;
@@ -168,7 +168,7 @@ class TextView extends PropertyView, implements IView{
         addTextfieldIButton.visible   = true;                                
         addTextfieldButton.visible    = true;
       }
-      case 'Text':{
+      case 'PMS':{
         back.visible                  = true;
         selectButton.visible          = true;                                        
         lineSpaceLabel.visible        = true;

@@ -43,7 +43,7 @@ class VectorPlaceholderView extends APlaceholder {
   private var mouseOver:Bool;
   private var id:Int;
   private var modelId:Int;
-  private var xml:String;
+//  private var xml:String;
   private var vectorFileFileName:String;
   private var vectorFileScreenName:String;
   private var url:String;
@@ -79,6 +79,7 @@ class VectorPlaceholderView extends APlaceholder {
   private var canResize:Bool;
   private var originalWidth:Float;
   private var originalHeight:Float;
+  private var pmsIsFreeInGray:Bool;
 
  
   public function new(pageView:PageView, id:Int, model:IModel, url:String, canResize:Bool){	
@@ -484,6 +485,15 @@ class VectorPlaceholderView extends APlaceholder {
     }
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
+  }
+  
+   
+  
+  override public function isFreeInGreyPms():Bool{
+    return pmsIsFreeInGray;
+  }
+  override public function freePmsInGrey(b:Bool):Void{
+    pmsIsFreeInGray = b;
   }
   
   private function onMoveTool(e:IKEvent):Void {

@@ -120,6 +120,14 @@ class APlaceholder extends Sprite{
 
   }
   
+  public function isFreeInGreyPms():Bool{
+    trace("isFreeInGreyPms: must be overriden in a subclass");
+    return false;
+  }
+  public function freePmsInGrey(b:Bool):Void{
+    trace("freePmsInGrey: must be overriden in a subclass");
+  }
+  
   //public function canResize(b:Bool):Void{
   //  trace("canResize: must be overriden in a subclass");
   //}

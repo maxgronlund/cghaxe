@@ -385,6 +385,7 @@ class PageView extends View{
     var sizeX = -1;
     var sizeY = -1;
     var canResize = resizable;
+    var isFree  = false;
     
     //if(GLOBAL.printType == 'foo')
     //  ;
@@ -414,16 +415,22 @@ class PageView extends View{
         
     for( can_resize in xml.elementsNamed("resizable") ) 
         canResize = can_resize.firstChild().nodeValue == 'true';
+    
+        for(free in xml.elementsNamed("free") ){
+          trace(free.firstChild().nodeValue.toString());
+          isFree = free.firstChild().nodeValue.toString() == 'free';
+        }
+          
         
     for(url_xml in xml.elementsNamed("url") ){
-      var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize);
+      var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize, isFree);
       placeholder.setSize(sizeX, sizeY);
     }
     //trace('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     //trace(GLOBAL.printType);
   }
   
-  private function addVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool):APlaceholder{
+  private function addVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool, isFree:Bool):APlaceholder{
 
     var url:String = xml.firstChild().nodeValue.toString();
     setPlaceholderInFocus(null);
@@ -431,6 +438,7 @@ class PageView extends View{
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url, resizable);
     placeholder.x = posX;
   	placeholder.y = posY;
+  	placeholder.freePmsInGrey(isFree);
     placeholders.push(placeholder);
     addChild(placeholder);
     return placeholder;

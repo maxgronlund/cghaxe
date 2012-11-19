@@ -50,7 +50,7 @@ class VectorsPane extends View, implements IView{
   }
   
   private function addButton(param:IParameter	):Void{
-
+    trace(param.getXml().toString());
     var vectorTitle:String;
     
     for( title in param.getXml().elementsNamed("title") ) {
