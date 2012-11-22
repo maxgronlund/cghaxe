@@ -62,15 +62,8 @@ class LogosView extends PropertyView, implements IView{
     
     */
     
-    addLogoInfo         = new InfoMessageView(GLOBAL.tool_tips_controller, 
-                                                TOOL_TIPS.MY_UPLOADS_ADD,
-                                                'right', 
-                                                'top');
-                                                
-    uploadLogoInfo         = new InfoMessageView(GLOBAL.tool_tips_controller, 
-                                               TOOL_TIPS.MY_UPLOADS_UPLOAD,
-                                               'right', 
-                                                'top');
+    addLogoInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, TOOL_TIPS.MY_UPLOADS_ADD,'right','top');                
+    uploadLogoInfo    = new InfoMessageView(GLOBAL.tool_tips_controller, TOOL_TIPS.MY_UPLOADS_UPLOAD,'right','top');
     Preset.addEventListener(EVENT_ID.LOGOS_LOADED, onLogosLoaded);
     Preset.addEventListener(EVENT_ID.PHOTOS_LOADED, onPhotosLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);

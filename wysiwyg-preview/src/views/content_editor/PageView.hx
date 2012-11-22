@@ -180,9 +180,9 @@ class PageView extends View{
           
               
             }
-            case CONST.LASER_COLOR:{
-              amount_laser_color = 1;
-            }
+            //case CONST.DIGITAL_PRINT:{
+            //  amount_laser_color = 1;
+            //}
             default:{
               amount_laser_color = 1;
             }
@@ -258,7 +258,8 @@ class PageView extends View{
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{addDesignToPage(param);}
       case EVENT_ID.ADD_GREETING_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), false);}
       case EVENT_ID.ADD_SYMBOL_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), true);}
-      case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(), onPosX(), onPosY());}
+      case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),   onPosX(), onPosY(), -1, -1);}
+      case EVENT_ID.ADD_PHOTO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),  onPosX(), onPosY(), -1, -1);}
     }
   }
   
@@ -310,17 +311,18 @@ class PageView extends View{
     for( plc_type in xml.elementsNamed("placeholder-type") ){
       placeholder_type = plc_type.firstChild().nodeValue;
     }
-
+    
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
       case "text_placeholder":
         parseTextPlaceholder(xml);
-      case "bitmap_placeholder":
+      case "bitmap_place_holder":
         parseBitmapPlaceholder(xml, posX, posY);
-      
-      default:
+      default:{
         parseTextPlaceholder(xml);
+      }
+        
     }
 
   }
@@ -334,12 +336,19 @@ class PageView extends View{
     
     for(foil_color in xml.elementsNamed("foil-color") ) 
       GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
+      
+    for( std_pms_color in xml.elementsNamed("std-pms-color") ) 
+      GLOBAL.stdPmsColor =  Std.parseInt(std_pms_color.firstChild().nodeValue);
+      
+    for( pms1_color in xml.elementsNamed("pms1-color") ) 
+      GLOBAL.pms1Color =  Std.parseInt(pms1_color.firstChild().nodeValue);
     
-    for(pms_color in xml.elementsNamed("pms-color") ) 
-      GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
+    for( pms2_color in xml.elementsNamed("pms2-color") ) 
+        GLOBAL.pms2Color =  Std.parseInt(pms2_color.firstChild().nodeValue);
     
-    for(print_type in xml.elementsNamed("print-type") ) 
+    for(print_type in xml.elementsNamed("print-type") ) {
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
+    }
       
     for( size_x in xml.elementsNamed("size-x") )
         sizeX = Std.parseInt(size_x.firstChild().nodeValue);
@@ -375,32 +384,40 @@ class PageView extends View{
     //var url;
     
     for( size_x in xml.elementsNamed("size-x") )
-        sizeX = Std.parseInt(size_x.firstChild().nodeValue);
+      sizeX = Std.parseInt(size_x.firstChild().nodeValue);
     
     for( size_y in xml.elementsNamed("size-y") ) 
-        sizeY = Std.parseInt(size_y.firstChild().nodeValue);
+      sizeY = Std.parseInt(size_y.firstChild().nodeValue);
+        
+    for(foil_color in xml.elementsNamed("foil-color") ) 
+      GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
+    //
+    for(pms_color in xml.elementsNamed("std-pms-color") ) 
+      GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
     
-    
-    trace(sizeX,sizeY);
+    for(print_type in xml.elementsNamed("print-type") ) {
+      GLOBAL.printType = print_type.firstChild().nodeValue.toString();
+    }
     
     for( url in xml.elementsNamed("url") ) {
-      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY);
-      placeholder.setSize(sizeX, sizeY);
+      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY, sizeX, sizeY);
+      //placeholder.setSize(sizeX, sizeY);
     }
   }
   
-  private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float):APlaceholder{
-     
+  private function addBitmapPlaceholder(xml:Xml, posX:Float, posY:Float, sizeX:Float, sizeY:Float):APlaceholder{
+    
     var url:String = xml.firstChild().nodeValue.toString();
-    trace(url);
     setPlaceholderInFocus(null);
     var placeholder:APlaceholder	= new BitmapPlaceholder(this, placeholders.length, model, url);
     placeholder.x = posX;
   	placeholder.y = posY;
     placeholders.push(placeholder);
+    placeholder.setSize(sizeX, sizeY);
     addChild(placeholder);
     return placeholder;
   }
+  
   
   private function parseTextPlaceholder(xml:Xml):Void{
     
@@ -413,7 +430,7 @@ class PageView extends View{
     for( print_type in xml.elementsNamed("print-type") ) 
       GLOBAL.printType =  print_type.firstChild().nodeValue;
       
-    for( std_pms_color in xml.elementsNamed("std_pms_color") ) 
+    for( std_pms_color in xml.elementsNamed("std-pms-color") ) 
       GLOBAL.stdPmsColor =  Std.parseInt(std_pms_color.firstChild().nodeValue);
       
     for( pms1_color in xml.elementsNamed("pms1-color") ) 
@@ -504,19 +521,19 @@ class PageView extends View{
   }
   
   public function setPlaceholderInFocus(placeholder:APlaceholder):Void{
-    if(inFocus != null){
-      // clean up
-      inFocus.setFocus(false);
-      model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
-      inFocus = null;
-    } 
-    if(placeholder != null) {
-      // set focus
-      inFocus = placeholder;
-      inFocus.setFocus(true);
-      model.addEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
-
-    }
+    //if(inFocus != null){
+    //  // clean up
+    //  inFocus.setFocus(false);
+    //  model.removeEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
+    //  inFocus = null;
+    //} 
+    //if(placeholder != null) {
+    //  // set focus
+    //  inFocus = placeholder;
+    //  inFocus.setFocus(true);
+    //  model.addEventListener(EVENT_ID.UPDATE_PLACEHOLDER, inFocus.onUpdatePlaceholder);
+    //
+    //}
   }
   
   public function enableMove(e:MouseEvent):Void{

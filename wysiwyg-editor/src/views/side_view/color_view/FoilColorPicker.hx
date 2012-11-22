@@ -36,7 +36,6 @@ class FoilColorPicker extends View{
     var posY:Float = e.stageY-this.y;
     var color:String;
     
-    trace(posY);
     if(posY < 32)
       color = row1(e.stageX);
     else

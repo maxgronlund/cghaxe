@@ -539,7 +539,7 @@ class TextPlaceholderView extends APlaceholder {
     
     
     switch ( printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         was_foiled = false;
         unfoilify();
       }
@@ -575,7 +575,7 @@ class TextPlaceholderView extends APlaceholder {
   private function setFontScreenColor():Void{
     //unmountPmsColors();
     switch ( printType ){
-      case CONST.STD_PMS_COLOR: fontScreenColor           = stdPmsColor;
+      case CONST.STD_PMS_COLOR, 'std_pms_color': fontScreenColor           = stdPmsColor;
       case CONST.CUSTOM_PMS1_COLOR:{
         fontScreenColor     = pms1Color;
 

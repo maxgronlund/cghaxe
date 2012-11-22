@@ -2,7 +2,9 @@ import flash.geom.Point;
 import flash.events.Event;
 
 class GreetingsView extends VectorsView, implements IView{
-
+  
+  var print_types:Xml;
+  private var pos:Int;
 
   public function new(greetingsController:IController){	
     super(greetingsController);
@@ -10,10 +12,8 @@ class GreetingsView extends VectorsView, implements IView{
     verticalScrollbar     = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
     Preset.addEventListener(EVENT_ID.GREETINGS_LOADED, onVectorLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
-    addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, 
-                                                 TOOL_TIPS.GREETINGS_ADD,
-                                                 'right', 
-                                                 'top');
+    addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, TOOL_TIPS.GREETINGS_ADD,'right','top');
+    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
   }
   
   override public function init():Void{
@@ -36,6 +36,60 @@ class GreetingsView extends VectorsView, implements IView{
     
     super.init();
   }
+  
+  private function onPageSelected(e:IKEvent):Void{
+    disableTools();
+    if(Pages.getString(CONST.PRINT_TYPES) != 'na'){
+      print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+      setPrintTypes();
+    }
+    PositionTools();
+  }
+  
+  private function disableTools():Void{
+     back.visible                     = false;
+     selectButton.visible             = false;
+     addVectorButton.visible          = false;
+     addVectorIButton.visible         = false;
+     vectorsPane.visible              = false;
+     verticalScrollbar.visible        = false; 
+     scrollPaneBack.visible           = false; 
+  }
+  
+  private function onEnableTool(cmd:String):Void{
+    
+    if(cmd == 'Greetings'){
+      back.visible                     = true;
+      selectButton.visible             = true;
+      addVectorButton.visible          = true;
+      addVectorIButton.visible         = true;
+      vectorsPane.visible              = true;
+      verticalScrollbar.visible        = true;
+      scrollPaneBack.visible           = true;
+    }
+    
+  }
+    
+
+ 
+  
+  private function setPrintTypes():Void{
+
+    //disableTools();
+    for(print_types in print_types.elementsNamed('print-types')){
+      for(print_type in print_types.elementsNamed('print-type')){
+        for(title in print_type.elementsNamed('title')){
+          onEnableTool( title.firstChild().nodeValue.toString());
+          //trace( title.firstChild().nodeValue.toString());
+        }
+      }
+    }
+    //PositionTools();
+  }
+  
+   private function PositionTools():Void{
+      //trace('PositionTools');
+   }
   
   override private function onVectorLoaded(e:KEvent):Void{
 
@@ -78,5 +132,7 @@ class GreetingsView extends VectorsView, implements IView{
     //                             TOOL_TIPS.greetings_add_body,
     //                             TOOL_TIPS.greetings_add_link); 
   }
+  
+  
 }
 

@@ -559,7 +559,8 @@ class TextPlaceholderView extends APlaceholder {
         setFoil();
         
       }
-      case CONST.LASER_COLOR:{
+      
+      case CONST.DIGITAL_PRINT:{
         was_foiled = false;
         unfoilify();
       }
@@ -580,7 +581,7 @@ class TextPlaceholderView extends APlaceholder {
       case CONST.CUSTOM_PMS2_COLOR: fontScreenColor       = pms2Color;  
       case CONST.FOIL_COLOR:    setFontScreenColorForFoil();
       case CONST.GARAMOND:    setFontScreenColorForFoil(); 
-      case CONST.LASER_COLOR:   fontScreenColor            = laserColor; 
+      case CONST.DIGITAL_PRINT:   fontScreenColor            = laserColor; 
     }
   }
   

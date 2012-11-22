@@ -60,6 +60,7 @@ class SideView extends View, implements IView
   }
   
   override public function showView(id:String, b:Bool):Void{
+    controller.setString(EVENT_ID.CLOSE_TOOL_TIPS, 'foo');
     trace(id);
     posY = 0;
 
@@ -80,11 +81,8 @@ class SideView extends View, implements IView
     if(b){
       this.setChildIndex(selectedView, this.numChildren - 1);
     }
-
   }
-  
 
-  
   private function getIndex(viewId:String):Int{
     
     for( i in 0...views.length){

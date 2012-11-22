@@ -310,6 +310,7 @@ class VectorPlaceholderView extends APlaceholder {
     str += '\t\t\t<std-pms-color>' + Std.string(stdPmsColor) + '</std-pms-color>\n';
     str += '\t\t\t<pms1-color>' + Std.string(GLOBAL.pms1Color) + '</pms1-color>\n';
     str += '\t\t\t<pms2-color>' + Std.string(GLOBAL.pms2Color) + '</pms2-color>\n';
+    str += '\t\t\t<free>' + Std.string(pmsIsFreeInGray) + '</free>\n';
     str += '\t\t</placeholder>\n';
     return str;
   }
@@ -374,14 +375,17 @@ class VectorPlaceholderView extends APlaceholder {
     this.setChildIndex(selectBox, this.numChildren - 1);
     resizeBackdrop();
     switch ( printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         unfoilify();
+        updateColor(stdPmsColor);
       }
       case CONST.CUSTOM_PMS1_COLOR:{
         unfoilify();
+        updateColor(pms1Color);
       }
       case CONST.CUSTOM_PMS2_COLOR:{
         unfoilify();
+        updateColor(pms2Color);
       }
       case CONST.FOIL_COLOR:{
         foilify(foilColor);
@@ -397,9 +401,11 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function updateColor(_color:Int):Void{
+    trace('sheck for free here', _color);
     switch ( printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         color(_color);
+            
       }
       case CONST.CUSTOM_PMS1_COLOR:{
         color(_color);
@@ -443,9 +449,12 @@ class VectorPlaceholderView extends APlaceholder {
   override public function onUpdatePlaceholder(event:Event):Void{    
     
     switch ( GLOBAL.printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         printType = GLOBAL.printType;
         unfoilify();
+        if(GLOBAL.stdPmsColor == 9672088){
+          pmsIsFreeInGray = GLOBAL.Greetings.validateString(EVENT_ID.IS_GREEDING_FREE, url);
+        }
         color(GLOBAL.stdPmsColor);
       }
       case CONST.CUSTOM_PMS1_COLOR:{
@@ -486,8 +495,6 @@ class VectorPlaceholderView extends APlaceholder {
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
   }
-  
-   
   
   override public function isFreeInGreyPms():Bool{
     return pmsIsFreeInGray;

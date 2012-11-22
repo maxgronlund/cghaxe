@@ -3,6 +3,12 @@ class TOOL_TIPS  {
   public static var color_4_pms_body:String; 
   public static var color_4_pms_link:String; 
   public static var color_4_pms_title:String; 
+  public static var color_2_pms_body:String; 
+  public static var color_2_pms_link:String; 
+  public static var color_2_pms_title:String;
+  public static var digital_print_body:String; 
+  public static var digital_print_link:String; 
+  public static var digital_print_title:String;
   public static var color_custom_pms_1_body:String; 
   public static var color_custom_pms_1_link:String; 
   public static var color_custom_pms_1_title:String;
@@ -38,10 +44,12 @@ class TOOL_TIPS  {
   public static var text_resizable_title:String;
   public static var text_resizable_body:String;
   
+  public static inline var COLOR_PMS_2            = "color_2_pms";
   public static inline var COLOR_PMS_4            = "color_4_pms";
   public static inline var COLOR_CUSTOM_PMS_1     = "color_custom_pms_1";
   public static inline var COLOR_CUSTOM_PMS_2     = "color_custom_pms_2";
   public static inline var COLOR_STD_PMS          = "color_std_pms";
+  public static inline var COLOR_PICKER           = "color_picker";
   public static inline var COLOR_FOIL             = "color_foil";
   public static inline var GREETINGS_ADD          = "greetings_add";
   public static inline var SYMBOLS_ADD            = "symbols_add";

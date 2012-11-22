@@ -179,11 +179,13 @@ class EVENT_ID  {
   
   
   public static inline var USE_GARAMOND:String               = "use_garamond"; 
-  public static inline var PMS4_COLOR:String                 = "PMS4_COLOR";                                                    
+  public static inline var PMS4_COLOR:String                 = "PMS4_COLOR";
+  public static inline var PMS2_COLOR:String                 = "PMS2_COLOR";                                                    
   public static inline var SHOW_FOIL:String                  = "foil_view";
   public static inline var SHOW_IMAGE:String                 = "image_view";
   public static inline var SHOW_LOGO:String                  = "logo_view";
   public static inline var SHOW_BLIND_VIEW:String            = "blind_view";
+  public static inline var CLOSE_TOOL_TIPS:String            = "close_tool_tips";
                                                              
   
   public static inline var CLOSE                             = "close";
@@ -234,6 +236,7 @@ class EVENT_ID  {
   public static inline var SYMBOL_SELECTED                    = "symbol_selected";
   public static inline var ADD_GREETING_TO_PAGE               = "add_greeting_to_page";
   public static inline var ADD_SYMBOL_TO_PAGE                 = "add_symbol_to_page";
+  public static inline var IS_GREEDING_FREE                   = "is_greeding_free";
   
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";
@@ -279,6 +282,11 @@ class EVENT_ID  {
   public static inline var UPDATE_TOOL_SIZES                  = "update_tool_sizes";
   public static inline var POSSITION_TOOLS                    = "possition_tools";
   public static inline var PRINT_TYPES_LOADED                 = "print_types_loaded";
-	
+  
+  public static inline var SWF_LOADED                         = "swf_loaded";
+  
+  public static inline var UPDATE_STAGE_POSITION              = "update_stage_position";
+  public static inline var UPDATE_PAGE_POSITION               = "update_page_position";
+  
 	
 }

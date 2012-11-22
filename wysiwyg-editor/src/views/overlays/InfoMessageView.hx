@@ -1,6 +1,6 @@
 import flash.geom.Point;
 import flash.events.Event;
-
+import flash.events.MouseEvent;
 
 class InfoMessageView extends View, implements IView
 {
@@ -25,13 +25,32 @@ class InfoMessageView extends View, implements IView
     linkTextField   = new FormatedText('helvetica', '', 11, false, 0x0000AA, 250);
     
     GLOBAL.Application.addEventListener(id, onToolTip);
-
+    GLOBAL.Application.addEventListener(EVENT_ID.CLOSE_TOOL_TIPS, onCloseToolTip);
+    
+    addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+  }
+  
+  private function onMouseDown(e:MouseEvent){	
+    
+    //trace('bbbbbb-------------------');
+    removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+    this.visible = false;
+ 
   }
   
   private function onToolTip(e:KEvent):Void{
-    if(e.getBool() )
+    
+    if(e.getBool() ){
+      if(!this.visible){
+        GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.EVENT_ID.CLOSE_TOOL_TIPS));
+        addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+      }
       this.visible = !this.visible;
-
+    }
+  }
+  
+  private function onCloseToolTip(e:KEvent):Void{
+      this.visible = false;
   }
   
   public function setContent(title:String, body:String, link:String){	

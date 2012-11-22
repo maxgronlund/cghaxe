@@ -111,7 +111,7 @@ class TextView extends PropertyView, implements IView{
   }
    
   private function onUpdateSideView(e:IKEvent):Void{
-    trace('onUpdateSideView', e.getString() );
+
     var b:Bool = e.getString() == 'garamond_place_holder';
     fixedSize(b);
     fixedSizeButton.setOn(b);
@@ -119,7 +119,7 @@ class TextView extends PropertyView, implements IView{
 	}
   
   private function onPageSelected(e:IKEvent):Void{
-    disableTools();
+    //disableTools();
     if(Pages.getString(CONST.PRINT_TYPES) != 'na'){
       print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
       setPrintTypes();
@@ -157,7 +157,7 @@ class TextView extends PropertyView, implements IView{
   }
   
   private function onEnableTool(cmd:String):Void{
-    trace(cmd);
+    
     switch ( cmd ){
       case 'Foil, Garamond':{
         back.visible                  = true;
@@ -317,7 +317,6 @@ class TextView extends PropertyView, implements IView{
     
     pos += 169;
     
-
     addChild(addTextfieldButton);
     addTextfieldButton.x = marginLeft;
     addTextfieldButton.y = pos;
@@ -328,12 +327,11 @@ class TextView extends PropertyView, implements IView{
     //addTextfieldIButton.y = pos;
     addTextfieldIButton.fireOnMouseUp(false);
     
-    
-    
-    back.height = pos ;
+  
+    back.height = pos;
     
     setChildIndex(lineSpacePopup, this.numChildren - 1);
-
+    setChildIndex(fontSizePopup, this.numChildren - 1);
     
     fixedSizeInfo.x = fixedSizeIButton.x;
   	//fixedSizeInfo.y = fixedSizeIButton.y;
@@ -401,7 +399,7 @@ class TextView extends PropertyView, implements IView{
         lineSpacePopup.deselectItem(param.getInt());
         lineSpacePopup.show(true); 
         lineSpacePopup.setInt('display', param.getInt());
-        //trace(param.getInt());
+        
       }
       case EVENT_ID.FONT_SIZE_SELECTED:{
         fontSizePopup.deselectItem(param.getInt());

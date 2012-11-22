@@ -251,7 +251,7 @@ class BitmapPlaceholder extends APlaceholder{
         unfoilify();
         uncolor();
       }
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         unfoilify();
         color(stdPmsColor);
       }
@@ -345,10 +345,10 @@ class BitmapPlaceholder extends APlaceholder{
   override public function onUpdatePlaceholder(event:Event):Void{    
     
     printType = GLOBAL.printType;
-    trace("Setting printype to", printType);
+    //trace("Setting printype to", printType);
     // TO DO
     switch ( GLOBAL.printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         unfoilify();
         stdPmsColor = GLOBAL.stdPmsColor;
         color(GLOBAL.stdPmsColor);
@@ -366,7 +366,7 @@ class BitmapPlaceholder extends APlaceholder{
         foilify(GLOBAL.foilColor);
       }
       case CONST.DIGITAL_PRINT:{
-        trace("Setting printype to DIGITAL_PRINT");
+        //trace("Setting printype to DIGITAL_PRINT");
         uncolor();
         unfoilify();
       }
@@ -377,7 +377,7 @@ class BitmapPlaceholder extends APlaceholder{
   
   override public function updateColor(_color:Int):Void{
     switch ( printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         stdPmsColor = GLOBAL.stdPmsColor;
         color(_color);
       }

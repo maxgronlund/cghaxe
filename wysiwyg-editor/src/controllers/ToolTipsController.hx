@@ -13,7 +13,10 @@ class ToolTipsController extends Controller, implements IController
   }
   
   override public function setParam(param:IParameter):Void{
-  //  trace(param.getLabel());
+
+    //if(param.getBool() ){
+    //  //GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.EVENT_ID.CLOSE_TOOL_TIPS));
+    //}
     Application.dispatchParameter(param);
   }
 }

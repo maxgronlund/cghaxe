@@ -1,6 +1,6 @@
 import flash.display.BitmapData;
 import flash.display.Bitmap;
-//import flash.geom.Point;
+import flash.geom.Point;
 import flash.events.MouseEvent;
 import flash.events.Event;
 
@@ -34,8 +34,8 @@ class DesktopView extends View, implements IView{
   
   public function new(desktopController:IController){	
   	super(desktopController);
-  	GLOBAL.foilEffect = 0.25;
-  	pagesView = new PagesView(desktopController);
+  	GLOBAL.foilEffect   = 0.25;
+  	pagesView           = new PagesView(desktopController);
   	Application.addEventListener(EVENT_ID.ZOOM, onZoom);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
     Pages.addEventListener(EVENT_ID.PLACEHOLDER_LOADED, onPlaceholderLoaded);
@@ -63,9 +63,9 @@ class DesktopView extends View, implements IView{
   }
   
   override public function init():Void{
-  	pagesView.init();
-  	this.visible = false;
-  	placeholdersToLoad = 0;
+    pagesView.init();
+    this.visible = false;
+    placeholdersToLoad = 0;
   }
   
   override public function onAddedToStage(e:Event){
@@ -121,6 +121,7 @@ class DesktopView extends View, implements IView{
   private function onPlaceholderCount(e:KEvent):Void{
     placeholdersToLoad = e.getInt();
   }
+  
   private function onPlaceholderLoaded(e:KEvent):Void{
     
     sizeX = pagesView.width/Zoom.getZoomFactor();
@@ -132,7 +133,6 @@ class DesktopView extends View, implements IView{
       Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'From DesktopView');
       setSizes();
     }
-
   }
   
   private function onAllImagesLoaded(e:KEvent):Void{
@@ -216,6 +216,14 @@ class DesktopView extends View, implements IView{
     
     GLOBAL.pos_x = x;
     GLOBAL.pos_y = y;
+    
+    var point:Point = new Point(x,y);
+    var param = new Parameter(EVENT_ID.UPDATE_STAGE_POSITION);
+    param.setPoint(point);
+    Application.dispatchParameter(param);
+    
+    //Application.addEventListener(EVENT_ID.UPDATE_STAGE_POSITION,  onUpdatePositionInfo );
+    
   }
   
   override public function updateFoilEffects(offset_offset:Float=0.01):Void{

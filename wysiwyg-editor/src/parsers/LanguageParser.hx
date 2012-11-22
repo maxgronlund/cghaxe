@@ -58,10 +58,10 @@ class LanguageParser
     for(standard_pms in xml_data.elementsNamed("standard-pms") ) 
       TRANSLATION.standard_pms = standard_pms.firstChild().nodeValue.toString();
 
-    for(custom_pms_1 in xml_data.elementsNamed("custom-pms-1") ) 
+    for(custom_pms_1 in xml_data.elementsNamed("pms_1") ) 
       TRANSLATION.custom_pms_1 = custom_pms_1.firstChild().nodeValue.toString();
 
-    for(custom_pms_2 in xml_data.elementsNamed("custom-pms-2") ) 
+    for(custom_pms_2 in xml_data.elementsNamed("pms_2") ) 
       TRANSLATION.custom_pms_2 = custom_pms_2.firstChild().nodeValue.toString();
 
     for(foil_color_picker in xml_data.elementsNamed("foil-color-picker") ) 
@@ -72,6 +72,9 @@ class LanguageParser
       
     for(pms_4 in xml_data.elementsNamed("pms-4") ) 
       TRANSLATION.pms_4 = pms_4.firstChild().nodeValue.toString();
+      
+    for(pms_2 in xml_data.elementsNamed("pms-2") ) 
+      TRANSLATION.pms_2 = pms_2.firstChild().nodeValue.toString();
 
     for(upload_image in xml_data.elementsNamed("upload-image") ) 
       TRANSLATION.upload_image = upload_image.firstChild().nodeValue.toString();

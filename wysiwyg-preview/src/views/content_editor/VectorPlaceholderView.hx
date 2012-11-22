@@ -72,7 +72,7 @@ class VectorPlaceholderView extends APlaceholder {
   private var printType:String;
   private var sizeX:Float;
   private var sizeY:Float;
-  private var selectBox:SelectBox;
+  //private var selectBox:SelectBox;
   private var widthHeightRatio:Float;
   private var canResize:Bool;
 
@@ -353,17 +353,25 @@ class VectorPlaceholderView extends APlaceholder {
     param.setInt(id);
     model.setParam(param);
 
-    if(selectBox == null) {
-       selectBox   =   new SelectBox(pageView, this, canResize); 
-       addChild(selectBox);
-       
-    }
-    this.setChildIndex(selectBox, this.numChildren - 1);
+    //if(selectBox == null) {
+    //   selectBox   =   new SelectBox(pageView, this, canResize); 
+    //   addChild(selectBox);
+    //   
+    //}
+//    this.setChildIndex(selectBox, this.numChildren - 1);
     resizeBackdrop();
     switch ( printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
         unfoilify();
-        color(pmsColor);
+        updateColor(stdPmsColor);
+      }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        unfoilify();
+        updateColor(pms1Color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        unfoilify();
+        updateColor(pms2Color);
       }
       case CONST.FOIL_COLOR:{
         foilify(foilColor);
@@ -375,7 +383,7 @@ class VectorPlaceholderView extends APlaceholder {
       setSize(sizeX, sizeY);
     }
     
-    this.setChildIndex(selectBox, this.numChildren - 1);
+//    this.setChildIndex(selectBox, this.numChildren - 1);
   }
   
   public function resizeBackdrop():Void {
@@ -386,7 +394,7 @@ class VectorPlaceholderView extends APlaceholder {
     foilShine.width     = this.width;
     foilShine.height    = this.height;
     
-    selectBox.resizeBackdrop(vectorMovie.width, vectorMovie.height, 0, 0);
+//    selectBox.resizeBackdrop(vectorMovie.width, vectorMovie.height, 0, 0);
   }
   
   override public function setSize(sizeX:Float, sizeY:Float):Void{
@@ -417,25 +425,25 @@ class VectorPlaceholderView extends APlaceholder {
         foilify(GLOBAL.foilColor);
       }
     }
-    this.setChildIndex(selectBox, this.numChildren - 1);
+//    this.setChildIndex(selectBox, this.numChildren - 1);
     GLOBAL.Pages.calculatePrice();
   }
   
   override public function setFocus(b:Bool):Void{
     focus = b;
     updateFocus();
-    this.setChildIndex(selectBox, this.numChildren - 1);
+//    this.setChildIndex(selectBox, this.numChildren - 1);
   }
 
   private function updateFocus():Void{
     
     if(focus){
       GLOBAL.Pages.addEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      selectBox.setFocus(true);  
+//      selectBox.setFocus(true);  
       resizeBackdrop();
     }else{
       GLOBAL.Pages.removeEventListener(EVENT_ID.MOVE_TOOL, onMoveTool);
-      selectBox.setFocus(false);  
+//      selectBox.setFocus(false);  
     }
     handleKeyboard( focus ); 
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
@@ -490,7 +498,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
 
   override public function alert(b:Bool):Void{
-    selectBox.alert(b);//alertBox.visible = b;
+//    selectBox.alert(b);//alertBox.visible = b;
   }
   
   public function getWidthHeightRatio():Float{

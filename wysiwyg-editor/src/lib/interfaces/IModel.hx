@@ -29,7 +29,13 @@ interface IModel implements IEventDispatcher
 	function getDynamic(id:String, index:Int):Dynamic;
 	function getPoint(id:String):Point;
 	function getVector(id:String):Vector<Dynamic>;
-	function dispatchXML(label:String, xml:Xml):Void;
+	
+	function validateString(id:String, s:String):Bool;
+	
+	
+	// has to be cleaned up
 	function getPrintPrice(units:UInt, printType:String):Float;
 	function calculatePrice():Void;
+	
+	function dispatchXML(label:String, xml:Xml):Void;
 }

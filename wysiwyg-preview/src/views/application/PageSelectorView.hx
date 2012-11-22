@@ -58,7 +58,6 @@ class PageSelectorView extends View, implements IView {
     pageButtons[0].bang();
   }
   
-	
   override public function onAddedToStage(e:Event){
     super.onAddedToStage(e);	
     addChild(backdrop);

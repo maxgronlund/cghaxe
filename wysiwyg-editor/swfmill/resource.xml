@@ -22,6 +22,7 @@
       <bitmap id="DesignsViewButton" import="library/images/designs_view_button.png" />
       <bitmap id="FoilViewButton" import="library/images/foil_view_button.png" />
       <bitmap id="Pms4Button" import="library/images/pms_4.png" />
+      <bitmap id="Pms2Button" import="library/images/pms_2.png" />
       <bitmap id="GarmondPrintButton" import="library/images/garamond_button.png" />
 <!--      <bitmap id="GreetingsViewButton" import="library/images/greetings_view_button.png" /> -->
       <bitmap id="GridButton" import="library/images/grid_button.png" />

@@ -88,6 +88,11 @@ class AModel extends EventDispatcher
     trace("getVector: must be overriden in a subclass");
     return null;
   }
+  
+  public function validateString(id:String, s:String):Bool{
+    trace("validateString: must be overriden in a subclass");
+    return false;
+  }
     
   public function getPrintPrice(units:UInt, printType:String):Float {
     trace("getPrintPrice: must be overriden in a subclass");

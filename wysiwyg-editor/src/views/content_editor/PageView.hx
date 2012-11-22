@@ -101,8 +101,10 @@ class PageView extends View{
               }
           
               if(!text_color_is_used) {
-                if( placeholders[i].getPlaceholderType() == 'greeting' ) {
-                  if( placeholders[i].isFreeInGreyPms() ){
+                if( placeholders[i].getPlaceholderType() == 'vector_placeholder' ) {
+
+                  if( placeholders[i].isFreeInGreyPms() == true ){
+
                     if(color != "9672088"){
                       std_pms_colors.push(color);
                       amount_std_pms_color += 1;
@@ -157,7 +159,7 @@ class PageView extends View{
               //Check if there's already a foil color
               var color:String = placeholders[i].getFoilColor();              
               
-              if( placeholders[i].getPlaceholderType() == 'text_place_holder' ) {
+              if( (placeholders[i].getPlaceholderType() == 'text_place_holder') || (placeholders[i].getPlaceholderType() == 'garamond_place_holder') ) {
                 var text_color_is_used:Bool = false;
                 for(i in 0...text_foil_colors.length) {
                   if(text_foil_colors[i] == color) {
@@ -366,8 +368,7 @@ class PageView extends View{
     }
   }
   
-  override public function setString(id:String,s:String ): Void
-  {
+  override public function setString(id:String,s:String ): Void{
     switch ( id ){
       case EVENT_ID.DELETE_KEY_PRESSED:{
         
@@ -393,14 +394,13 @@ class PageView extends View{
     var canResize = resizable;
     var isFree  = false;
     
-    //if(GLOBAL.printType == 'foo')
-    //  ;
+
     
     for(foil_color in xml.elementsNamed("foil-color") ) 
       GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
-    
-    for(pms_color in xml.elementsNamed("std-pms-color") ) 
-      GLOBAL.stdPmsColor = Std.parseInt(pms_color.firstChild().nodeValue);
+      
+    for( std_pms_color in xml.elementsNamed("std-pms-color") ) 
+      GLOBAL.stdPmsColor =  Std.parseInt(std_pms_color.firstChild().nodeValue);
       
     for( pms1_color in xml.elementsNamed("pms1-color") ) 
       GLOBAL.pms1Color =  Std.parseInt(pms1_color.firstChild().nodeValue);
@@ -422,10 +422,9 @@ class PageView extends View{
     for( can_resize in xml.elementsNamed("resizable") ) 
         canResize = can_resize.firstChild().nodeValue == 'true';
     
-        for(free in xml.elementsNamed("free") ){
-          trace(free.firstChild().nodeValue.toString());
-          isFree = free.firstChild().nodeValue.toString() == 'free';
-        }
+    for(free in xml.elementsNamed("free") ){
+      isFree = (free.firstChild().nodeValue.toString() == 'true');
+    }
           
         
     for(url_xml in xml.elementsNamed("url") ){
@@ -544,7 +543,6 @@ class PageView extends View{
   }
   
   private function onAddTextSuggestion(e:IKEvent):Void {
-    trace('onAddTextSuggestion');
     addTextPlaceholder(10,10);
   }
   
@@ -642,7 +640,7 @@ class PageView extends View{
   public function hitTest():Void {
 
     switch(inFocus.getPlaceholderType()) {
-      case 'text_place_holder':
+      case 'text_place_holder', 'garamond_place_holder':
         hitTestTextPlaceholder();
         
       case "vector_placeholder":
@@ -716,6 +714,11 @@ class PageView extends View{
 
     this.x = endPosX;
     this.y = endPosY;
+    
+    var point:Point = new Point(Std.int(x),Std.int(y));
+    var param = new Parameter(EVENT_ID.UPDATE_PAGE_POSITION);
+    param.setPoint(point);
+    Application.dispatchParameter(param);
 
   }
   
@@ -750,6 +753,7 @@ class PageView extends View{
   }
   
   private function frontShotErrorHandler(Event:IOErrorEvent):Void {
+      Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'ERROR Loading Front shoot');
       trace("ioErrorHandler: " + Event);
   }
 

@@ -2,7 +2,7 @@ import flash.geom.Point;
 import flash.events.Event;
 
 class SymbolsView extends VectorsView, implements IView{
-
+  var print_types:Xml;
 
   public function new(symbolsController:IController){	
     super(symbolsController);
@@ -10,6 +10,7 @@ class SymbolsView extends VectorsView, implements IView{
     verticalScrollbar     = new VerticalScrollbar(symbolsController, EVENT_ID.SYMBOL_SCROLL);
     Preset.addEventListener(EVENT_ID.SYMBOLS_LOADED, onVectorLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
+    Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
   }
   
   override public function init():Void{
@@ -32,6 +33,58 @@ class SymbolsView extends VectorsView, implements IView{
     super.init();
   }
   
+  private function onPageSelected(e:IKEvent):Void{
+    disableTools();
+    if(Pages.getString(CONST.PRINT_TYPES) != 'na'){
+      print_types = Xml.parse(Pages.getString(CONST.PRINT_TYPES));
+      setPrintTypes();
+    }
+    PositionTools();
+  }
+  
+  private function disableTools():Void{
+     back.visible                     = false;
+     selectButton.visible             = false;
+     addVectorButton.visible          = false;
+     addVectorIButton.visible         = false;
+     vectorsPane.visible              = false;
+     verticalScrollbar.visible        = false; 
+     scrollPaneBack.visible           = false; 
+  }
+  
+  private function onEnableTool(cmd:String):Void{
+
+    if(cmd == 'Symbols'){
+      back.visible                     = true;
+      selectButton.visible             = true;
+      addVectorButton.visible          = true;
+      addVectorIButton.visible         = true;
+      vectorsPane.visible              = true;
+      verticalScrollbar.visible        = true;
+      scrollPaneBack.visible           = true;
+    }
+  }
+    
+  private function setPrintTypes():Void{
+  
+    //disableTools();
+    for(print_types in print_types.elementsNamed('print-types')){
+      for(print_type in print_types.elementsNamed('print-type')){
+        for(title in print_type.elementsNamed('title')){
+          onEnableTool( title.firstChild().nodeValue.toString());
+          //trace( title.firstChild().nodeValue.toString());
+        }
+      }
+    }
+    //PositionTools();
+  }
+
+ private function PositionTools():Void{
+    //trace('PositionTools');
+ }
+    
+    
+  
   override private function onVectorLoaded(e:KEvent):Void{
 
     for(symbol in e.getXml().elementsNamed('symbol')){
@@ -49,7 +102,6 @@ class SymbolsView extends VectorsView, implements IView{
       }
     }
   }
-  
   
   override public function setFloat(id:String, f:Float):Void{
     switch ( id ) {
@@ -69,4 +121,5 @@ class SymbolsView extends VectorsView, implements IView{
                               TOOL_TIPS.symbols_add_body,
                               TOOL_TIPS.symbols_add_link);
   }
+  
 }

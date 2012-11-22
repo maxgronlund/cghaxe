@@ -18,7 +18,16 @@ class ToolTipParser
 
     for(color_4_pms_title in xml_data.elementsNamed("color-4-pms-title") )
       TOOL_TIPS.color_4_pms_title = color_4_pms_title.firstChild().nodeValue.toString();
-
+      
+    for( color_2_pms_body in xml_data.elementsNamed("color-2-pms-body") ) 
+      TOOL_TIPS.color_2_pms_body = color_2_pms_body.firstChild().nodeValue.toString();
+    
+    for(color_2_pms_link in xml_data.elementsNamed("color-2-pms-link") ) 
+      TOOL_TIPS.color_2_pms_link = color_2_pms_link.firstChild().nodeValue.toString();
+    
+    for(color_2_pms_title in xml_data.elementsNamed("color-2-pms-title") )
+      TOOL_TIPS.color_2_pms_title = color_2_pms_title.firstChild().nodeValue.toString();
+        
     for(color_custom_pms_1_body in xml_data.elementsNamed("color-custom-pms-1-body") ) 
       TOOL_TIPS.color_custom_pms_1_body = color_custom_pms_1_body.firstChild().nodeValue.toString();
 
@@ -54,6 +63,15 @@ class ToolTipParser
 
     for(color_std_pms_title in xml_data.elementsNamed("color-std-pms-title") ) 
       TOOL_TIPS.color_std_pms_title = color_std_pms_title.firstChild().nodeValue.toString();
+      
+    for( digital_print_body in xml_data.elementsNamed("digital-print-body") ) 
+       TOOL_TIPS.digital_print_body = digital_print_body.firstChild().nodeValue.toString();
+    
+    for(digital_print_link in xml_data.elementsNamed("digital-print-link") ) 
+      TOOL_TIPS.digital_print_link = digital_print_link.firstChild().nodeValue.toString();
+    
+    for(digital_print_title in xml_data.elementsNamed("digital-print-title") )
+      TOOL_TIPS.digital_print_title = digital_print_title.firstChild().nodeValue.toString();
 
     for(greetings_add_body in xml_data.elementsNamed("greetings-add-body") ) 
       TOOL_TIPS.greetings_add_body = greetings_add_body.firstChild().nodeValue.toString();

@@ -236,6 +236,7 @@ class PagesModel extends Model, implements IModel {
       }
       case'file_xml':{
         var fileStr:String ='';
+        fileStr += '<version>Version 1.0.0</version>\n';
         fileStr += '<stage>\n';
         fileStr += '\t<zoom>'   + Std.string(Zoom.saveZoom()*1000) + '</zoom>\n';
         fileStr += '\t<pos_x>'  + Std.string(GLOBAL.pos_x) + '</pos_x>\n';

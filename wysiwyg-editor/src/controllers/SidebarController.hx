@@ -15,6 +15,11 @@ class SidebarController extends Controller, implements IController
       case EVENT_ID.SHOW_BLIND_VIEW:{
         //GLOBAL.side_view.showView(EVENT_ID.SHOW_BLIND_VIEW, true);
       }
+      case EVENT_ID.CLOSE_TOOL_TIPS:{
+        //GLOBAL.side_view.showView(EVENT_ID.SHOW_BLIND_VIEW, true);
+        GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.EVENT_ID.CLOSE_TOOL_TIPS));
+        //GLOBAL.Application.addEventListener(EVENT_ID.CLOSE_TOOL_TIPS, onCloseToolTip);
+      }
 		}
 	}
 }

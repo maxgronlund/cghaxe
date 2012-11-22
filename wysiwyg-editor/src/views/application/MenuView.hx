@@ -16,6 +16,8 @@ class MenuView extends View, implements IView
 	private var zoomInButton:OneStateButton;
 	private var zoomOutButton:OneStateButton;
 	private var zoomTo100Button:OneStateButton;
+	
+	private var positionView:PositionView;
 //	
 //	private var placeholdersButton:TwoStateButton;
   
@@ -35,6 +37,7 @@ class MenuView extends View, implements IView
     zoomInButton 	      = new OneStateButton();
     zoomOutButton       = new OneStateButton();
     zoomTo100Button     = new OneStateButton();
+    positionView        = new PositionView(GLOBAL.desktop_controller);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onSetDefaultTool);
 
   }
@@ -136,6 +139,11 @@ class MenuView extends View, implements IView
     zoomTo100Button.x   = SIZE.MENU_VIEW_WIDTH - zoomTo100Button.getWidth();
     zoomInButton.x      = zoomTo100Button.x - zoomInButton.getWidth();
     zoomOutButton.x     = zoomInButton.x - zoomOutButton.getWidth();
+    
+    
+    addChild(positionView);
+    positionView.x = 300;
+    positionView.y = 3;
     
   }
   

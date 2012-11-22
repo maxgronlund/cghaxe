@@ -212,7 +212,7 @@ class Main
     GLOBAL.greetings_view             = greetingsView;
     GLOBAL.symbols_view               = symbolsView;
     GLOBAL.logos_view                 = logosView;
-    GLOBAL.blind_view                 = blindView;
+//    GLOBAL.blind_view                 = blindView;
     GLOBAL.foil			              		= foil;
   }
   

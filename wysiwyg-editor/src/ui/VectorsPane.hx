@@ -10,11 +10,12 @@ class VectorsPane extends View, implements IView{
   private var vectorsButtons:Vector<OneStateTextAndImageButton>;
   private var buttonIndex:UInt;
   private var buttonPos:UInt;
+  private var back:Rectangle;
 
   public function new(vectorsController:IController){	
     super(vectorsController);
-    bmpData     = new BitmapData(172,20,false, COLOR.SCROLLPANE );
-    backdrop    = new Bitmap(bmpData);
+    //bmpData     = new BitmapData(172,20,false, COLOR.SCROLLPANE );
+    //backdrop    = new Bitmap(bmpData);
     
     vectorsButtons = new Vector<OneStateTextAndImageButton>();
     buttonIndex	= 0;
@@ -25,7 +26,7 @@ class VectorsPane extends View, implements IView{
 
   override public function onAddedToStage(e:Event):Void{
   	super.onAddedToStage(e);
-  	addChild(backdrop);
+  	addChild(back);
   }
 
   //override public function setParam(param:IParameter):Void{
@@ -50,7 +51,7 @@ class VectorsPane extends View, implements IView{
   }
   
   private function addButton(param:IParameter	):Void{
-    trace(param.getXml().toString());
+
     var vectorTitle:String;
     
     for( title in param.getXml().elementsNamed("title") ) {

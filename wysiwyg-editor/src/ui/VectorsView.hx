@@ -25,11 +25,9 @@ class VectorsView extends PropertyView, implements IView{
     
     addVectorIButton       = new OneStateTextAndImageButton();
     addVectorIButton.setFormat(0, 3, 0x333333, 'center');
+    addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, TOOL_TIPS.SYMBOLS_ADD,'right','top');
+    
     Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
-    addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, 
-                                                 TOOL_TIPS.SYMBOLS_ADD,
-                                                 'right', 
-                                                 'top');
   }
   
   
@@ -98,6 +96,9 @@ class VectorsView extends PropertyView, implements IView{
     }
 	}
 	override public function getHeight():Int{
-		return 256;
+    var r = 0;
+    if(back.visible)
+		  r =  256;
+    return r;
 	}
 }
