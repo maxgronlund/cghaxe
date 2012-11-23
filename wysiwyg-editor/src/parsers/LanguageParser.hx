@@ -58,10 +58,10 @@ class LanguageParser
     for(standard_pms in xml_data.elementsNamed("standard-pms") ) 
       TRANSLATION.standard_pms = standard_pms.firstChild().nodeValue.toString();
 
-    for(custom_pms_1 in xml_data.elementsNamed("pms_1") ) 
+    for(custom_pms_1 in xml_data.elementsNamed("custom-pms-1") ) 
       TRANSLATION.custom_pms_1 = custom_pms_1.firstChild().nodeValue.toString();
 
-    for(custom_pms_2 in xml_data.elementsNamed("pms_2") ) 
+    for(custom_pms_2 in xml_data.elementsNamed("custom-pms-2") ) 
       TRANSLATION.custom_pms_2 = custom_pms_2.firstChild().nodeValue.toString();
 
     for(foil_color_picker in xml_data.elementsNamed("foil-color-picker") ) 

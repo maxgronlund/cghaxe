@@ -8,7 +8,7 @@ import flash.net.URLLoader;
 import flash.net.URLRequest;
 import flash.display.Loader;
 
-import flash.events.MouseEvent;
+//import flash.events.MouseEvent;
 import flash.display.DisplayObject;
 import flash.display.MovieClip;
 import flash.display.Loader;
@@ -43,12 +43,14 @@ class VectorPlaceholderView extends APlaceholder {
   private var mouseOver:Bool;
   private var id:Int;
   private var modelId:Int;
-  private var xml:String;
+//  private var xml:String;
   private var vectorFileFileName:String;
   private var vectorFileScreenName:String;
   private var url:String;
   private var vectorFilePosX:Float;
-  private var pmsColor:Int;
+  private var stdPmsColor:Int;
+  private var pms1Color:UInt; 
+  private var pms2Color:UInt;
   private var foilColor:String;
   private var focus:Bool;
   private var collition:Bool;
@@ -75,6 +77,9 @@ class VectorPlaceholderView extends APlaceholder {
   //private var selectBox:SelectBox;
   private var widthHeightRatio:Float;
   private var canResize:Bool;
+  private var originalWidth:Float;
+  private var originalHeight:Float;
+  private var pmsIsFreeInGray:Bool;
 
  
   public function new(pageView:PageView, id:Int, model:IModel, url:String, canResize:Bool){	
@@ -118,11 +123,14 @@ class VectorPlaceholderView extends APlaceholder {
     foilShine.graphics.endFill();
 
     foilColor                         = GLOBAL.foilColor;
-    pmsColor                          = GLOBAL.stdPmsColor;
+    stdPmsColor                       = GLOBAL.stdPmsColor;
+    pms1Color                         = GLOBAL.pms1Color;
+    pms2Color                         = GLOBAL.pms2Color;
     printType                         = GLOBAL.printType;
     sizeX                             = 0;
     sizeY                             = 0;
     canResize                         = false;
+
   }
     
   override public function getBitmapMask():Bitmap {
@@ -155,7 +163,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   public function color(_color:UInt):Void {
-    pmsColor = _color;
+    stdPmsColor = _color;
     colorTransform = vectorMovie.transform.colorTransform;
     colorTransform.color = _color;
     vectorMovie.transform.colorTransform = colorTransform;
@@ -299,7 +307,10 @@ class VectorPlaceholderView extends APlaceholder {
     str += '\t\t\t<url>' + url + '</url>\n';
     str += '\t\t\t<print-type>' + printType + '</print-type>\n';
     str += '\t\t\t<foil-color>' + foilColor + '</foil-color>\n';
-    str += '\t\t\t<pms-color>' + Std.string(pmsColor) + '</pms-color>\n';
+    str += '\t\t\t<std-pms-color>' + Std.string(stdPmsColor) + '</std-pms-color>\n';
+    str += '\t\t\t<pms1-color>' + Std.string(GLOBAL.pms1Color) + '</pms1-color>\n';
+    str += '\t\t\t<pms2-color>' + Std.string(GLOBAL.pms2Color) + '</pms2-color>\n';
+    str += '\t\t\t<free>' + Std.string(pmsIsFreeInGray) + '</free>\n';
     str += '\t\t</placeholder>\n';
     return str;
   }
@@ -332,6 +343,9 @@ class VectorPlaceholderView extends APlaceholder {
     var scale:Float = 0.25;
     addChild(vectorMovie);
     
+    originalWidth = vectorMovie.width;
+    originalHeight = vectorMovie.height;
+    
     default_colorTransform = vectorMovie.transform.colorTransform;
     vectorMovie.width *= scale;
     vectorMovie.height *= scale;
@@ -349,7 +363,7 @@ class VectorPlaceholderView extends APlaceholder {
     bitmap = new Bitmap(bitmapInfo);
 
     
-    var param:IParameter = new Parameter(EVENT_ID.SWF_LOADED);
+    var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_LOADED);
     param.setInt(id);
     model.setParam(param);
 
@@ -358,7 +372,7 @@ class VectorPlaceholderView extends APlaceholder {
     //   addChild(selectBox);
     //   
     //}
-//    this.setChildIndex(selectBox, this.numChildren - 1);
+    //this.setChildIndex(selectBox, this.numChildren - 1);
     resizeBackdrop();
     switch ( printType ){
       case CONST.STD_PMS_COLOR, 'std_pms_color':{
@@ -383,7 +397,23 @@ class VectorPlaceholderView extends APlaceholder {
       setSize(sizeX, sizeY);
     }
     
-//    this.setChildIndex(selectBox, this.numChildren - 1);
+    //this.setChildIndex(selectBox, this.numChildren - 1);
+  }
+  
+  override public function updateColor(_color:Int):Void{
+    trace('sheck for free here', _color);
+    switch ( printType ){
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
+        color(_color);
+            
+      }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        color(_color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        color(_color);
+      }
+    }  
   }
   
   public function resizeBackdrop():Void {
@@ -394,8 +424,12 @@ class VectorPlaceholderView extends APlaceholder {
     foilShine.width     = this.width;
     foilShine.height    = this.height;
     
-//    selectBox.resizeBackdrop(vectorMovie.width, vectorMovie.height, 0, 0);
+    //selectBox.resizeBackdrop(vectorMovie.width, vectorMovie.height, 0, 0);
   }
+  
+  override public function getScale():Float{
+	  return vectorMovie.width/originalWidth;
+	}
   
   override public function setSize(sizeX:Float, sizeY:Float):Void{
 
@@ -414,14 +448,27 @@ class VectorPlaceholderView extends APlaceholder {
     
   override public function onUpdatePlaceholder(event:Event):Void{    
     
-    printType = GLOBAL.printType;
-    
     switch ( GLOBAL.printType ){
-      case CONST.STD_PMS_COLOR:{
+      case CONST.STD_PMS_COLOR, 'std_pms_color':{
+        printType = GLOBAL.printType;
         unfoilify();
+        if(GLOBAL.stdPmsColor == 9672088){
+          pmsIsFreeInGray = GLOBAL.Greetings.validateString(EVENT_ID.IS_GREEDING_FREE, url);
+        }
         color(GLOBAL.stdPmsColor);
       }
+      case CONST.CUSTOM_PMS1_COLOR:{
+        printType = GLOBAL.printType;
+        unfoilify();
+        color(GLOBAL.pms1Color);
+      }
+      case CONST.CUSTOM_PMS2_COLOR:{
+        printType = GLOBAL.printType;
+        unfoilify();
+        color(GLOBAL.pms2Color);
+      }
       case CONST.FOIL_COLOR:{
+        printType = GLOBAL.printType;
         foilify(GLOBAL.foilColor);
       }
     }
@@ -449,6 +496,13 @@ class VectorPlaceholderView extends APlaceholder {
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));   
   }
   
+  override public function isFreeInGreyPms():Bool{
+    return pmsIsFreeInGray;
+  }
+  override public function freePmsInGrey(b:Bool):Void{
+    pmsIsFreeInGray = b;
+  }
+  
   private function onMoveTool(e:IKEvent):Void {
     updateFocus();
   }
@@ -470,15 +524,15 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   override public function getStdPmsColor():String {
-    return Std.string(pmsColor);
+    return Std.string(stdPmsColor);
   }
   
   override public function getPms1Color():String {
-    return 'pms1Color';
+    return Std.string(pms1Color);
   }
   
   override public function getPms2Color():String {
-    return 'pms2Color';
+    return Std.string(pms2Color);
   }
   
   override public function getFoilColor():String {
