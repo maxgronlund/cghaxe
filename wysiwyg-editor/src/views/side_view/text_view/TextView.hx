@@ -168,7 +168,7 @@ class TextView extends PropertyView, implements IView{
         addTextfieldIButton.visible   = true;                                
         addTextfieldButton.visible    = true;
       }
-      case 'PMS':{
+      case 'Text':{
         back.visible                  = true;
         selectButton.visible          = true;                                        
         lineSpaceLabel.visible        = true;
