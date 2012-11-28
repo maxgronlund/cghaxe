@@ -105,7 +105,7 @@ class PageView extends View{
 
                   if( placeholders[i].isFreeInGreyPms() == true ){
 
-                    if(color != "9672088"){
+                    if(color != "2301728"){
                       std_pms_colors.push(color);
                       amount_std_pms_color += 1;
                     }

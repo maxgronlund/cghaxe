@@ -144,6 +144,9 @@ class EVENT_ID  {
   public static inline var ZOOM_100:String                  = "menu_zoom_to_100";
   public static inline var MOVE_TOOL:String                 = "move_tool";
   public static inline var TEXT_TOOL:String                 = "text_tool";
+  public static inline var ALLIGN_SELECTED_LEFT:String      = "align_selected_left";
+  public static inline var ALLIGN_SELECTED_CENTER:String    = "align_selected_center";
+  public static inline var ALLIGN_SELECTED_RIGHT:String     = "align_selected_right";
   public static inline var GRID_ON:String                   = "grid_on";
   public static inline var SET_DEFAULT_TOOL:String          = "set_default_tool";
   

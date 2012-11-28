@@ -452,7 +452,7 @@ class VectorPlaceholderView extends APlaceholder {
       case CONST.STD_PMS_COLOR, 'std_pms_color':{
         printType = GLOBAL.printType;
         unfoilify();
-        if(GLOBAL.stdPmsColor == 9672088){
+        if(GLOBAL.stdPmsColor == 2301728){
           pmsIsFreeInGray = GLOBAL.Greetings.validateString(EVENT_ID.IS_GREEDING_FREE, url);
         }
         color(GLOBAL.stdPmsColor);

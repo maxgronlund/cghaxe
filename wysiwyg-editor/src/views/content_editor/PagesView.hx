@@ -20,6 +20,7 @@ class PagesView extends View, implements IView{
     Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
     Symbols.addEventListener(EVENT_ID.ADD_SYMBOL_TO_PAGE, onAddSymbolToPage);
     Logos.addEventListener(EVENT_ID.ADD_LOGO_TO_PAGE, onAddLogoToPage);
+    Application.addEventListener(EVENT_ID.ALLIGN_SELECTED_LEFT, onAllignLeft);
   }
   
   private function onAddGreetingToPage(e:IKEvent):Void{
@@ -48,6 +49,15 @@ class PagesView extends View, implements IView{
     }
    stage.addEventListener(KeyboardEvent.KEY_DOWN, onKeyPressed);
    Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'All Pages Added to Stage');
+  }
+  
+  private function onAllignLeft(e:Event):Void{
+    this.x = 0;
+    this.y = 0;
+    for( i in 0...pages.length){
+      pages[i].x = 0;
+      pages[i].y = 0;
+    }
   }
   
   private function removePages():Void{
@@ -143,6 +153,8 @@ class PagesView extends View, implements IView{
   private function onKeyUp(event:KeyboardEvent):Void{}
     
   private function onKeyPressed(event:KeyboardEvent):Void{
+    
+    return;
      switch(event.keyCode){
        case 8:{
          pageInFocus.setString(EVENT_ID.DELETE_KEY_PRESSED, 'foo');

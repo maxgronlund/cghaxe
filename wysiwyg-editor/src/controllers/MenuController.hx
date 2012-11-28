@@ -27,7 +27,12 @@ class MenuController extends Controller, implements IController
       case EVENT_ID.GRID_ON:{
         Application.dispatchParameter(param);
       }
+      case EVENT_ID.ALLIGN_SELECTED_LEFT:{
+        Application.dispatchParameter(param);
+      }
       
     }	
 	}
 }
+
+//Application.addEventListener(EVENT_ID.ALLIGN_SELECTED_LEFT, onAllignLeft);

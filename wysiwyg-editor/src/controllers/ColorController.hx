@@ -25,6 +25,7 @@ class ColorController extends Controller, implements IController{
   private function onStdPmsColorSelected(param:IParameter):Void{
     GLOBAL.printType    = CONST.STD_PMS_COLOR;
     GLOBAL.stdPmsColor  = param.getUInt();
+    trace(GLOBAL.stdPmsColor);
     GLOBAL.text_view.setParam(param);
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
     Pages.setParam(param);

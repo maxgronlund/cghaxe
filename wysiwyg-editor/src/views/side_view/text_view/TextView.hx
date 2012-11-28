@@ -160,7 +160,7 @@ class TextView extends PropertyView, implements IView{
     
     switch ( cmd ){
       case 'Foil, Garamond':{
-        GLOBAL.printType              = CONST.STD_PMS_COLOR;
+        GLOBAL.printType              = CONST.FOIL_COLOR;
         back.visible                  = true;
         selectButton.visible          = true;
         fontLabel.visible             = true;
@@ -170,7 +170,7 @@ class TextView extends PropertyView, implements IView{
         addTextfieldButton.visible    = true;
       }
       case 'Text':{
-        GLOBAL.printType              = CONST.FOIL_COLOR;
+        
         back.visible                  = true;
         selectButton.visible          = true;                                        
         lineSpaceLabel.visible        = true;
@@ -185,6 +185,9 @@ class TextView extends PropertyView, implements IView{
         fontScrollbar.visible         = true;                            
         addTextfieldIButton.visible   = true;                                
         addTextfieldButton.visible    = true; 
+      }
+      case 'PMS':{
+        GLOBAL.printType              = CONST.STD_PMS_COLOR;
       }
 
     }

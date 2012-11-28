@@ -41,6 +41,13 @@ class DesktopView extends View, implements IView{
     Pages.addEventListener(EVENT_ID.PLACEHOLDER_LOADED, onPlaceholderLoaded);
     Application.addEventListener(EVENT_ID.ALL_IMAGES_LOADED, onAllImagesLoaded);
     Application.addEventListener(EVENT_ID.RESET_STAGE_SIZE, onResetDesktopSize);
+    
+    
+    Application.addEventListener(EVENT_ID.ALLIGN_SELECTED_LEFT, onAllignLeft);
+    
+    
+    
+    
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     addEventListener(Event.ENTER_FRAME, onEnterFrame);
@@ -50,6 +57,11 @@ class DesktopView extends View, implements IView{
     bmpData    = new BitmapData(SIZE.DESKTOP_WIDTH,SIZE.DESKTOP_HEIGHT,false, COLOR.DESKTOP );
     backdrop   = new Bitmap(bmpData);
     
+  }
+  
+  private function onAllignLeft(e:Event):Void{
+    this.x = 10;
+    this.y = 60;
   }
 
   private function onEnterFrame(e:Event):Void{

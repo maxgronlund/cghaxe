@@ -11,6 +11,7 @@ class MenuView extends View, implements IView
 	private var maskButton:TwoStateButton;
 	private var moveButton:TwoStateButton;
 	private var textButton:TwoStateButton;
+	private var alignLeftButton:OneStateButton;
 	private var gridButton:TwoStateButton;
 	private var trashButton:OneStateButton;
 	private var zoomInButton:OneStateButton;
@@ -32,6 +33,7 @@ class MenuView extends View, implements IView
     saveButton 		      = new OneStateButton();
     buyNowButton 		    = new OneStateButton();
     maskButton 		      = new TwoStateButton();
+    alignLeftButton 		= new OneStateButton();
     gridButton 		      = new TwoStateButton();
     trashButton 		    = new OneStateButton();
     zoomInButton 	      = new OneStateButton();
@@ -61,6 +63,11 @@ class MenuView extends View, implements IView
             new Point(40,29), 
             new MaskButton(), 
             new Parameter( EVENT_ID.SHOW_MASK));
+            
+    alignLeftButton.init( controller,
+            new Point(14,29), 
+            new AlignLeftButton(), 
+            new Parameter( EVENT_ID.ALLIGN_SELECTED_LEFT));
 
     gridButton.init( controller,
             new Point(40,29), 
@@ -116,6 +123,7 @@ class MenuView extends View, implements IView
     }
     
     if(GLOBAL.admin_mode){
+      addChild(alignLeftButton);
       addChild(maskButton);
     }
     addChild(gridButton);
@@ -126,6 +134,9 @@ class MenuView extends View, implements IView
     
     var posX      = saveButton.x + saveButton.getWidth();
     if(GLOBAL.admin_mode){
+      alignLeftButton.x  = posX;
+      posX          = alignLeftButton.x + alignLeftButton.getWidth();
+      
       maskButton.x  = posX;
       posX          = maskButton.x + maskButton.getWidth();
     }
