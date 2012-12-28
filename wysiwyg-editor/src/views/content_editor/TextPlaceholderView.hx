@@ -400,7 +400,7 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function loadFont():Void{
-
+    trace('loadFont');
     fontFileName                    = GLOBAL.Font.fileName;
     fontSize                        = GLOBAL.Font.fontSize;       
     fontAlign                       = GLOBAL.Font.fontAlign;
@@ -660,7 +660,9 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function buildUrl(fileName:String):String{
-  	return "/assets/" + fileName+ ".swf?" + Math.random();
+    var url:String = "/assets/" + fileName+ ".swf?" + Std.string(Std.int(Math.random()*100000000000000));
+    trace(url);
+  	return url;
   }
   
   override public function setFocus(b:Bool):Void{

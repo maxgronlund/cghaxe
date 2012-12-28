@@ -15,7 +15,7 @@ class TextController extends Controller, implements IController{
   
 
 	override public function setParam(param:IParameter):Void{
-
+   
     switch ( param.getLabel() ){
       case EVENT_ID.FONT_STYLE: onFontStyleSelected(param);
       case EVENT_ID.OPEN_COLOR_PICKER: GLOBAL.text_view.setParam(param);
@@ -84,6 +84,7 @@ class TextController extends Controller, implements IController{
     fontStyleIndex = param.getInt();
     updateFont();
     
+    
   }
   
   private function onFontColorSelected(param:IParameter):Void{
@@ -108,7 +109,8 @@ class TextController extends Controller, implements IController{
   
   private function updateFont():Void{
     GLOBAL.Font.styleName 	= GLOBAL.Font.fontPackage.styleName(fontStyleIndex);
-    GLOBAL.Font.fileName 	= GLOBAL.Font.fontPackage.fileName(fontStyleIndex); 
+    GLOBAL.Font.fileName 	= GLOBAL.Font.fontPackage.fileName(fontStyleIndex);
+    updateFontPlaceholder(); 
   }
   
   private function onTextAllign(param:IParameter):Void{
@@ -120,6 +122,7 @@ class TextController extends Controller, implements IController{
   
   
   private function updateFontPlaceholder():Void{
+    //trace('updateFontPlaceholder');
     Pages.setParam(new Parameter(EVENT_ID.UPDATE_PLACEHOLDER));
   }
 }

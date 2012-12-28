@@ -5,9 +5,11 @@ class ParameterParser
 {
   private var Application:IModel;
   
+  
 	public function new(PreviewModel:IModel){
 
     this.Application = PreviewModel;
+    
     
 	}
 	
@@ -22,6 +24,17 @@ class ParameterParser
 	  if(params.language_id != null){
 	    GLOBAL.language_id = params.language_id;
 	  }
+	  
+	  if(params.language_name != null){
+	    GLOBAL.language_name = params.language_name;
+	  }
+	  
+	  if(params.get_preset_id_url != null){
+	    GLOBAL.get_preset_id_url = params.get_preset_id_url;
+	    trace(params.get_preset_id_url);
+	  }
+	  
+	  
 	  
 	  if(params.copy_preset != null){
 	    GLOBAL.copy_preset = params.copy_preset;
