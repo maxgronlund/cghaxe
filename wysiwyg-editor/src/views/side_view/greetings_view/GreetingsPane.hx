@@ -24,5 +24,4 @@ class GreetingsPane extends VectorsPane, implements IView{
     }
   }
   
-  
 }

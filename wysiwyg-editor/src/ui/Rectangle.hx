@@ -45,7 +45,7 @@ class Rectangle extends Sprite
   	removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
   	addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
   	
-  	addChild(backdrop);
+  	if (backdrop != null) addChild(backdrop);
   	setSize(sizeX, sizeY);
 
   }

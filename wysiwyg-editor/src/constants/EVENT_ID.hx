@@ -86,7 +86,6 @@ class EVENT_ID  {
 //  public static inline var PRESET_FILE_URL                  = "preset_file_url";
   public static inline var PRICE_FILE_LOADED                = "price_file_loaded";
   public static inline var PRESET_FILE_LOADED               = "preset_file_loaded";
-  public static inline var PRESET_ID_LOADED                 = "preset_id_loaded";
   public static inline var PASS_PRICE_FILE                  = "pass_price_file";
   public static inline var PASS_PRESET_FILE                 = "pass_preset_file";
   public static inline var PRESET_LOADED                    = "preset_loaded";
@@ -241,6 +240,10 @@ class EVENT_ID  {
   public static inline var ADD_GREETING_TO_PAGE               = "add_greeting_to_page";
   public static inline var ADD_SYMBOL_TO_PAGE                 = "add_symbol_to_page";
   public static inline var IS_GREEDING_FREE                   = "is_greeding_free";
+  
+  public static inline var GREETING_PREVIEW                   = "greeting_preview";
+  public static inline var GREETING_FINISH_PREVIEW            = "greeting_finish_preview";
+  
   
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";

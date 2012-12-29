@@ -5,6 +5,9 @@
 
 class GLOBAL  {
   
+	
+	
+	public static var IS_DEBUG :Bool = false;
   
   // models
   public static var product_name:String;
@@ -42,8 +45,6 @@ class GLOBAL  {
   public static var admin_mode:Bool;
   public static var hitTest:CGHitTest;
   public static var language_id:String;
-  public static var language_name:String;
-  public static var get_preset_id_url:String;
   public static var copy_preset:String;
   
   // zoom

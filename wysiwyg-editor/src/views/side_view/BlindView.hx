@@ -6,9 +6,9 @@ import flash.display.Bitmap;
 class BlindView extends View
 {
 	public function new(controller:IController){	
-    super(controller);
-    bmpData 		= new BitmapData(SIZE.SIDEBAR_VIEW_WIDTH,SIZE.PROPERTY_INSPECTOR_HEIGHT,false,COLOR.SIDE_VIEW );
-    backdrop		= new Bitmap(bmpData);
+		super(controller);
+		bmpData 		= new BitmapData(SIZE.SIDEBAR_VIEW_WIDTH,SIZE.PROPERTY_INSPECTOR_HEIGHT,false,COLOR.SIDE_VIEW );
+		backdrop		= new Bitmap(bmpData);
 	}
 	
 	override public function onAddedToStage(e:Event){

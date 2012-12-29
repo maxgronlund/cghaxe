@@ -24,7 +24,12 @@ class XmlLoader implements ILoader, extends ALoader
     this.eventId = eventId;
     var loader:URLLoader = new URLLoader();
     loader.addEventListener(Event.COMPLETE, onLoaded);
-    var request:URLRequest = new URLRequest(url+"&shop_item_id="+GLOBAL.shop_item_id);
+	
+	var request:URLRequest;
+	if (GLOBAL.IS_DEBUG) request = new URLRequest(url);
+	else 
+    request = new URLRequest(url + "&shop_item_id=" + GLOBAL.shop_item_id);
+	
     loader.load(request);
   }
   

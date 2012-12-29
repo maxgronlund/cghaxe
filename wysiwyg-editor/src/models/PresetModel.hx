@@ -20,7 +20,6 @@ class PresetModel extends Model, implements IModel
   private var productSelected:String;
   private var loader:URLLoader;
   private var pms_converter:PMSColorToRGBConverter;
-  private var presetIdLoader:ILoader;
   
   
   public function new(){
@@ -30,7 +29,6 @@ class PresetModel extends Model, implements IModel
     associatedProducts  = new Vector<Int>();
     pms_converter       = new PMSColorToRGBConverter();
     assProdIndex        = 0;
-    presetIdLoader      = new XmlLoader();
   }
   
   override public function init():Void{
@@ -112,14 +110,23 @@ class PresetModel extends Model, implements IModel
       parseXmlData(xml_data);
     }
     
-    for(save_path in xml.elementsNamed("save-path") ) {
-      
-      GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+    for (save_path in xml.elementsNamed("save-path") )
+	{
+		
+
+			GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+		
       Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Save Path Loaded');
     }
     
-    for(buy_path in xml.elementsNamed("buy-path") ) {
-      GLOBAL.buy_path = buy_path.firstChild().nodeValue.toString();
+    for (buy_path in xml.elementsNamed("buy-path") ) 
+	{
+		
+
+			  GLOBAL.buy_path = buy_path.firstChild().nodeValue.toString();
+		
+		
+    
     }
     
     for(greetings in xml.elementsNamed("greetings")){
@@ -244,7 +251,7 @@ class PresetModel extends Model, implements IModel
   }
   
   private function save_preset():Dynamic{
-    //trace('Save preset',GLOBAL.save_path);
+    trace('Save preset',GLOBAL.save_path);
     var request:URLRequest              = new URLRequest(GLOBAL.save_path); 
     request.method                      = URLRequestMethod.POST;  
     var variables:URLVariables          = new URLVariables();
@@ -260,14 +267,14 @@ class PresetModel extends Model, implements IModel
     variables.user_id 				          = Std.parseInt(GLOBAL.user_id);
     variables.shop_item_id              = GLOBAL.shop_item_id;
     variables.user_uuid                 = GLOBAL.user_uuid;
-    variables.language_name             = GLOBAL.language_name;
+    //variables.language_name             = GLOBAL.language_name;
+    
     variables.preset_sibling_selected 	= productSelected;
-    //variables.edit_mode                 = GLOBAL.edit_mode;
 
     variables._method = 'put';
     request.data = variables;
     return request;
-    trace( GLOBAL.save_path);
+    
     
     
   }
@@ -277,7 +284,6 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onBuySavedComplete);
     loader.load(save_preset());
-
     
   }
   
@@ -308,7 +314,7 @@ class PresetModel extends Model, implements IModel
   	loader.removeEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.removeEventListener(Event.COMPLETE, onBuySavedComplete);
 
-  	var request:URLRequest              = new URLRequest(GLOBAL.buy_path+"&preset_quantity="+GLOBAL.preset_quantity+"&shop_item_id="+GLOBAL.shop_item_id+"&preset_id="+GLOBAL.preset_id+"&quantity="+GLOBAL.preset_quantity); 
+  	var request:URLRequest              = new URLRequest(GLOBAL.buy_path+"&preset_quantity="+GLOBAL.preset_quantity+"&shop_item_id="+GLOBAL.shop_item_id+"&preset_id="+GLOBAL.preset_id); 
     request.method                      = URLRequestMethod.GET;  
 
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
@@ -317,62 +323,8 @@ class PresetModel extends Model, implements IModel
   }
   
   private function onSavedComplete(e:Event):Void{
-  	//onComplete();
-  	// Get new preset id now
-  	if(GLOBAL.edit_mode == 'system_preset'){
-  	  onComplete();
-  	}else{
-  	  getNewPresetId();
-  	}
-  	
-
+  	onComplete();
   }
-  private function getNewPresetId():Void{
-    //trace('REQUEST PRESET ID NOW', GLOBAL.get_preset_id_url);
-    presetIdLoader.addEventListener( EVENT_ID.PRESET_ID_LOADED, onPresetIdUpdated); 
-    presetIdLoader.load( GLOBAL.get_preset_id_url+"&user_id="+GLOBAL.user_id, EVENT_ID.PRESET_ID_LOADED);
-  }
-  
-  private function onPresetIdUpdated(e:XmlEvent):Void{
- 
-    for( preset_id in e.getXml().elementsNamed("preset-id") ) {
-      updateSavePath((preset_id.firstChild().nodeValue));
-    }
-  }
-  
-  private function updateSavePath(preset_id:String):Void{
-    //  ?shop_item_id=190&user_uuid=65168516-d3a
-    trace( 'old save path',GLOBAL.save_path);
-    GLOBAL.save_path = "/en/users/1/wysiwyg_editors/"+preset_id+'.xml' + '?shop_item_id='+GLOBAL.shop_item_id+'&user_uuid=65168516-d3a';
-    trace( 'new save path',GLOBAL.save_path);
-    ExternalInterface.call("updateAddressBar(\""+preset_id+"\")");
-    
-    onComplete();
-  }
-  
-  //private function getNewPresetId():Void{
-  //	
-  //
-  //	var request:URLRequest  = new URLRequest(GLOBAL.get_preset_id_url+"&user_id="+GLOBAL.user_id); 
-  //  request.method          = URLRequestMethod.GET;  
-  //
-  //  loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
-  //  loader.addEventListener(Event.COMPLETE, onPresetIdUpdated);
-  //  loader.load(request);
-  //  trace('LOAD NEW PRESET ID');
-  //}
-  
-  //private function onPresetIdUpdated(e:Event):Void{
-  //  loader.removeEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetIdUpdated);
-  //  
-  //  trace(Xml.parse(e.target.data).toString());
-  //  trace(' NEW PRESET ID LOADED');
-  //  //loadProgress('Preset ID Loaded');
-  //  
-  //  //presetXml = e.getXml();
-  //  //loadSeq();
-  //}
-  
   
   private function onBuyComplete(e:Event):Void{
     ExternalInterface.call("openCart()");

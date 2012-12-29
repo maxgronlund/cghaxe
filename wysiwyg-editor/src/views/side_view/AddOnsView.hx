@@ -9,9 +9,9 @@ class AddOnsView extends PropertyView, implements IView{
 	}
 	
 	override public function init():Void{
-    selectButton.init( controller,
-        new Point(190,30), 
-        new AddOnsButton(), 
-        new Parameter( EVENT_ID.SHOW_ADD_ONS));
+		selectButton.init( controller,
+						new Point(190,30), 
+						new AddOnsButton(), 
+						new Parameter( EVENT_ID.SHOW_ADD_ONS));
 	}
 }

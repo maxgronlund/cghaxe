@@ -1,7 +1,3 @@
-
-
-
-
 import flash.display.Bitmap; 
 
 class VerticalScrollHandleMax extends Bitmap{ 

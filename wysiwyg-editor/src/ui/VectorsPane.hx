@@ -26,7 +26,8 @@ class VectorsPane extends View, implements IView{
 
   override public function onAddedToStage(e:Event):Void{
   	super.onAddedToStage(e);
-  	addChild(back);
+	
+  	//addChild(back);
   }
 
   //override public function setParam(param:IParameter):Void{
@@ -58,6 +59,8 @@ class VectorsPane extends View, implements IView{
       vectorTitle = title.firstChild().nodeValue;
       param.setString(vectorTitle);
     }
+	
+	
     param.setInt(buttonIndex);
     var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
     oneStateTextAndImageButton.init( controller, new Point(171, 27), new PlaceholderButton(), param );

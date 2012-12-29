@@ -139,6 +139,10 @@ class ApplicationModel extends Model, implements IModel
       case 'load preset files from backend':{
         loadProgress('Request Preset XML');
         presetLoader.addEventListener( EVENT_ID.PRESET_FILE_LOADED, onPresetLoaded); 
+		
+		if (GLOBAL.IS_DEBUG) presetLoader.load(GLOBAL.preset_file_url, EVENT_ID.PRESET_FILE_LOADED);
+		else
+		
         presetLoader.load(GLOBAL.preset_file_url+"&language_id="+GLOBAL.language_id, EVENT_ID.PRESET_FILE_LOADED);
         
       }

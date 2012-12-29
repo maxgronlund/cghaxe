@@ -47,6 +47,11 @@ class PageView extends View{
   private var designXml:Xml;
   private var deletable:Bool;
   private var placeHolderCount:UInt;
+  
+  
+  private var _greeting :APlaceholder = null;
+  private var _greetingPreview :APlaceholder = null;
+  
 
   
   public function new(controller:IController){	
@@ -285,12 +290,71 @@ class PageView extends View{
   override public function setParam(param:IParameter):Void{
     switch ( param.getLabel() ){
       case EVENT_ID.ADD_DESIGN_TO_PAGE:{addDesignToPage(param);}
-      case EVENT_ID.ADD_GREETING_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), false);}
+      case EVENT_ID.ADD_GREETING_TO_PAGE:
+		{
+			addGreeting(param);
+		}
+		
       case EVENT_ID.ADD_SYMBOL_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), true);}
       case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),   onPosX(), onPosY(), -1, -1);}
-      case EVENT_ID.ADD_PHOTO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),  onPosX(), onPosY(), -1, -1);}
+      case EVENT_ID.ADD_PHOTO_TO_PAGE: { addBitmapPlaceholder( param.getXml(),  onPosX(), onPosY(), -1, -1); }
+	 
+	  case EVENT_ID.GREETING_PREVIEW: { addGreetingPreview(param); };
+	  
+	  case EVENT_ID.GREETING_FINISH_PREVIEW: { removeGreetingPreview(param); };
     }
   }
+  
+  private function addGreeting(param :IParameter) :Void
+  {
+	  
+	  if (_greeting != null)
+		{
+			var grX :Float = _greeting.x;
+			var grY :Float = _greeting.y;
+
+			
+			setPlaceholderInFocus(_greeting);
+			controller.setParam(new Parameter(EVENT_ID.TRASH_PLACEHOLDER));
+			
+			parseVectorPlaceholder(  param.getXml(), grX, grY, false); 
+		}
+		else
+		{
+		  parseVectorPlaceholder(  param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
+		}
+		
+		  _greeting = placeholders[placeholders.length - 1];
+	 }
+  
+  private function addGreetingPreview(param :IParameter) :Void
+  {
+	  if (_greetingPreview != null) removeGreetingPreview(param);
+	  
+	  if (_greeting != null) 
+	  {
+		_greeting.visible = false;
+		 parseVectorPlaceholder( param.getXml(), _greeting.x, _greeting.y, false);
+	  }
+	  else 
+	  {
+		   parseVectorPlaceholder( param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
+		}
+	  
+	  _greetingPreview = placeholders[placeholders.length - 1];
+	  
+	}
+	
+	 private function removeGreetingPreview(param :IParameter) :Void
+  {
+	  if (_greeting != null) _greeting.visible = true;
+	  if ( _greetingPreview != null)
+	  {
+		//setPlaceholderInFocus(_greetingPreview);
+		onDestroyMyPlaceholder(_greetingPreview);
+		_greetingPreview = null;
+	  }
+	}
   
   private function addDesignToPage(param:IParameter):Void{
 
@@ -387,7 +451,7 @@ class PageView extends View{
     }
   }
   
-  private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool = false):Void{
+  private function parseVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool = false, isCenter :Bool = false, cWidth :Float = 0, cHeight:Float = 0):Void {
     
     var sizeX = -1;
     var sizeY = -1;
@@ -428,19 +492,19 @@ class PageView extends View{
           
         
     for(url_xml in xml.elementsNamed("url") ){
-      var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize, isFree);
+      var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize, isFree, isCenter, cWidth, cHeight);
       placeholder.setSize(sizeX, sizeY);
     }
     //trace('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     //trace(GLOBAL.printType);
   }
   
-  private function addVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool, isFree:Bool):APlaceholder{
+  private function addVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool, isFree:Bool, isCenter :Bool = false, cWidth :Float = 0, cHeight:Float = 0):APlaceholder{
 
     var url:String = xml.firstChild().nodeValue.toString();
     setPlaceholderInFocus(null);
     
-    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url, resizable);
+    var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url, resizable, isCenter, cWidth, cHeight);
     placeholder.x = posX;
   	placeholder.y = posY;
   	placeholder.freePmsInGrey(isFree);
@@ -546,14 +610,22 @@ class PageView extends View{
     addTextPlaceholder(10,10);
   }
   
-  private function onDestroyPlaceholder(e:IKEvent = null ){
-    removeChild(inFocus);
+  private function onDestroyMyPlaceholder(placeholder :Dynamic)
+  {
+	  if (placeholder == _greeting) _greeting = null;
+	  if (placeholder == _greetingPreview) _greetingPreview = null;
+	  
+    removeChild(placeholder);
     var index:UInt = 0;
     for(i in 0...placeholders.length){
       if(placeholders[i] == inFocus) index = i;
     }
     placeholders.splice(index,1);
     inFocus = null;
+  }
+  
+  private function onDestroyPlaceholder(e:IKEvent = null ) {
+	 onDestroyMyPlaceholder(inFocus); 
   }
   
   

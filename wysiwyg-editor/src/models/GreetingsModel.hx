@@ -39,6 +39,7 @@ class GreetingsModel extends Model, implements IModel {
  
   override public function setParam(param:IParameter):Void{
     //trace(param.getLabel());
+	//greetingsXml = param.getXml();
     switch ( param.getLabel() ){
       case EVENT_ID.GREETING_SELECTED:{
         greetingsXml = param.getXml();
@@ -49,6 +50,16 @@ class GreetingsModel extends Model, implements IModel {
           dispatchXML(EVENT_ID.ADD_GREETING_TO_PAGE, greetingsXml);
         }
       }
+	  
+	  case EVENT_ID.GREETING_PREVIEW:
+		{
+			dispatchXML(EVENT_ID.GREETING_PREVIEW, param.getXml());
+		}
+		
+	case EVENT_ID.GREETING_FINISH_PREVIEW:
+		{
+			dispatchXML(EVENT_ID.GREETING_FINISH_PREVIEW, param.getXml());
+		}
     }
   }
 

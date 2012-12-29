@@ -2,7 +2,7 @@ import flash.geom.Point;
 import flash.events.Event;
 import flash.Vector;
 
-class InsertImageDialogView extends View, implements IView
+class SymbolImageDialog extends View, implements IView
 {
   private var _rect:Rectangle;
   private var _vectorsButtons:Vector<ImageButton>;
@@ -11,9 +11,9 @@ class InsertImageDialogView extends View, implements IView
   private var _buttonPos:UInt;
   private var _selectedButton:Int;
   
-  private var _imgWidth :Int = 75;
-  private var _imgHeight :Int = 75;
-  private var _imgOff :Int = 10;
+  private var _imgWidth :Int = 50;
+  private var _imgHeight :Int = 50;
+  private var _imgOff :Int = 5;
   
 
   
@@ -37,11 +37,11 @@ class InsertImageDialogView extends View, implements IView
   override public function setParam(param:IParameter):Void{
     
     switch ( param.getLabel() ){
-      case EVENT_ID.ADD_GREETING_BUTTON:{
-        param.setLabel(EVENT_ID.GREETING_SELECTED);
+      case EVENT_ID.ADD_SYMBOL_BUTTON:{
+        param.setLabel(EVENT_ID.SYMBOL_SELECTED);
         addButton(param);
       }
-      case EVENT_ID.GREETING_SELECTED:{
+      case EVENT_ID.SYMBOL_SELECTED:{
         selectButton( param.getInt());
       }
     }
@@ -62,11 +62,13 @@ class InsertImageDialogView extends View, implements IView
 		 imgBtn.setSize(_imgWidth, _imgHeight);
 		 imgBtn.init(controller, param, vectorURL);
 		 
+		 /*
 		 var overParam :Parameter = new Parameter(EVENT_ID.GREETING_PREVIEW);
 		overParam.setXml(param.getXml());
 		 var outParam :Parameter = new Parameter(EVENT_ID.GREETING_FINISH_PREVIEW);
 		outParam.setXml(param.getXml());
 		imgBtn.initOverOut(overParam, outParam);
+		*/
 		 
 		 
 		 imgBtn.fireOnMouseUp(false);
@@ -74,9 +76,9 @@ class InsertImageDialogView extends View, implements IView
 	 
 		_vectorsButtons[_buttonIndex] = imgBtn;
 		addChild(_vectorsButtons[_buttonIndex]);
-		_vectorsButtons[_buttonIndex].x = (_buttonIndex % 2) * (_imgWidth + _imgOff);
+		_vectorsButtons[_buttonIndex].x = (_buttonIndex % 3) * (_imgWidth + _imgOff);
 		_vectorsButtons[_buttonIndex].y = _buttonPos;
-		if ((_buttonIndex % 2) == 1)_buttonPos += _imgHeight + _imgOff;
+		if ((_buttonIndex % 3) == 2)_buttonPos += _imgHeight + _imgOff;
 		_buttonIndex++;
 		selectButton(0);
    }
@@ -92,7 +94,7 @@ class InsertImageDialogView extends View, implements IView
    override public function getFloat(id:String):Float{
     switch ( id ){
       case 'height':
-		  var h :Int = Math.ceil(_buttonIndex / 2) * (_imgHeight + _imgOff);
+		  var h :Int = Math.ceil(_buttonIndex / 3) * (_imgHeight + _imgOff);
 		  return h;
     }
     return 0;
