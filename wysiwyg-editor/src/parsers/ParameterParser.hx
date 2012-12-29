@@ -70,6 +70,12 @@ class ParameterParser
     if(params.shop_item_name != null){
       GLOBAL.shop_item_name = params.shop_item_name;
     }
+    
+    if(params.get_preset_id_url != null){
+      GLOBAL.get_preset_id_url = params.get_preset_id_url;
+    }
+    
+    
 
     if(params.edit_mode != null){
       GLOBAL.edit_mode = params.edit_mode;

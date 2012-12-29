@@ -154,4 +154,6 @@ class GLOBAL  {
   public static var add_logo:String;
   public static var add_image:String;
   public static var placeholders:Int;
+  public static var get_preset_id_url:String;
+  public static var language_name:String;
 }
