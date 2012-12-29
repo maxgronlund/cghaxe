@@ -47,6 +47,8 @@ class MenuView extends View, implements IView
   private function onSetDefaultTool(e:IKEvent):Void{
 
     addButtons();
+	
+	if (textButton == null) return;
     textButton.setOn(true);
   }
   

@@ -80,9 +80,14 @@ class VectorPlaceholderView extends APlaceholder {
   private var originalWidth:Float;
   private var originalHeight:Float;
   private var pmsIsFreeInGray:Bool;
+  
+  
+  private var _isCenter :Bool = false;
+  private var _cWidth :Float = 0;
+  private var _cHeight :Float = 0;
 
  
-  public function new(pageView:PageView, id:Int, model:IModel, url:String, canResize:Bool){	
+  public function new(pageView:PageView, id:Int, model:IModel, url:String, canResize:Bool, isCenter :Bool = false, cWidth :Float = 0, cHeight:Float = 0){	
     
     super(pageView, id, model, url);
     this.pageView                     = pageView;
@@ -93,6 +98,11 @@ class VectorPlaceholderView extends APlaceholder {
     vectorFilePosX                    = 0;
     mouseOver                         = false;
     focus                             = false;
+	
+	_isCenter = isCenter;
+	_cWidth = cWidth;
+	_cHeight = cHeight;
+	
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     GLOBAL.Application.addEventListener(EVENT_ID.DESKTOP_VIEW_MOVE, onDesktopViewMove);
     
@@ -329,7 +339,11 @@ class VectorPlaceholderView extends APlaceholder {
     pageView.hitTest();
   }
   
-  private function loadVectorFile():Void{
+  private function loadVectorFile():Void {
+	 
+	  trace("load vector: " + url);
+	  
+	  
     var ldr:Loader                = new Loader(); 
     var req:URLRequest            = new URLRequest(url); 
     var ldrContext:LoaderContext  = new LoaderContext(); 
@@ -355,6 +369,9 @@ class VectorPlaceholderView extends APlaceholder {
     
     var bitmapScale:Float = 72/150 * scale;
     var bounds = vectorMovie.getBounds(vectorMovie);
+	
+	if ((bounds.width == 0) && (bounds.height == 0)) return;
+	
     var bitmapInfo:BitmapData = new BitmapData(Std.int(bounds.width*bitmapScale+0.5), Std.int(bounds.height*bitmapScale+0.5), true, 0x00000000);
     var matrix:Matrix = new Matrix();
     matrix.scale(bitmapScale, bitmapScale);
@@ -396,6 +413,12 @@ class VectorPlaceholderView extends APlaceholder {
     if(sizeX != -1){
       setSize(sizeX, sizeY);
     }
+	
+	if (_isCenter)
+	{
+		this.x +=  (_cWidth - vectorMovie.width) / 2;
+		this.y += (_cHeight - vectorMovie.height) / 2;
+	}
     
     this.setChildIndex(selectBox, this.numChildren - 1);
   }

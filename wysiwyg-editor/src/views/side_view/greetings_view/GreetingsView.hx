@@ -1,19 +1,32 @@
 import flash.geom.Point;
 import flash.events.Event;
+import flash.events.MouseEvent;
 
 class GreetingsView extends VectorsView, implements IView{
   
   var print_types:Xml;
   private var pos:Int;
+  
+  private var _overMessage :OverMessage = null;
 
   public function new(greetingsController:IController){	
     super(greetingsController);
-    vectorsPane           = new GreetingsPane(greetingsController);
+    //vectorsPane           = new GreetingsPane(greetingsController);
+	
+	vectorsPane = new InsertImageDialogView(greetingsController);
+	
     verticalScrollbar     = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
     Preset.addEventListener(EVENT_ID.GREETINGS_LOADED, onVectorLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, TOOL_TIPS.GREETINGS_ADD,'right','top');
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
+	
+	Greetings.addEventListener(EVENT_ID.GREETING_PREVIEW, onGreetingsPreview);
+	Greetings.addEventListener(EVENT_ID.GREETING_FINISH_PREVIEW, onFinishGreetingPreview);
+	
+	_overMessage = new OverMessage();
+	_overMessage.mouseChildren = false;
+	_overMessage.mouseEnabled = false;
   }
   
   override public function init():Void{
@@ -133,6 +146,39 @@ class GreetingsView extends VectorsView, implements IView{
     //                             TOOL_TIPS.greetings_add_link); 
   }
   
-  
+  override public function onAddedToStage(e:Event):Void
+  {
+	  super.onAddedToStage(e);
+		addChild(_overMessage);
+		_overMessage.visible = false;
+	 }
+	 
+	 private function onGreetingsPreview(e :IKEvent) :Void
+	 {
+		 
+		 var title:String;
+		
+		for( url in e.getXml().elementsNamed("title") ) {
+		  title = url.firstChild().nodeValue;
+		}
+		 
+		 _overMessage.setContent(title);
+		 onGreetingsPreviewMouseMove();
+		 _overMessage.visible = true;
+		 
+		 this.addEventListener(MouseEvent.MOUSE_MOVE, onGreetingsPreviewMouseMove);
+	}
+	
+	private function onGreetingsPreviewMouseMove(e :MouseEvent = null) :Void
+	{
+		_overMessage.x = this.mouseX - _overMessage.getWidth() - 15;
+		_overMessage.y = this.mouseY - 30;
+	}
+	
+	private function onFinishGreetingPreview(e :IKEvent) :Void
+	{
+		_overMessage.visible = false;
+		this.removeEventListener(MouseEvent.MOUSE_MOVE, onGreetingsPreviewMouseMove);
+	}
 }
 

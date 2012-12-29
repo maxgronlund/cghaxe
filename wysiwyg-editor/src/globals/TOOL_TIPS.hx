@@ -51,7 +51,11 @@ class TOOL_TIPS  {
   public static inline var COLOR_STD_PMS          = "color_std_pms";
   public static inline var COLOR_PICKER           = "color_picker";
   public static inline var COLOR_FOIL             = "color_foil";
+  
   public static inline var GREETINGS_ADD          = "greetings_add";
+  public static inline var GREETINGS_PREVIEW      = "greetings_preview";
+  
+  
   public static inline var SYMBOLS_ADD            = "symbols_add";
   public static inline var TEXT_FIXED_SIZE        = "text_fixed_size";
   public static inline var TEXT_RESIZABLE         = "text_resizable";

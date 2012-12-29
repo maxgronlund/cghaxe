@@ -7,6 +7,9 @@ class SymbolsView extends VectorsView, implements IView{
   public function new(symbolsController:IController){	
     super(symbolsController);
     vectorsPane           = new SymbolsPane(symbolsController);
+	
+	//vectorsPane = new SymbolImageDialog(symbolsController);
+	
     verticalScrollbar     = new VerticalScrollbar(symbolsController, EVENT_ID.SYMBOL_SCROLL);
     Preset.addEventListener(EVENT_ID.SYMBOLS_LOADED, onVectorLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
@@ -20,6 +23,7 @@ class SymbolsView extends VectorsView, implements IView{
               new ToolSelectionButton(), 
               new Parameter( EVENT_ID.SHOW_SYMBOLS));
     
+			  
     addVectorButton.init(controller,
             new Point(150,22), 
             new OneStateButtonBackL(), 
@@ -121,5 +125,16 @@ class SymbolsView extends VectorsView, implements IView{
                               TOOL_TIPS.symbols_add_body,
                               TOOL_TIPS.symbols_add_link);
   }
+  
+  override public function onAddedToStage(e:Event):Void 
+  {
+	  
+	  super.onAddedToStage(e);
+  
+    //scrollPane.setSize( 174, 199);
+	//scrollPaneBack.setSize(174, 200);
+
+	  
+  } 
   
 }

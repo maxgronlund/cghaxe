@@ -301,7 +301,8 @@ class Main
     sideView.x = SIZE.MAIN_VIEW_WIDTH - SIZE.SIDEBAR_VIEW_WIDTH;
   }
   
-  private function loadParams():Void{
+  private function loadParams():Void {
+	  trace(flash.Lib.current.loaderInfo.parameters);
     parameterParser.parse(flash.Lib.current.loaderInfo.parameters);  
   }	
   

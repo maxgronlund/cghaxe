@@ -53,6 +53,7 @@ class ScrollPane extends View
 	override public function getFloat(id:String):Float{
 		switch ( id ){
 			case 'mask_height':
+				if (mask == null) return 0;
 				return mask.height;
 		}
 		return 0;

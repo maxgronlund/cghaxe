@@ -38,6 +38,8 @@ class FormatedText extends Sprite
     setLabel(text);
   }
   public function setLabel(str:String):Void {
+	  
+	  if (textField != null)
     textField.text                  = str;
   }
   
@@ -73,8 +75,17 @@ class FormatedText extends Sprite
     return textField.text;
   }
   
-  public function getWidth():Float{
+  
+  public function getWidth():Float {
+	 
+	  if (textField == null) return 0;
     return textField.width;
+  }
+  
+  public function getTextWidth():Float {
+	 
+	  if (textField == null) return 0;
+    return textField.textWidth;
   }
   
   public function getHeight():Float{

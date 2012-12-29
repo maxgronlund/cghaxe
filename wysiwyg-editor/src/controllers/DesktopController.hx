@@ -16,11 +16,17 @@ class DesktopController extends Controller, implements IController
       case EVENT_ID.ZOOM_OUT:{
         Zoom.zoomOut();
       }
-      case EVENT_ID.ZOOM_100:{
+      case EVENT_ID.ZOOM_100:
+		  {
         Zoom.resetZoom();
         GLOBAL.desktop_view.setParam(param);
         
       }
+	  
+	  case EVENT_ID.TRASH_PLACEHOLDER:
+		{
+			  GLOBAL.menu_controller.setParam(param);
+		}
     }	
 	}
 }

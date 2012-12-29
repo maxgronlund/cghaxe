@@ -5,6 +5,9 @@
 
 class GLOBAL  {
   
+	
+	
+	public static var IS_DEBUG :Bool = false;
   
   // models
   public static var product_name:String;

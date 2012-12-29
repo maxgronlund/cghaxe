@@ -18,6 +18,8 @@ class PagesView extends View, implements IView{
     Pages.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
+	Greetings.addEventListener(EVENT_ID.GREETING_PREVIEW, onGreetingsPreview);
+	Greetings.addEventListener(EVENT_ID.GREETING_FINISH_PREVIEW, onGreetingsFinishPreview);
     Symbols.addEventListener(EVENT_ID.ADD_SYMBOL_TO_PAGE, onAddSymbolToPage);
     Logos.addEventListener(EVENT_ID.ADD_LOGO_TO_PAGE, onAddLogoToPage);
     Application.addEventListener(EVENT_ID.ALLIGN_SELECTED_LEFT, onAllignLeft);
@@ -26,6 +28,18 @@ class PagesView extends View, implements IView{
   private function onAddGreetingToPage(e:IKEvent):Void{
     pageInFocus.setParam(e.getParam());
   }
+  
+  private function onGreetingsPreview(e :IKEvent) :Void
+  {
+	  pageInFocus.setParam(e.getParam());
+	  
+   }
+   
+   private function onGreetingsFinishPreview(e :IKEvent) :Void
+  {
+	  pageInFocus.setParam(e.getParam());
+	  
+   }
   
   private function onAddSymbolToPage(e:IKEvent):Void{
     pageInFocus.setParam(e.getParam());

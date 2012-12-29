@@ -13,6 +13,8 @@ class OneStateTextAndImageButton extends OneStateButton
   private var color:Int;
   private var align:String;
   
+  private var _imgURL :String = "";
+  
   public function new(){
     super();
     labelText = 'na';
@@ -35,6 +37,12 @@ class OneStateTextAndImageButton extends OneStateButton
   public function setText(s:String):Void{
     labelText = s;
   }
+  
+  public function setImgURL(url :String) :Void
+  {
+	  _imgURL = url;
+	  this.height = 50;
+	}
   
   public function updateLabel():Void{
     formattedText.setLabel(labelText);

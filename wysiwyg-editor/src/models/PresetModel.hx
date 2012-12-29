@@ -112,14 +112,23 @@ class PresetModel extends Model, implements IModel
       parseXmlData(xml_data);
     }
     
-    for(save_path in xml.elementsNamed("save-path") ) {
-      
-      GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+    for (save_path in xml.elementsNamed("save-path") )
+	{
+		
+
+			GLOBAL.save_path = save_path.firstChild().nodeValue.toString();
+		
       Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Save Path Loaded');
     }
     
-    for(buy_path in xml.elementsNamed("buy-path") ) {
-      GLOBAL.buy_path = buy_path.firstChild().nodeValue.toString();
+    for (buy_path in xml.elementsNamed("buy-path") ) 
+	{
+		
+
+			  GLOBAL.buy_path = buy_path.firstChild().nodeValue.toString();
+		
+		
+    
     }
     
     for(greetings in xml.elementsNamed("greetings")){
@@ -277,7 +286,6 @@ class PresetModel extends Model, implements IModel
     loader.addEventListener(IOErrorEvent.IO_ERROR, onError);
     loader.addEventListener(Event.COMPLETE, onBuySavedComplete);
     loader.load(save_preset());
-
     
   }
   

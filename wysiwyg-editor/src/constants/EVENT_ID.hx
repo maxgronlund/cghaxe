@@ -242,6 +242,10 @@ class EVENT_ID  {
   public static inline var ADD_SYMBOL_TO_PAGE                 = "add_symbol_to_page";
   public static inline var IS_GREEDING_FREE                   = "is_greeding_free";
   
+  public static inline var GREETING_PREVIEW                   = "greeting_preview";
+  public static inline var GREETING_FINISH_PREVIEW            = "greeting_finish_preview";
+  
+  
   // logos
   public static inline var LOGOS_LOADED:String                = "logos_loaded";
   public static inline var PHOTOS_LOADED:String               = "photos_loaded";
