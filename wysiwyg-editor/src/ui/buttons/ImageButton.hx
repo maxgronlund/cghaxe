@@ -221,8 +221,6 @@ class ImageButton extends MouseHandler
 	}
 	
 	
-	
-	
 	 private function onAddedToStage(e:Event):Void
 	 {	
 		removeEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
