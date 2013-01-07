@@ -1,11 +1,16 @@
 import flash.geom.Point;
 import flash.events.Event;
 import flash.events.MouseEvent;
+import flash.Vector;
 
 class GreetingsView extends VectorsView, implements IView{
   
   var print_types:Xml;
   private var pos:Int;
+  
+  private var addVectorButton:OneStateTextAndImageButton;
+  private var addVectorIButton:OneStateTextAndImageButton;
+  private var addVectorInfo:InfoMessageView;
   
   private var _overMessage :OverMessage = null;
 
@@ -13,7 +18,17 @@ class GreetingsView extends VectorsView, implements IView{
     super(greetingsController);
     //vectorsPane           = new GreetingsPane(greetingsController);
 	
+		
 	vectorsPane = new InsertImageDialogView(greetingsController);
+	back                = new Rectangle(190, 226, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+	scrollPaneBack      = new Rectangle(174, 160, 0xC3C3C3, 0xF4F4F4, Rectangle.DRAW_LINES, Rectangle.USE_FILL);
+
+	addVectorButton     = new OneStateTextAndImageButton();
+    addVectorButton.setFormat(0, 3, 0x333333, 'center');
+    
+    addVectorIButton       = new OneStateTextAndImageButton();
+    addVectorIButton.setFormat(0, 3, 0x333333, 'center');
+    addVectorInfo       = new InfoMessageView(GLOBAL.tool_tips_controller, TOOL_TIPS.SYMBOLS_ADD,'right','top');	
 	
     verticalScrollbar     = new VerticalScrollbar(greetingsController, EVENT_ID.GREETING_SCROLL);
     Preset.addEventListener(EVENT_ID.GREETINGS_LOADED, onVectorLoaded);
@@ -23,6 +38,7 @@ class GreetingsView extends VectorsView, implements IView{
 	
 	Greetings.addEventListener(EVENT_ID.GREETING_PREVIEW, onGreetingsPreview);
 	Greetings.addEventListener(EVENT_ID.GREETING_FINISH_PREVIEW, onFinishGreetingPreview);
+	Greetings.addEventListener(EVENT_ID.SHOW_GREETINGS, onShowGreetings);
 	
 	_overMessage = new OverMessage();
 	_overMessage.mouseChildren = false;
@@ -47,7 +63,7 @@ class GreetingsView extends VectorsView, implements IView{
                         new OneStateButtonBackS(), 
                         new Parameter( TOOL_TIPS.GREETINGS_ADD));
     
-    super.init();
+    addVectorButton.fireOnMouseUp(false);
   }
   
   private function onPageSelected(e:IKEvent):Void{
@@ -104,54 +120,68 @@ class GreetingsView extends VectorsView, implements IView{
       //trace('PositionTools');
    }
   
-  override private function onVectorLoaded(e:KEvent):Void{
-
-    for(greeting in e.getXml().elementsNamed('greeting')){
-      var param:IParameter = new Parameter(EVENT_ID.ADD_GREETING_BUTTON);
-      param.setXml(greeting);
-      vectorsPane.setParam(param);
-    }
+  private function onVectorLoaded(e:KEvent):Void{
+	createVectorsArray('greeting',e.getParam().getXml());  
   }
+  
+  private function onShowGreetings(e:Event):Void
+  {
+	  var param:IParameter = new Parameter(EVENT_ID.ADD_GREETING_BUTTON);
+	  loadFirstVector(param);
+  }
+  
+  
 
   override public function setParam(param:IParameter):Void{
-    switch( param.getLabel() ){
-      case EVENT_ID.GREETING_SELECTED: {
-        vectorsPane.setParam(param);
-      }
-    }
+		switch( param.getLabel() ){
+		  case EVENT_ID.GREETING_SELECTED: {
+			vectorsPane.setParam(param);
+		  }
+		}
 	}
 	
 	override public function setFloat(id:String, f:Float):Void{
-    switch ( id ) {
-      case EVENT_ID.GREETING_SCROLL:{
-        vectorsPane.y = -(vectorsPane.getFloat('height')-scrollPane.getFloat('mask_height')) * f;
-      }
-    }
+		switch ( id ) {
+		  case EVENT_ID.GREETING_SCROLL:{
+			vectorsPane.y = -(vectorsPane.getFloat('height')-scrollPane.getFloat('mask_height')) * f;
+		  }
+		}
 	}
 	private function onLoadDefaultTool(e:IKEvent):Void{ 
-    selectButton.setText(TRANSLATION.greetings_button);
-    addVectorButton.setText(TRANSLATION.add_greeting);
-    addVectorButton.updateLabel(); 
-    
-    addVectorIButton.setText('?');    
-    addVectorIButton.updateLabel();
-    
-    
-    
-    addVectorInfo.setContent( TOOL_TIPS.greetings_add_title,
-                              TOOL_TIPS.greetings_add_body,
-                              TOOL_TIPS.greetings_add_link);
-    //addVectorIButton.setContent( TOOL_TIPS.greetings_add_title,
-    //                             TOOL_TIPS.greetings_add_body,
-    //                             TOOL_TIPS.greetings_add_link); 
-  }
+		selectButton.setText(TRANSLATION.greetings_button);
+		addVectorButton.setText(TRANSLATION.add_greeting);
+		addVectorButton.updateLabel(); 
+		
+		addVectorIButton.setText('?');    
+		addVectorIButton.updateLabel();
+		
+		
+		
+		addVectorInfo.setContent( TOOL_TIPS.greetings_add_title,
+								  TOOL_TIPS.greetings_add_body,
+								  TOOL_TIPS.greetings_add_link);
+		//addVectorIButton.setContent( TOOL_TIPS.greetings_add_title,
+		//                             TOOL_TIPS.greetings_add_body,
+		//                             TOOL_TIPS.greetings_add_link); 
+	}
   
-  override public function onAddedToStage(e:Event):Void
-  {
-	  super.onAddedToStage(e);
+	override public function onAddedToStage(e:Event):Void {
+		super.onAddedToStage(e);
 		addChild(_overMessage);
 		_overMessage.visible = false;
-	 }
+		
+		addChild(addVectorButton);
+		addVectorButton.x   = 9;
+		addVectorButton.y   = 218;
+		
+		addChild(addVectorIButton);
+		addVectorIButton.x   = 154 +9;
+		addVectorIButton.y   = 218;
+		
+		addVectorInfo.x = addVectorIButton.x;
+		addVectorInfo.y = addVectorIButton.y;
+		addChild(addVectorInfo);
+	}
 	 
 	 private function onGreetingsPreview(e :IKEvent) :Void
 	 {

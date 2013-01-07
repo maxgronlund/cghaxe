@@ -21,12 +21,18 @@ class PagesView extends View, implements IView{
 	Greetings.addEventListener(EVENT_ID.GREETING_PREVIEW, onGreetingsPreview);
 	Greetings.addEventListener(EVENT_ID.GREETING_FINISH_PREVIEW, onGreetingsFinishPreview);
     Symbols.addEventListener(EVENT_ID.ADD_SYMBOL_TO_PAGE, onAddSymbolToPage);
+	Symbols.addEventListener(EVENT_ID.START_DRAG_SYMBOL, onStartDragSymbol);
+	Logos.addEventListener(EVENT_ID.START_DRAG_LOGO, onStartDragSymbol);
     Logos.addEventListener(EVENT_ID.ADD_LOGO_TO_PAGE, onAddLogoToPage);
     Application.addEventListener(EVENT_ID.ALLIGN_SELECTED_LEFT, onAllignLeft);
   }
   
   private function onAddGreetingToPage(e:IKEvent):Void{
     pageInFocus.setParam(e.getParam());
+  }
+  
+  private function onStartDragSymbol(e:IKEvent):Void {
+	 pageInFocus.setParam(e.getParam());
   }
   
   private function onGreetingsPreview(e :IKEvent) :Void

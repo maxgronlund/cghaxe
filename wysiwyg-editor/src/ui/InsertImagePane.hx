@@ -2,7 +2,7 @@ import flash.geom.Point;
 import flash.events.Event;
 import flash.Vector;
 
-class InsertImageDialogView extends View, implements IView
+class InsertImagePane extends View, implements IView
 {
   private var _rect:Rectangle;
   private var _vectorsButtons:Vector<ImageButton>;
@@ -27,7 +27,12 @@ class InsertImageDialogView extends View, implements IView
   override public function init():Void{
     
   }
-  
+    
+  override public function onAddedToStage(e:Event):Void{
+    super.onAddedToStage(e);
+    //addChild(_rect);
+
+  }
   
   override public function setParam(param:IParameter):Void{
     
@@ -44,6 +49,7 @@ class InsertImageDialogView extends View, implements IView
   
    private function addButton(param:IParameter	):Void
    {
+
 		var vectorURL:String;
 		
 		for( url in param.getXml().elementsNamed("url") ) {
@@ -53,7 +59,6 @@ class InsertImageDialogView extends View, implements IView
 	
 		 param.setInt(_buttonIndex);
 		 var imgBtn = new ImageButton();
-		 imgBtn.addEventListener(EVENT_ID.LOAD_NEXT_IMAGE,onLoadNextImage);
 		 imgBtn.setSize(_imgWidth, _imgHeight);
 		 imgBtn.init(controller, param, vectorURL);
 		 
@@ -74,10 +79,6 @@ class InsertImageDialogView extends View, implements IView
 		if ((_buttonIndex % 2) == 1)_buttonPos += _imgHeight + _imgOff;
 		_buttonIndex++;
 		selectButton(0);
-   }
-   
-   private function onLoadNextImage(e:KEvent):Void {
-	   dispatchEvent(new KEvent(EVENT_ID.LOAD_NEXT_IMAGE,e.getParam()));
    }
    
    private function selectButton(id:Int):Void{

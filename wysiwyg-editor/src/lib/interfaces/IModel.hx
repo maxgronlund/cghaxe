@@ -31,7 +31,7 @@ interface IModel implements IEventDispatcher
 	function getVector(id:String):Vector<Dynamic>;
 	
 	function validateString(id:String, s:String):Bool;
-	
+	function isGreetingUrl(url:String):Bool;
 	
 	// has to be cleaned up
 	function getPrintPrice(units:UInt, printType:String):Float;

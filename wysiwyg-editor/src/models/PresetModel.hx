@@ -43,7 +43,8 @@ class PresetModel extends Model, implements IModel
   private function onParsePreset(e:IKEvent):Void{
 
     var xml:Xml = Xml.parse(StringTools.htmlUnescape(e.getXml().toString()));
-    for( preset in xml.elementsNamed("preset") ) {
+	
+    for ( preset in xml.elementsNamed("preset") ) {
       countPlaceholders(preset);
       parsePreset(preset);
     }
@@ -53,9 +54,10 @@ class PresetModel extends Model, implements IModel
   private function countPlaceholders(xml:Xml):Void{
 
     var placeholders:UInt = 0;
-
+	
     for(xml_data in xml.elementsNamed("xml-data") ) {
-      for( page in xml_data.elementsNamed("page") ) {
+      for ( page in xml_data.elementsNamed("page") ) {
+		  var str1:String = page.toString();
         for( placeholder in page.elementsNamed("placeholder") ) {
           placeholders++;
         }
@@ -123,12 +125,7 @@ class PresetModel extends Model, implements IModel
     
     for (buy_path in xml.elementsNamed("buy-path") ) 
 	{
-		
-
-			  GLOBAL.buy_path = buy_path.firstChild().nodeValue.toString();
-		
-		
-    
+		GLOBAL.buy_path = buy_path.firstChild().nodeValue.toString();
     }
     
     for(greetings in xml.elementsNamed("greetings")){
@@ -216,7 +213,8 @@ class PresetModel extends Model, implements IModel
     
     var page_index:Int = 0;
   
-    for(page in xml_data.elementsNamed("page") ) {
+    for (page in xml_data.elementsNamed("page") ) {
+		var str:String = page.toString();
       var param:IParameter = new Parameter(EVENT_ID.PAGE_XML_LOADED);
       param.setXml(page);
       param.setInt(page_index);

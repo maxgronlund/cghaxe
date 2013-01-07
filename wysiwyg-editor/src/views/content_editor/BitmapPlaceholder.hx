@@ -224,8 +224,8 @@ class BitmapPlaceholder extends APlaceholder{
     originalBackdropWidth = backdrop.width;
     originalBackdropHeight = backdrop.height;
     
-    backdrop.scaleX       *= 0.5;
-    backdrop.scaleY       *= 0.5;
+    //backdrop.scaleX       *= 0.5;
+    //backdrop.scaleY       *= 0.5;
 
     addChild(backdrop);
     default_colorTransform = backdrop.transform.colorTransform;
@@ -236,7 +236,7 @@ class BitmapPlaceholder extends APlaceholder{
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     widthHeightRatio  = this.width/this.height;
     
-    if(sizeX == -1){
+    if(sizeX == -1 || sizeX == 0){
       sizeX = this.width;
       sizeY = this.height;
     }
@@ -244,7 +244,7 @@ class BitmapPlaceholder extends APlaceholder{
     var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_LOADED);
     param.setInt(id);
     model.setParam(param);
-    
+    /*
     switch ( printType ){
       
       case CONST.DIGITAL_PRINT:{
@@ -266,7 +266,7 @@ class BitmapPlaceholder extends APlaceholder{
       case CONST.FOIL_COLOR:{
         foilify(foilColor);
       }
-    }
+    }*/
 	}
 	
 	override public function getScale():Float{

@@ -6,34 +6,30 @@ class SymbolsView extends VectorsView, implements IView{
 
   public function new(symbolsController:IController){	
     super(symbolsController);
-    vectorsPane           = new SymbolsPane(symbolsController);
+    //vectorsPane           = new SymbolsPane(symbolsController);
 	
-	//vectorsPane = new SymbolImageDialog(symbolsController);
+	back                = new Rectangle(190, 326, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
+	scrollPaneBack      = new Rectangle(174, 160, 0xC3C3C3, 0xF4F4F4, Rectangle.DRAW_LINES, Rectangle.USE_FILL);
+
+	
+	vectorsPane = new SymbolImageDialog(symbolsController);
 	
     verticalScrollbar     = new VerticalScrollbar(symbolsController, EVENT_ID.SYMBOL_SCROLL);
     Preset.addEventListener(EVENT_ID.SYMBOLS_LOADED, onVectorLoaded);
     Application.addEventListener(EVENT_ID.SET_DEFAULT_TOOL, onLoadDefaultTool);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
+	
+	Symbols.addEventListener(EVENT_ID.SHOW_SYMBOLS, onShowSymbols);
   }
   
   override public function init():Void{
     //trace('init');     
-    selectButton.init( controller,
+    
+	selectButton.init( controller,
               new Point(190,30), 
               new ToolSelectionButton(), 
               new Parameter( EVENT_ID.SHOW_SYMBOLS));
-    
-			  
-    addVectorButton.init(controller,
-            new Point(150,22), 
-            new OneStateButtonBackL(), 
-            new Parameter( EVENT_ID.ADD_SYMBOL_TO_PAGE));
-            
-    addVectorIButton.init( GLOBAL.tool_tips_controller,
-                        new Point(22,22), 
-                        new OneStateButtonBackS(), 
-                        new Parameter( TOOL_TIPS.SYMBOLS_ADD));
-    
+	
     super.init();
   }
   
@@ -48,9 +44,7 @@ class SymbolsView extends VectorsView, implements IView{
   
   private function disableTools():Void{
      back.visible                     = false;
-     selectButton.visible             = false;
-     addVectorButton.visible          = false;
-     addVectorIButton.visible         = false;
+	 selectButton.visible             = false;
      vectorsPane.visible              = false;
      verticalScrollbar.visible        = false; 
      scrollPaneBack.visible           = false; 
@@ -60,9 +54,7 @@ class SymbolsView extends VectorsView, implements IView{
 
     if(cmd == 'Symbols'){
       back.visible                     = true;
-      selectButton.visible             = true;
-      addVectorButton.visible          = true;
-      addVectorIButton.visible         = true;
+	  selectButton.visible             = true;
       vectorsPane.visible              = true;
       verticalScrollbar.visible        = true;
       scrollPaneBack.visible           = true;
@@ -89,14 +81,17 @@ class SymbolsView extends VectorsView, implements IView{
     
     
   
-  override private function onVectorLoaded(e:KEvent):Void{
+  private function onVectorLoaded(e:KEvent):Void{
 
-    for(symbol in e.getXml().elementsNamed('symbol')){
-      var param:IParameter = new Parameter(EVENT_ID.ADD_SYMBOL_BUTTON);
-      param.setXml(symbol);
-      vectorsPane.setParam(param);
-      //trace(symbol.toString());
-    }
+	createVectorsArray('symbol',e.getParam().getXml());
+		
+  }
+  
+  private function onShowSymbols(e:Event):Void
+  {
+	  var param:IParameter = new Parameter(EVENT_ID.ADD_SYMBOL_BUTTON);
+	  loadFirstVector(param);
+	  
   }
 
   override public function setParam(param:IParameter):Void{
@@ -116,25 +111,13 @@ class SymbolsView extends VectorsView, implements IView{
   }
   private function onLoadDefaultTool(e:IKEvent):Void{
     selectButton.setText(TRANSLATION.symbols_button);
-    addVectorButton.setText(TRANSLATION.add_symbol);
-    addVectorButton.updateLabel();
-    addVectorIButton.setText('?');    
-    addVectorIButton.updateLabel();
-    
-    addVectorInfo.setContent( TOOL_TIPS.symbols_add_title,
-                              TOOL_TIPS.symbols_add_body,
-                              TOOL_TIPS.symbols_add_link);
   }
   
   override public function onAddedToStage(e:Event):Void 
   {
-	  
-	  super.onAddedToStage(e);
+	super.onAddedToStage(e);
   
-    //scrollPane.setSize( 174, 199);
-	//scrollPaneBack.setSize(174, 200);
-
-	  
+    scrollPane.setSize( 174, 299);
+	scrollPaneBack.setSize(174, 300);
   } 
-  
 }

@@ -48,7 +48,8 @@ class TRANSLATION  {
   public static var add_greeting:String;
   public static var add_design:String;
   public static var garamond:String;
-  
+  public static var logo_title:String;
+  public static var image_title:String;
 
   
 

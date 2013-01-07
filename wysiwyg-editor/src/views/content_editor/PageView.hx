@@ -52,7 +52,7 @@ class PageView extends View{
   private var _greeting :APlaceholder = null;
   private var _greetingPreview :APlaceholder = null;
   
-
+  private var _draggingSymbol:DraggingSymbol = null;
   
   public function new(controller:IController){	
 
@@ -249,9 +249,9 @@ class PageView extends View{
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
-
   }
-
+  
+  
   override public function setModel(model:IModel):Void{
     this.model = model;
     model.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onAddTextPlaceholder);
@@ -294,7 +294,8 @@ class PageView extends View{
 		{
 			addGreeting(param);
 		}
-		
+	  case EVENT_ID.START_DRAG_SYMBOL: { startDragSymbol(param); }
+	  case EVENT_ID.START_DRAG_LOGO: { startDragSymbol(param); }
       case EVENT_ID.ADD_SYMBOL_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), true);}
       case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),   onPosX(), onPosY(), -1, -1);}
       case EVENT_ID.ADD_PHOTO_TO_PAGE: { addBitmapPlaceholder( param.getXml(),  onPosX(), onPosY(), -1, -1); }
@@ -310,8 +311,8 @@ class PageView extends View{
 	  
 	  if (_greeting != null)
 		{
-			var grX :Float = _greeting.x;
-			var grY :Float = _greeting.y;
+			var grX :Float = _greeting.x+_greeting.width/2;
+			var grY :Float = _greeting.y+_greeting.height/2;
 
 			
 			setPlaceholderInFocus(_greeting);
@@ -321,7 +322,7 @@ class PageView extends View{
 		}
 		else
 		{
-		  parseVectorPlaceholder(  param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
+			parseVectorPlaceholder(  param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
 		}
 		
 		  _greeting = placeholders[placeholders.length - 1];
@@ -334,12 +335,12 @@ class PageView extends View{
 	  if (_greeting != null) 
 	  {
 		_greeting.visible = false;
-		 parseVectorPlaceholder( param.getXml(), _greeting.x, _greeting.y, false);
+		 parseVectorPlaceholder( param.getXml(), _greeting.x+_greeting.width/2, _greeting.y+_greeting.height/2, false);
 	  }
 	  else 
 	  {
 		   parseVectorPlaceholder( param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
-		}
+	  }
 	  
 	  _greetingPreview = placeholders[placeholders.length - 1];
 	  
@@ -400,7 +401,7 @@ class PageView extends View{
   }
   
   private function parsePlaceholder(xml:Xml):Void{
-    
+    var str:String = xml.toString();
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Parse Placeholder');
     
     for( pos_x in xml.elementsNamed("pos-x") ) 
@@ -418,7 +419,18 @@ class PageView extends View{
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
-      case "text_placeholder":
+		
+		var sourceUrl:String = "";
+		for (xml_url in  xml.elementsNamed("url") ) {
+			sourceUrl = xml_url.firstChild().nodeValue.toString();
+		}
+		
+		if (Greetings.isGreetingUrl(sourceUrl))
+		{
+			_greeting = placeholders[placeholders.length - 1];
+		}
+		
+	  case "text_placeholder":
         parseTextPlaceholder(xml);
       case "bitmap_place_holder":
         parseBitmapPlaceholder(xml, posX, posY);
@@ -494,6 +506,7 @@ class PageView extends View{
     for(url_xml in xml.elementsNamed("url") ){
       var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize, isFree, isCenter, cWidth, cHeight);
       placeholder.setSize(sizeX, sizeY);
+	  
     }
     //trace('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
     //trace(GLOBAL.printType);
@@ -505,10 +518,13 @@ class PageView extends View{
     setPlaceholderInFocus(null);
     
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url, resizable, isCenter, cWidth, cHeight);
-    placeholder.x = posX;
-  	placeholder.y = posY;
+   
   	placeholder.freePmsInGrey(isFree);
     placeholders.push(placeholder);
+	
+	placeholder.x = posX;
+	placeholder.y = posY;
+	
     addChild(placeholder);
     return placeholder;
   }
@@ -536,7 +552,7 @@ class PageView extends View{
     }
     
     for( url in xml.elementsNamed("url") ) {
-      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY, sizeX, sizeY);
+      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX-_draggingSymbol.width/2, posY-_draggingSymbol.height/2, sizeX, sizeY);
       //placeholder.setSize(sizeX, sizeY);
     }
     
@@ -750,6 +766,69 @@ class PageView extends View{
     removeEventListener(MouseEvent.ROLL_OUT, onMouseOut);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
+  }
+  
+  private function startDragSymbol(param:IParameter):Void {
+	  
+	  if (param.getLabel() == EVENT_ID.START_DRAG_LOGO) {
+		   _draggingSymbol = new DraggingLogo();
+	  } else {
+		   _draggingSymbol = new DraggingSymbol();
+	  }
+	  
+	  
+	  var vectorURL:String;
+		
+	  for( url in param.getXml().elementsNamed("url") ) {
+		vectorURL = url.firstChild().nodeValue;
+		param.setString(vectorURL);
+	  }
+	 
+	  _draggingSymbol.init(controller, param, vectorURL);
+	  addChild(_draggingSymbol);
+	  
+	  stage.addEventListener(Event.ENTER_FRAME, onDragEnterFrame);
+	  stage.addEventListener(MouseEvent.MOUSE_UP, onMouseDragUp);
+	  
+	  onDragEnterFrame();
+  }
+  
+  private function onDragEnterFrame(e:Event = null):Void {
+	  if (_draggingSymbol != null) {
+
+		var endPosX:Float = this.mouseX - _draggingSymbol.width /2; 
+		var endPosY:Float = this.mouseY - _draggingSymbol.height / 2;
+		
+		_draggingSymbol.x = endPosX;
+		_draggingSymbol.y = endPosY;
+	  }
+	  
+  }
+  
+  private function onMouseDragUp(e:MouseEvent):Void {
+	  if (_draggingSymbol != null)
+	  {		  
+		  var param:IParameter = _draggingSymbol.getParam();
+		  
+		  if (param.getLabel() == EVENT_ID.START_DRAG_LOGO) {
+			parseBitmapPlaceholder( param.getXml(), this.mouseX, this.mouseY);
+		  } else {
+			parseVectorPlaceholder( param.getXml(), this.mouseX, this.mouseY, true);
+		  }
+		  
+		  
+		  
+		  stage.removeEventListener(Event.ENTER_FRAME, onDragEnterFrame);
+	      stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseDragUp);
+		  
+		  clearDraggingSymbol();
+		  
+	  }
+  }
+ 
+  private function clearDraggingSymbol():Void {
+	 removeChild(_draggingSymbol);
+	 _draggingSymbol = null;	
   }
   
   private function onMouseDown(e:MouseEvent){	

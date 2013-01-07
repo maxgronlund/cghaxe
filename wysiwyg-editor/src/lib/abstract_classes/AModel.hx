@@ -99,6 +99,11 @@ class AModel extends EventDispatcher
     return 0.0;
   }
   
+  public function isGreetingUrl(url:String):Bool{
+    trace("isGreetingsUrl: must be overriden in a subclass");
+    return false;
+  }
+  
   
 // dispatchers	!!! finish up later
 	public function dispatchXML( label:String, xml:Xml):Void{

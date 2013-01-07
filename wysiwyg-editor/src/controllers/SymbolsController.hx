@@ -8,11 +8,13 @@ class SymbolsController extends Controller, implements IController{
     switch ( param.getLabel() ){
       case EVENT_ID.SHOW_SYMBOLS:{
         GLOBAL.side_view.showView(EVENT_ID.SHOW_SYMBOLS, param.getBool());
+		Symbols.setParam(param);
       }
       case EVENT_ID.SYMBOL_SELECTED:{
         GLOBAL.symbols_view.setParam(param);
         Symbols.setParam(param);
       }
+	  case EVENT_ID.START_DRAG_SYMBOL: { Symbols.setParam(param); }
       case EVENT_ID.ADD_SYMBOL_TO_PAGE:{Symbols.setParam(param);}
       case EVENT_ID.SYMBOL_SCROLL:{GLOBAL.symbols_view.setFloat(EVENT_ID.SYMBOL_SCROLL, param.getFloat());}
 

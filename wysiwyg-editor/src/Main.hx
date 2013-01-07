@@ -7,6 +7,7 @@ import flash.net.URLRequest;
 import flash.display.StageScaleMode;
 import flash.display.StageDisplayState; 
 import flash.text.TextFormat;
+import flash.trace.Trace;
 
 
 class Main
@@ -75,7 +76,8 @@ class Main
   private var hitTest:CGHitTest;
 
   
-  static function main(){
+  static function main() {
+	//Trace.setLevel(0, 1);
     new Main();
   }
   
