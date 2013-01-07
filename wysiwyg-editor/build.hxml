@@ -13,7 +13,7 @@
 -cp src/controllers
 -cp src/data_types
 -cp src/encoders
--cp src/events
+-cp src/events¢
 -cp src/interfaces
 -cp src/loaders
 -cp src/lib
