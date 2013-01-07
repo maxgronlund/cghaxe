@@ -14,9 +14,16 @@ class SymbolsModel extends Model, implements IModel {
  }
  
   override public function setParam(param:IParameter):Void{
-    switch ( param.getLabel() ){
+    switch ( param.getLabel() ) {
+	  case EVENT_ID.SHOW_SYMBOLS: {	
+		  dispatchEvent(new Event(EVENT_ID.SHOW_SYMBOLS));
+	  }
       case EVENT_ID.SYMBOL_SELECTED:{
         symbolsXml = param.getXml();
+      }
+	  case EVENT_ID.START_DRAG_SYMBOL:{
+        symbolsXml = param.getXml();
+		dispatchXML(EVENT_ID.START_DRAG_SYMBOL, symbolsXml);
       }
       case EVENT_ID.ADD_SYMBOL_TO_PAGE:{
         if(symbolsXml != null){

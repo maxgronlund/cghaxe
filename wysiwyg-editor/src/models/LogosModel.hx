@@ -27,6 +27,10 @@ class LogosModel extends Model, implements IModel {
       case EVENT_ID.PHOTO_SELECTED:{
         logosXml = param.getXml();
       }
+	  case EVENT_ID.START_DRAG_LOGO:{
+        logosXml = param.getXml();
+		dispatchXML(EVENT_ID.START_DRAG_LOGO, logosXml);
+      }
       case EVENT_ID.ADD_LOGO_TO_PAGE:{
         if(logosXml != null){
           dispatchXML(EVENT_ID.ADD_LOGO_TO_PAGE, logosXml);
@@ -37,12 +41,16 @@ class LogosModel extends Model, implements IModel {
           dispatchXML(EVENT_ID.ADD_LOGO_TO_PAGE, logosXml);
         }
       }
+	  case EVENT_ID.SHOW_MY_UPLOADS: {
+		dispatchEvent(new Event(EVENT_ID.SHOW_MY_UPLOADS));
+	  } 
       case EVENT_ID.EVENT_ID.UPLOAD_PHOTO:{
         uploadImage();
       }
       case EVENT_ID.EVENT_ID.UPLOAD_LOGO:{
         uploadLogo();
       }
+	  
       
     }
   }

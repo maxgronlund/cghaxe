@@ -353,8 +353,11 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onVectorFileLoaded(event:Event):Void { 
-    vectorMovie =  cast event.target.loader.content;
+    vectorMovie = new MovieClip();
+	vectorMovie.addChild(cast event.target.loader.content);
+	  
     var scale:Float = 0.25;
+	
     addChild(vectorMovie);
     
     originalWidth = vectorMovie.width;
@@ -366,7 +369,9 @@ class VectorPlaceholderView extends APlaceholder {
     
     widthHeightRatio = vectorMovie.width/vectorMovie.height;
     
-    
+	this.x -= vectorMovie.width / 2;
+	this.y -= vectorMovie.height / 2;
+	
     var bitmapScale:Float = 72/150 * scale;
     var bounds = vectorMovie.getBounds(vectorMovie);
 	
@@ -416,10 +421,10 @@ class VectorPlaceholderView extends APlaceholder {
 	
 	if (_isCenter)
 	{
-		this.x +=  (_cWidth - vectorMovie.width) / 2;
-		this.y += (_cHeight - vectorMovie.height) / 2;
+		this.x =  (_cWidth - vectorMovie.width) / 2;
+		this.y = (_cHeight - vectorMovie.height) / 2;
 	}
-    
+	
     this.setChildIndex(selectBox, this.numChildren - 1);
   }
   

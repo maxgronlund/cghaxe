@@ -4,7 +4,7 @@ import flash.display.Bitmap;
 import flash.geom.Point;
 import flash.Vector;
 
-class GreetingsPane extends VectorsPane, implements IView{
+class GreetingsPane extends InsertImagePane, implements IView{
   
 
   public function new(greetingsController:IController){	

@@ -51,28 +51,28 @@ class VectorsPane extends View, implements IView{
     }
   }
   
-  private function addButton(param:IParameter	):Void{
+  private function addButton(param:IParameter):Void{
 
-    var vectorTitle:String;
-    
-    for( title in param.getXml().elementsNamed("title") ) {
-      vectorTitle = title.firstChild().nodeValue;
-      param.setString(vectorTitle);
-    }
-	
-	
-    param.setInt(buttonIndex);
-    var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
-    oneStateTextAndImageButton.init( controller, new Point(171, 27), new PlaceholderButton(), param );
-    oneStateTextAndImageButton.fireOnMouseUp(false);
-    oneStateTextAndImageButton.jumpBack(false);
-    oneStateTextAndImageButton.setText(vectorTitle);
-    vectorsButtons[buttonIndex] = oneStateTextAndImageButton;
-    addChild(vectorsButtons[buttonIndex]);
-    vectorsButtons[buttonIndex].y = buttonPos;
-    buttonPos += 27;
-    buttonIndex++;
-    selectButton(0);
+		var vectorTitle:String;
+		
+		for( title in param.getXml().elementsNamed("title") ) {
+		  vectorTitle = title.firstChild().nodeValue;
+		  param.setString(vectorTitle);
+		}
+		
+		
+		param.setInt(buttonIndex);
+		var oneStateTextAndImageButton:OneStateTextAndImageButton = new OneStateTextAndImageButton();
+		oneStateTextAndImageButton.init( controller, new Point(171, 27), new PlaceholderButton(), param );
+		oneStateTextAndImageButton.fireOnMouseUp(false);
+		oneStateTextAndImageButton.jumpBack(false);
+		oneStateTextAndImageButton.setText(vectorTitle);
+		vectorsButtons[buttonIndex] = oneStateTextAndImageButton;
+		addChild(vectorsButtons[buttonIndex]);
+		vectorsButtons[buttonIndex].y = buttonPos;
+		buttonPos += 27;
+		buttonIndex++;
+		selectButton(0);
 
 	}
 

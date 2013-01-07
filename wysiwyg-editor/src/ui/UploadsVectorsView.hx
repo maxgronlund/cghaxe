@@ -2,59 +2,18 @@ import flash.geom.Point;
 import flash.events.Event;
 import flash.Vector;
 
-class VectorsView extends PropertyView, implements IView{
+class UploadsVectorsView extends VectorsView, implements IView{
 
-  private var back:Rectangle;
-  private var scrollPaneBack:Rectangle;
-  private var scrollPane:AView;
-  private var vectorsPane:AView;
-  private var verticalScrollbar:VerticalScrollbar;
   
-  
-  private var allLoadingVectors:Vector<Xml>;
-  private var currentVectorLoading:UInt;
-  
-  private var verticalScrollbarAdded:Bool;
   
   public function new(controller:IController){	
     super(controller);
-    //back                = new Rectangle(190, 226, 0x000000, 0xDEDEDE, Rectangle.DONT_DRAW_LINES, Rectangle.USE_FILL);
-	//scrollPaneBack      = new Rectangle(174, 160, 0xC3C3C3, 0xF4F4F4, Rectangle.DRAW_LINES, Rectangle.USE_FILL);
-    //backdrop              = new PlaceholdersBackBitmap();
-    scrollPane          = new ScrollPane(controller);
-        
-	verticalScrollbarAdded = false;
-	
-	allLoadingVectors = new Vector<Xml>();
-	currentVectorLoading = 0;
-	
-    Application.addEventListener(EVENT_ID.ADD_SCROLL_BARS, onAddScrollBars);
-  }
-  
-  
-  override public function init():Void{
     
   }
+  
   
   override public function onAddedToStage(e:Event):Void{
-    super.onAddedToStage(e);
-    addChild(back);
-    back.y              = 30;
-    
-    addChild(scrollPaneBack);
-    scrollPaneBack.x    = 8;
-    scrollPaneBack.y    = 43;
-
-    addChild(scrollPane);
-    scrollPane.setSize( Std.int(scrollPaneBack.width), Std.int(scrollPaneBack.height)-1);
-    scrollPane.x        = 9;
-    scrollPane.y        = 44;
-    scrollPane.addView(vectorsPane, 0,0);	
-    
-
-    
-
-    vectorsPane.addEventListener(EVENT_ID.LOAD_NEXT_IMAGE, loadVector);
+   	
   }
   
   public function createVectorsArray(type:String,xml:Xml):Void {
