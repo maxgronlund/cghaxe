@@ -160,9 +160,8 @@ class FontBase extends MovieClip
 
   public function getXml():String{
     var escapedText:String = StringTools.htmlEscape(getText());
-  	var str:String = '\t\t\t<text>'   + escapedText+ '</text>\n';
+    var str:String = '\t\t\t<text>'   + escapedText+ '</text>\n';
               str += '\t\t\t<html>'   + textField.htmlText + '</html>\n';
-    
     return str;
   }
   
@@ -180,6 +179,5 @@ class FontBase extends MovieClip
   }
 
 }
-
 
 

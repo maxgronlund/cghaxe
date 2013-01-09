@@ -61,7 +61,7 @@ class SideView extends View, implements IView
   
   override public function showView(id:String, b:Bool):Void{
     controller.setString(EVENT_ID.CLOSE_TOOL_TIPS, 'foo');
-    trace(id);
+//    trace(id);
     posY = 0;
 
     for( i in 0...views.length){

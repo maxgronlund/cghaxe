@@ -60,8 +60,8 @@ class DesktopView extends View, implements IView{
   }
   
   private function onAllignLeft(e:Event):Void{
-    this.x = 10;
-    this.y = 60;
+    GLOBAL.pos_x = this.x = 10;
+    GLOBAL.pos_y = this.y = 60;
   }
 
   private function onEnterFrame(e:Event):Void{

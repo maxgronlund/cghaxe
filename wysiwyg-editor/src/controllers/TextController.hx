@@ -68,13 +68,12 @@ class TextController extends Controller, implements IController{
   
   private function onFontSelected(param:IParameter):Void {
 
-    
     fontStyleIndex = 0;
     GLOBAL.text_view.setParam(param); 
     GLOBAL.Font.fontPackage   = param.getFontPackage();
     GLOBAL.Font.fileName      = GLOBAL.Font.fontPackage.fileName(fontStyleIndex);
     
-    updateFont();
+    updateFontPlaceholder();
   }
   
   
@@ -82,7 +81,7 @@ class TextController extends Controller, implements IController{
     // NOT IN USE 
     GLOBAL.text_view.setParam(param);
     fontStyleIndex = param.getInt();
-    updateFont();
+    updateFontPlaceholder();
     
   }
   

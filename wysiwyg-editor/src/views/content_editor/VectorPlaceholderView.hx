@@ -326,7 +326,7 @@ class VectorPlaceholderView extends APlaceholder {
   }
   
   private function onKeyPressed(event:KeyboardEvent):Void{
-    var step:Float = 150/72;
+    var step:Float = GLOBAL.from_72_to_150_dpi;
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 

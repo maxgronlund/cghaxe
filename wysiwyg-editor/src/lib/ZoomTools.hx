@@ -1,7 +1,7 @@
 
 class ZoomTools
 {
-  private var toScreenFactor:Float;
+  //private var toScreenFactor:Float;
   private var zoomFactor:Float;
   private var loadedZoom:Float;
   //private var zoom:Float;
@@ -11,7 +11,7 @@ class ZoomTools
   private var zoomOutFactor:Float;
 
   public function new(){
-    toScreenFactor      = 72/150;
+    //toScreenFactor      = GLOBAL.from_150_to_72_dpi;
     zoomFactor          = 1;
     loadedZoom          = -1;
     Application         = GLOBAL.Application;
@@ -28,7 +28,7 @@ class ZoomTools
   }
 
   public function toScreen(size:Float):Float{
-  	return size * toScreenFactor;
+  	return size * GLOBAL.from_150_to_72_dpi;
   }
   
   public function zoomTo(z:Float):Void{
@@ -49,7 +49,7 @@ class ZoomTools
   
   public function setZoom(z:Float):Void{
     //trace(zoomFactor);
-    zoomFactor = z / toScreenFactor;
+    zoomFactor = z / GLOBAL.from_150_to_72_dpi;
   }
   
   public function resetZoom():Void{
@@ -57,7 +57,7 @@ class ZoomTools
     updateGui();
   }
    public function toMouse():Float{
-     return 1 / (zoomFactor * toScreenFactor);
+     return 1 / (zoomFactor * GLOBAL.from_150_to_72_dpi);
   }
   
   private function updateGui():Void{
@@ -65,7 +65,7 @@ class ZoomTools
   }
   
   public function getZoomFactor():Float{
-    return zoomFactor * toScreenFactor;
+    return zoomFactor * GLOBAL.from_150_to_72_dpi;
   }
 
   public function saveZoom():Float{

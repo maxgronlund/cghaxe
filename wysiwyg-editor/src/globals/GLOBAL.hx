@@ -8,7 +8,8 @@ class GLOBAL  {
 	
 	
 	public static var IS_DEBUG :Bool = false;
-  
+  public static var from_150_to_72_dpi:Float   = 72/150;
+  public static var from_72_to_150_dpi:Float   = 150/72;
   // models
   public static var product_name:String;
   public static var shop_item_name:String;

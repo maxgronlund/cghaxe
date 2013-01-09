@@ -302,7 +302,7 @@ class Main
   }
   
   private function loadParams():Void {
-	  trace(flash.Lib.current.loaderInfo.parameters);
+//	  trace(flash.Lib.current.loaderInfo.parameters);
     parameterParser.parse(flash.Lib.current.loaderInfo.parameters);  
   }	
   

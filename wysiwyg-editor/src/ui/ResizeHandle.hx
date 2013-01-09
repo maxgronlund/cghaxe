@@ -22,7 +22,7 @@ class ResizeHandle extends Sprite
     super();
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     this.color    = 0x000000;
-    scale         = 150/72;
+    scale         = GLOBAL.from_72_to_150_dpi;
 
   }
 

@@ -305,8 +305,7 @@ class PageView extends View{
     }
   }
   
-  private function addGreeting(param :IParameter) :Void
-  {
+  private function addGreeting(param :IParameter) :Void{
 	  
 	  if (_greeting != null)
 		{
@@ -558,8 +557,8 @@ class PageView extends View{
   
   private function parseTextPlaceholder(xml:Xml):Void{
     
-
-    for( anchor_point in xml.elementsNamed("anchor-point") ) 
+    GLOBAL.Font.anchorPoint = 0;
+    for( anchor_point in xml.elementsNamed("anchor-point") )
       GLOBAL.Font.anchorPoint =  Std.parseFloat(anchor_point.firstChild().nodeValue);
     
     for( font_file_name in xml.elementsNamed("font-file-name") ) 
@@ -657,6 +656,10 @@ class PageView extends View{
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
+    trace('posX', posX);
+    trace('anchorPoint',  GLOBAL.Font.anchorPoint);
+    trace('fontAlign',    GLOBAL.Font.fontAlign);
+    trace('------------------------ Text placeholder added -------------------------');
 
   }
 
@@ -965,4 +968,5 @@ class PageView extends View{
     str += '\t\t<pos-y>' + Std.string(this.y) + '</pos-y>\n';
     model.setString(EVENT_ID.SET_PAGE_XML,str);
   }
+
 }

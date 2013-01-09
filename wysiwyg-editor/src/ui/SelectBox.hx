@@ -18,7 +18,7 @@ import flash.display.MovieClip;
 
 class SelectBox extends MouseHandler
 {
-  private var scale:Float;
+//  private var scale:Float;
   private var combindeMargins:Float;
   private var backdrop:Sprite;
   private var alertBox:Sprite;
@@ -35,7 +35,7 @@ class SelectBox extends MouseHandler
     super();
     this.pageView = pageView;
     this.placeHolderView  = placeHolderView;
-    scale                 = 150/72;
+    //scale                 = GLOBAL.from_72_to_150_dpi;
     outline               = new Vector<Shape>();
     this.resizable        = resizable;
     resizeHandle          = new ResizeHandle();
@@ -93,7 +93,7 @@ class SelectBox extends MouseHandler
   private function createAlertBox():Void{
     alertBox = new Sprite();
     addChild(alertBox);
-    alertBox.graphics.lineStyle(1/scale,0xff0000);
+    alertBox.graphics.lineStyle(GLOBAL.from_150_to_72_dpi,0xff0000);
     alertBox.graphics.beginFill(0xff8888);
     alertBox.graphics.drawRect(0,0,100,100);
     alertBox.graphics.endFill();
@@ -104,7 +104,7 @@ class SelectBox extends MouseHandler
   private function createBackdrop():Void{
     backdrop = new Sprite();
     addChild(backdrop);
-    backdrop.graphics.lineStyle(1/scale,0x888888);
+    backdrop.graphics.lineStyle(GLOBAL.from_150_to_72_dpi,0x888888);
     backdrop.graphics.beginFill(0xffffff);
     backdrop.graphics.drawRect(0,0,100,100);
     backdrop.graphics.endFill();
@@ -133,7 +133,7 @@ class SelectBox extends MouseHandler
   }
   
   private function resizeBack(width:Float, height:Float, x:Float, combindeMargins:Float):Void{
-    backdrop.width        = 16+width-(scale*combindeMargins);
+    backdrop.width        = 16+width-(GLOBAL.from_72_to_150_dpi*combindeMargins);
     backdrop.height       = height;
     
     backdrop.x            = x + combindeMargins;
@@ -145,7 +145,7 @@ class SelectBox extends MouseHandler
   }
   
   private function resizeAlertBox(textfield_width:Float, textfield_height:Float, x:Float, combindeMargins:Float):Void{
-    alertBox.width        = 16+textfield_width-(scale*combindeMargins);
+    alertBox.width        = 16+textfield_width-(GLOBAL.from_72_to_150_dpi*combindeMargins);
     alertBox.height       = textfield_height;
     alertBox.x            = x + combindeMargins;
   }

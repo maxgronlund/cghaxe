@@ -53,7 +53,7 @@ class TextPlaceholderView extends APlaceholder {
   private var fontAlign:String;
   private var storedAlign:String;
   private var anchorPoint:Float;
-  private var repossition:Bool;
+//  private var repossition:Bool;
   private var previewMode:Bool;
   private var designMode:Bool;
   private var focus:Bool;
@@ -85,7 +85,8 @@ class TextPlaceholderView extends APlaceholder {
   private var loaded_fonts:Hash<Dynamic>;
   private var textFieldText:String;
   private var garamond:Bool;
-  
+  private var loadOnPos:Float;
+  private var loadWidth:Float;
   //private var loading:Bitmap;
   
   
@@ -94,7 +95,7 @@ class TextPlaceholderView extends APlaceholder {
     super(pageView, id, model, text);
     addEventListener(Event.ADDED_TO_STAGE, onAddedToStage);
     GLOBAL.Application.addEventListener(EVENT_ID.DESKTOP_VIEW_MOVE, onDesktopViewMove);
-    GLOBAL.Font.anchorPoint           = 0;
+    //GLOBAL.Font.anchorPoint           = 0;
     
     this.pageView                      = pageView;
     this.id                           = id;
@@ -110,7 +111,7 @@ class TextPlaceholderView extends APlaceholder {
     this.focus                        = false;
     this.tagsIsVisible                = false;
     this.storedAlign                  = GLOBAL.Font.fontAlign;
-    this.repossition                  = false;
+//    this.repossition                  = false;
     this.collition                    = false;
     this.foiled                       = false;
     this.was_foiled                   = false;
@@ -123,14 +124,15 @@ class TextPlaceholderView extends APlaceholder {
     redFoilTexture                    = new RedFoilTexture();
     greenFoilTexture                  = new GreenFoilTexture();
     blueFoilTexture                   = new BlueFoilTexture();
-    
+    loadWidth                         = 0;            
+    loadOnPos                         = 0;
   }
   
   private function onAddedToStage(e:Event){
     model.addEventListener(EVENT_ID.GET_PAGE_XML+Std.string(modelId), onGetXml);
     addEventListener(Event.REMOVED_FROM_STAGE, onRemovedFromStage);
     loadFont();
-    GLOBAL.Pages.calculatePrice();
+    //GLOBAL.Pages.calculatePrice();
   }
   
   public function isFoiled():Bool {
@@ -271,12 +273,16 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   override public function getXml() : String {
-
     showTags();
-    
+    trace('fontMovie.width', fontMovie.width);
+    trace('posX', Std.string(this.x));
+    trace('move to right', calcPosX());
+    trace('anchorPoint', calculateAnchorPoint());
+    trace('fontAlign', fontAlign);
+    trace('--------------------------------Saved --------------------------------------');
     var str:String = '\t\t<placeholder id=\"'+ Std.string(id) +'\">\n';
     str += '\t\t\t<placeholder-type>' + 'text_placeholder' + '</placeholder-type>\n';
-    str += '\t\t\t<pos-x>' + Std.string(x) + '</pos-x>\n';
+    str += '\t\t\t<pos-x>' + Std.string( calcPosX() + this.x) + '</pos-x>\n';
     str += '\t\t\t<pos-y>' + Std.string(y) + '</pos-y>\n';
     str += '\t\t\t<font-file-name>' + fontFileName + '</font-file-name>\n';
     str += '\t\t\t<garamond>' + isGaramond() + '</garamond>\n';
@@ -298,12 +304,28 @@ class TextPlaceholderView extends APlaceholder {
     return str;
   }
   
+  private function calcPosX():Float{
+    var move = 0.0;
+    switch ( fontAlign )
+    {
+      case 'center':{
+        var deltaWidth =  loadWidth - fontMovie.width;
+        move = deltaWidth/2;
+      }
+      case 'right':{
+        var deltaWidth =  loadWidth - fontMovie.width;
+        move = deltaWidth;
+      }
+    }
+    return move;
+  }
+  
   override public function isGaramond():String{
     return garamond ? 'true' : 'false';
   }
 
   private function onKeyPressed(event:KeyboardEvent):Void{
-    var step:Float = 150/72;
+    var step:Float = GLOBAL.from_72_to_150_dpi;
     switch(event.keyCode){
       case 37: this.x -=step; 
       case 39: this.x +=step; 
@@ -400,7 +422,7 @@ class TextPlaceholderView extends APlaceholder {
   }
 
   private function loadFont():Void{
-
+    GLOBAL.Pages.calculatePrice();
     fontFileName                    = GLOBAL.Font.fileName;
     fontSize                        = GLOBAL.Font.fontSize;       
     fontAlign                       = GLOBAL.Font.fontAlign;
@@ -457,7 +479,7 @@ class TextPlaceholderView extends APlaceholder {
     
     restoreShowTags();
     
-    if(repossition) moveToAnchorPoint();
+    //if(repossition) moveToAnchorPoint();
     
     var param:IParameter = new Parameter(EVENT_ID.PLACEHOLDER_LOADED);
     param.setInt(id);
@@ -474,6 +496,14 @@ class TextPlaceholderView extends APlaceholder {
     GLOBAL.Pages.calculatePrice();
     //Pages.dispatchEvent( new Event(EVENT_ID.CALCULATE_PRICE));
     //GLOBAL.Pages.setString(EVENT_ID.CALCULATE_PRICE, 'foo');
+    showTags();
+    loadOnPos = x;
+    loadWidth = fontMovie.width;
+    restoreShowTags();
+    trace('loadOnPos ', loadOnPos);
+    trace('loadWidth ', loadWidth);
+    trace('-----------------------------');
+
     
   }
   
@@ -501,13 +531,13 @@ class TextPlaceholderView extends APlaceholder {
     
     storedAlign         = fontAlign;
     anchorPoint         = calculateAnchorPoint();
-    repossition         = true;
+//    repossition         = true;
     storeTags();
     font = null;
     unfoilify();
     loadFont();
     
-    GLOBAL.Pages.calculatePrice();
+    //GLOBAL.Pages.calculatePrice();
     
   }
   
@@ -630,14 +660,17 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function moveToAnchorPoint():Void{
-    if(anchorPoint != calculateAnchorPoint() ){
-      if( storedAlign == fontAlign){
-        this.x += (anchorPoint - calculateAnchorPoint())*(150/72);
-      }
-    }
-    anchorPoint = calculateAnchorPoint();
-    storedAlign  = fontAlign;
-    repossition = false;
+    
+    trace('moveToAnchorPoint');
+    //this.x += calculateAnchorPoint();
+    //if(anchorPoint != calculateAnchorPoint() ){
+    //  if( storedAlign == fontAlign){
+    //    this.x += ( anchorPoint - calculateAnchorPoint() ) * GLOBAL.from_72_to_150_dpi;
+    //  }
+    //}
+    //anchorPoint = calculateAnchorPoint();
+    //storedAlign  = fontAlign;
+    //repossition = false;
     
   }
 
@@ -646,13 +679,12 @@ class TextPlaceholderView extends APlaceholder {
     //GLOBAL.MOVE_TOOL;
     // !!! colide with the hit test
     //font.setText(textWithTags);
-    var anchor_point:Float = 0;
+    
+    var anchor_point:Float          = 0;
     switch(fontAlign){
-      case 'left': anchor_point   = 0;
-      case 'center': anchor_point  = font.getWidth()/2;
-      case 'right': anchor_point   = font.getWidth();
-      //case 'center': anchor_point  = this.width/2;
-      //case 'right': anchor_point   = this.width;
+      case 'left': anchor_point     = 0;
+      case 'center': anchor_point   = fontMovie.width/2;
+      case 'right': anchor_point    = fontMovie.width;
     }
     // !!! colide with the hit test
     //if(!tagsIsVisible) font.setText(insertTags(textWithTags));
@@ -691,14 +723,14 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   private function textFielsCapturedFocus(b:Bool):Void{
-    trace('textFielsCapturedFocus');
+
     if(b){
       MouseTrap.capture();
       unfoilify();
       pageView.setPlaceholderInFocus(this);
       pageView.setString(EVENT_ID.DISABLE_DELETE_KEY, 'yes');
       setTextOnTop(true);
-      trace('prevent the pageView from release the inFocus and capture the mouse here');
+//      trace('prevent the pageView from release the inFocus and capture the mouse here');
     }else{
       pageView.setString(EVENT_ID.ENABLE_DELETE_KEY, 'now');
       MouseTrap.release();
@@ -727,9 +759,12 @@ class TextPlaceholderView extends APlaceholder {
   }
   
   public function textInputCapture():Void {
+    //loadOnPos
     updatePrice();
     resizeBackdrop();
     hitTest();
+    //trace('pos x:', x);
+    //trace('fontAlign.getWidth', font.getWidth());
   }
 
   public function updateGlobals(){

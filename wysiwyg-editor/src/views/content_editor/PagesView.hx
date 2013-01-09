@@ -66,8 +66,8 @@ class PagesView extends View, implements IView{
   }
   
   private function onAllignLeft(e:Event):Void{
-    this.x = 0;
-    this.y = 0;
+    //this.x = 0;
+    //this.y = 0;
     for( i in 0...pages.length){
       pages[i].x = 0;
       pages[i].y = 0;

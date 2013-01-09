@@ -69,8 +69,8 @@ class CGHitTest
     		{
     		  //non_transparent_pixels += 1;
     		  
-    		  var pixelX:Int = Std.int((((x*bitmapScale*4)-bitmapX)+maskX)*(150/71));
-    			var pixelY:Int = Std.int((((y*bitmapScale*4)-bitmapY)+maskY)*(150/72));
+    		  var pixelX:Int = Std.int((((x*bitmapScale*4)-bitmapX)+maskX)*GLOBAL.from_72_to_150_dpi);
+    			var pixelY:Int = Std.int((((y*bitmapScale*4)-bitmapY)+maskY)*GLOBAL.from_72_to_150_dpi);
     		  
     			if(bitmapDataMask.getPixel32(pixelX, pixelY) < tolerance)
     			{
