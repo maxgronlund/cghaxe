@@ -1,0 +1,77 @@
+<!-- Moved to font001
+<font id="algerian" import="library/fonts/ALGER.TTF" name="algerian"/>
+<font id="antiqua_bold" import="library/fonts/antiqua/ANTQUAB.TTF" name="antiqua_bold"/>
+<font id="antiqua_bold_italic" import="library/fonts/antiqua/ANTQUABI.TTF" name="antiqua_bold_italic"/>
+<font id="antiqua_italic" import="library/fonts/antiqua/ANTQUAI.TTF" name="antiqua_italic"/>
+
+
+<font id="antique_olive" import="library/fonts/Antique/olvr55w.ttf" name="antique_olive"/>
+<font id="antique_olive_italic" import="library/fonts/antique/olvr56w.ttf" name="antique_olive_italic"/>
+<font id="antique_olive_bold" import="library/fonts/Antique/olvr75w.ttf" name="antique_olive_bold"/>
+<font id="antique_olive_regular" import="library/fonts/Antique/olvr93w.ttf" name="antique_olive_regular"/>
+-->
+
+
+<font id="baskerville_old_face" import="library/fonts/BASKVILL.TTF" name="baskerville_old_face"/>
+
+<font id="book_antiqua" import="library/fonts/BKANT.TTF" name="book_antiqua"/>
+<font id="book_antiqua_bold" import="library/fonts/ANTQUAB.TTF" name="book_antiqua_bold"/>
+<font id="book_antiqua_bold_italic" import="library/fonts/ANTQUABI.TTF" name="book_antiqua_bold_italic"/>
+<font id="book_antiqua_italic" import="library/fonts/ANTQUAI.TTF" name="book_antiqua_italic"/>
+
+<font id="bordoni_mt" import="library/fonts/bodoni_mt/BOD_PSTC.TTF" name="bordoni_mt"/>
+
+
+
+<!-- garamond -->
+<font id="garamond" import="library/fonts/garamond/GARA.TTF" name="garamond"/>
+<font id="garamond_bold" import="library/fonts/garamond/GARABD.TTF" name="garamond_bold"/>
+<font id="garamond_italic" import="library/fonts/garamond/garr46w.ttf" name="garamond_italic"/>
+
+<!-- verdana -->
+<font id="verdana" import="library/fonts/verdana/verdana.ttf" name="verdana"/>
+<font id="verdana_bold" import="library/fonts/verdana/verdanab.ttf" name="verdana_bold"/>
+<font id="verdana_itialic" import="library/fonts/verdana/verdanai.ttf" name="verdana_itialic"/>
+<font id="verdana_bold_itialic" import="library/fonts/verdana/verdanaz.ttf" name="verdana_bold_itialic"/>
+
+
+
+
+//		antiqua = new FontPackage('Antiqua');
+//		antiqua.addFont('antiqua_bold', 'Bold', defaultSize);
+//		antiqua.addFont('antiqua_bold_italic', 'Bold Italic', defaultSize);
+//		antiqua.addFont('antiqua_italic', 'Italic', defaultSize);
+//		
+//		antique_olive = new FontPackage('Antique Olive');
+//		antique_olive.addFont('antique_olive', 'Regular', defaultSize);
+//		antique_olive.addFont('antique_olive_bold', 'Bold', defaultSize);
+//		antique_olive.addFont('antique_olive_regular', 'Bold Condensed', defaultSize);
+//		antique_olive.addFont('antique_olive_italic', 'Italic', defaultSize);
+//		
+//		baskerville_old_face = new FontPackage('Baskerville');
+//		baskerville_old_face.addFont('baskerville_old_face', 'Regular', defaultSize +6);
+//		
+//		book_antiqua = new FontPackage('Book Antiqua');
+//		book_antiqua.addFont('book_antiqua_bold', 'Bold', defaultSize);
+//		book_antiqua.addFont('book_antiqua_bold_italic', 'Bold Italic', defaultSize);
+//		book_antiqua.addFont('book_antiqua_italic', 'Italic', defaultSize);
+//		
+//		
+//		bordoni_mt = new FontPackage('Bordoni MT');
+//		bordoni_mt.addFont('bordoni_mt', 'Regular', defaultSize);
+//		
+//		garamond = new FontPackage('Garamond');
+//		garamond.addFont('garamond', 'Regular', defaultSize);
+//		garamond.addFont('garamond_bold', 'Bold', defaultSize);
+//		garamond.addFont('garamond_italic', 'Italic', defaultSize);
+//
+//				
+		helvetica = new FontPackage('Helvetica');
+		helvetica.addFont('helvetica', 'Regular', defaultSize, "/assets/algerian.swf?"+Math.random());
+		helvetica.addFont('helvetica_bold', 'Bold', defaultSize, "/assets/algerian.swf?"+Math.random());
+//		
+//		verdana = new FontPackage('Verdana');
+//		verdana.addFont('verdana', 'Regular', defaultSize);
+//		verdana.addFont('verdana_bold', 'Bold', defaultSize);
+//		verdana.addFont('verdana_italic', 'Italic', defaultSize);
+//		verdana.addFont('verdana_bold_italic', 'Bold Italic', defaultSize);

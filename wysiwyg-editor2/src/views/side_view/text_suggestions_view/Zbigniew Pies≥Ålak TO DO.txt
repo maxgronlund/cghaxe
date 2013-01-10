@@ -1,0 +1,14 @@
+Zbigniew Pieślak
+
+
+confirmation e-mail
+sections:
+
+
+Systematisk test
+Rydde op i navne på Logo/BMP filer
+Finde ud af om ___ er nødvendigt på user presets
+Finde ud af om der er nogen presets med ___ der bliver brugt
+Tømme kurven
+Fixe ordre
+Flytte ordre til shopen

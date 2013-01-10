@@ -1,0 +1,72 @@
+#build file
+-cp src
+# application specific libraries
+-cp src/constants
+-cp src/globals
+-cp src/bitmaps
+-cp src/bitmaps/buttons
+-cp src/bitmaps/buttons/fonts
+-cp src/bitmaps/scrollbars
+-cp src/bitmaps/backdrops
+-cp src/bitmaps/dropdowns
+
+-cp src/controllers
+-cp src/data_types
+-cp src/encoders
+-cp src/events
+-cp src/interfaces
+-cp src/loaders
+-cp src/lib
+-cp src/lib/macros
+-cp src/models
+-cp src/system
+-cp src/ui
+-cp src/ui/buttons
+-cp src/ui/buttons
+-cp src/ui/drop_downs
+-cp src/ui/scrollbars
+-cp src/views
+-cp src/views/application
+-cp src/views/content_editor
+-cp src/views/content_editor/placeholder
+-cp src/views/overlays
+-cp src/views/side_view
+-cp src/views/side_view/text_view
+-cp src/views/side_view/color_view
+-cp src/views/side_view/designs_view
+-cp src/views/side_view/price_view
+-cp src/views/side_view/design_images_view
+-cp src/views/side_view/text_suggestions_view
+#-cp src/views/side_view/vectors_view
+-cp src/views/side_view/greetings_view
+-cp src/views/side_view/symbols_view
+-cp src/views/side_view/logos_view
+-cp src/views/selection_view
+-cp src/views/selection_view/greetings_view
+-cp src/lib/text_editor
+#-cp src/old_stuff
+-cp src/lib/abstract_classes
+-cp src/lib/interfaces
+-cp src/parsers
+
+
+
+# framework
+#-cp ../framework/bitmaps
+-cp ../framework/controllers
+-cp ../framework/data_types
+-cp ../framework/encoders
+-cp ../framework/events
+-cp ../framework/interfaces
+-cp ../framework/loaders
+-cp ../framework/lib
+-cp ../framework/abstract_classes
+-cp ../framework/ui
+-cp ../framework/views
+
+-main Main
+-swf-lib ../swfmill/resource.swf
+-swf ../../Calligraphen/app/assets/flash/wysiwyg_editor.swf
+-swf-header 980:980:60:FFFFFF
+-swf-version 10
+

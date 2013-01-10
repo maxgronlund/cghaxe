@@ -1,0 +1,4 @@
+done:
+
+
+bug on product#index delete fixed
