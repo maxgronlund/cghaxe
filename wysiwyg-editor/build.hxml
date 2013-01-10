@@ -22,7 +22,6 @@
 -cp src/system
 -cp src/ui
 -cp src/ui/buttons
--cp src/ui/buttons
 -cp src/ui/drop_downs
 -cp src/ui/scrollbars
 -cp src/views

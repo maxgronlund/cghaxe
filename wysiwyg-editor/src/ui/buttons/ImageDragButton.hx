@@ -36,8 +36,8 @@ class ImageDragButton extends ImageButton
   }
   
   override private function loadNextImage():Void {
-	   var param:IParameter = new Parameter(EVENT_ID.ADD_SYMBOL_BUTTON);
-	   dispatchEvent(new KEvent(EVENT_ID.LOAD_NEXT_IMAGE, param ));
-   }
+    var param:IParameter = new Parameter(EVENT_ID.ADD_SYMBOL_BUTTON);
+    dispatchEvent(new KEvent(EVENT_ID.LOAD_NEXT_IMAGE, param ));
+  }
   
 }
