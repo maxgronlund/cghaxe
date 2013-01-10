@@ -5,10 +5,12 @@ class GreetingsModel extends Model, implements IModel {
   
   private var greetingsXml:Xml;
   private var freeGreetings:Vector<String>;
+  private var greetingsUrls:Vector<String>;
 
   public function new(){	
     super();
     freeGreetings = new Vector<String>();
+    greetingsUrls = new Vector<String>();
   }
     
  override public function init():Void{	
@@ -39,7 +41,7 @@ class GreetingsModel extends Model, implements IModel {
  
   override public function setParam(param:IParameter):Void{
     //trace(param.getLabel());
-	//greetingsXml = param.getXml();
+    //greetingsXml = param.getXml();
     switch ( param.getLabel() ){
       case EVENT_ID.GREETING_SELECTED:{
         greetingsXml = param.getXml();
@@ -50,16 +52,15 @@ class GreetingsModel extends Model, implements IModel {
           dispatchXML(EVENT_ID.ADD_GREETING_TO_PAGE, greetingsXml);
         }
       }
-	  
-	  case EVENT_ID.GREETING_PREVIEW:
-		{
-			dispatchXML(EVENT_ID.GREETING_PREVIEW, param.getXml());
-		}
-		
-	case EVENT_ID.GREETING_FINISH_PREVIEW:
-		{
-			dispatchXML(EVENT_ID.GREETING_FINISH_PREVIEW, param.getXml());
-		}
+    
+      case EVENT_ID.GREETING_PREVIEW:
+      {
+      	dispatchXML(EVENT_ID.GREETING_PREVIEW, param.getXml());
+      }
+      
+      case EVENT_ID.GREETING_FINISH_PREVIEW:{
+        dispatchXML(EVENT_ID.GREETING_FINISH_PREVIEW, param.getXml());
+      }
     }
   }
 
@@ -87,5 +88,16 @@ class GreetingsModel extends Model, implements IModel {
 	  	  isFree=true;
 	  }
     return isFree;
+  }
+  
+  override public function isGreetingUrl(sourceUrl:String):Bool {
+    var found:Bool = false;
+    for (url in greetingsUrls) {
+      if (sourceUrl == url || sourceUrl == "/"+url) {
+        found = true;
+        break;
+      }
+    }
+    return found;
   }
 }

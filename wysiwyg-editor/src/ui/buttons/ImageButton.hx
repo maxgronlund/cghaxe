@@ -6,6 +6,7 @@ package ;
  */
 
 import flash.events.Event;
+import flash.events.IOErrorEvent;
 import flash.events.MouseEvent;
 import flash.display.Loader;
 import flash.system.LoaderContext;
@@ -144,12 +145,15 @@ class ImageButton extends MouseHandler
 		var req:URLRequest            = new URLRequest(_imageUrl); 
 		var ldrContext:LoaderContext  = new LoaderContext(); 
 		ldrContext.applicationDomain  = new ApplicationDomain();
+		ldr.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onLoadImageError);
 		ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onImageLoaded); 
 		ldr.load(req, ldrContext);
   }
   
    private function onImageLoaded(event:Event):Void { 
-	    _vectorMovie =  cast event.target.loader.content;
+	    _vectorMovie = new MovieClip();
+		_vectorMovie.addChild(cast event.target.loader.content);
+	    
 		//var scale:Float = 0.1;
 		addChild(_vectorMovie);
 		
@@ -165,10 +169,20 @@ class ImageButton extends MouseHandler
 		
 		_vectorMovie.x = (_back.width - _vectorMovie.width) / 2;
 		_vectorMovie.y = (_back.height - _vectorMovie.height) / 2;
+		loadNextImage();
    }
+   
+   private function onLoadImageError(event:IOErrorEvent):Void {
+		trace('IO Error loading image');
+		loadNextImage();
+   }   
   
-  private function setState(state:Int):Void 
-  {
+   private function loadNextImage():Void {
+	   var param:IParameter = new Parameter(EVENT_ID.ADD_GREETING_BUTTON);
+	   dispatchEvent(new KEvent(EVENT_ID.LOAD_NEXT_IMAGE,param));
+   }
+   
+  private function setState(state:Int):Void {
   	_back.alpha = 0.0;
 	
 	if (state == 0) _back.alpha = 0.0;

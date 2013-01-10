@@ -244,6 +244,14 @@ class EVENT_ID  {
   
   public static inline var GREETING_PREVIEW                   = "greeting_preview";
   public static inline var GREETING_FINISH_PREVIEW            = "greeting_finish_preview";
+  public static inline var LOAD_NEXT_IMAGE	                  = "load_next_image";
+                                                              
+  public static inline var START_DRAG_SYMBOL                  = "start_drag_symbol";
+  public static inline var START_DRAG_LOGO                    = "start_drag_logo";
+  public static inline var STOP_DRAG_SYMBOL                   = "stop_drag_symbol";
+                                                              
+  public static inline var LOAD_GREETINGS_ASSETS              = "load_greetings_assets";
+  public static inline var LOAD_SYMBOLS_ASSETS	              = "load_symbols_assets";
   
   
   // logos
