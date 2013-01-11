@@ -236,7 +236,7 @@ class BitmapPlaceholder extends APlaceholder{
     GLOBAL.Application.dispatchParameter(new Parameter(EVENT_ID.RESET_STAGE_SIZE));
     widthHeightRatio  = this.width/this.height;
     
-    if(sizeX == -1 || sizeX == 0){){
+    if(sizeX == -1 || sizeX == 0){
       sizeX = this.width;
       sizeY = this.height;
     }
