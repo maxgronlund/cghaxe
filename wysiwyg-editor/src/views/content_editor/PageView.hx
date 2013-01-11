@@ -47,11 +47,12 @@ class PageView extends View{
   private var designXml:Xml;
   private var deletable:Bool;
   private var placeHolderCount:UInt;
+  
+  
   private var _greeting :APlaceholder = null;
   private var _greetingPreview :APlaceholder = null;
-  private var _draggingSymbol:DraggingSymbol = null;
   
-
+  private var _draggingSymbol:DraggingSymbol = null;
   
   public function new(controller:IController){	
 
@@ -248,9 +249,9 @@ class PageView extends View{
     addEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
     addEventListener(MouseEvent.ROLL_OVER, onMouseOver);
     Preset.addEventListener(EVENT_ID.PLACEHOLDER_COUNT, onPlaceholderCount);
-
   }
-
+  
+  
   override public function setModel(model:IModel):Void{
     this.model = model;
     model.addEventListener(EVENT_ID.ADD_PLACEHOLDER, onAddTextPlaceholder);
@@ -293,62 +294,68 @@ class PageView extends View{
 		{
 			addGreeting(param);
 		}
-    case EVENT_ID.START_DRAG_SYMBOL: { startDragSymbol(param); }
+	  case EVENT_ID.START_DRAG_SYMBOL: { startDragSymbol(param); }
 	  case EVENT_ID.START_DRAG_LOGO: { startDragSymbol(param); }
-    case EVENT_ID.ADD_SYMBOL_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), true);}
-    case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),   onPosX(), onPosY(), -1, -1);}
-    case EVENT_ID.ADD_PHOTO_TO_PAGE: { addBitmapPlaceholder( param.getXml(),  onPosX(), onPosY(), -1, -1); }
+      case EVENT_ID.ADD_SYMBOL_TO_PAGE:{parseVectorPlaceholder( param.getXml(), onPosX(), onPosY(), true);}
+      case EVENT_ID.ADD_LOGO_TO_PAGE:{addBitmapPlaceholder( param.getXml(),   onPosX(), onPosY(), -1, -1);}
+      case EVENT_ID.ADD_PHOTO_TO_PAGE: { addBitmapPlaceholder( param.getXml(),  onPosX(), onPosY(), -1, -1); }
+	 
 	  case EVENT_ID.GREETING_PREVIEW: { addGreetingPreview(param); };
+	  
 	  case EVENT_ID.GREETING_FINISH_PREVIEW: { removeGreetingPreview(param); };
     }
   }
   
-  private function addGreeting(param :IParameter) :Void{
+  private function addGreeting(param :IParameter) :Void
+  {
 	  
-    if (_greeting != null)
-    {
-      var grX :Float = _greeting.x;
-      var grY :Float = _greeting.y;
-      
-      setPlaceholderInFocus(_greeting);
-      controller.setParam(new Parameter(EVENT_ID.TRASH_PLACEHOLDER));
-      parseVectorPlaceholder(  param.getXml(), grX, grY, false); 
-    }
-    else
-      parseVectorPlaceholder(  param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
+	  if (_greeting != null)
+		{
+			var grX :Float = _greeting.x+_greeting.width/2;
+			var grY :Float = _greeting.y+_greeting.height/2;
 
-    
-      _greeting = placeholders[placeholders.length - 1];
+			
+			setPlaceholderInFocus(_greeting);
+			controller.setParam(new Parameter(EVENT_ID.TRASH_PLACEHOLDER));
+			
+			parseVectorPlaceholder(  param.getXml(), grX, grY, false); 
+		}
+		else
+		{
+			parseVectorPlaceholder(  param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
+		}
+		
+		  _greeting = placeholders[placeholders.length - 1];
 	 }
   
   private function addGreetingPreview(param :IParameter) :Void
   {
-    if (_greetingPreview != null) removeGreetingPreview(param);
-    
-    if (_greeting != null) 
-    {
-    _greeting.visible = false;
-     parseVectorPlaceholder( param.getXml(), _greeting.x, _greeting.y, false);
-    }
-    else 
-    {
-       parseVectorPlaceholder( param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
-    }
-    
-    _greetingPreview = placeholders[placeholders.length - 1];
-    
-  }
-  
-   private function removeGreetingPreview(param :IParameter) :Void
+	  if (_greetingPreview != null) removeGreetingPreview(param);
+	  
+	  if (_greeting != null) 
+	  {
+		_greeting.visible = false;
+		 parseVectorPlaceholder( param.getXml(), _greeting.x+_greeting.width/2, _greeting.y+_greeting.height/2, false);
+	  }
+	  else 
+	  {
+		   parseVectorPlaceholder( param.getXml(), guideMask.x, guideMask.y, false, true, guideMask.width, guideMask.height);
+	  }
+	  
+	  _greetingPreview = placeholders[placeholders.length - 1];
+	  
+	}
+	
+	 private function removeGreetingPreview(param :IParameter) :Void
   {
-    if (_greeting != null) _greeting.visible = true;
-    if ( _greetingPreview != null)
-    {
-    //setPlaceholderInFocus(_greetingPreview);
-    onDestroyMyPlaceholder(_greetingPreview);
-    _greetingPreview = null;
-    }
-  }
+	  if (_greeting != null) _greeting.visible = true;
+	  if ( _greetingPreview != null)
+	  {
+		//setPlaceholderInFocus(_greetingPreview);
+		onDestroyMyPlaceholder(_greetingPreview);
+		_greetingPreview = null;
+	  }
+	}
   
   private function addDesignToPage(param:IParameter):Void{
 
@@ -371,22 +378,22 @@ class PageView extends View{
     
     if(pagePresetXML != null){
       for( page  in pagePresetXML.elementsNamed("page") ) {
-        for( pos_x in page.elementsNamed("pos-x") ) 
+        for( pos_x in page.elementsNamed("pos-x") ) {
           this.x = (Std.parseFloat(pos_x.firstChild().nodeValue));
-        
-        for( pos_y in page.elementsNamed("pos-y") ) 
+        }
+        for( pos_y in page.elementsNamed("pos-y") ) {
           this.y = (Std.parseFloat(pos_y.firstChild().nodeValue));
-        
-        for( placeholder in page.elementsNamed("placeholder") ) 
+        }
+        for( placeholder in page.elementsNamed("placeholder") ) {
           parsePlaceholder(placeholder);
-        
+        }
       }
     }
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Page XML Parsed');
     
-    if( placeHolderCount == 0 && model.getInt('pageId') == 0)
+    if( placeHolderCount == 0 && model.getInt('pageId') == 0){
       Application.setString(EVENT_ID.CLOSE_LOAD_PROGRESS,'From Last PageView');
-    
+    }
   }
   
   private function onPlaceholderCount(e:KEvent):Void{
@@ -412,17 +419,17 @@ class PageView extends View{
     switch( placeholder_type){
       case "vector_placeholder":
         parseVectorPlaceholder(xml, posX, posY);
-
-    var sourceUrl:String = "";
-    for (xml_url in  xml.elementsNamed("url") ) {
-    	sourceUrl = xml_url.firstChild().nodeValue.toString();
-    }
-    
-    if (Greetings.isGreetingUrl(sourceUrl))
-    {
-    	_greeting = placeholders[placeholders.length - 1];
-    }
-    
+		
+		var sourceUrl:String = "";
+		for (xml_url in  xml.elementsNamed("url") ) {
+			sourceUrl = xml_url.firstChild().nodeValue.toString();
+		}
+		
+		if (Greetings.isGreetingUrl(sourceUrl))
+		{
+			_greeting = placeholders[placeholders.length - 1];
+		}
+		
 	  case "text_placeholder":
         parseTextPlaceholder(xml);
       case "bitmap_place_holder":
@@ -433,6 +440,7 @@ class PageView extends View{
         trace('-------------------------------------------');
         parseTextPlaceholder(xml);
       }
+        
     }
   }
   
@@ -462,6 +470,8 @@ class PageView extends View{
     var canResize = resizable;
     var isFree  = false;
     
+
+    
     for(foil_color in xml.elementsNamed("foil-color") ) 
       GLOBAL.foilColor = foil_color.firstChild().nodeValue.toString();
       
@@ -474,9 +484,11 @@ class PageView extends View{
     for( pms2_color in xml.elementsNamed("pms2-color") ) 
         GLOBAL.pms2Color =  Std.parseInt(pms2_color.firstChild().nodeValue);
     
-    for(print_type in xml.elementsNamed("print-type") ) 
+    for(print_type in xml.elementsNamed("print-type") ) {
       GLOBAL.printType = print_type.firstChild().nodeValue.toString();
-    
+    }
+      
+      
     for( size_x in xml.elementsNamed("size-x") )
         sizeX = Std.parseInt(size_x.firstChild().nodeValue);
     
@@ -486,13 +498,18 @@ class PageView extends View{
     for( can_resize in xml.elementsNamed("resizable") ) 
         canResize = can_resize.firstChild().nodeValue == 'true';
     
-    for(free in xml.elementsNamed("free") )
+    for(free in xml.elementsNamed("free") ){
       isFree = (free.firstChild().nodeValue.toString() == 'true');
+    }
           
+        
     for(url_xml in xml.elementsNamed("url") ){
       var placeholder:APlaceholder = addVectorPlaceholder(url_xml, posX, posY, canResize, isFree, isCenter, cWidth, cHeight);
       placeholder.setSize(sizeX, sizeY);
+	  
     }
+    //trace('++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++');
+    //trace(GLOBAL.printType);
   }
   
   private function addVectorPlaceholder(xml:Xml, posX:Float, posY:Float, resizable:Bool, isFree:Bool, isCenter :Bool = false, cWidth :Float = 0, cHeight:Float = 0):APlaceholder{
@@ -501,10 +518,13 @@ class PageView extends View{
     setPlaceholderInFocus(null);
     
     var placeholder:APlaceholder	= new VectorPlaceholderView(this, placeholders.length, model, url, resizable, isCenter, cWidth, cHeight);
-    placeholder.x = posX;
-  	placeholder.y = posY;
+   
   	placeholder.freePmsInGrey(isFree);
     placeholders.push(placeholder);
+	
+	placeholder.x = posX;
+	placeholder.y = posY;
+	
     addChild(placeholder);
     return placeholder;
   }
@@ -532,7 +552,7 @@ class PageView extends View{
     }
     
     for( url in xml.elementsNamed("url") ) {
-      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX, posY, sizeX, sizeY);
+      var placeholder:APlaceholder = addBitmapPlaceholder(url, posX-_draggingSymbol.width/2, posY-_draggingSymbol.height/2, sizeX, sizeY);
       //placeholder.setSize(sizeX, sizeY);
     }
     
@@ -554,8 +574,8 @@ class PageView extends View{
   
   private function parseTextPlaceholder(xml:Xml):Void{
     
-    GLOBAL.Font.anchorPoint = 0;
-    for( anchor_point in xml.elementsNamed("anchor-point") )
+
+    for( anchor_point in xml.elementsNamed("anchor-point") ) 
       GLOBAL.Font.anchorPoint =  Std.parseFloat(anchor_point.firstChild().nodeValue);
     
     for( font_file_name in xml.elementsNamed("font-file-name") ) 
@@ -594,6 +614,7 @@ class PageView extends View{
     for( gara in xml.elementsNamed("garamond") ){
       GLOBAL.garamond = gara.firstChild().nodeValue == 'true';
     }
+    
     addTextPlaceholder(posX,posY);
   }
   
@@ -652,7 +673,6 @@ class PageView extends View{
   	placeholder.y = posY;
     placeholders.push(placeholder);
     addChild(placeholder);
-
 
   }
 
@@ -748,6 +768,69 @@ class PageView extends View{
     removeEventListener(MouseEvent.MOUSE_DOWN, onMouseDown);
   }
   
+  private function startDragSymbol(param:IParameter):Void {
+	  
+	  if (param.getLabel() == EVENT_ID.START_DRAG_LOGO) {
+		   _draggingSymbol = new DraggingLogo();
+	  } else {
+		   _draggingSymbol = new DraggingSymbol();
+	  }
+	  
+	  
+	  var vectorURL:String;
+		
+	  for( url in param.getXml().elementsNamed("url") ) {
+		vectorURL = url.firstChild().nodeValue;
+		param.setString(vectorURL);
+	  }
+	 
+	  _draggingSymbol.init(controller, param, vectorURL);
+	  addChild(_draggingSymbol);
+	  
+	  stage.addEventListener(Event.ENTER_FRAME, onDragEnterFrame);
+	  stage.addEventListener(MouseEvent.MOUSE_UP, onMouseDragUp);
+	  
+	  onDragEnterFrame();
+  }
+  
+  private function onDragEnterFrame(e:Event = null):Void {
+	  if (_draggingSymbol != null) {
+
+		var endPosX:Float = this.mouseX - _draggingSymbol.width /2; 
+		var endPosY:Float = this.mouseY - _draggingSymbol.height / 2;
+		
+		_draggingSymbol.x = endPosX;
+		_draggingSymbol.y = endPosY;
+	  }
+	  
+  }
+  
+  private function onMouseDragUp(e:MouseEvent):Void {
+	  if (_draggingSymbol != null)
+	  {		  
+		  var param:IParameter = _draggingSymbol.getParam();
+		  
+		  if (param.getLabel() == EVENT_ID.START_DRAG_LOGO) {
+			parseBitmapPlaceholder( param.getXml(), this.mouseX, this.mouseY);
+		  } else {
+			parseVectorPlaceholder( param.getXml(), this.mouseX, this.mouseY, true);
+		  }
+		  
+		  
+		  
+		  stage.removeEventListener(Event.ENTER_FRAME, onDragEnterFrame);
+	      stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseDragUp);
+		  
+		  clearDraggingSymbol();
+		  
+	  }
+  }
+ 
+  private function clearDraggingSymbol():Void {
+	 removeChild(_draggingSymbol);
+	 _draggingSymbol = null;	
+  }
+  
   private function onMouseDown(e:MouseEvent){	
     
     if(MouseTrap.capture()){
@@ -790,66 +873,6 @@ class PageView extends View{
 
   }
   
-  private function startDragSymbol(param:IParameter):Void {
-    
-    if (param.getLabel() == EVENT_ID.START_DRAG_LOGO) {
-       _draggingSymbol = new DraggingLogo();
-    } else {
-       _draggingSymbol = new DraggingSymbol();
-    }
-    
-    
-    var vectorURL:String;
-    
-    for( url in param.getXml().elementsNamed("url") ) {
-    vectorURL = url.firstChild().nodeValue;
-    param.setString(vectorURL);
-    }
-    
-    _draggingSymbol.init(controller, param, vectorURL);
-    addChild(_draggingSymbol);
-    
-    stage.addEventListener(Event.ENTER_FRAME, onDragEnterFrame);
-    stage.addEventListener(MouseEvent.MOUSE_UP, onMouseDragUp);
-    
-    onDragEnterFrame();
-  }
-  
-  private function onDragEnterFrame(e:Event = null):Void {
-    if (_draggingSymbol != null) {
-    
-    var endPosX:Float = this.mouseX - _draggingSymbol.width /2; 
-    var endPosY:Float = this.mouseY - _draggingSymbol.height / 2;
-    
-    _draggingSymbol.x = endPosX;
-    _draggingSymbol.y = endPosY;
-    }
-    
-  }
-  
-  private function onMouseDragUp(e:MouseEvent):Void {
-    if (_draggingSymbol != null){		  
-      var param:IParameter = _draggingSymbol.getParam();
-      
-      if (param.getLabel() == EVENT_ID.START_DRAG_LOGO) {
-      parseBitmapPlaceholder( param.getXml(), this.mouseX, this.mouseY);
-      } else {
-      parseVectorPlaceholder( param.getXml(), this.mouseX, this.mouseY, true);
-      }
-
-      stage.removeEventListener(Event.ENTER_FRAME, onDragEnterFrame);
-        stage.removeEventListener(MouseEvent.MOUSE_UP, onMouseDragUp);
-      
-      clearDraggingSymbol();
-      
-    }
-  }
-  
-  private function clearDraggingSymbol():Void {
-   removeChild(_draggingSymbol);
-   _draggingSymbol = null;	
-  }
-  
   private function movePlaceholder(e:MouseEvent){
 
     var moveX:Float = e.stageX * GLOBAL.Zoom.toMouse();
@@ -877,6 +900,7 @@ class PageView extends View{
     Application.setString(EVENT_ID.UPDATE_LOAD_PROGRESS,'Loading Front Shot');
     imageLoader.contentLoaderInfo.addEventListener(Event.COMPLETE, onLoadFrontShotComplete);
     imageLoader.addEventListener(IOErrorEvent.IO_ERROR, frontShotErrorHandler);
+	imageLoader.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, frontShotErrorHandler);
     imageLoader.load(new URLRequest(model.getString('front_shoot_url')));
   }
   
@@ -983,6 +1007,7 @@ class PageView extends View{
     }
     else{
       parsePagePresetXml();
+
     }
   }
   
@@ -1001,6 +1026,7 @@ class PageView extends View{
   }
   
   private function onShowMask(e:IKEvent):Void{
+
   	guideMask.visible = e.getBool();
   }
   
@@ -1019,5 +1045,4 @@ class PageView extends View{
     str += '\t\t<pos-y>' + Std.string(this.y) + '</pos-y>\n';
     model.setString(EVENT_ID.SET_PAGE_XML,str);
   }
-
 }

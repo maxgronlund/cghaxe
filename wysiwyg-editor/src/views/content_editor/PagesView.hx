@@ -9,6 +9,7 @@ class PagesView extends View, implements IView{
   private var pageInFocus:PageView;
   
   public function new(desktopController:IController){	
+    
     super(desktopController);
     Application.addEventListener(EVENT_ID.RESET_WYSIWYG, onResetWysiwyg);
     Application.addEventListener(EVENT_ID.ADD_PAGES_TO_STAGE, addPagesToStage);
@@ -17,11 +18,11 @@ class PagesView extends View, implements IView{
     Pages.addEventListener(EVENT_ID.BUILD_DESIGN_PAGE, onBuildDesignPage);
     Pages.addEventListener(EVENT_ID.PAGE_SELECTED, onPageSelected);
     Greetings.addEventListener(EVENT_ID.ADD_GREETING_TO_PAGE, onAddGreetingToPage);
-    Greetings.addEventListener(EVENT_ID.GREETING_PREVIEW, onGreetingsPreview);
-    Greetings.addEventListener(EVENT_ID.GREETING_FINISH_PREVIEW, onGreetingsFinishPreview);
+	Greetings.addEventListener(EVENT_ID.GREETING_PREVIEW, onGreetingsPreview);
+	Greetings.addEventListener(EVENT_ID.GREETING_FINISH_PREVIEW, onGreetingsFinishPreview);
     Symbols.addEventListener(EVENT_ID.ADD_SYMBOL_TO_PAGE, onAddSymbolToPage);
-    Symbols.addEventListener(EVENT_ID.START_DRAG_SYMBOL, onStartDragSymbol);
-    Logos.addEventListener(EVENT_ID.START_DRAG_LOGO, onStartDragSymbol);
+	Symbols.addEventListener(EVENT_ID.START_DRAG_SYMBOL, onStartDragSymbol);
+	Logos.addEventListener(EVENT_ID.START_DRAG_LOGO, onStartDragSymbol);
     Logos.addEventListener(EVENT_ID.ADD_LOGO_TO_PAGE, onAddLogoToPage);
     Application.addEventListener(EVENT_ID.ALLIGN_SELECTED_LEFT, onAllignLeft);
   }
@@ -34,12 +35,16 @@ class PagesView extends View, implements IView{
 	 pageInFocus.setParam(e.getParam());
   }
   
-  private function onGreetingsPreview(e :IKEvent) :Void{
-    pageInFocus.setParam(e.getParam());
+  private function onGreetingsPreview(e :IKEvent) :Void
+  {
+	  pageInFocus.setParam(e.getParam());
+	  
    }
    
-  private function onGreetingsFinishPreview(e :IKEvent) :Void{
-    pageInFocus.setParam(e.getParam());
+   private function onGreetingsFinishPreview(e :IKEvent) :Void
+  {
+	  pageInFocus.setParam(e.getParam());
+	  
    }
   
   private function onAddSymbolToPage(e:IKEvent):Void{
@@ -56,7 +61,7 @@ class PagesView extends View, implements IView{
     if(pages != null) removePages();
     pages = new Vector<PageView>();
   }
-      
+
   private function addPagesToStage(e:IKEvent):Void{
     for( i in 0...pages.length){
       addChild(pages[i]);
@@ -67,8 +72,8 @@ class PagesView extends View, implements IView{
   }
   
   private function onAllignLeft(e:Event):Void{
-    //this.x = 0;
-    //this.y = 0;
+    this.x = 0;
+    this.y = 0;
     for( i in 0...pages.length){
       pages[i].x = 0;
       pages[i].y = 0;
@@ -89,12 +94,17 @@ class PagesView extends View, implements IView{
   private function onAddPageDesignToPage(e:IKEvent):Void{
     pageInFocus.setParam(e.getParam());
   }
+
+  private function onPageSelected(e:IKEvent):Void{
+    putPageOnTop( e.getInt());
+  }
   
   private function onBuildDesignPage(e:IKEvent):Void{
     
     var pageView:PageView = new PageView(controller);
     pageView.setModel(e.getParam().getModel());
     pages.push(pageView); 
+     
   }
   
   private function onBuildPage(e:IKEvent):Void{
@@ -107,11 +117,6 @@ class PagesView extends View, implements IView{
   private function onLoadDefaultPage(e:IKEvent):Void{
     putPageOnTop(0);
   }
-
-  private function onPageSelected(e:IKEvent):Void{
-    putPageOnTop( e.getInt());
-  }
- 
   
   private function putPageOnTop(id:Int):Void{
     pageInFocus = pages[id];

@@ -7,6 +7,7 @@ import flash.geom.Point;
 import flash.net.URLLoader;
 import flash.net.URLRequest;
 import flash.display.Loader;
+import flash.events.IOErrorEvent;
 
 //import flash.events.MouseEvent;
 import flash.display.MovieClip;
@@ -449,6 +450,7 @@ class TextPlaceholderView extends APlaceholder {
       var ldrContext:LoaderContext  = new LoaderContext(); 
       ldrContext.applicationDomain  = new ApplicationDomain();
       ldr.contentLoaderInfo.addEventListener(Event.COMPLETE, onFontLoaded); 
+      ldr.contentLoaderInfo.addEventListener(IOErrorEvent.IO_ERROR, onIOError); 
       ldr.load(req, ldrContext);
       loaded_fonts.set(fontFileName, fontMovie);
     } else {
@@ -461,6 +463,10 @@ class TextPlaceholderView extends APlaceholder {
     
     fontMovie   =  cast event.target.loader.content;
     onFontCached();
+  }
+  
+  private function onIOError(e:IOErrorEvent):Void {
+	  
   }
   
   private function onFontCached():Void {

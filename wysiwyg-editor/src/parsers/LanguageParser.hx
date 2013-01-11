@@ -114,6 +114,14 @@ class LanguageParser
 
     for(upload_image in xml_data.elementsNamed("upload-image") ) 
       TRANSLATION.upload_image = upload_image.firstChild().nodeValue.toString();
+	  
+	TRANSLATION.image_title = "Images";
+	for(image_title in xml_data.elementsNamed("image-title") ) 
+      TRANSLATION.image_title = image_title.firstChild().nodeValue.toString();
+
+	TRANSLATION.logo_title = "Logo's";
+    for(logo_title in xml_data.elementsNamed("logo-title") ) 
+      TRANSLATION.logo_title = logo_title.firstChild().nodeValue.toString();
 
     for(add_logo in xml_data.elementsNamed("add-logo") ) 
       TRANSLATION.add_logo = add_logo.firstChild().nodeValue.toString();

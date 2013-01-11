@@ -10,7 +10,8 @@ class LogosController extends Controller, implements IController{
       
       case EVENT_ID.SHOW_MY_UPLOADS:{
         GLOBAL.side_view.showView(EVENT_ID.SHOW_MY_UPLOADS, param.getBool());
-      }
+		Logos.setParam(param);
+	  }
       
       case EVENT_ID.LOGO_SELECTED:{
         GLOBAL.logos_view.setParam(param);
@@ -29,7 +30,7 @@ class LogosController extends Controller, implements IController{
         GLOBAL.logos_view.setParam(param);
         Logos.setParam(param);
       }
-
+      case EVENT_ID.START_DRAG_LOGO: { Logos.setParam(param); }
       case EVENT_ID.ADD_LOGO_TO_PAGE:{
         
         // EVENT_ID.PMS4_COLOR
